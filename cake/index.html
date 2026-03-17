@@ -522,7 +522,6 @@ html.og-mode .hero{
         <li><a href="#sub-openspec-iterate">OpenSpec 迭代</a></li>
         <li><a href="#sub-commit-skill">設定 Commit Skill</a></li>
         <li><a href="#sub-pr-skill">設定 PR Skill</a></li>
-        <li><a href="#sub-worktree">Git Worktree 開發 &amp; Code Review</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="testing">
@@ -530,7 +529,7 @@ html.og-mode .hero{
         <span class="toc-num">4</span> 導入測試
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-gen-test">gen-test-cases</a></li>
+        <li><a href="#sub-section">建立適合專案的測試工作流</a></li>
         <li><a href="#sub-github-action">GitHub Action 自動化</a></li>
       </ul>
     </li>
@@ -775,7 +774,7 @@ openspec init</div>
 - 資料圖表頁（折線圖、長條圖，支援日期篩選）
 - 員工管理頁（管理者可檢視、新增、編輯、刪除員工資料）
 
-前端使用 React + TypeScript，並搭配 service function 回傳 Promise.resolve() 的方式模擬資料
+前端使用 React + TypeScript，使用 Mock API 模擬後端回應
 請參考 openspec 的 skill 執行，以最小可行性方案來規劃</div>
     </div>
   </div>
@@ -1010,7 +1009,7 @@ with details about my project, tech stack, and conventions</div>
         Prompt
         <span class="label">新增分隻</span>
       </div>
-      <div class="prompt-body">根據 branch 變更內容，根據 camel-case 命名原則 checkout 到新的 feature branch</div>
+      <div class="prompt-body">分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch。</div>
     </div>
   </div>
 
@@ -1076,62 +1075,7 @@ with details about my project, tech stack, and conventions</div>
         Prompt
         <span class="label">生成 PR</span>
       </div>
-      <div class="prompt-body">撰寫 PR</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">AI 產生的程式碼很多，但這不是你不看的原因</div>
-      <p>導入 AI 後 Code Review 的負擔大幅增加，有些公司認為一天要完成 3 倍工作量才算達標。結果大家犧牲深度思考、懶得 Code Review。</p>
-    </div>
-  </div>
-
-  <div class="reveal" id="sub-worktree">
-    <div class="sub-title"><span class="bar"></span>Git Worktree 開發 &amp; Code Review</div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">情境</div>
-      <p>你負責一個專案，但同時要撰寫新功能、修復舊 Bug，還要 Code Review 同事的程式</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🌳</span> 多 Agent 並行開發</h3>
-      <ul>
-        <li>不同功能使用不同 feature branch，搭配 Git Worktree 建立獨立工作區</li>
-        <li>每個 Worktree 可同時跑不同 dev server，讓多個 AI Agent 執行各自任務</li>
-      </ul>
-      <p>可以安裝對應的 Code Review Skill，這邊以 superpowers 示範</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">在 feature branch 做 Code Review</span>
-      </div>
-      <div class="prompt-body">幫忙 code review</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">在 Git Worktree 選擇 master 分支，同步執行其他任務</p>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">在 master branch 討論新功能</span>
-      </div>
-      <div class="prompt-body">請幫我根據「重要程度」排出 5 個建議擴充的新功能</div>
+      <div class="prompt-body">撰寫 PR，與 main branch 比對</div>
     </div>
   </div>
 
@@ -1184,8 +1128,8 @@ with details about my project, tech stack, and conventions</div>
     </div>
   </div>
 
-  <div class="reveal" id="sub-gen-test">
-    <div class="sub-title"><span class="bar"></span>gen-test-cases</div>
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>建立適合專案的測試工作流</div>
   </div>
 
   <div class="reveal">
@@ -1235,7 +1179,7 @@ with details about my project, tech stack, and conventions</div>
         Prompt
         <span class="label">生成測試案例</span>
       </div>
-      <div class="prompt-body">/gen-test-cases
+      <div class="prompt-body">/Gen Test Cases 
 （拖入要測試的檔案，ex: src/pages/LoginPage.tsx）</div>
     </div>
   </div>
@@ -1243,7 +1187,7 @@ with details about my project, tech stack, and conventions</div>
   <div class="reveal">
     <div class="insight">
       <div class="insight-title">從玩具到產品，差的就是測試</div>
-      <p>很多時候 AI 只是修好了眼前的錯誤，但過程中改壞了過去的邏輯。千萬不要嫌寫測試浪費時間 — 測試其實是在幫你加速開發。</p>
+      <p>很多時候 AI 只是修好了眼前的錯誤，但過程中改壞了過去的邏輯。千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。</p>
       <p style="margin-top:.5rem">現在有 AI 了，你不用自己寫測試程式，只要審核 AI 給的測試情境是否有遺漏就好。</p>
     </div>
   </div>
@@ -1269,7 +1213,7 @@ with details about my project, tech stack, and conventions</div>
       <ul>
         <li>每次推送到 GitHub 都觸發測試</li>
         <li>測試完畢生成覆蓋率報告</li>
-        <li>設定 Branch Protection Rule：測試通過才能合併到主分支</li>
+        <li>設定 Branch Protection Rule：測試通過才能合併到主分支（將 Require status checks to pass 打勾，然後輸入「test」）</li>
       </ul>
       <p>測試覆蓋率不需追求 100%，重要的邏輯都要測試到。有了測試，規格書上的功能才能被真正驗證。</p>
     </div>
@@ -1283,8 +1227,7 @@ with details about my project, tech stack, and conventions</div>
         <span class="label">自動化測試</span>
       </div>
       <div class="prompt-body">我希望在 GitHub Action 加入自動化測試的流程
-每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
-測試完畢後，要生成覆蓋率報告讓我下載</div>
+每一個分支將更新推送到 GitHub 都會觸發一次自動化測試</div>
     </div>
   </div>
 
@@ -1432,7 +1375,7 @@ collapseBtn.addEventListener('click',function(){
 
 // Scroll spy — 這兩個陣列需根據實際內容填入
 var sectionIds=["instructor","section","new-project","old-project","testing","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-var allAnchorIds=["instructor","section","new-project","sub-openspec-init","sub-create-project","sub-project-rules","old-project","sub-openspec-iterate","sub-commit-skill","sub-pr-skill","sub-worktree","testing","sub-gen-test","sub-github-action","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
+var allAnchorIds=["instructor","section","new-project","sub-openspec-init","sub-create-project","sub-project-rules","old-project","sub-openspec-iterate","sub-commit-skill","sub-pr-skill","testing","sub-section","sub-github-action","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
 
 var sectionForAnchor={};
 allAnchorIds.forEach(function(id){
