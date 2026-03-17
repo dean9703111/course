@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 開發工作流</title>
+<link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 開發工作流｜Vibe Coding 實戰課">
+<meta property="og:description" content="從 0 到 1 打造 AI 開發工作流，讓規格、版本控制、測試都能被 AI 自動化協助。">
+<meta property="og:image" content="https://deanlin.net/course/cake/assets/og-cake.jpg">
+<meta property="og:url" content="https://deanlin.net/course/cake/">
+<meta property="og:site_name" content="林鼎淵 Dean Lin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & VARIABLES ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1117;
+  --bg-card:#181b25;
+  --bg-card-alt:#1e2130;
+  --text:#e4e4e7;
+  --text-dim:#8b8d9a;
+  --accent:#f0804e;
+  --accent2:#5eead4;
+  --accent3:#a78bfa;
+  --border:#2a2d3a;
+  --code-bg:#12141c;
+  --radius:12px;
+}
+[data-theme="light"]{
+  --bg:#f5f5f7;
+  --bg-card:#ffffff;
+  --bg-card-alt:#f0f0f3;
+  --text:#1a1a2e;
+  --text-dim:#5a5b6a;
+  --accent:#e0672e;
+  --accent2:#0d9488;
+  --accent3:#7c3aed;
+  --border:#d4d4d8;
+  --code-bg:#eaeaef;
+}
+html{scroll-behavior:smooth;font-size:16px}
+[id]{scroll-margin-top:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans TC',sans-serif;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:2rem;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-30%;left:-20%;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(240,128,78,.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:-20%;right:-10%;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(94,234,212,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.4rem 1rem;border:1px solid var(--border);border-radius:100px;
+  font-size:.8rem;color:var(--text-dim);letter-spacing:.05em;
+  margin-bottom:2rem;backdrop-filter:blur(4px);
+}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{
+  font-family:'Noto Serif TC',serif;
+  font-size:clamp(2.2rem,5vw,4rem);font-weight:900;line-height:1.25;
+  margin-bottom:1.5rem;
+  background:linear-gradient(135deg,var(--text) 30%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-dim);max-width:600px;margin-bottom:1rem;font-weight:300}
+.hero-author{font-size:.95rem;color:var(--accent);font-weight:500;margin-bottom:3rem}
+.hero-nav{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
+.hero-nav a{
+  padding:.65rem 1.4rem;border-radius:100px;font-size:.85rem;font-weight:500;
+  text-decoration:none;transition:all .3s ease;border:1px solid var(--border);color:var(--text);
+}
+.hero-nav a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.hero-nav a.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.hero-nav a.primary:hover{background:#ff9566;border-color:#ff9566}
+
+/* ===== SECTION ===== */
+.section{max-width:860px;margin:0 auto;padding:5rem 1.5rem}
+.section-label{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:1.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1rem;
+}
+.section-label .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:6px;
+  background:rgba(240,128,78,.15);font-size:1.2rem;
+}
+.section h2{
+  font-family:'Noto Serif TC',serif;
+  font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;line-height:1.3;margin-bottom:.75rem;
+}
+.section .lead{
+  font-size:1.05rem;color:var(--text-dim);margin-bottom:2.5rem;
+  padding-left:1rem;border-left:3px solid var(--accent);
+}
+.divider{max-width:860px;margin:0 auto;border:none;border-top:1px solid var(--border)}
+
+/* ===== CARD ===== */
+.card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.75rem;margin-bottom:1.5rem;transition:border-color .3s;
+}
+.card:hover{border-color:rgba(240,128,78,.3)}
+.card h3{font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.card h3 .icon{font-size:1.1rem}
+.card ul{list-style:none;padding:0}
+.card ul li{position:relative;padding-left:1.2rem;margin-bottom:.5rem;color:var(--text-dim);font-size:.95rem}
+.card ul li::before{content:'';position:absolute;left:0;top:.7em;width:5px;height:5px;border-radius:50%;background:var(--accent2)}
+.card p{color:var(--text-dim);font-size:.95rem}
+
+/* ===== INLINE CODE ===== */
+code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-radius:4px;font-size:.875em;font-family:'JetBrains Mono',monospace}
+
+/* ===== LOOSE TEXT & LIST ===== */
+.loose-text{color:var(--text-dim);font-size:.9rem;margin-bottom:.75rem}
+.loose-list{list-style:none;padding:0;margin:1rem 0}
+.loose-list li{position:relative;padding-left:1.4rem;margin-bottom:.6rem;color:var(--text-dim);font-size:.95rem;line-height:1.8}
+.loose-list li::before{content:'';position:absolute;left:0;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--accent2)}
+
+/* ===== PROMPT BLOCK ===== */
+.prompt-block{
+  background:var(--code-bg);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;margin-bottom:1.5rem;
+}
+.prompt-header{
+  display:flex;align-items:center;gap:.5rem;
+  padding:.6rem 1rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);
+  font-size:.75rem;color:var(--text-dim);font-family:'JetBrains Mono',monospace;
+}
+.prompt-header .dots{display:flex;gap:5px}
+.prompt-header .dots span{width:8px;height:8px;border-radius:50%;display:block}
+.prompt-header .dots span:nth-child(1){background:#ff5f57}
+.prompt-header .dots span:nth-child(2){background:#febc2e}
+.prompt-header .dots span:nth-child(3){background:#28c840}
+.prompt-header .label{margin-left:auto;color:var(--accent);font-weight:500}
+.prompt-body{
+  padding:1.25rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;
+  line-height:1.7;color:var(--accent2);white-space:pre-wrap;overflow-x:auto;
+}
+
+/* ===== INSIGHT BOX ===== */
+.insight{
+  background:linear-gradient(135deg,rgba(167,139,250,.06),rgba(94,234,212,.04));
+  border:1px solid rgba(167,139,250,.2);border-radius:var(--radius);
+  padding:1.75rem;margin:2rem 0;position:relative;
+}
+.insight::before{
+  content:'💡';position:absolute;top:-14px;left:20px;
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  background:var(--bg-card);border:1px solid rgba(167,139,250,.25);
+  border-radius:50%;font-size:.85rem;line-height:1;
+}
+.insight .insight-title{font-weight:700;color:var(--accent3);margin-bottom:.5rem;font-size:.95rem}
+.insight p{color:var(--text-dim);font-size:.9rem;line-height:1.9}
+.insight ul{list-style:none;padding:0;margin:.75rem 0 0}
+.insight ul li{position:relative;padding-left:1.2rem;margin-bottom:.4rem;color:var(--text-dim);font-size:.9rem;line-height:1.9}
+.insight ul li::before{content:'';position:absolute;left:0;top:.75em;width:5px;height:5px;border-radius:50%;background:var(--accent3)}
+
+/* ===== FLOW STEPS ===== */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
+.flow-step{
+  background:var(--bg-card-alt);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.25rem;text-align:center;position:relative;
+}
+.flow-step .step-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(240,128,78,.12);color:var(--accent);
+  font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;margin-bottom:.75rem;
+}
+.flow-step .step-title{font-size:.9rem;font-weight:700;margin-bottom:.35rem}
+.flow-step .step-desc{font-size:.8rem;color:var(--text-dim)}
+
+/* ===== TAGS ===== */
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
+.tag{padding:.3rem .8rem;border-radius:100px;font-size:.75rem;font-weight:500;border:1px solid var(--border);color:var(--text-dim)}
+.tag.green{border-color:rgba(94,234,212,.3);color:var(--accent2)}
+.tag.orange{border-color:rgba(240,128,78,.3);color:var(--accent)}
+.tag.purple{border-color:rgba(167,139,250,.3);color:var(--accent3)}
+
+/* ===== CHECKLIST ===== */
+.checklist{list-style:none;padding:0;margin:1rem 0}
+.checklist li{position:relative;padding:.5rem 0 .5rem 2rem;font-size:.9rem;color:var(--text-dim);border-bottom:1px solid rgba(255,255,255,.04)}
+.checklist li::before{
+  content:'✓';position:absolute;left:0;top:.5rem;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:5px;
+  background:rgba(94,234,212,.1);color:var(--accent2);font-size:.7rem;font-weight:700;
+}
+
+/* ===== SUMMARY GRID ===== */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin:2rem 0}
+.summary-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.75rem;transition:all .3s;
+}
+.summary-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.summary-card .sc-icon{font-size:1.5rem;margin-bottom:1rem}
+.summary-card h4{font-family:'Noto Serif TC',serif;font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
+.summary-card p{font-size:.85rem;color:var(--text-dim);line-height:1.7}
+
+/* ===== INSTRUCTOR ===== */
+.instructor{display:flex;gap:2rem;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin:2rem 0}
+.instructor-avatar{width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);flex-shrink:0;background:var(--bg-card-alt);display:flex;align-items:center;justify-content:center}
+.instructor-avatar-placeholder{width:130px;height:130px;border-radius:50%;border:3px dashed var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--bg-card-alt);color:var(--text-dim)}
+.instructor-info h3{font-family:'Noto Serif TC',serif;font-size:1.3rem;font-weight:700;margin-bottom:.25rem}
+.instructor-info .tagline{color:var(--accent);font-size:.85rem;font-weight:500;margin-bottom:.75rem}
+.instructor-info p{color:var(--text-dim);font-size:.9rem;line-height:1.8}
+.instructor-stats{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.instructor-stats a{font-size:.8rem;color:var(--text-dim);display:inline-flex;align-items:center;gap:.35rem;text-decoration:none;transition:color .2s}
+.instructor-stats a:hover{color:var(--accent)}
+.instructor-stats a strong{color:var(--text);font-weight:700;transition:color .2s}
+.instructor-stats a:hover strong{color:var(--accent)}
+.social-links{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.social-links a{
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  padding:.45rem .9rem;border-radius:100px;border:1px solid var(--border);
+  color:var(--text-dim);text-decoration:none;font-size:.78rem;font-weight:500;transition:all .3s;
+}
+.social-links a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.social-links a svg{flex-shrink:0;width:18px;height:18px}
+@media(max-width:640px){
+  .instructor{flex-direction:column;align-items:center;text-align:center}
+  .instructor-stats{justify-content:center}
+  .social-links{justify-content:center}
+}
+
+/* ===== QUOTE PAGE ===== */
+.quote-page{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:3rem 2rem;position:relative;overflow:hidden;
+}
+.quote-page::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 20% 40%,rgba(240,128,78,.06) 0%,transparent 70%),radial-gradient(ellipse 50% 60% at 80% 60%,rgba(94,234,212,.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+.quote-page .reveal{max-width:740px;width:100%}
+.quote-page .quote-mark{font-family:'Noto Serif TC',serif;font-size:clamp(4rem,10vw,8rem);line-height:1;color:var(--accent);opacity:.2;margin-bottom:-1rem;user-select:none;text-align:left}
+.quote-page blockquote{font-family:'Noto Serif TC',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;line-height:1.9;color:var(--text);max-width:740px;position:relative}
+.quote-page .quote-author{margin-top:2rem;font-size:.85rem;color:var(--text-dim);letter-spacing:.08em}
+.quote-page .quote-line{width:50%;height:2px;background:var(--accent);border-radius:1px;margin:1.5rem auto 0}
+
+/* ===== FOOTER ===== */
+.footer{text-align:center;padding:3rem 1.5rem;border-top:1px solid var(--border);color:var(--text-dim);font-size:.8rem}
+
+/* ===== SUB-TITLE ===== */
+.sub-title{font-family:'Noto Serif TC',serif;font-size:1.5rem;font-weight:700;margin:3.5rem 0 1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--accent);display:flex;align-items:center;gap:.75rem}
+.sub-title .bar{display:none}
+.sub-lead{color:var(--text-dim);font-size:.9rem;margin-top:.25rem}
+
+/* ===== ANIMATIONS ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:fixed;top:0;left:0;width:260px;height:100vh;
+  background:rgba(15,17,23,.92);backdrop-filter:blur(16px);
+  border-right:1px solid var(--border);padding:2rem 0;z-index:100;
+  display:flex;flex-direction:column;
+  transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;overscroll-behavior:contain;
+}
+[data-theme="light"] .sidebar{background:rgba(245,245,247,.94)}
+.sidebar.open{transform:translateX(0)}
+@media(min-width:1100px){
+  .sidebar{transform:translateX(0)}
+  body{padding-left:260px;transition:padding-left .35s cubic-bezier(.4,0,.2,1)}
+  .sidebar.collapsed{transform:translateX(-100%)}
+  body.sidebar-collapsed{padding-left:0}
+}
+.sidebar-collapse-btn{
+  position:fixed;top:50%;left:260px;transform:translateY(-50%);z-index:101;
+  width:20px;height:48px;border:none;border-radius:0 8px 8px 0;
+  background:var(--bg-card);border:1px solid var(--border);border-left:none;
+  cursor:pointer;display:none;align-items:center;justify-content:center;
+  color:var(--text-dim);font-size:.6rem;transition:all .35s cubic-bezier(.4,0,.2,1);padding:0;
+}
+.sidebar-collapse-btn:hover{width:24px;color:var(--accent);background:var(--bg-card-alt)}
+.sidebar-collapse-btn svg{transition:transform .35s}
+.sidebar.collapsed ~ .sidebar-collapse-btn{left:0}
+.sidebar.collapsed ~ .sidebar-collapse-btn svg{transform:rotate(180deg)}
+@media(min-width:1100px){.sidebar-collapse-btn{display:flex}}
+@media(max-width:1099px){.sidebar-collapse-btn{display:none}}
+
+.sidebar-brand{
+  padding:0 1.5rem 1.5rem;font-family:'Noto Serif TC',serif;font-size:.85rem;
+  font-weight:700;color:var(--accent);border-bottom:1px solid var(--border);margin-bottom:1rem;
+  flex-shrink:0;line-height:1.4;display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+}
+.toc{list-style:none;padding:0;flex:1}
+.toc-group{margin-bottom:.25rem}
+.toc-group-title{
+  display:flex;align-items:center;gap:.5rem;padding:.55rem 1.5rem;
+  font-size:.78rem;font-weight:700;letter-spacing:.06em;color:var(--text-dim);
+  text-decoration:none;transition:all .25s;position:relative;
+}
+.toc-group-title::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--accent);border-radius:0 2px 2px 0;opacity:0;transition:opacity .25s}
+.toc-group-title:hover{color:var(--text)}
+.toc-group-title.active{color:var(--accent)}
+.toc-group-title.active::before{opacity:1}
+.toc-group-title .toc-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:5px;
+  background:rgba(240,128,78,.1);font-size:.65rem;color:var(--accent);flex-shrink:0;
+}
+.toc-sub{list-style:none;padding:0;overflow:hidden;max-height:0;transition:max-height .35s ease}
+.toc-group.expanded .toc-sub{max-height:500px}
+.toc-sub a{display:block;padding:.35rem 1.5rem .35rem 3.25rem;font-size:.75rem;color:var(--text-dim);text-decoration:none;transition:all .2s;position:relative}
+.toc-sub a::before{content:'';position:absolute;left:2.25rem;top:50%;width:4px;height:4px;border-radius:50%;background:var(--border);transform:translateY(-50%);transition:background .2s}
+.toc-sub a:hover{color:var(--text)}
+.toc-sub a.active{color:var(--accent2)}
+.toc-sub a.active::before{background:var(--accent2)}
+.sidebar-progress{flex-shrink:0;padding:1rem 1.5rem .5rem;border-top:1px solid var(--border)}
+.sidebar-progress-label{font-size:.65rem;color:var(--text-dim);margin-bottom:.4rem;display:flex;justify-content:space-between}
+.sidebar-progress-track{width:100%;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.sidebar-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;width:0%;transition:width .3s ease}
+
+/* ===== HAMBURGER ===== */
+.hamburger{
+  position:fixed;bottom:1.25rem;right:1.25rem;top:auto;left:auto;z-index:200;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(240,128,78,.92);backdrop-filter:blur(12px);border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  transition:all .3s;box-shadow:0 4px 20px rgba(240,128,78,.35);
+}
+.hamburger:hover{transform:scale(1.08)}
+.hamburger span{display:block;width:18px;height:2px;background:#fff;border-radius:1px;transition:all .3s}
+.hamburger.active{background:rgba(24,27,37,.92);box-shadow:0 4px 20px rgba(0,0,0,.4)}
+[data-theme="light"] .hamburger.active{background:rgba(255,255,255,.92)}
+.hamburger.active span{background:var(--text)}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(3.5px,3.5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(3.5px,-3.5px)}
+@media(min-width:1100px){.hamburger{display:none}}
+
+.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;opacity:0;pointer-events:none;transition:opacity .3s}
+.sidebar-overlay.visible{opacity:1;pointer-events:auto}
+
+/* ===== THEME TOGGLE ===== */
+.theme-toggle{
+  width:32px;height:32px;border-radius:50%;background:var(--bg-card-alt);
+  border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:.95rem;transition:all .3s;flex-shrink:0;line-height:1;padding:0;
+}
+.theme-toggle:hover{border-color:var(--accent);transform:scale(1.1)}
+
+/* ===== FONT SIZE TOGGLE ===== */
+.fontsize-toggle{
+  width:32px;height:32px;border-radius:50%;background:var(--bg-card-alt);
+  border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:.7rem;font-weight:700;transition:all .3s;flex-shrink:0;
+  line-height:1;padding:0;color:var(--text-dim);font-family:'Noto Sans TC',sans-serif;
+}
+.fontsize-toggle:hover{border-color:var(--accent);transform:scale(1.1);color:var(--accent)}
+
+/* ===== LIGHT MODE OVERRIDES ===== */
+[data-theme="light"] .prompt-header{background:rgba(0,0,0,.03)}
+[data-theme="light"] .checklist li{border-bottom-color:rgba(0,0,0,.06)}
+[data-theme="light"] .prompt-body{color:#0d6e63}
+[data-theme="light"] .insight{background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(13,148,136,.04));border-color:rgba(124,58,237,.2)}
+[data-theme="light"] .hero::before{background:radial-gradient(circle,rgba(224,103,46,.08) 0%,transparent 70%)}
+[data-theme="light"] .hero::after{background:radial-gradient(circle,rgba(13,148,136,.06) 0%,transparent 70%)}
+[data-theme="light"] .card:hover{border-color:rgba(224,103,46,.35)}
+
+/* ===== OG MODE (for square OG thumbnails) ===== */
+html.og-mode body{
+  padding-left:0 !important;
+}
+html.og-mode .sidebar,
+html.og-mode .sidebar-collapse-btn,
+html.og-mode .hamburger,
+html.og-mode .sidebar-overlay{
+  display:none !important;
+}
+html.og-mode .section,
+html.og-mode .quote-page,
+html.og-mode .footer{
+  display:none !important;
+}
+html.og-mode .hero{
+  max-width:960px;
+  margin:0 auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:640px){
+  .section{padding:3rem 1.25rem}
+  .card{padding:1.25rem}
+  .prompt-body{font-size:.78rem;padding:1rem}
+  .flow{grid-template-columns:1fr}
+  .hero-nav{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<button class="hamburger" id="hamburger" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="sidebar-overlay" id="overlay"></div>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand"><span>AI 開發工作流<br>課程目錄</span><button class="fontsize-toggle" id="fontsize-toggle" aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button></div>
+  <ul class="toc">
+    <li class="toc-group" data-section="instructor">
+      <a href="#instructor" class="toc-group-title">
+        <span class="toc-num">👤</span> 講師簡介
+      </a>
+      <ul class="toc-sub"></ul>
+    </li>
+    <li class="toc-group" data-section="new-project">
+      <a href="#new-project" class="toc-group-title">
+        <span class="toc-num">1</span> 新專案
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-openspec-init">OpenSpec 初始化</a></li>
+        <li><a href="#sub-create-project">從零建立專案</a></li>
+        <li><a href="#sub-project-rules">建立專案規則</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="old-project">
+      <a href="#old-project" class="toc-group-title">
+        <span class="toc-num">2</span> 舊專案
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-openspec-iterate">OpenSpec 迭代</a></li>
+        <li><a href="#sub-commit-skill">設定 Commit Skill</a></li>
+        <li><a href="#sub-pr-skill">設定 PR Skill</a></li>
+        <li><a href="#sub-worktree">Git Worktree 開發 &amp; Code Review</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="testing">
+      <a href="#testing" class="toc-group-title">
+        <span class="toc-num">3</span> 導入測試
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-gen-test">gen-test-cases</a></li>
+        <li><a href="#sub-github-action">GitHub Action 自動化</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="summary">
+      <a href="#summary" class="toc-group-title">
+        <span class="toc-num">★</span> 總結
+      </a>
+      <ul class="toc-sub">
+      </ul>
+    </li>
+
+      </ul>
+  <div class="sidebar-progress">
+    <div class="sidebar-progress-label"><span>閱讀進度</span><span id="progress-pct">0%</span></div>
+    <div class="sidebar-progress-track"><div class="sidebar-progress-fill" id="progress-fill"></div></div>
+  </div>
+</nav>
+<button class="sidebar-collapse-btn" id="sidebar-collapse" aria-label="收合側邊欄">
+  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L2 7l6 6"/></svg>
+</button>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>Cake 2026 Build with AI</div>
+  <h1>市場不會為爛產品買單！</h1>
+  <p class="hero-sub">Vibe Coding 讓你快速啟動，但「品質、維護、擴充」才決定產品能走多遠</p>
+  <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
+  <nav class="hero-nav">
+    <a href="#new-project" class="primary">新專案</a>
+    <a href="#old-project">舊專案</a>
+    <a href="#testing">導入測試</a>
+    <a href="#summary">總結</a>
+      </nav>
+</header>
+
+<section class="quote-page">
+  <div class="reveal">
+    <div class="quote-mark">“</div>
+    <blockquote>工具會過時，框架會淘汰，<br>但解決問題的思維，永遠有價值。</blockquote>
+    <div class="quote-line"></div>
+  </div>
+</section>
+
+<section class="section" id="instructor">
+  <div class="reveal">
+    <span class="section-label"><span class="num">👤</span> 講師簡介</span>
+    <h2>關於講師</h2>
+  </div>
+  <div class="reveal">
+    <div class="instructor">
+      <img class="instructor-avatar" src="../config/assets/author.jpg" alt="林鼎淵 Dean Lin">
+      <div class="instructor-info">
+        <h3>林鼎淵 Dean Lin</h3>
+        <div class="tagline">外商工程師 · 企業內訓講師 · 暢銷書作家</div>
+        <p>專注於 AI 開發工作流的實踐與推廣，協助企業導入 AI 輔助開發流程。<br> 擅長將複雜的技術概念轉化為可落地的工作流程，讓團隊真正提升開發效率而非盲目追逐工具。</p>
+        <div class="instructor-stats">
+          <a href="https://www.tenlong.com.tw/products/9786264142083" target="_blank" rel="noopener">📚 出版 <strong>7</strong> 本專業書籍</a>
+          <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener">🎤 超過 <strong>100</strong> 場講座</a>
+          <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener">✍️ 發表超過 <strong>400</strong> 篇文章</a>
+        </div>
+        <div class="social-links">
+          <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm2.94 0c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75c.66 0 1.19 2.58 1.19 5.75z"/></svg> Medium</a>
+          <a href="https://www.facebook.com/deanlinbao" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
+          <a href="https://www.threads.com/@deanlin5288" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 878 1000" fill="currentColor"><path d="M446.7,1000h-0.3c-149.2-1-263.9-50.2-341-146.2C36.9,768.3,1.5,649.4,0.3,500.4v-0.7c1.2-149.1,36.6-267.9,105.2-353.4C182.5,50.2,297.3,1,446.4,0h0.3h0.3c114.4,0.8,210.1,30.2,284.4,87.4c69.9,53.8,119.1,130.4,146.2,227.8l-85,23.7c-46-165-162.4-249.3-346-250.6c-121.2,0.9-212.9,39-272.5,113.2C118.4,271,89.6,371.4,88.5,500c1.1,128.6,29.9,229,85.7,298.5c59.6,74.3,151.3,112.4,272.5,113.2c109.3-0.8,181.6-26.3,241.7-85.2c68.6-67.2,67.4-149.7,45.4-199.9c-12.9-29.6-36.4-54.2-68.1-72.9c-8,56.3-25.9,101.9-53.5,136.3c-36.9,45.9-89.2,71-155.4,74.6c-50.1,2.7-98.4-9.1-135.8-33.4c-44.3-28.7-70.2-72.5-73-123.5c-2.7-49.6,17-95.2,55.4-128.4c36.7-31.7,88.3-50.3,149.3-53.8c44.9-2.5,87-0.5,125.8,5.9c-5.2-30.9-15.6-55.5-31.2-73.2c-21.4-24.4-54.5-36.8-98.3-37.1c-0.4,0-0.8,0-1.2,0c-35.2,0-83,9.7-113.4,55L261.2,327c40.8-60.6,107-94,186.6-94c0.6,0,1.2,0,1.8,0c133.1,0.8,212.4,82.3,220.3,224.5c4.5,1.9,9,3.9,13.4,5.9c62.1,29.2,107.5,73.4,131.4,127.9c33.2,75.9,36.3,199.6-64.5,298.3C673.1,965,579.6,999.1,447,1000L446.7,1000L446.7,1000z M488.5,512.9c-10.1,0-20.3,0.3-30.8,0.9c-76.5,4.3-124.2,39.4-121.5,89.3c2.8,52.3,60.5,76.6,116,73.6c51-2.7,117.4-22.6,128.6-154.6C552.6,516,521.7,512.9,488.5,512.9z"/></svg> Threads</a>
+          <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
+          <a href="https://github.com/dean9703111" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<hr class="divider">
+<section class="section" id="new-project">
+  <div class="reveal">
+    <span class="section-label"><span class="num">1</span> 新專案</span>
+    <h2>用 SDD 讓 AI 根據規格建立專案</h2>
+    <p class="lead">規格驅動開發（Spec-Driven Development）— 讓 AI 不只寫程式，還幫你建立完善的規格文件</p>
+  </div>
+
+  <div class="reveal" id="sub-openspec-init">
+    <div class="sub-title"><span class="bar"></span>OpenSpec 初始化</div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">為什麼需要 OpenSpec？</div>
+      <ul>
+        <li>AI 寫程式越來越快，但專案越改越亂，甚至越改越壞</li>
+        <li>關鍵人物離職，沒有文件，系統知識直接斷層</li>
+        <li>解法：白話文對話 → AI 自動建立規格文件 → 根據規格驅動開發</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> 安裝與初始化</h3>
+      <ul>
+        <li>選擇使用的 AI 工具（ex: Claude Code）</li>
+        <li>產生 <code>.claude</code> 的 Agent Skills</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">安裝指令</span>
+      </div>
+      <div class="prompt-body">npm install -g @fission-ai/openspec@latest
+openspec init</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚡</span> Skills 與 Commands</h3>
+      <ul>
+        <li><strong>Skills</strong> — AI 在對話過程中自動觸發的技能包，不需要背指令</li>
+        <li><strong>Commands</strong> — 用 <code>/opsx</code> 前綴強制驅動：apply / archive / explore / propose</li>
+        <li>可透過 <code>openspec config profile</code> 擴充更多 workflows</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">查看 Skill</span>
+      </div>
+      <div class="prompt-body">我想知道 openspec 目前安裝的 skill 用途
+請使用表格呈現，用白話簡短描述</div>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-create-project">
+    <div class="sub-title"><span class="bar"></span>從零建立專案</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🎯</span> Prompt 設計三要素</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-title">專案目標</div>
+        <div class="step-desc">大方向描述需求，AI 會釐清細節</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-title">使用技術</div>
+        <div class="step-desc">指定技術棧，便於團隊接手</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-title">細節討論</div>
+        <div class="step-desc">提醒 AI 主動提問，釐清模糊需求</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">建立 Dashboard </span>
+      </div>
+      <div class="prompt-body">請設計一個公司內部 Dashboard 系統，包含以下功能：
+- 登入頁面（帳號密碼驗證，區分管理者與一般使用者）
+- 首頁儀表板（顯示關鍵數據卡片：營收、訂單數、活躍用戶數、轉換率）
+- 資料圖表頁（折線圖、長條圖，支援日期篩選）
+- 員工管理頁（管理者可檢視、新增、編輯、刪除員工資料）
+
+前端使用 React + TypeScript，使用 Mock API 模擬後端回應
+請參考 openspec 的 skill 執行，以最小可行性方案來規劃</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📋</span> OpenSpec 自動建立規格文件</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-title">proposal.md</div>
+        <div class="step-desc">確認目標與範圍</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-title">design.md</div>
+        <div class="step-desc">技術選型與風險評估</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-title">specs/</div>
+        <div class="step-desc">按功能分類的詳細規格</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-title">task.md</div>
+        <div class="step-desc">任務清單，完成自動打勾</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">開始實作</span>
+      </div>
+      <div class="prompt-body">開始實作</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">AI 正在改變企業決策</div>
+      <p>過去出缺勤、考核這類內部系統，企業通常找廠商購買、支付年費維護。但 Vibe Coding 的出現正讓企業做出不同的選擇。</p>
+      <p style="margin-top:.5rem">有些企業導入 Vibe Coding 的目標不是取代工程師，而是讓熟悉業務的人有能力設計出符合使用需求的產品原型，再交給工程師做優化與維護。</p>
+      <p style="margin-top:.5rem">用 OpenSpec 建立規格文件 — 就是讓這個交接過程有據可循，而不是一團無文件的程式碼丟過去。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🚀</span> 啟動專案進行歸檔</h3>
+      <p>第一次啟動可以請 AI 幫忙，因為 AI 有很高的機率在第一版遇到零星錯誤</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">讓 AI 協助啟動</span>
+      </div>
+      <div class="prompt-body">請幫我啟動專案</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">初步確認功能符合預期後，請他將變更歸檔</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">歸檔</span>
+      </div>
+      <div class="prompt-body">功能符合預期，進行歸檔</div>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-project-rules">
+    <div class="sub-title"><span class="bar"></span>建立專案規則</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📐</span> 生成 CLAUDE、OpenSpec 專案參考規則</h3>
+      <p><strong>CLAUDE.md</strong> 是給「做事」用的，<strong>openspec/config.yaml</strong> 是給「規劃」用的</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">初始化規則</span>
+      </div>
+      <div class="prompt-body">/init</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">OpenSpec 設定</span>
+      </div>
+      <div class="prompt-body">Please read openspec/config.yaml and help me fill it out
+with details about my project, tech stack, and conventions</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🗂</span> ️ 設計 README.md、.gitignore 並加入版控</h3>
+      <p>初版完成後，要加入版控；未來更新時，才會清楚 AI 到底改了哪些細節</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">設計 .gitignore、README.md</span>
+      </div>
+      <div class="prompt-body">請幫我設計專案的「.gitignore」但「.claude、openspec」要加入版本控制
+並且將「專案簡介與啟動方式」寫入 README.md</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section" id="old-project">
+  <div class="reveal">
+    <span class="section-label"><span class="num">2</span> 舊專案</span>
+    <h2>根據情境設計 Skills，讓 AI 有執行依據</h2>
+    <p class="lead">最難的不是 0 到 1，而是 1 到 100；透過 Skills 設計，讓 AI 在迭代功能、版本控制、Code Review 都有規範可循</p>
+  </div>
+
+  <div class="reveal" id="sub-openspec-iterate">
+    <div class="sub-title"><span class="bar"></span>OpenSpec 迭代</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">✨</span> 用 OpenSpec 新增新功能</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">新增功能</span>
+      </div>
+      <div class="prompt-body">增加操作紀錄頁面
+使用 OpenSpec</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">確認後實作</span>
+      </div>
+      <div class="prompt-body">開始實作</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">為什麼 1 到 100 比 0 到 1 更難？</div>
+      <p>如果沒有規格文件，下次改功能時 AI 不知道之前的設計邏輯，可能把同一個功能重複寫好幾次，或改 A 壞 B。</p>
+      <p style="margin-top:.5rem">用 OpenSpec 每次迭代都會在 Source Control 留下規格變更，AI 跟人類都有文件可以參考。關鍵人物離職最痛的不是少了一個人，而是系統知識直接斷層。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">歸檔變更</span>
+      </div>
+      <div class="prompt-body">幫我歸檔</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text"><strong>Tips</strong>: 不是所有事情都需要觸發 OpenSpec，向 branch 命名直接讓 AI 想就好</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">新增分隻</span>
+      </div>
+      <div class="prompt-body">根據 branch 變更內容，根據 camel-case 命名原則 checkout 到新的 feature branch</div>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-commit-skill">
+    <div class="sub-title"><span class="bar"></span>設定 Commit Skill</div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>根據需求建立 Agent Skills，能實際給予幫助的，才是好的 Skill</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📝</span> 為什麼需要 Commit Skill？</h3>
+      <ul>
+        <li>分析變更的檔案 → 判斷應拆成幾個 commit → 分段提交</li>
+        <li>不同功能的修改分開 commit，讓邏輯可被追蹤</li>
+        <li>保持好習慣：每做完一件事就 commit，不要多功能混一起</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag orange">人工手打：耗時且風格不一致</span>
+      <span class="tag purple">AI 自動生成：長短隨機、中英混雜</span>
+      <span class="tag green">解法：git-smart-commit Skill</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">拆分 Commit</span>
+      </div>
+      <div class="prompt-body">新增 commit</div>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-pr-skill">
+    <div class="sub-title"><span class="bar"></span>設定 PR Skill</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔀</span> git-pr-description Skill</h3>
+      <ul>
+        <li>比對當前分支與目標分支的差異</li>
+        <li>讀取 commit 訊息與變更檔案</li>
+        <li>參考 <code>pr-template</code> 生成 Title 與 Description</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">生成 PR</span>
+      </div>
+      <div class="prompt-body">撰寫 PR</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">AI 產生的程式碼很多，但這不是你不看的原因</div>
+      <p>導入 AI 後 Code Review 的負擔大幅增加，有些公司認為一天要完成 3 倍工作量才算達標。結果大家犧牲深度思考、懶得 Code Review。</p>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-worktree">
+    <div class="sub-title"><span class="bar"></span>Git Worktree 開發 &amp; Code Review</div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">情境</div>
+      <p>你負責一個專案，但同時要撰寫新功能、修復舊 Bug，還要 Code Review 同事的程式</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🌳</span> 多 Agent 並行開發</h3>
+      <ul>
+        <li>不同功能使用不同 feature branch，搭配 Git Worktree 建立獨立工作區</li>
+        <li>每個 Worktree 可同時跑不同 dev server，讓多個 AI Agent 執行各自任務</li>
+      </ul>
+      <p>可以安裝對應的 Code Review Skill，這邊以 superpowers 示範</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">在 feature branch 做 Code Review</span>
+      </div>
+      <div class="prompt-body">幫忙 code review</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">在 Git Worktree 選擇 master 分支，同步執行其他任務</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">在 master branch 討論新功能</span>
+      </div>
+      <div class="prompt-body">請幫我根據「重要程度」排出 5 個建議擴充的新功能</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">人，才是 AI 的瓶頸</div>
+      <p>Code Review 的速度已經跟不上 AI 寫程式的速度。當人成為 AI 的瓶頸時，要去想的是如何降低門檻，而不是放棄審核。</p>
+      <p style="margin-top:.5rem">每個功能單獨驗證，Code Review 時只需專注一件事。雖然每一步都是 AI 在執行，但如果沒有業界經驗，其實不知道怎麼串起這些工具。<strong>真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。</strong></p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section" id="testing">
+  <div class="reveal">
+    <span class="section-label"><span class="num">3</span> 導入測試</span>
+    <h2>讓維護與擴充更有底氣</h2>
+    <p class="lead">市場不會為爛產品買單；加入自動化測試，是 Vibe Coding 從玩具走向產品的關鍵</p>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🛡</span> ️ 為什麼 Vibe Coding 一定要測試？</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-title">穩定性</div>
+        <div class="step-desc">請 AI 修 bug，結果舊功能壞掉</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-title">複雜度</div>
+        <div class="step-desc">功能越多，人工測試越不可能覆蓋全部</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-title">擴充性</div>
+        <div class="step-desc">功能間有相依性，修改可能引發連鎖影響</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>不寫測試才浪費時間 — 測試讓你敢大膽修改，遇錯快速定位</p>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-gen-test">
+    <div class="sub-title"><span class="bar"></span>gen-test-cases</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔄</span> 測試撰寫流程</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-title">建立資料夾</div>
+        <div class="step-desc">存放測試清單</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-title">AI 撰寫清單</div>
+        <div class="step-desc">類型、說明、輸入、期待輸出</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-title">人類 Review</div>
+        <div class="step-desc">確認情境有無遺漏</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-title">AI 撰寫測試</div>
+        <div class="step-desc">描述與文件一致</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-title">自主驗證</div>
+        <div class="step-desc">最多嘗試 5 次</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">下面以 command 指令形式強制觸發任務</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">生成測試案例</span>
+      </div>
+      <div class="prompt-body">/gen-test-cases
+（拖入要測試的檔案，ex: src/pages/LoginPage.tsx）</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">從玩具到產品，差的就是測試</div>
+      <p>很多時候 AI 只是修好了眼前的錯誤，但過程中改壞了過去的邏輯。千萬不要嫌寫測試浪費時間 — 測試其實是在幫你加速開發。</p>
+      <p style="margin-top:.5rem">現在有 AI 了，你不用自己寫測試程式，只要審核 AI 給的測試情境是否有遺漏就好。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">💡</span> 實務建議</h3>
+      <ul>
+        <li>不要一口氣生成所有測試，先放一個檔案確認結果符合預期</li>
+        <li>每個頁面/模組有獨立的測試程式，方便定位問題</li>
+        <li>測試案例會隨規格變更而調整，不可能一次到位</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-github-action">
+    <div class="sub-title"><span class="bar"></span>GitHub Action 自動化</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔁</span> 自動化測試流程</h3>
+      <ul>
+        <li>每次推送到 GitHub 都觸發測試</li>
+        <li>測試完畢生成覆蓋率報告</li>
+        <li>設定 Branch Protection Rule：測試通過才能合併到主分支</li>
+      </ul>
+      <p>測試覆蓋率不需追求 100%，重要的邏輯都要測試到。有了測試，規格書上的功能才能被真正驗證。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">自動化測試</span>
+      </div>
+      <div class="prompt-body">我希望在 GitHub Action 加入自動化測試的流程
+每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
+測試完畢後，要生成覆蓋率報告讓我下載</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">不可能掌握某個技能就變大師</div>
+      <p>講師設計的教材是最佳體驗路徑，但換到自己的專案情境一定會遇到不一樣的問題。回去後不要只是複製指令，而是把流程搬到自己的專案試一遍。</p>
+      <p style="margin-top:.5rem"><strong>學習 AI 不是搜集指令複製貼上，更重要的是了解應用情境後，透過實踐調整為適合自己的工作流。</strong></p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section" id="summary">
+  <div class="reveal">
+    <span class="section-label"><span class="num">★</span> 總結</span>
+    <h2>今天的三大主軸</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="sc-icon">🏗️</div>
+        <h4>新專案 — SDD</h4>
+        <p>OpenSpec: 讓 AI 產生完善文件後，用規格驅動開發，完成從零到一的步驟</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">⚙️</div>
+        <h4>舊專案 — Skills</h4>
+        <p>設計 Commit / PR / Code Review Skills，讓 AI 在大型專案中有規範可循</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🧪</div>
+        <h4>導入測試 — CI/CD</h4>
+        <p>用指令（Command）驅動 AI 撰寫測試，搭配 GitHub Action 守住品質底線</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="quote-page">
+  <div class="reveal">
+    <div class="quote-mark">“</div>
+    <blockquote>能判斷哪些流程需要自動化的，<br> 只有每天在現場操作的你。<br><br> 不管 AI 多強大，<br> 按下同意時，責任就歸屬於你。</blockquote>
+    <div class="quote-line"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p style="font-size:.9rem;color:var(--text);margin-bottom:1rem">歡迎追蹤我的社群，獲取更多 AI 開發實戰內容</p>
+  <div class="social-links" style="justify-content:center;margin-bottom:1.5rem">
+    <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm2.94 0c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75c.66 0 1.19 2.58 1.19 5.75z"/></svg> Medium</a>
+    <a href="https://www.facebook.com/deanlinbao" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
+    <a href="https://www.threads.com/@deanlin5288" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 878 1000" fill="currentColor"><path d="M446.7,1000h-0.3c-149.2-1-263.9-50.2-341-146.2C36.9,768.3,1.5,649.4,0.3,500.4v-0.7c1.2-149.1,36.6-267.9,105.2-353.4C182.5,50.2,297.3,1,446.4,0h0.3h0.3c114.4,0.8,210.1,30.2,284.4,87.4c69.9,53.8,119.1,130.4,146.2,227.8l-85,23.7c-46-165-162.4-249.3-346-250.6c-121.2,0.9-212.9,39-272.5,113.2C118.4,271,89.6,371.4,88.5,500c1.1,128.6,29.9,229,85.7,298.5c59.6,74.3,151.3,112.4,272.5,113.2c109.3-0.8,181.6-26.3,241.7-85.2c68.6-67.2,67.4-149.7,45.4-199.9c-12.9-29.6-36.4-54.2-68.1-72.9c-8,56.3-25.9,101.9-53.5,136.3c-36.9,45.9-89.2,71-155.4,74.6c-50.1,2.7-98.4-9.1-135.8-33.4c-44.3-28.7-70.2-72.5-73-123.5c-2.7-49.6,17-95.2,55.4-128.4c36.7-31.7,88.3-50.3,149.3-53.8c44.9-2.5,87-0.5,125.8,5.9c-5.2-30.9-15.6-55.5-31.2-73.2c-21.4-24.4-54.5-36.8-98.3-37.1c-0.4,0-0.8,0-1.2,0c-35.2,0-83,9.7-113.4,55L261.2,327c40.8-60.6,107-94,186.6-94c0.6,0,1.2,0,1.8,0c133.1,0.8,212.4,82.3,220.3,224.5c4.5,1.9,9,3.9,13.4,5.9c62.1,29.2,107.5,73.4,131.4,127.9c33.2,75.9,36.3,199.6-64.5,298.3C673.1,965,579.6,999.1,447,1000L446.7,1000L446.7,1000z M488.5,512.9c-10.1,0-20.3,0.3-30.8,0.9c-76.5,4.3-124.2,39.4-121.5,89.3c2.8,52.3,60.5,76.6,116,73.6c51-2.7,117.4-22.6,128.6-154.6C552.6,516,521.7,512.9,488.5,512.9z"/></svg> Threads</a>
+    <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
+    <a href="https://github.com/dean9703111" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
+  </div>
+  <p>© 林鼎淵 Dean Lin</p>
+</footer>
+
+<script>
+(function(){
+  // OG mode: ?og=1 → hide sidebar/sections, hero-only layout for thumbnails
+  try {
+    var search = window.location.search || '';
+    if (search.indexOf('og=1') !== -1) {
+      document.documentElement.classList.add('og-mode');
+    }
+  } catch(e) {}
+
+  var s=localStorage.getItem('theme');
+  var d=window.matchMedia('(prefers-color-scheme:dark)').matches;
+  var t=s||(d?'dark':'light');
+  if(t==='light')document.documentElement.setAttribute('data-theme','light');
+  var b=document.getElementById('theme-toggle');
+  if(b)b.textContent=t==='light'?'☀️':'🌙';
+})();
+</script>
+
+<script>
+// Reveal on scroll
+var revealObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){revealObs.observe(el)});
+
+// Sidebar / Hamburger
+var sidebar=document.getElementById('sidebar');
+var hamburger=document.getElementById('hamburger');
+var overlay=document.getElementById('overlay');
+
+function toggleSidebar(){
+  var open=sidebar.classList.toggle('open');
+  hamburger.classList.toggle('active',open);
+  overlay.classList.toggle('visible',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeSidebar(){
+  sidebar.classList.remove('open');
+  hamburger.classList.remove('active');
+  overlay.classList.remove('visible');
+  document.body.style.overflow='';
+}
+hamburger.addEventListener('click',toggleSidebar);
+overlay.addEventListener('click',closeSidebar);
+sidebar.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){
+  if(window.innerWidth<1100)closeSidebar();
+})});
+
+// Desktop sidebar collapse
+var collapseBtn=document.getElementById('sidebar-collapse');
+if(localStorage.getItem('sidebar-collapsed')==='true'&&window.innerWidth>=1100){
+  sidebar.classList.add('collapsed');
+  document.body.classList.add('sidebar-collapsed');
+}
+collapseBtn.addEventListener('click',function(){
+  var c=sidebar.classList.toggle('collapsed');
+  document.body.classList.toggle('sidebar-collapsed',c);
+  localStorage.setItem('sidebar-collapsed',c);
+});
+
+// Scroll spy — 這兩個陣列需根據實際內容填入
+var sectionIds=["instructor","new-project","old-project","testing","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+var allAnchorIds=["instructor","new-project","sub-openspec-init","sub-create-project","sub-project-rules","old-project","sub-openspec-iterate","sub-commit-skill","sub-pr-skill","sub-worktree","testing","sub-gen-test","sub-github-action","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
+
+var sectionForAnchor={};
+allAnchorIds.forEach(function(id){
+  if(sectionIds.includes(id)){sectionForAnchor[id]=id}
+  else{
+    for(var i=sectionIds.length-1;i>=0;i--){
+      var idx=allAnchorIds.indexOf(sectionIds[i]);
+      if(idx<=allAnchorIds.indexOf(id)){sectionForAnchor[id]=sectionIds[i];break}
+    }
+  }
+});
+
+function updateToc(){
+  var scrollY=window.scrollY+150;
+  var activeAnchor=allAnchorIds[0];
+  allAnchorIds.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&el.offsetTop<=scrollY)activeAnchor=id;
+  });
+  var activeSection=sectionForAnchor[activeAnchor]||sectionIds[0];
+  document.querySelectorAll('.toc-group').forEach(function(g){
+    var isActive=g.dataset.section===activeSection;
+    g.classList.toggle('expanded',isActive);
+    g.querySelector('.toc-group-title').classList.toggle('active',isActive);
+  });
+  document.querySelectorAll('.toc-sub a').forEach(function(a){
+    var href=a.getAttribute('href').replace('#','');
+    a.classList.toggle('active',href===activeAnchor);
+  });
+  var docH=document.documentElement.scrollHeight-window.innerHeight;
+  var pct=docH>0?Math.round((window.scrollY/docH)*100):0;
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-pct').textContent=pct+'%';
+}
+
+var ticking=false;
+window.addEventListener('scroll',function(){
+  if(!ticking){requestAnimationFrame(function(){updateToc();ticking=false});ticking=true}
+});
+updateToc();
+
+// Theme toggle
+var themeToggle=document.getElementById('theme-toggle');
+themeToggle.addEventListener('click',function(){
+  var isLight=document.documentElement.getAttribute('data-theme')==='light';
+  if(isLight){
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('theme','dark');
+    themeToggle.textContent='🌙';
+  }else{
+    document.documentElement.setAttribute('data-theme','light');
+    localStorage.setItem('theme','light');
+    themeToggle.textContent='☀️';
+  }
+});
+window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){
+  if(localStorage.getItem('theme'))return;
+  if(e.matches){document.documentElement.removeAttribute('data-theme');themeToggle.textContent='🌙'}
+  else{document.documentElement.setAttribute('data-theme','light');themeToggle.textContent='☀️'}
+});
+
+// Font size toggle (5 levels)
+var fontSizes=[14,15,16,18,20];
+var fontLabels=['A1','A2','A3','A4','A5'];
+var fontIdx=fontSizes.indexOf(parseInt(localStorage.getItem('fontSize'))||16);
+if(fontIdx<0)fontIdx=2;
+var fontBtn=document.getElementById('fontsize-toggle');
+function applyFontSize(){
+  document.documentElement.style.fontSize=fontSizes[fontIdx]+'px';
+  fontBtn.textContent=fontLabels[fontIdx];
+  localStorage.setItem('fontSize',fontSizes[fontIdx]);
+}
+applyFontSize();
+fontBtn.addEventListener('click',function(){
+  fontIdx=(fontIdx+1)%fontSizes.length;
+  applyFontSize();
+});
+</script>
+</body>
+</html>
