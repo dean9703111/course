@@ -8,7 +8,7 @@
 - **[nvm](https://github.com/nvm-sh/nvm)** — Node.js 版本管理工具，方便切換
 - **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** — 安裝任一款程式碼編輯器（IDE）
 
-```prompt [label="安裝 Node.js（透過 nvm）"]
+```terminal [label="安裝 Node.js（透過 nvm）"]
 nvm install --lts
 nvm use --lts
 node -v
@@ -18,7 +18,7 @@ node -v
 
 [下載 Repository](https://github.com/deancourse/cake-2026-build-with-ai.git) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（預設為 Claude Code）
 
-```prompt [label="Clone 課程 Repo"]
+```terminal [label="Clone 課程 Repo"]
 git clone git@github.com:deancourse/cake-2026-build-with-ai.git
 cd cake-2026-build-with-ai
 ```
@@ -44,7 +44,7 @@ cd cake-2026-build-with-ai
 - 選擇使用的 AI 工具（ex: Claude Code）
 - 產生 `.claude` 的 Agent Skills
 
-```prompt [label="安裝指令"]
+```terminal [label="安裝指令"]
 npm install -g @fission-ai/openspec@latest
 openspec init
 ```
@@ -175,7 +175,7 @@ with details about my project, tech stack, and conventions
 
 **Tips**: 不是所有事情都需要觸發 OpenSpec，向 branch 命名直接讓 AI 想就好
 
-```prompt [label="新增分隻"]
+```prompt [label="新增分支"]
 分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch。
 ```
 
