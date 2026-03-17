@@ -445,9 +445,16 @@ html.og-mode .hero{
       </a>
       <ul class="toc-sub"></ul>
     </li>
+    <li class="toc-group" data-section="section">
+      <a href="#section" class="toc-group-title">
+        <span class="toc-num">1</span> 前置需求
+      </a>
+      <ul class="toc-sub">
+      </ul>
+    </li>
     <li class="toc-group" data-section="new-project">
       <a href="#new-project" class="toc-group-title">
-        <span class="toc-num">1</span> 新專案
+        <span class="toc-num">2</span> 新專案
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-openspec-init">OpenSpec 初始化</a></li>
@@ -457,7 +464,7 @@ html.og-mode .hero{
     </li>
     <li class="toc-group" data-section="old-project">
       <a href="#old-project" class="toc-group-title">
-        <span class="toc-num">2</span> 舊專案
+        <span class="toc-num">3</span> 舊專案
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-openspec-iterate">OpenSpec 迭代</a></li>
@@ -468,7 +475,7 @@ html.og-mode .hero{
     </li>
     <li class="toc-group" data-section="testing">
       <a href="#testing" class="toc-group-title">
-        <span class="toc-num">3</span> 導入測試
+        <span class="toc-num">4</span> 導入測試
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-gen-test">gen-test-cases</a></li>
@@ -499,7 +506,8 @@ html.og-mode .hero{
   <p class="hero-sub">Vibe Coding 讓你快速啟動，但「品質、維護、擴充」才決定產品能走多遠</p>
   <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
   <nav class="hero-nav">
-    <a href="#new-project" class="primary">新專案</a>
+    <a href="#section" class="primary">前置需求</a>
+    <a href="#new-project">新專案</a>
     <a href="#old-project">舊專案</a>
     <a href="#testing">導入測試</a>
     <a href="#summary">總結</a>
@@ -545,9 +553,69 @@ html.og-mode .hero{
 
 
 <hr class="divider">
+<section class="section" id="section">
+  <div class="reveal">
+    <span class="section-label"><span class="num">1</span> 前置需求</span>
+    <h2>開始前請先確認環境已就緒</h2>
+    <p class="lead">電腦需要安裝以下工具，才能往後續流程操作</p>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔧</span> 必要工具安裝</h3>
+      <ul>
+        <li><strong><a href="https://git-scm.com/install/windows" target="_blank" rel="noopener">Git</a></strong> — 版本控制工具，用來追蹤每次改動</li>
+        <li><strong><a href="https://github.com" target="_blank" rel="noopener">GitHub 帳號</a></strong> — 雲端 Git 儲存庫，用來管理專案</li>
+        <li><strong><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">nvm</a></strong> — Node.js 版本管理工具，方便切換</li>
+        <li><strong><a href="https://cursor.com/" target="_blank" rel="noopener">Cursor</a></strong>、<strong><a href="https://antigravity.google/" target="_blank" rel="noopener">Antigravity</a></strong>、<strong><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a></strong> - 安裝任一款程式碼編輯器（IDE）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">安裝 Node.js（透過 nvm）</span>
+      </div>
+      <div class="prompt-body">nvm install --lts
+nvm use --lts
+node -v</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> 課程範例 Repository</h3>
+      <p><a href="https://github.com/deancourse/cake-2026-build-with-ai.git" target="_blank" rel="noopener">下載 Repository</a> 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（預設為 Claude Code）</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">Clone 課程 Repo</span>
+      </div>
+      <div class="prompt-body">git clone git@github.com:deancourse/cake-2026-build-with-ai.git
+cd cake-2026-build-with-ai</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">還沒設定 SSH Key？</div>
+      <p>如果 clone 失敗，代表尚未設定 GitHub SSH 金鑰。 請參考 <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh" target="_blank" rel="noopener">GitHub 官方教學</a> 完成設定，或改用 HTTPS：<code>https://github.com/deancourse/cake-2026-build-with-ai.git</code></p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
 <section class="section" id="new-project">
   <div class="reveal">
-    <span class="section-label"><span class="num">1</span> 新專案</span>
+    <span class="section-label"><span class="num">2</span> 新專案</span>
     <h2>用 SDD 讓 AI 根據規格建立專案</h2>
     <p class="lead">規格驅動開發（Spec-Driven Development）— 讓 AI 不只寫程式，還幫你建立完善的規格文件</p>
   </div>
@@ -801,7 +869,7 @@ with details about my project, tech stack, and conventions</div>
 <hr class="divider">
 <section class="section" id="old-project">
   <div class="reveal">
-    <span class="section-label"><span class="num">2</span> 舊專案</span>
+    <span class="section-label"><span class="num">3</span> 舊專案</span>
     <h2>根據情境設計 Skills，讓 AI 有執行依據</h2>
     <p class="lead">最難的不是 0 到 1，而是 1 到 100；透過 Skills 設計，讓 AI 在迭代功能、版本控制、Code Review 都有規範可循</p>
   </div>
@@ -1006,7 +1074,7 @@ with details about my project, tech stack, and conventions</div>
 <hr class="divider">
 <section class="section" id="testing">
   <div class="reveal">
-    <span class="section-label"><span class="num">3</span> 導入測試</span>
+    <span class="section-label"><span class="num">4</span> 導入測試</span>
     <h2>讓維護與擴充更有底氣</h2>
     <p class="lead">市場不會為爛產品買單；加入自動化測試，是 Vibe Coding 從玩具走向產品的關鍵</p>
   </div>
@@ -1268,8 +1336,8 @@ collapseBtn.addEventListener('click',function(){
 });
 
 // Scroll spy — 這兩個陣列需根據實際內容填入
-var sectionIds=["instructor","new-project","old-project","testing","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-var allAnchorIds=["instructor","new-project","sub-openspec-init","sub-create-project","sub-project-rules","old-project","sub-openspec-iterate","sub-commit-skill","sub-pr-skill","sub-worktree","testing","sub-gen-test","sub-github-action","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
+var sectionIds=["instructor","section","new-project","old-project","testing","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+var allAnchorIds=["instructor","section","new-project","sub-openspec-init","sub-create-project","sub-project-rules","old-project","sub-openspec-iterate","sub-commit-skill","sub-pr-skill","sub-worktree","testing","sub-gen-test","sub-github-action","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
 
 var sectionForAnchor={};
 allAnchorIds.forEach(function(id){

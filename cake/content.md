@@ -1,3 +1,34 @@
+# 前置需求：開始前請先確認環境已就緒
+> 電腦需要安裝以下工具，才能往後續流程操作
+
+### 🔧 必要工具安裝
+
+- **[Git](https://git-scm.com/install/windows)** — 版本控制工具，用來追蹤每次改動
+- **[GitHub 帳號](https://github.com)** — 雲端 Git 儲存庫，用來管理專案
+- **[nvm](https://github.com/nvm-sh/nvm)** — Node.js 版本管理工具，方便切換
+- **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** - 安裝任一款程式碼編輯器（IDE）
+
+```prompt [label="安裝 Node.js（透過 nvm）"]
+nvm install --lts
+nvm use --lts
+node -v
+```
+
+### 📦 課程範例 Repository
+
+[下載 Repository](https://github.com/deancourse/cake-2026-build-with-ai.git) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（預設為 Claude Code）
+
+```prompt [label="Clone 課程 Repo"]
+git clone git@github.com:deancourse/cake-2026-build-with-ai.git
+cd cake-2026-build-with-ai
+```
+
+> **還沒設定 SSH Key？**
+> 如果 clone 失敗，代表尚未設定 GitHub SSH 金鑰。
+> 請參考 [GitHub 官方教學](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) 完成設定，或改用 HTTPS：`https://github.com/deancourse/cake-2026-build-with-ai.git`
+
+---
+
 # 新專案：用 SDD 讓 AI 根據規格建立專案
 > 規格驅動開發（Spec-Driven Development）— 讓 AI 不只寫程式，還幫你建立完善的規格文件
 
