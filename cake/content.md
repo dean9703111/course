@@ -6,7 +6,7 @@
 - **[Git](https://git-scm.com/install/windows)** — 版本控制工具，用來追蹤每次改動
 - **[GitHub 帳號](https://github.com)** — 雲端 Git 儲存庫，用來管理專案
 - **[nvm](https://github.com/nvm-sh/nvm)** — Node.js 版本管理工具，方便切換
-- **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** - 安裝任一款程式碼編輯器（IDE）
+- **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** — 安裝任一款程式碼編輯器（IDE）
 
 ```prompt [label="安裝 Node.js（透過 nvm）"]
 nvm install --lts
@@ -307,3 +307,13 @@ with details about my project, tech stack, and conventions
 - ⚙️ **舊專案 — Skills** | 設計 Commit / PR / Code Review Skills，讓 AI 在大型專案中有規範可循
 - 🧪 **導入測試 — CI/CD** | 用指令（Command）驅動 AI 撰寫測試，搭配 GitHub Action 守住品質底線
 [/summary]
+
+[bonus title="🎁 幕後製作心得"]
+這個課程網頁的製作，走過了一段從「結果不可控」到「完全掌控」的歷程。
+
+1. **遇到痛點** — Vibe Coding 出來的網頁，調整內容都要改 HTML，非常不方便
+2. **逆推結構** — 讓 AI 把現有網頁拆解，對應成一套可用 Markdown 撰寫的格式
+3. **內容與版型分離** — 只需改 Markdown，自動套用對應版型，細節完全可控
+4. **設計 Agent Skill** — 不是讓 AI 生成網頁，而是讓 AI 學會「這份 Markdown 怎麼寫」
+5. **模板生成器思維** — AI 負責生成結構化內容，程式再把內容轉成最終網頁
+[/bonus]

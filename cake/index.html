@@ -419,6 +419,57 @@ html.og-mode .hero{
   margin:0 auto;
 }
 
+/* ===== BONUS BUTTON & MODAL ===== */
+.bonus-btn-wrap{text-align:center;margin:2.5rem 0 1rem}
+.bonus-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.75rem 2rem;border-radius:100px;
+  background:linear-gradient(135deg,rgba(240,128,78,.12),rgba(167,139,250,.12));
+  border:1px solid rgba(240,128,78,.4);color:var(--accent);
+  font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;
+  font-family:'Noto Sans TC',sans-serif;
+}
+.bonus-btn:hover{background:linear-gradient(135deg,rgba(240,128,78,.22),rgba(167,139,250,.22));transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,128,78,.2)}
+.bonus-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+  display:flex;align-items:center;justify-content:center;padding:1.5rem;
+}
+.bonus-overlay.visible{opacity:1;pointer-events:auto}
+.bonus-modal{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  max-width:640px;width:100%;max-height:80vh;display:flex;flex-direction:column;
+  transform:translateY(24px);transition:transform .3s;overflow:hidden;
+}
+.bonus-overlay.visible .bonus-modal{transform:translateY(0)}
+.bonus-modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.bonus-modal-header h3{font-family:'Noto Serif TC',serif;font-size:1.05rem;font-weight:700;color:var(--accent)}
+.bonus-modal-close{
+  width:30px;height:30px;border-radius:50%;background:var(--bg-card-alt);
+  border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:.95rem;color:var(--text-dim);transition:all .2s;
+}
+.bonus-modal-close:hover{border-color:var(--accent);color:var(--accent)}
+.bonus-modal-body{
+  padding:1.5rem 1.75rem;overflow-y:auto;flex:1;
+  line-height:2;font-size:.9rem;color:var(--text-dim);
+}
+.bonus-modal-body p{margin-bottom:.6rem}
+.bonus-modal-body strong{color:var(--text);font-weight:700}
+.bonus-modal-body em{color:var(--accent2)}
+.bonus-modal-body code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-radius:4px;font-size:.875em;font-family:'JetBrains Mono',monospace}
+.bonus-modal-body ul{list-style:none;padding:0;margin:.25rem 0 .75rem}
+.bonus-modal-body ul li{position:relative;padding-left:1.2rem;margin-bottom:.3rem}
+.bonus-modal-body ul li::before{content:'';position:absolute;left:0;top:.75em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.bonus-steps{margin:.25rem 0 .5rem}
+.bonus-step{display:flex;align-items:flex-start;gap:.85rem;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.bonus-steps .bonus-step:last-child{border-bottom:none}
+.bonus-step-num{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:rgba(240,128,78,.12);border:1px solid rgba(240,128,78,.25);color:var(--accent);font-size:.72rem;font-weight:700;flex-shrink:0;margin-top:.1rem;font-family:'JetBrains Mono',monospace}
+.bonus-step-text{font-size:.9rem;color:var(--text-dim);line-height:1.75}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:640px){
   .section{padding:3rem 1.25rem}
@@ -426,6 +477,7 @@ html.og-mode .hero{
   .prompt-body{font-size:.78rem;padding:1rem}
   .flow{grid-template-columns:1fr}
   .hero-nav{flex-direction:column;align-items:center}
+  .bonus-modal{max-height:90vh}
 }
 </style>
 </head>
@@ -567,7 +619,7 @@ html.og-mode .hero{
         <li><strong><a href="https://git-scm.com/install/windows" target="_blank" rel="noopener">Git</a></strong> — 版本控制工具，用來追蹤每次改動</li>
         <li><strong><a href="https://github.com" target="_blank" rel="noopener">GitHub 帳號</a></strong> — 雲端 Git 儲存庫，用來管理專案</li>
         <li><strong><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">nvm</a></strong> — Node.js 版本管理工具，方便切換</li>
-        <li><strong><a href="https://cursor.com/" target="_blank" rel="noopener">Cursor</a></strong>、<strong><a href="https://antigravity.google/" target="_blank" rel="noopener">Antigravity</a></strong>、<strong><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a></strong> - 安裝任一款程式碼編輯器（IDE）</li>
+        <li><strong><a href="https://cursor.com/" target="_blank" rel="noopener">Cursor</a></strong>、<strong><a href="https://antigravity.google/" target="_blank" rel="noopener">Antigravity</a></strong>、<strong><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a></strong> — 安裝任一款程式碼編輯器（IDE）</li>
       </ul>
     </div>
   </div>
@@ -1251,6 +1303,18 @@ with details about my project, tech stack, and conventions</div>
       </div>
     </div>
   </div>
+
+  <div class="reveal bonus-btn-wrap">
+    <button class="bonus-btn" data-bonus-title="🎁 幕後製作心得" data-bonus-content="這個課程網頁的製作，走過了一段從「結果不可控」到「完全掌控」的歷程。
+
+1. **遇到痛點** — Vibe Coding 出來的網頁，調整內容都要改 HTML，非常不方便
+2. **逆推結構** — 讓 AI 把現有網頁拆解，對應成一套可用 Markdown 撰寫的格式
+3. **內容與版型分離** — 只需改 Markdown，自動套用對應版型，細節完全可控
+4. **設計 Agent Skill** — 不是讓 AI 生成網頁，而是讓 AI 學會「這份 Markdown 怎麼寫」
+5. **模板生成器思維** — AI 負責生成結構化內容，程式再把內容轉成最終網頁">
+      🎁 幕後製作心得
+    </button>
+  </div>
 </section>
 
 
@@ -1273,6 +1337,16 @@ with details about my project, tech stack, and conventions</div>
   </div>
   <p>© 林鼎淵 Dean Lin</p>
 </footer>
+
+<div class="bonus-overlay" id="bonus-overlay">
+  <div class="bonus-modal">
+    <div class="bonus-modal-header">
+      <h3 id="bonus-modal-title"></h3>
+      <button class="bonus-modal-close" id="bonus-modal-close">✕</button>
+    </div>
+    <div class="bonus-modal-body" id="bonus-modal-body"></div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -1398,6 +1472,74 @@ window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',funct
   if(e.matches){document.documentElement.removeAttribute('data-theme');themeToggle.textContent='🌙'}
   else{document.documentElement.setAttribute('data-theme','light');themeToggle.textContent='☀️'}
 });
+
+// Bonus Modal
+(function(){
+  var overlay=document.getElementById('bonus-overlay');
+  var closeBtn=document.getElementById('bonus-modal-close');
+  var titleEl=document.getElementById('bonus-modal-title');
+  var bodyEl=document.getElementById('bonus-modal-body');
+
+  function fmtInline(s){
+    return s
+      .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/`([^`]+)`/g,'<code>$1</code>');
+  }
+
+  function renderMd(text){
+    var lines=text.split('\n');
+    var html='';
+    var paraLines=[];
+    var inList=false;
+    var inSteps=false;
+    function flushPara(){
+      if(paraLines.length){html+='<p>'+paraLines.map(fmtInline).join('<br>')+'</p>';paraLines=[];}
+    }
+    function flushList(){if(inList){html+='</ul>';inList=false;}}
+    function flushSteps(){if(inSteps){html+='</div>';inSteps=false;}}
+    for(var i=0;i<lines.length;i++){
+      var l=lines[i];
+      var stepMatch=l.match(/^(\d+)\.\s+(.*)/);
+      if(stepMatch){
+        flushPara();flushList();
+        if(!inSteps){html+='<div class="bonus-steps">';inSteps=true;}
+        html+='<div class="bonus-step"><span class="bonus-step-num">'+stepMatch[1]+'</span><span class="bonus-step-text">'+fmtInline(stepMatch[2])+'</span></div>';
+      } else if(/^- /.test(l)){
+        flushPara();flushSteps();
+        if(!inList){html+='<ul>';inList=true;}
+        html+='<li>'+fmtInline(l.replace(/^- /,''))+'</li>';
+      } else if(l.trim()===''){
+        flushSteps();flushList();flushPara();
+      } else {
+        flushSteps();flushList();paraLines.push(l);
+      }
+    }
+    flushSteps();flushList();flushPara();
+    return html;
+  }
+
+  function openModal(title,content){
+    titleEl.textContent=title;
+    bodyEl.innerHTML=renderMd(content);
+    overlay.classList.add('visible');
+    document.body.style.overflow='hidden';
+  }
+  function closeModal(){
+    overlay.classList.remove('visible');
+    document.body.style.overflow='';
+  }
+
+  closeBtn.addEventListener('click',closeModal);
+  overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+  document.querySelectorAll('.bonus-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      openModal(btn.dataset.bonusTitle||'',btn.dataset.bonusContent||'');
+    });
+  });
+})();
 
 // Font size toggle (5 levels)
 var fontSizes=[14,15,16,18,20];
