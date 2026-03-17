@@ -108,6 +108,12 @@ openspec init
 請幫我啟動專案
 ```
 
+如果覺得外觀太過慘烈，可以讓 AI 參考 [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) 修正一下
+
+```prompt [label="讓 AI 協助啟動"]
+參考 UI/UX SKill 美化頁面
+```
+
 初步確認功能符合預期後，請他將變更歸檔
 
 ```prompt [label="歸檔"]
@@ -137,6 +143,8 @@ with details about my project, tech stack, and conventions
 請幫我設計專案的「.gitignore」但「.claude、openspec」要加入版本控制
 並且將「專案簡介與啟動方式」寫入 README.md
 ```
+
+> 先使用內建的 AI 來 Generate Commit，Commit 後將變更 Sync Changes 更新上去
 
 ---
 
@@ -168,7 +176,7 @@ with details about my project, tech stack, and conventions
 **Tips**: 不是所有事情都需要觸發 OpenSpec，向 branch 命名直接讓 AI 想就好
 
 ```prompt [label="新增分隻"]
-根據 branch 變更內容，根據 camel-case 命名原則 checkout 到新的 feature branch
+分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch。
 ```
 
 ## 設定 Commit Skill
@@ -198,33 +206,7 @@ with details about my project, tech stack, and conventions
 - 參考 `pr-template` 生成 Title 與 Description
 
 ```prompt [label="生成 PR"]
-撰寫 PR
-```
-
-> **AI 產生的程式碼很多，但這不是你不看的原因**
-> 導入 AI 後 Code Review 的負擔大幅增加，有些公司認為一天要完成 3 倍工作量才算達標。結果大家犧牲深度思考、懶得 Code Review。
-
-
-## Git Worktree 開發 & Code Review
-
-> **情境**
-> 你負責一個專案，但同時要撰寫新功能、修復舊 Bug，還要 Code Review 同事的程式
-
-### 🌳 多 Agent 並行開發
-
-- 不同功能使用不同 feature branch，搭配 Git Worktree 建立獨立工作區
-- 每個 Worktree 可同時跑不同 dev server，讓多個 AI Agent 執行各自任務
-
-可以安裝對應的 Code Review Skill，這邊以 superpowers 示範
-
-```prompt [label="在 feature branch 做 Code Review"]
-幫忙 code review
-```
-
-在 Git Worktree 選擇 master 分支，同步執行其他任務
-
-```prompt [label="在 master branch 討論新功能"]
-請幫我根據「重要程度」排出 5 個建議擴充的新功能
+撰寫 PR，與 main branch 比對
 ```
 
 > **人，才是 AI 的瓶頸**
@@ -247,7 +229,7 @@ with details about my project, tech stack, and conventions
 
 > 不寫測試才浪費時間 — 測試讓你敢大膽修改，遇錯快速定位
 
-## gen-test-cases
+## 建立適合專案的測試工作流
 
 ### 🔄 測試撰寫流程
 
@@ -262,7 +244,7 @@ with details about my project, tech stack, and conventions
 下面以 command 指令形式強制觸發任務
 
 ```prompt [label="生成測試案例"]
-/gen-test-cases
+/Gen Test Cases 
 （拖入要測試的檔案，ex: src/pages/LoginPage.tsx）
 ```
 
@@ -281,15 +263,13 @@ with details about my project, tech stack, and conventions
 ### 🔁 自動化測試流程
 - 每次推送到 GitHub 都觸發測試
 - 測試完畢生成覆蓋率報告
-- 設定 Branch Protection Rule：測試通過才能合併到主分支
+- 設定 Branch Protection Rule：測試通過才能合併到主分支（將 Require status checks to pass 打勾，然後輸入「test」）
 
 測試覆蓋率不需追求 100%，重要的邏輯都要測試到。有了測試，規格書上的功能才能被真正驗證。
-
 
 ```prompt [label="自動化測試"]
 我希望在 GitHub Action 加入自動化測試的流程
 每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
-測試完畢後，要生成覆蓋率報告讓我下載
 ```
 
 > **不可能掌握某個技能就變大師**
