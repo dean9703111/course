@@ -6,6 +6,7 @@
 - **[Git](https://git-scm.com/install/windows)** — 版本控制工具，用來追蹤每次改動
 - **[GitHub 帳號](https://github.com)** — 雲端 Git 儲存庫，用來管理專案
 - **[nvm](https://github.com/nvm-sh/nvm)** — Node.js 版本管理工具，方便切換
+- **[Python](https://www.python.org/downloads/)** — Agent Skills 的 scripts 大部分使用 Python 撰寫 
 - **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** — 安裝任一款程式碼編輯器（IDE）
 
 ```terminal [label="安裝 Node.js（透過 nvm）"]
@@ -69,26 +70,17 @@ openspec init
 3. 細節討論 — 提醒 AI 主動提問，釐清模糊需求
 [/flow]
 
-```prompt [label="建立 Dashboard "]
-請設計一個 SaaS Dashboard 頁面，包含以下功能：
-1. 登入頁面
-- 帳號密碼驗證
+> 使用「Plan Mode」，並請 AI 與自己釐清細節會得到更好的結果；下面 Prompt 是讓大家快速體驗完整流程
 
-2. 首頁儀表板
-- KPI 數據卡片（與昨日或上週比較）：營收、訂單數、活躍用戶數、轉換率
-- 今日即時數據（今日營收、今日訂單、今日新增會員）
-- 最近活動（Activity Feed）
-- 熱銷商品排行榜
+```prompt [label="建立 MVP 系統"]
+設計車輛管理系統，包含以下功能：
+- 登入頁面（帳號密碼驗證，區分管理者與一般使用者）
+- 首頁儀表板（上方顯示關鍵數據卡片，下面顯示資料圖表）
+- 車輛管理頁（可檢視、新增、編輯、刪除車輛資料）
+- 員工管理頁（僅管理者可檢視、新增、編輯、刪除員工資料）
 
-3. 資料圖表頁
-- 折線圖（營收趨勢）
-- 長條圖（訂單數）
-- 圓餅圖（裝置來源或流量來源）
-- 轉換漏斗（訪客 → 訂單）
-- 支援日期篩選（日 / 週 / 月）
-
-前端使用 React + TypeScript，使用 Mock API 模擬後端回應
-請參考 openspec 的 skill 執行，以最小可行性方案來規劃
+前端使用 React + Vite8，使用 Mock API 模擬後端回應
+參考 openspec 的 skill 執行，以最小可行性方案來規劃
 ```
 
 ### 📋 OpenSpec 自動建立規格文件
@@ -167,7 +159,7 @@ with details about my project, tech stack, and conventions
 ### ✨ 用 OpenSpec 新增新功能
 
 ```prompt [label="新增功能"]
-增加員工管理頁
+增加使用者紀錄頁面，供管理者查看
 使用 OpenSpec
 ```
 
@@ -187,7 +179,7 @@ with details about my project, tech stack, and conventions
 **Tips**: 不是所有事情都需要觸發 OpenSpec，向 branch 命名直接讓 AI 想就好
 
 ```prompt [label="新增分支"]
-分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch。
+分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch
 ```
 
 ## 設定 Commit Skill

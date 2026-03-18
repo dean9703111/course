@@ -618,6 +618,7 @@ html.og-mode .hero{
         <li><strong><a href="https://git-scm.com/install/windows" target="_blank" rel="noopener">Git</a></strong> — 版本控制工具，用來追蹤每次改動</li>
         <li><strong><a href="https://github.com" target="_blank" rel="noopener">GitHub 帳號</a></strong> — 雲端 Git 儲存庫，用來管理專案</li>
         <li><strong><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">nvm</a></strong> — Node.js 版本管理工具，方便切換</li>
+        <li><strong><a href="https://www.python.org/downloads/" target="_blank" rel="noopener">Python</a></strong> — Agent Skills 的 scripts 大部分使用 Python 撰寫</li>
         <li><strong><a href="https://cursor.com/" target="_blank" rel="noopener">Cursor</a></strong>、<strong><a href="https://antigravity.google/" target="_blank" rel="noopener">Antigravity</a></strong>、<strong><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a></strong> — 安裝任一款程式碼編輯器（IDE）</li>
       </ul>
     </div>
@@ -762,31 +763,26 @@ openspec init</div>
   </div>
 
   <div class="reveal">
+    <div class="insight">
+      <p>使用「Plan Mode」，並請 AI 與自己釐清細節會得到更好的結果；下面 Prompt 是讓大家快速體驗完整流程</p>
+    </div>
+  </div>
+
+  <div class="reveal">
     <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">建立 Dashboard </span>
+        <span class="label">建立 MVP 系統</span>
       </div>
-      <div class="prompt-body">請設計一個 SaaS Dashboard 頁面，包含以下功能：
-1. 登入頁面
-- 帳號密碼驗證
+      <div class="prompt-body">設計車輛管理系統，包含以下功能：
+- 登入頁面（帳號密碼驗證，區分管理者與一般使用者）
+- 首頁儀表板（上方顯示關鍵數據卡片，下面顯示資料圖表）
+- 車輛管理頁（可檢視、新增、編輯、刪除車輛資料）
+- 員工管理頁（僅管理者可檢視、新增、編輯、刪除員工資料）
 
-2. 首頁儀表板
-- KPI 數據卡片（與昨日或上週比較）：營收、訂單數、活躍用戶數、轉換率
-- 今日即時數據（今日營收、今日訂單、今日新增會員）
-- 最近活動（Activity Feed）
-- 熱銷商品排行榜
-
-3. 資料圖表頁
-- 折線圖（營收趨勢）
-- 長條圖（訂單數）
-- 圓餅圖（裝置來源或流量來源）
-- 轉換漏斗（訪客 → 訂單）
-- 支援日期篩選（日 / 週 / 月）
-
-前端使用 React + TypeScript，使用 Mock API 模擬後端回應
-請參考 openspec 的 skill 執行，以最小可行性方案來規劃</div>
+前端使用 React + Vite8，使用 Mock API 模擬後端回應
+參考 openspec 的 skill 執行，以最小可行性方案來規劃</div>
     </div>
   </div>
 
@@ -974,7 +970,7 @@ with details about my project, tech stack, and conventions</div>
         Prompt
         <span class="label">新增功能</span>
       </div>
-      <div class="prompt-body">增加員工管理頁
+      <div class="prompt-body">增加使用者紀錄頁面，供管理者查看
 使用 OpenSpec</div>
     </div>
   </div>
@@ -1020,7 +1016,7 @@ with details about my project, tech stack, and conventions</div>
         Prompt
         <span class="label">新增分支</span>
       </div>
-      <div class="prompt-body">分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch。</div>
+      <div class="prompt-body">分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch</div>
     </div>
   </div>
 
