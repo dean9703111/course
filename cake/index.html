@@ -285,8 +285,10 @@ code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-ra
 .sub-lead{color:var(--text-dim);font-size:.9rem;margin-top:.25rem}
 
 /* ===== ANIMATIONS ===== */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal{opacity:0;transition:opacity .7s ease}
+.reveal>*{transform:translateY(20px);transition:transform .7s ease}
+.reveal.visible{opacity:1}
+.reveal.visible>*{transform:translateY(0)}
 
 /* ===== SIDEBAR (SHELL) ===== */
 .sidebar{
