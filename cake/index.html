@@ -363,6 +363,22 @@ code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-ra
 .sidebar-progress-track{width:100%;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
 .sidebar-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;width:0%;transition:width .3s ease}
 
+/* ===== COLLAPSED PROGRESS BAR (BOTTOM OF VIEWPORT) ===== */
+.collapsed-progress{
+  position:fixed;bottom:0;left:0;width:100%;height:3px;z-index:99;
+  background:var(--border);pointer-events:none;
+  transition:opacity .35s cubic-bezier(.4,0,.2,1);
+}
+.collapsed-progress-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .3s ease;
+}
+@media(min-width:1100px){
+  .collapsed-progress{opacity:0}
+  body.sidebar-collapsed .collapsed-progress{opacity:1}
+}
+
 /* ===== HAMBURGER ===== */
 .hamburger{
   position:fixed;bottom:1.25rem;right:1.25rem;top:auto;left:auto;z-index:200;
@@ -565,6 +581,8 @@ html.og-mode .hero{
   <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L2 7l6 6"/></svg>
 </button>
 
+<div class="collapsed-progress"><div class="collapsed-progress-fill" id="collapsed-progress-fill"></div></div>
+
 <header class="hero">
   <div class="hero-badge"><span class="dot"></span>Cake 2026 Build with AI</div>
   <h1>市場不會為爛產品買單！</h1>
@@ -766,7 +784,7 @@ openspec init</div>
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-title">使用技術</div>
-        <div class="step-desc">指定技術棧，便於團隊接手</div>
+        <div class="step-desc">指定使用技術，便於團隊接手</div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
@@ -1430,6 +1448,7 @@ function updateToc(){
   var pct=docH>0?Math.round((window.scrollY/docH)*100):0;
   document.getElementById('progress-fill').style.width=pct+'%';
   document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('collapsed-progress-fill').style.width=pct+'%';
 }
 
 var ticking=false;
