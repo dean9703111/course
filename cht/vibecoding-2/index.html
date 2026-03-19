@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 開發工作流</title>
+<title>Vibe Coding 全端實戰 — Google Antigravity 教學</title>
 <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AI 開發工作流｜Vibe Coding 實戰課">
-<meta property="og:description" content="從 0 到 1 打造 AI 開發工作流，讓規格、版本控制、測試都能被 AI 自動化協助。">
-<meta property="og:image" content="https://deanlin.net/course/cake/assets/og-cake.jpg">
-<meta property="og:url" content="https://deanlin.net/course/cake/">
+<meta property="og:title" content="Vibe Coding 全端實戰 — Google Antigravity 教學">
+<meta property="og:description" content="AI 開發工作流與實戰教學">
+<meta property="og:image" content="config/assets/og-default.jpg">
+<meta property="og:url" content="">
 <meta property="og:site_name" content="林鼎淵 Dean Lin">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -292,7 +292,7 @@ code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-ra
 .sidebar{
   position:fixed;top:0;left:0;width:260px;height:100vh;
   background:rgba(15,17,23,.92);backdrop-filter:blur(16px);
-  border-right:1px solid var(--border);padding:2rem 0;z-index:100;
+  border-right:1px solid var(--border);padding:0;z-index:100;
   display:flex;flex-direction:column;
   transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
   overflow-y:auto;overscroll-behavior:contain;
@@ -320,9 +320,12 @@ code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-ra
 @media(max-width:1099px){.sidebar-collapse-btn{display:none}}
 
 .sidebar-brand{
-  padding:0 1.5rem 1.5rem;font-family:'Noto Serif TC',serif;font-size:.85rem;
+  padding:1.5rem 1.5rem 1.5rem;font-family:'Noto Serif TC',serif;font-size:1rem;
   font-weight:700;color:var(--accent);border-bottom:1px solid var(--border);margin-bottom:1rem;
-  flex-shrink:0;line-height:1.4;display:flex;align-items:center;justify-content:space-between;gap:.75rem;
+  flex-shrink:0;line-height:1.5;
+}
+.sidebar-controls{
+  display:flex;align-items:center;gap:.5rem;margin-top:.75rem;
 }
 .toc{list-style:none;padding:0;flex:1}
 .toc-group{margin-bottom:.25rem}
@@ -347,7 +350,7 @@ code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-ra
 .toc-sub a:hover{color:var(--text)}
 .toc-sub a.active{color:var(--accent2)}
 .toc-sub a.active::before{background:var(--accent2)}
-.sidebar-progress{flex-shrink:0;padding:1rem 1.5rem .5rem;border-top:1px solid var(--border)}
+.sidebar-progress{flex-shrink:0;padding:1.25rem 1.5rem;border-top:1px solid var(--border)}
 .sidebar-progress-label{font-size:.65rem;color:var(--text-dim);margin-bottom:.4rem;display:flex;justify-content:space-between}
 .sidebar-progress-track{width:100%;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
 .sidebar-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;width:0%;transition:width .3s ease}
@@ -489,7 +492,13 @@ html.og-mode .hero{
 <div class="sidebar-overlay" id="overlay"></div>
 
 <nav class="sidebar" id="sidebar">
-  <div class="sidebar-brand"><span>AI 開發工作流</span><button class="fontsize-toggle" id="fontsize-toggle" aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button></div>
+  <div class="sidebar-brand">
+    <div>Vibe Coding 全端實戰<br>Google Antigravity 教學</div>
+    <div class="sidebar-controls">
+      <button class="fontsize-toggle" id="fontsize-toggle" aria-label="字體大小">A2</button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+    </div>
+  </div>
   <ul class="toc">
     <li class="toc-group" data-section="instructor">
       <a href="#instructor" class="toc-group-title">
@@ -499,38 +508,55 @@ html.og-mode .hero{
     </li>
     <li class="toc-group" data-section="section">
       <a href="#section" class="toc-group-title">
-        <span class="toc-num">1</span> 前置需求
+        <span class="toc-num">1</span> 技術選型
       </a>
       <ul class="toc-sub">
+        <li><a href="#sub-section">全端三層架構</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="new-project">
-      <a href="#new-project" class="toc-group-title">
-        <span class="toc-num">2</span> 新專案
+    <li class="toc-group" data-section="antigravity-ai">
+      <a href="#antigravity-ai" class="toc-group-title">
+        <span class="toc-num">2</span> Antigravity 設定
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-openspec-init">OpenSpec 初始化</a></li>
-        <li><a href="#sub-create-project">從零建立專案</a></li>
-        <li><a href="#sub-project-rules">建立專案規則</a></li>
+        <li><a href="#sub-section">工作區初始化</a></li>
+        <li><a href="#sub-section">模型與對話模式</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="old-project">
-      <a href="#old-project" class="toc-group-title">
-        <span class="toc-num">3</span> 舊專案
+    <li class="toc-group" data-section="section">
+      <a href="#section" class="toc-group-title">
+        <span class="toc-num">3</span> 提示詞設計
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-openspec-iterate">OpenSpec 迭代</a></li>
-        <li><a href="#sub-commit-skill">設定 Commit Skill</a></li>
-        <li><a href="#sub-pr-skill">設定 PR Skill</a></li>
+        <li><a href="#sub-section">提示詞四要素</a></li>
+        <li><a href="#sub-section">提示詞設計解析</a></li>
+        <li><a href="#sub-section">執行與調整</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="testing">
-      <a href="#testing" class="toc-group-title">
-        <span class="toc-num">4</span> 導入測試
+    <li class="toc-group" data-section="section">
+      <a href="#section" class="toc-group-title">
+        <span class="toc-num">4</span> 安全上線
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section">建立適合專案的測試工作流</a></li>
-        <li><a href="#sub-github-action">GitHub Action 自動化</a></li>
+        <li><a href="#sub-section">認識專案結構</a></li>
+        <li><a href="#sub-section">部署前的兩個準備</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="github-pages">
+      <a href="#github-pages" class="toc-group-title">
+        <span class="toc-num">5</span> GitHub Pages 部署
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section">初次部署流程</a></li>
+        <li><a href="#sub-section">常見踩坑整理</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="section">
+      <a href="#section" class="toc-group-title">
+        <span class="toc-num">6</span> 比工具更重要的思維
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section">選工具的態度</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="summary">
@@ -552,15 +578,17 @@ html.og-mode .hero{
 </button>
 
 <header class="hero">
-  <div class="hero-badge"><span class="dot"></span>Cake 2026 Build with AI</div>
-  <h1>市場不會為爛產品買單！</h1>
-  <p class="hero-sub">Vibe Coding 讓你快速啟動，但「品質、維護、擴充」才決定產品能走多遠</p>
+  <div class="hero-badge"><span class="dot"></span>Vibe Coding 教學</div>
+  <h1>用 Vibe Coding 完成<br>輕量級全端專案並部署上線</h1>
+  <p class="hero-sub">Google Antigravity 手把手實戰：從 Prompt 設計、專案生成到 GitHub Pages 部署，掌握 AI 時代的全端開發思維</p>
   <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
   <nav class="hero-nav">
-    <a href="#section" class="primary">前置需求</a>
-    <a href="#new-project">新專案</a>
-    <a href="#old-project">舊專案</a>
-    <a href="#testing">導入測試</a>
+    <a href="#section" class="primary">技術選型</a>
+    <a href="#antigravity-ai">Antigravity 設定</a>
+    <a href="#section">提示詞設計</a>
+    <a href="#section">安全上線</a>
+    <a href="#github-pages">GitHub Pages 部署</a>
+    <a href="#section">比工具更重要的思維</a>
     <a href="#summary">總結</a>
       </nav>
 </header>
@@ -568,7 +596,7 @@ html.og-mode .hero{
 <section class="quote-page">
   <div class="reveal">
     <div class="quote-mark">“</div>
-    <blockquote>工具會過時，框架會淘汰，<br>但解決問題的思維，永遠有價值。</blockquote>
+    <blockquote>越精準的提示詞，越短的時間得到期待的結果。</blockquote>
     <div class="quote-line"></div>
   </div>
 </section>
@@ -580,7 +608,7 @@ html.og-mode .hero{
   </div>
   <div class="reveal">
     <div class="instructor">
-      <img class="instructor-avatar" src="../config/assets/author.jpg" alt="林鼎淵 Dean Lin">
+      <img class="instructor-avatar" src="../../config/assets/author.jpg" alt="林鼎淵 Dean Lin">
       <div class="instructor-info">
         <h3>林鼎淵 Dean Lin</h3>
         <div class="tagline">外商工程師 · 企業內訓講師 · 暢銷書作家</div>
@@ -606,542 +634,294 @@ html.og-mode .hero{
 <hr class="divider">
 <section class="section" id="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">1</span> 前置需求</span>
-    <h2>開始前請先確認環境已就緒</h2>
-    <p class="lead">電腦需要安裝以下工具，才能往後續流程操作</p>
+    <span class="section-label"><span class="num">1</span> 技術選型</span>
+    <h2>零成本全端架構</h2>
+    <p class="lead">不需要伺服器、不用綁信用卡 — React + Google Apps Script + Google Sheets，免費打造可上線的全端專案</p>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>全端三層架構</div>
   </div>
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">🔧</span> 必要工具安裝</h3>
+      <h3><span class="icon">🖥</span> ️ 前端：React</h3>
       <ul>
-        <li><strong><a href="https://git-scm.com/install/windows" target="_blank" rel="noopener">Git</a></strong> — 版本控制工具，用來追蹤每次改動</li>
-        <li><strong><a href="https://github.com" target="_blank" rel="noopener">GitHub 帳號</a></strong> — 雲端 Git 儲存庫，用來管理專案</li>
-        <li><strong><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener">nvm</a></strong> — Node.js 版本管理工具，方便切換</li>
-        <li><strong><a href="https://www.python.org/downloads/" target="_blank" rel="noopener">Python</a></strong> — Agent Skills 的 scripts 大部分使用 Python 撰寫</li>
-        <li><strong><a href="https://cursor.com/" target="_blank" rel="noopener">Cursor</a></strong>、<strong><a href="https://antigravity.google/" target="_blank" rel="noopener">Antigravity</a></strong>、<strong><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a></strong> — 安裝任一款程式碼編輯器（IDE）</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Terminal
-        <span class="label">安裝 Node.js（透過 nvm）</span>
-      </div>
-      <div class="prompt-body">nvm install --lts
-nvm use --lts
-node -v</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📦</span> 課程範例 Repository</h3>
-      <p><a href="https://github.com/deancourse/cake-2026-build-with-ai.git" target="_blank" rel="noopener">下載 Repository</a> 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（預設為 Claude Code）</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Terminal
-        <span class="label">Clone 課程 Repo</span>
-      </div>
-      <div class="prompt-body">git clone git@github.com:deancourse/cake-2026-build-with-ai.git
-cd cake-2026-build-with-ai</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">還沒設定 SSH Key？</div>
-      <p>如果 clone 失敗，代表尚未設定 GitHub SSH 金鑰。 請參考 <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh" target="_blank" rel="noopener">GitHub 官方教學</a> 完成設定，或改用 HTTPS：<code>https://github.com/deancourse/cake-2026-build-with-ai.git</code></p>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section" id="new-project">
-  <div class="reveal">
-    <span class="section-label"><span class="num">2</span> 新專案</span>
-    <h2>用 SDD 讓 AI 根據規格建立專案</h2>
-    <p class="lead">規格驅動開發（Spec-Driven Development）— 讓 AI 不只寫程式，還幫你建立完善的規格文件</p>
-  </div>
-
-  <div class="reveal" id="sub-openspec-init">
-    <div class="sub-title"><span class="bar"></span>OpenSpec 初始化</div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">為什麼需要 OpenSpec？</div>
-      <ul>
-        <li>AI 寫程式越來越快，但專案越改越亂，甚至越改越壞</li>
-        <li>關鍵人物離職，沒有文件，系統知識直接斷層</li>
-        <li>解法：白話文對話 → AI 自動建立規格文件 → 根據規格驅動開發</li>
+        <li>使用者瀏覽的畫面介面</li>
+        <li>知名框架，大量現成元件讓 AI 有素材可用</li>
+        <li>選擇 React Vite 快速啟動專案</li>
       </ul>
     </div>
   </div>
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">📦</span> 安裝與初始化</h3>
+      <h3><span class="icon">⚙</span> ️ 後端：Google Apps Script</h3>
       <ul>
-        <li>選擇使用的 AI 工具（ex: Claude Code）</li>
-        <li>產生 <code>.claude</code> 的 Agent Skills</li>
+        <li>處理邏輯判斷的核心，打開瀏覽器就能使用</li>
+        <li>新手友善，取代傳統 Python、Node.js、PHP 的複雜設置</li>
+        <li>從 Google Sheet 擴充功能直接配置，工具間相依性清楚</li>
       </ul>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Terminal
-        <span class="label">安裝指令</span>
-      </div>
-      <div class="prompt-body">npm install -g @fission-ai/openspec@latest
-openspec init</div>
-    </div>
-  </div>
-
-  <div class="reveal">
     <div class="card">
-      <h3><span class="icon">⚡</span> Skills 與 Commands</h3>
+      <h3><span class="icon">🗄</span> ️ 資料庫：Google Sheets</h3>
       <ul>
-        <li><strong>Skills</strong> — AI 在對話過程中自動觸發的技能包，不需要背指令</li>
-        <li><strong>Commands</strong> — 用 <code>/opsx</code> 前綴強制驅動：apply / archive / explore / propose</li>
-        <li>可透過 <code>openspec config profile</code> 擴充更多 workflows</li>
+        <li>大家熟悉的試算表，打開就能看並編輯</li>
+        <li>取代 MySQL、Postgres、Mongo 的複雜架設</li>
+        <li>可公開特定工作表供 API 存取</li>
       </ul>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">查看 Skill</span>
-      </div>
-      <div class="prompt-body">我想知道 openspec 目前安裝的 skill 用途
-請使用表格呈現，用白話簡短描述</div>
-    </div>
-  </div>
-
-  <div class="reveal" id="sub-create-project">
-    <div class="sub-title"><span class="bar"></span>從零建立專案</div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🎯</span> Prompt 設計三要素</h3>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-title">專案目標</div>
-        <div class="step-desc">大方向描述需求，AI 會釐清細節</div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-title">使用技術</div>
-        <div class="step-desc">指定技術棧，便於團隊接手</div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-title">細節討論</div>
-        <div class="step-desc">提醒 AI 主動提問，釐清模糊需求</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
     <div class="insight">
-      <p>使用「Plan Mode」，並請 AI 與自己釐清細節會得到更好的結果；下面 Prompt 是讓大家快速體驗完整流程</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">建立 MVP 系統</span>
-      </div>
-      <div class="prompt-body">設計車輛管理系統，包含以下功能：
-- 登入頁面（帳號密碼驗證，區分管理者與一般使用者）
-- 首頁儀表板（上方顯示關鍵數據卡片，下面顯示資料圖表）
-- 車輛管理頁（可檢視、新增、編輯、刪除車輛資料）
-- 員工管理頁（僅管理者可檢視、新增、編輯、刪除員工資料）
-
-前端使用 React + Vite8，使用 Mock API 模擬後端回應
-參考 openspec 的 skill 執行，以最小可行性方案來規劃</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📋</span> OpenSpec 自動建立規格文件</h3>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-title">proposal.md</div>
-        <div class="step-desc">確認目標與範圍</div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-title">design.md</div>
-        <div class="step-desc">技術選型與風險評估</div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-title">specs/</div>
-        <div class="step-desc">按功能分類的詳細規格</div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">4</div>
-        <div class="step-title">task.md</div>
-        <div class="step-desc">任務清單，完成自動打勾</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">開始實作</span>
-      </div>
-      <div class="prompt-body">開始實作</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">AI 正在改變企業決策</div>
-      <p>過去出缺勤、考核這類內部系統，企業通常找廠商購買、支付年費維護。但 Vibe Coding 的出現正讓企業做出不同的選擇。</p>
-      <p style="margin-top:.5rem">有些企業導入 Vibe Coding 的目標不是取代工程師，而是讓熟悉業務的人有能力設計出符合使用需求的產品原型，再交給工程師做優化與維護。</p>
-      <p style="margin-top:.5rem">用 OpenSpec 建立規格文件 — 就是讓這個交接過程有據可循，而不是一團無文件的程式碼丟過去。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🚀</span> 啟動專案進行歸檔</h3>
-      <p>第一次啟動可以請 AI 幫忙，因為 AI 有很高的機率在第一版遇到零星錯誤</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">讓 AI 協助啟動</span>
-      </div>
-      <div class="prompt-body">請幫我啟動專案</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">如果覺得外觀太過慘烈，可以讓 AI 參考 <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank" rel="noopener">ui-ux-pro-max-skill</a> 修正一下</p>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">讓 AI 協助啟動</span>
-      </div>
-      <div class="prompt-body">參考 UI/UX SKill 美化頁面</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">初步確認功能符合預期後，請他將變更歸檔</p>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">歸檔</span>
-      </div>
-      <div class="prompt-body">功能符合預期，進行歸檔</div>
-    </div>
-  </div>
-
-  <div class="reveal" id="sub-project-rules">
-    <div class="sub-title"><span class="bar"></span>建立專案規則</div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📐</span> 生成 CLAUDE、OpenSpec 專案參考規則</h3>
-      <p><strong>CLAUDE.md</strong> 是給「做事」用的，<strong>openspec/config.yaml</strong> 是給「規劃」用的</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Terminal
-        <span class="label">初始化規則</span>
-      </div>
-      <div class="prompt-body">/init</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">OpenSpec 設定</span>
-      </div>
-      <div class="prompt-body">Please read openspec/config.yaml and help me fill it out
-with details about my project, tech stack, and conventions</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🗂</span> ️ 設計 README.md、.gitignore 並加入版控</h3>
-      <p>初版完成後，要加入版控；未來更新時，才會清楚 AI 到底改了哪些細節</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">設計 .gitignore、README.md</span>
-      </div>
-      <div class="prompt-body">請幫我設計專案的「.gitignore」但「.claude、openspec」要加入版本控制
-並且將「專案簡介與啟動方式」寫入 README.md</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <p>先使用內建的 AI 來 Generate Commit，Commit 後將變更 Sync Changes 更新上去</p>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section" id="old-project">
-  <div class="reveal">
-    <span class="section-label"><span class="num">3</span> 舊專案</span>
-    <h2>根據情境設計 Skills，讓 AI 有執行依據</h2>
-    <p class="lead">最難的不是 0 到 1，而是 1 到 100；透過 Skills 設計，讓 AI 在迭代功能、版本控制、Code Review 都有規範可循</p>
-  </div>
-
-  <div class="reveal" id="sub-openspec-iterate">
-    <div class="sub-title"><span class="bar"></span>OpenSpec 迭代</div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">✨</span> 用 OpenSpec 新增新功能</h3>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">新增功能</span>
-      </div>
-      <div class="prompt-body">增加使用者紀錄頁面，供管理者查看
-使用 OpenSpec</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">確認後實作</span>
-      </div>
-      <div class="prompt-body">開始實作</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">為什麼 1 到 100 比 0 到 1 更難？</div>
-      <p>如果沒有規格文件，下次改功能時 AI 不知道之前的設計邏輯，可能把同一個功能重複寫好幾次，或改 A 壞 B。</p>
-      <p style="margin-top:.5rem">用 OpenSpec 每次迭代都會在 Source Control 留下規格變更，AI 跟人類都有文件可以參考。關鍵人物離職最痛的不是少了一個人，而是系統知識直接斷層。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">歸檔變更</span>
-      </div>
-      <div class="prompt-body">幫我歸檔</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text"><strong>Tips</strong>: 不是所有事情都需要觸發 OpenSpec，向 branch 命名直接讓 AI 想就好</p>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">新增分支</span>
-      </div>
-      <div class="prompt-body">分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch</div>
-    </div>
-  </div>
-
-  <div class="reveal" id="sub-commit-skill">
-    <div class="sub-title"><span class="bar"></span>設定 Commit Skill</div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <p>根據需求建立 Agent Skills，能實際給予幫助的，才是好的 Skill</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📝</span> 為什麼需要 Commit Skill？</h3>
-      <ul>
-        <li>分析變更的檔案 → 判斷應拆成幾個 commit → 分段提交</li>
-        <li>不同功能的修改分開 commit，讓邏輯可被追蹤</li>
-        <li>保持好習慣：每做完一件事就 commit，不要多功能混一起</li>
-      </ul>
+      <div class="insight-title">為什麼選這套組合？</div>
+      <p>傳統全端專案需要伺服器、信用卡綁定、複雜前置作業。這套組合讓你專注在「理解全端架構」本身，而不是被環境設定困住。</p>
+      <p style="margin-top:.5rem">學完後，未來後端想換成 Node.js、資料庫換成 MySQL，都會輕鬆許多，因為你已經懂得前後端如何分工、資料如何流動。</p>
     </div>
   </div>
 
   <div class="reveal">
     <div class="tags">
-      <span class="tag orange">人工手打：耗時且風格不一致</span>
-      <span class="tag purple">AI 自動生成：長短隨機、中英混雜</span>
-      <span class="tag green">解法：git-smart-commit Skill</span>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">拆分 Commit</span>
-      </div>
-      <div class="prompt-body">新增 commit</div>
-    </div>
-  </div>
-
-  <div class="reveal" id="sub-pr-skill">
-    <div class="sub-title"><span class="bar"></span>設定 PR Skill</div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🔀</span> git-pr-description Skill</h3>
-      <ul>
-        <li>比對當前分支與目標分支的差異</li>
-        <li>讀取 commit 訊息與變更檔案</li>
-        <li>參考 <code>pr-template</code> 生成 Title 與 Description</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">生成 PR</span>
-      </div>
-      <div class="prompt-body">撰寫 PR，與 main branch 比對</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">人，才是 AI 的瓶頸</div>
-      <p>Code Review 的速度已經跟不上 AI 寫程式的速度。當人成為 AI 的瓶頸時，要去想的是如何降低門檻，而不是放棄審核。</p>
-      <p style="margin-top:.5rem">每個功能單獨驗證，Code Review 時只需專注一件事。雖然每一步都是 AI 在執行，但如果沒有業界經驗，其實不知道怎麼串起這些工具。<strong>真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。</strong></p>
+      <span class="tag green">免費 — 不需要伺服器、不用綁信用卡</span>
+      <span class="tag green">可部署 — GitHub Pages 免費公開上線</span>
+      <span class="tag orange">適合學習 — 不適合高流量或複雜邏輯場景</span>
     </div>
   </div>
 </section>
 
 <hr class="divider">
-<section class="section" id="testing">
+<section class="section" id="antigravity-ai">
   <div class="reveal">
-    <span class="section-label"><span class="num">4</span> 導入測試</span>
-    <h2>讓維護與擴充更有底氣</h2>
-    <p class="lead">市場不會為爛產品買單；加入自動化測試，是 Vibe Coding 從玩具走向產品的關鍵</p>
+    <span class="section-label"><span class="num">2</span> Antigravity 設定</span>
+    <h2>讓 AI 更懂你</h2>
+    <p class="lead">工具設定做對了，AI 才能給你更精準的回覆 — Rules、模型選擇、對話模式三大設定一次搞定</p>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>工作區初始化</div>
   </div>
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">🛡</span> ️ 為什麼 Vibe Coding 一定要測試？</h3>
+      <h3><span class="icon">📁</span> 建立工作區</h3>
+      <ul>
+        <li>新增專案資料夾（例如「pixel-game」）</li>
+        <li>將資料夾拖曳到 Antigravity 中</li>
+        <li>AI 才能知道工作區位置，確保操作範圍正確</li>
+      </ul>
     </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔧</span> 設定 Global Rules</h3>
+      <p>開啟「Customizations → Rules → Global」，貼上通用規則讓 AI 回覆更精準：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">Global Rules（推薦）</span>
+      </div>
+      <div class="prompt-body">DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL CODE OR EXPLANATION!!!
+
+- Be casual unless otherwise specified
+- Be terse
+- Suggest solutions that I didn't think about—anticipate my needs
+- Treat me as an expert
+- Give the answer immediately. Provide detailed explanations after giving the answer
+- Split into multiple responses if one response isn't enough to answer the question.</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">此規則貼上後在「所有專案」生效，也可額外加上語言偏好：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">語言設定</span>
+      </div>
+      <div class="prompt-body">- Always respond in 繁體中文</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">若只針對當前專案設定（如程式碼規範），改點「Workspace」設定即可。</p>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>模型與對話模式</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🤖</span> 跨模型支援</h3>
+      <ul>
+        <li>Antigravity 除自家 Gemini 外，也支援 Claude 與 GPT</li>
+        <li>每個模型有額度限制，超過後切換其他模型繼續使用</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚡</span> 對話模式選擇</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag purple">Planning — 適合複雜任務（如專案初始規劃），思考更深入</span>
+      <span class="tag green">Fast — 適合快速解答，省時省力</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section" id="section">
+  <div class="reveal">
+    <span class="section-label"><span class="num">3</span> 提示詞設計</span>
+    <h2>從需求到專案</h2>
+    <p class="lead">越精準的提示詞，越短的時間得到期待的結果 — 角色設定、UI/UX、功能需求、資料庫設計四大架構</p>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>提示詞四要素</div>
   </div>
 
   <div class="reveal">
     <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
-        <div class="step-title">穩定性</div>
-        <div class="step-desc">請 AI 修 bug，結果舊功能壞掉</div>
+        <div class="step-title">角色設定</div>
+        <div class="step-desc">讓 AI 扮演對應領域的資深工程師</div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
-        <div class="step-title">複雜度</div>
-        <div class="step-desc">功能越多，人工測試越不可能覆蓋全部</div>
+        <div class="step-title">UI/UX 需求</div>
+        <div class="step-desc">框架選擇與設計風格</div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
-        <div class="step-title">擴充性</div>
-        <div class="step-desc">功能間有相依性，修改可能引發連鎖影響</div>
+        <div class="step-title">功能需求</div>
+        <div class="step-desc">明確的操作流程與邏輯說明</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-title">資料設計</div>
+        <div class="step-desc">詳細的欄位定義與工具相依性說明</div>
       </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
-      <p>不寫測試才浪費時間 — 測試讓你敢大膽修改，遇錯快速定位</p>
+    <div class="card">
+      <h3><span class="icon">🎯</span> 完整專案 Prompt 範例</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">闖關問答遊戲（完整需求）</span>
+      </div>
+      <div class="prompt-body"># 角色
+你是一位資深的 React 前端工程師與遊戲設計師。請根據需求描述協助我設計一個網頁的「闖關問答遊戲」
+
+# UI/UX 需求
+- 前端框架：React Vite
+- 風格：Pixel Art 像素風，像是 2000 年代的街機，樸實但是有設計感。
+- 關主圖片處理：使用 DiceBear API 預先載入 100 張不同素材
+- 關卡呈現：每一關皆配有一個 Pixel 風格的「關主」圖片
+
+# 功能需求
+## 操作流程
+- 首頁：使用者需輸入「ID」才能開始遊戲，此 ID 是為了記錄到 Google Sheets
+- 題目來源：透過 Google Apps Script 從指定 Google Sheets 的「題目」工作表隨機撈取 N 題（不包含解答欄位）
+- 成績計算：將作答結果傳送到 Google Apps Script 計算成績，並記錄到 Google Sheets
+
+## Google Sheets 配置
+- 「題目」工作表：題號、題目、A、B、C、D、解答
+- 「回答」工作表：ID、闖關次數、總分、最高分、第一次通關分數（若同 ID 已通關過，後續分數不覆蓋，僅在同列增加闖關次數）、花了幾次通關、最近遊玩時間
+- Google Apps Script：是直接從這份 Google Sheet 擴充功能配置的
+
+# 環境變數設定 (.env)
+- GOOGLE_APP_SCRIPT_URL：Google Apps Script 的後端連結
+- PASS_THRESHOLD：通過門檻（需要答對幾題才算通過）
+- QUESTION_COUNT：每次遊戲的題目數量</div>
     </div>
   </div>
 
   <div class="reveal" id="sub-section">
-    <div class="sub-title"><span class="bar"></span>建立適合專案的測試工作流</div>
+    <div class="sub-title"><span class="bar"></span>提示詞設計解析</div>
   </div>
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">🔄</span> 測試撰寫流程</h3>
+      <h3><span class="icon">💡</span> 角色設定的作用</h3>
+      <ul>
+        <li>讓 AI 進入對應領域的思維框架</li>
+        <li>框架選擇提前指定，避免 AI 自行發揮造成技術棧不一致</li>
+        <li>風格描述越具體，畫面越接近預期（像素風 vs 現代風差異很大）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔒</span> 為什麼透過 Apps Script 取題？</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">保護資料來源的關鍵設計</div>
+      <p>若直接從前端呼叫 Google Sheets API，解答欄位也會被前端取得。透過 Google Apps Script 作為中間層，可以過濾掉「解答」欄位，只回傳題目與選項。</p>
+      <p style="margin-top:.5rem">這就是前後端分離的核心概念：前端只拿它需要的資料，敏感邏輯留在後端處理。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🗄</span> ️ 資料庫設計的精確度</h3>
+      <ul>
+        <li>明確列出每個工作表的欄位名稱，減少 AI 自行詮釋的空間</li>
+        <li>針對特殊業務邏輯額外說明（「同 ID 已通關過，後續分數不覆蓋」）</li>
+        <li>說明工具相依性（Apps Script 從 Google Sheet 擴充功能配置）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚙</span> ️ 環境變數的易用性設計</h3>
+      <ul>
+        <li>把「連結、門檻、題目數量」設計為環境變數</li>
+        <li>日後換考題、改評核標準，不需打開程式碼，直接修改設定即可</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>執行與調整</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔄</span> AI 執行流程</h3>
     </div>
   </div>
 
@@ -1149,101 +929,327 @@ with details about my project, tech stack, and conventions</div>
     <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
-        <div class="step-title">建立資料夾</div>
-        <div class="step-desc">存放測試清單</div>
+        <div class="step-title">貼上 Prompt → AI 思考並規劃任務清單</div>
+        <div class="step-desc"></div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
-        <div class="step-title">AI 撰寫清單</div>
-        <div class="step-desc">類型、說明、輸入、期待輸出</div>
+        <div class="step-title">確認 AI 要執行的指令（不懂可開新視窗詢問）</div>
+        <div class="step-desc"></div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
-        <div class="step-title">人類 Review</div>
-        <div class="step-desc">確認情境有無遺漏</div>
+        <div class="step-title">Accept All → 在瀏覽器預覽結果</div>
+        <div class="step-desc"></div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
-        <div class="step-title">AI 撰寫測試</div>
-        <div class="step-desc">描述與文件一致</div>
+        <div class="step-title">針對不符預期的地方，直接描述調整需求</div>
+        <div class="step-desc"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">確認指令安全性</span>
+      </div>
+      <div class="prompt-body">請說明下面這段指令，並告訴我是否有危害
+[貼上指令]</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">開啟瀏覽器預覽</span>
+      </div>
+      <div class="prompt-body">請開啟瀏覽器，模擬執行並檢查是否有錯誤</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">優化 UI（附自我驗證）</span>
+      </div>
+      <div class="prompt-body">我覺得畫面沒有考量到 RWD，白底的部分有破版
+我希望關主的頭像只占據螢幕高度的 1/3，請你完成後自己打開瀏覽器檢查設計結果是否符合預期</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">產生 README 與測試資料</span>
+      </div>
+      <div class="prompt-body">請為這個專案撰寫操作的 README.md 的文件
+讓使用者知道如何完成安裝、Google Sheets、Google Apps Script 的詳細操作
+並給我 10 個可以複製貼上測試的選擇題，題目主題為「生成式 AI 基礎知識」，用表格呈現</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">生成式 AI 的隨機性</div>
+      <p>AI 每次生成的結果都充滿隨機性，你得到的結果和遇到的問題可能完全不一樣。遇到問題，把錯誤訊息複製貼到對話視窗中，讓 AI 幫你解決。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section" id="section">
+  <div class="reveal">
+    <span class="section-label"><span class="num">4</span> 安全上線</span>
+    <h2>部署前的必要準備</h2>
+    <p class="lead">寫完程式 ≠ 可以部署 — .gitignore、.env 安全、GitHub Actions 自動化，三件事確認完再上線</p>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>認識專案結構</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> package.json</h3>
+      <ul>
+        <li><code>scripts</code>：啟動與建立靜態資源的指令</li>
+        <li><code>dependencies</code> / <code>devDependencies</code>：套件版本資訊</li>
+        <li>套件安裝在 <code>node_modules</code> 資料夾（體積最大，不需上傳）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🚫</span> .gitignore 的作用</h3>
+      <p>告訴 Git 哪些檔案或資料夾不需版本控制：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag orange">node_modules — 套件版本由 package.json 管控，不需上傳</span>
+      <span class="tag orange">build — 自動生成的靜態檔案，每次 build 都會重建</span>
+      <span class="tag orange">.env — 個人設定與密鑰，絕對不能上傳到公開 repo</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">絕對不能上傳 .env 到 Git！</div>
+      <p><code>.env</code> 存放 Google Apps Script 連結等敏感資訊，一旦上傳到公開 repo，任何人都能讀取你的後端連結，造成資安風險。</p>
+    </div>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>部署前的兩個準備</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📋</span> 建立 .env.example</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">建立環境變數範例檔</span>
+      </div>
+      <div class="prompt-body">請幫我建立一個 .env.example 的範例檔</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <ul class="loose-list">
+      <li>只放 key 名稱，不放實際值</li>
+      <li>讓其他人 clone 專案後知道需要設定哪些環境變數</li>
+    </ul>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🚀</span> 設定 GitHub Actions 自動部署</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">GitHub Actions 設定</span>
+      </div>
+      <div class="prompt-body">請設計能自動部署到 Github Pages 的 Action，會使用到的環境變數請參考 .env.example 檔
+並將操作流程更新到 README.md 文件</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section" id="github-pages">
+  <div class="reveal">
+    <span class="section-label"><span class="num">5</span> GitHub Pages 部署</span>
+    <h2>從本地到上線</h2>
+    <p class="lead">Source Control → GitHub → Pages → 環境變數設定 — 完整部署流程一步步操作</p>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>初次部署流程</div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-title">Source Control → Initialize Repository</div>
+        <div class="step-desc">初始化 Git</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-title">Generate → 讓 AI 生成 commit 訊息 → Commit → Push</div>
+        <div class="step-desc"></div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-title">GitHub 彈窗：輸入專案名稱、選擇 Public</div>
+        <div class="step-desc"></div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-title">Settings → Pages → 部署來源選「GitHub Actions」</div>
+        <div class="step-desc"></div>
       </div>
       <div class="flow-step">
         <div class="step-num">5</div>
-        <div class="step-title">自主驗證</div>
-        <div class="step-desc">最多嘗試 5 次</div>
+        <div class="step-title">Actions 分頁確認部署狀況（綠色✓=成功，紅色✗=需排錯）</div>
+        <div class="step-desc"></div>
       </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">下面以 command 指令形式強制觸發任務</p>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">生成測試案例</span>
-      </div>
-      <div class="prompt-body">/Gen Test Cases 
-（拖入要測試的檔案，ex: src/pages/LoginPage.tsx）</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">從玩具到產品，差的就是測試</div>
-      <p>很多時候 AI 只是修好了眼前的錯誤，但過程中改壞了過去的邏輯。千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。</p>
-      <p style="margin-top:.5rem">現在有 AI 了，你不用自己寫測試程式，只要審核 AI 給的測試情境是否有遺漏就好。</p>
     </div>
   </div>
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">💡</span> 實務建議</h3>
-      <ul>
-        <li>不要一口氣生成所有測試，先放一個檔案確認結果符合預期</li>
-        <li>每個頁面/模組有獨立的測試程式，方便定位問題</li>
-        <li>測試案例會隨規格變更而調整，不可能一次到位</li>
-      </ul>
+      <h3><span class="icon">⚙</span> ️ 設定 GitHub 環境變數</h3>
+      <p>在 <code>Settings → Secrets and variables → Actions</code> 中設定：</p>
     </div>
   </div>
 
-  <div class="reveal" id="sub-github-action">
-    <div class="sub-title"><span class="bar"></span>GitHub Action 自動化</div>
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag purple">Secrets — 存放敏感資訊（如 Google Apps Script URL）</span>
+      <span class="tag green">Variables — 存放較不敏感的環境變數（如題目數量、通過門檻）</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">查看 <code>.github/deploy.yml</code> 的 <code>env</code> 區塊，確認哪些用 secrets、哪些用 variables，再分別設定。</p>
   </div>
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">🔁</span> 自動化測試流程</h3>
-      <ul>
-        <li>每次推送到 GitHub 都觸發測試</li>
-        <li>測試完畢生成覆蓋率報告</li>
-        <li>設定 Branch Protection Rule：測試通過才能合併到主分支（將 Require status checks to pass 打勾，然後輸入「test」）</li>
-      </ul>
-      <p>測試覆蓋率不需追求 100%，重要的邏輯都要測試到。有了測試，規格書上的功能才能被真正驗證。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">自動化測試</span>
-      </div>
-      <div class="prompt-body">我希望在 GitHub Action 加入自動化測試的流程
-每一個分支將更新推送到 GitHub 都會觸發一次自動化測試</div>
+      <h3><span class="icon">🔄</span> 讓環境變數生效</h3>
+      <p>設定完環境變數後，需要手動重新觸發部署：</p>
+      <p>1. 到「Actions」分頁，找最後一個 deploy 結果</p>
+      <p>2. 選擇「Re-run all jobs」</p>
+      <p>3. 環境變數的變更才會在新的部署中生效</p>
     </div>
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <div class="insight-title">不可能掌握某個技能就變大師</div>
-      <p>講師設計的教材是最佳體驗路徑，但換到自己的專案情境一定會遇到不一樣的問題。回去後不要只是複製指令，而是把流程搬到自己的專案試一遍。</p>
-      <p style="margin-top:.5rem"><strong>學習 AI 不是搜集指令複製貼上，更重要的是了解應用情境後，透過實踐調整為適合自己的工作流。</strong></p>
+      <div class="insight-title">部署失敗很正常</div>
+      <p>一開始失敗很正常，把錯誤訊息複製起來，貼到與 AI 的對話視窗，讓他幫忙解決。看到綠色勾勾後，點擊進去就能看到專案的上線網址。</p>
     </div>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>常見踩坑整理</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚠</span> ️ Vibe Coding 後的品質關卡</h3>
+      <p>AI 可以幫我們加速，但品質需要有經驗的人把關——這個專案實際踩到的坑：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <ul class="checklist">
+      <li>呼叫兩次 Google Apps Script 取得題目（用 F12 → Network 分頁確認次數）</li>
+      <li>成績結算後「第一次通關分數、花了幾次通關」邏輯問題</li>
+      <li>中英文字體大小不一致</li>
+      <li>進入遊戲後刷新頁面（/game）會 404</li>
+      <li>成績頁面刷新後再次計算並累積分數（應直接導向首頁）</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section" id="section">
+  <div class="reveal">
+    <span class="section-label"><span class="num">6</span> 比工具更重要的思維</span>
+    <h2>比工具更重要的思維</h2>
+    <p class="lead">工具永遠在更新，但解決問題的能力才是你真正的護城河</p>
+  </div>
+
+  <div class="reveal" id="sub-section">
+    <div class="sub-title"><span class="bar"></span>選工具的態度</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🎯</span> 選最順手的主流工具</h3>
+      <ul>
+        <li>從 VSCode、Cursor 到 Antigravity，工具永遠在競爭更新</li>
+        <li>工具間的差異沒有你以為的大，選順手的主流工具就好</li>
+        <li><strong>完成專案的關鍵在於人，而不是工具</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🧱</span> 技術底蘊的價值</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">AI 寫出「看起來能動」的程式</div>
+      <p>畫面正常、功能正常，但背後邏輯可能有問題，或你看到的只是假資料。如果沒有前後端概念，不了解資料庫如何運作，你就沒有能力判斷 AI 給的結果是否正確。</p>
+      <p style="margin-top:.5rem">過去 AI 寫錯程式會跑不動，你會知道他錯了。現在他有能力寫出看起來能動的工具，判斷力反而更重要。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">💡</span> 給學習者的建議</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag green">從實際需求出發，而不是複製別人的提示詞</span>
+      <span class="tag orange">選一門程式語言深入研究，而不是一直追新工具</span>
+      <span class="tag purple">了解前後端概念後，換技術棧會輕鬆很多</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">基礎知識在 AI 時代依舊重要，不要讓 Vibe Coding 的「快」，成為你未來的「債」。</p>
   </div>
 </section>
 
@@ -1251,7 +1257,7 @@ with details about my project, tech stack, and conventions</div>
 <section class="section" id="summary">
   <div class="reveal">
     <span class="section-label"><span class="num">★</span> 總結</span>
-    <h2>今天的三大主軸</h2>
+    <h2>總結</h2>
     
   </div>
 
@@ -1259,32 +1265,30 @@ with details about my project, tech stack, and conventions</div>
     <div class="summary-grid">
       <div class="summary-card">
         <div class="sc-icon">🏗️</div>
-        <h4>新專案 — SDD</h4>
-        <p>OpenSpec: 讓 AI 產生完善文件後，用規格驅動開發，完成從零到一的步驟</p>
+        <h4>零成本全端架構</h4>
+        <p>React + Google Apps Script + Google Sheets，免費打造可上線的全端專案</p>
       </div>
       <div class="summary-card">
-        <div class="sc-icon">⚙️</div>
-        <h4>舊專案 — Skills</h4>
-        <p>設計 Commit / PR / Code Review Skills，讓 AI 在大型專案中有規範可循</p>
+        <div class="sc-icon">🤖</div>
+        <h4>Antigravity 設定</h4>
+        <p>Global Rules + 模型選擇 + Planning/Fast 模式，讓 AI 給更精準的回覆</p>
       </div>
       <div class="summary-card">
-        <div class="sc-icon">🧪</div>
-        <h4>導入測試 — CI/CD</h4>
-        <p>用指令（Command）驅動 AI 撰寫測試，搭配 GitHub Action 守住品質底線</p>
+        <div class="sc-icon">🎯</div>
+        <h4>提示詞設計四要素</h4>
+        <p>角色設定、UI/UX、功能需求、資料庫設計，越精準越有效率</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🔒</div>
+        <h4>安全部署準備</h4>
+        <p>.gitignore 保護、.env.example、GitHub Actions 自動化上線</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">💡</div>
+        <h4>比工具更重要的思維</h4>
+        <p>AI 是加速器，但判斷力與基礎知識才是你真正的護城河</p>
       </div>
     </div>
-  </div>
-
-  <div class="reveal bonus-btn-wrap">
-    <button class="bonus-btn" data-bonus-title="🎁 幕後製作心得" data-bonus-content="這個課程網頁的製作，走過了一段從「結果不可控」到「完全掌控」的歷程。
-
-1. **遇到痛點** — Vibe Coding 出來的網頁，調整內容都要改 HTML，非常不方便
-2. **逆推結構** — 讓 AI 把現有網頁拆解，對應成一套可用 Markdown 撰寫的格式
-3. **內容與版型分離** — 只需改 Markdown，自動套用對應版型，細節完全可控
-4. **設計 Agent Skill** — 不是讓 AI 生成網頁，而是讓 AI 學會「這份 Markdown 怎麼寫」
-5. **模板生成器思維** — AI 負責生成結構化內容，程式再把內容轉成最終網頁">
-      🎁 幕後製作心得
-    </button>
   </div>
 </section>
 
@@ -1292,7 +1296,7 @@ with details about my project, tech stack, and conventions</div>
 <section class="quote-page">
   <div class="reveal">
     <div class="quote-mark">“</div>
-    <blockquote>能判斷哪些流程需要自動化的，<br> 只有每天在現場操作的你。<br><br> 不管 AI 多強大，<br> 按下同意時，責任就歸屬於你。</blockquote>
+    <blockquote>AI 可以幫我們加速，<br> 但品質絕對需要有經驗的人來把關。<br><br> 基礎知識在 AI 時代依舊重要，<br> 不要讓 Vibe Coding 的「快」，成為你未來的「債」。</blockquote>
     <div class="quote-line"></div>
   </div>
 </section>
@@ -1381,8 +1385,8 @@ collapseBtn.addEventListener('click',function(){
 });
 
 // Scroll spy — 這兩個陣列需根據實際內容填入
-var sectionIds=["instructor","section","new-project","old-project","testing","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-var allAnchorIds=["instructor","section","new-project","sub-openspec-init","sub-create-project","sub-project-rules","old-project","sub-openspec-iterate","sub-commit-skill","sub-pr-skill","testing","sub-section","sub-github-action","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
+var sectionIds=["instructor","section","antigravity-ai","section","section","github-pages","section","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+var allAnchorIds=["instructor","section","sub-section","antigravity-ai","sub-section","sub-section","section","sub-section","sub-section","sub-section","section","sub-section","sub-section","github-pages","sub-section","sub-section","section","sub-section","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
 
 var sectionForAnchor={};
 allAnchorIds.forEach(function(id){

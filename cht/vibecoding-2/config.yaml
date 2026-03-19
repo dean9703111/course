@@ -1,0 +1,15 @@
+page:
+  title: "Vibe Coding 全端實戰 — Google Antigravity 教學"
+  badge: "Vibe Coding 教學"
+  hero_title: "用 Vibe Coding 完成<br>輕量級全端專案並部署上線"
+  subtitle: "Google Antigravity 手把手實戰：從 Prompt 設計、專案生成到 GitHub Pages 部署，掌握 AI 時代的全端開發思維"
+
+quotes:
+  opening:
+    text: "越精準的提示詞，越短的時間得到期待的結果。"
+  closing:
+    text: >
+      AI 可以幫我們加速，<br>
+      但品質絕對需要有經驗的人來把關。<br><br>
+      基礎知識在 AI 時代依舊重要，<br>
+      不要讓 Vibe Coding 的「快」，成為你未來的「債」。
