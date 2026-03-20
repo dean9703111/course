@@ -224,7 +224,7 @@ with details about my project, tech stack, and conventions
 > **人，才是 AI 的瓶頸**
 > Code Review 的速度已經跟不上 AI 寫程式的速度。當人成為 AI 的瓶頸時，要去想的是如何降低門檻，而不是放棄審核。
 >
-> 每個功能單獨驗證，Code Review 時只需專注一件事。雖然每一步都是 AI 在執行，但如果沒有業界經驗，其實不知道怎麼串起這些工具。**真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。**
+> 設計 Commit、PR 的 Skill 就是透過優化流程讓開發更順暢。雖然每一步都是 AI 在執行，但如果沒有實務經驗，其實不知道怎麼串起這些工具。**真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。**
 
 ---
 
@@ -275,7 +275,7 @@ with details about my project, tech stack, and conventions
 ### 🔁 自動化測試流程
 - 每次推送到 GitHub 都觸發測試
 - 測試完畢生成覆蓋率報告
-- 設定 Branch Protection Rule：測試通過才能合併到主分支（將 Require status checks to pass 打勾，然後輸入「test」）
+- 設定 Branch Protection Rule（ex: protected-by-tests）：測試通過才能合併到主分支（將 Require status checks to pass 打勾，然後輸入「test」）
 
 測試覆蓋率不需追求 100%，重要的邏輯都要測試到。有了測試，規格書上的功能才能被真正驗證。
 
@@ -296,8 +296,8 @@ with details about my project, tech stack, and conventions
 
 [summary]
 - 🏗️ **新專案 — SDD** | OpenSpec: 讓 AI 產生完善文件後，用規格驅動開發，完成從零到一的步驟
-- ⚙️ **舊專案 — Skills** | 設計 Commit / PR / Code Review Skills，讓 AI 在大型專案中有規範可循
-- 🧪 **導入測試 — CI/CD** | 用指令（Command）驅動 AI 撰寫測試，搭配 GitHub Action 守住品質底線
+- ⚙️ **舊專案 — Skills** | 用 OpenSpec 迭代，並設計 Commit / PR Skills，讓 AI 在大型專案中有規範可循
+- 🧪 **導入測試 — CI/CD** | 設計讓 AI 撰寫測試的工作流，搭配 GitHub Action 守住品質底線
 [/summary]
 
 [bonus title="🎁 幕後製作心得"]
