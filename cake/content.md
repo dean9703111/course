@@ -17,7 +17,7 @@ node -v
 
 ## 課程範例 Repository
 
-[下載 Repository](https://github.com/deancourse/cake-2026-build-with-ai.git) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（預設為 Claude Code）
+[下載 Repository](https://github.com/deancourse/cake-2026-build-with-ai.git) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（放在 `.agents` 資料夾下）
 
 ```terminal [label="Clone 課程 Repo"]
 git clone git@github.com:deancourse/cake-2026-build-with-ai.git
@@ -31,7 +31,7 @@ cd cake-2026-build-with-ai
 ## 設定 Agent Skills
 > 第一次接觸的朋友，可以透過[這支影片深入了解](https://youtu.be/xe00zJEtuMo)
 
-目前範例預設的 Agent Skills 為 Claude Code，但每個 AI Agent 的路徑不同，可以使用 [dotagents](https://github.com/iannuttall/dotagents) 來協助建立 symlinks。
+因為每個 AI Agent 的路徑不同，可以使用 [dotagents](https://github.com/iannuttall/dotagents) 來協助建立 symlinks。
 
 ```prompt [label="將 Agent Skills 同步到指定的 AI Agent"]
 npx @iannuttall/dotagents
