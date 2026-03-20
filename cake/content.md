@@ -1,7 +1,7 @@
 # 前置需求：開始前請先確認環境已就緒
 > 電腦需要安裝以下工具，才能往後續流程操作
 
-## 🔧 必要工具安裝
+## 必要工具安裝
 
 - **[Git](https://git-scm.com/install/windows)** — 版本控制工具，用來追蹤每次改動
 - **[GitHub 帳號](https://github.com)** — 雲端 Git 儲存庫，用來管理專案
@@ -15,7 +15,7 @@ nvm use --lts
 node -v
 ```
 
-## 📦 課程範例 Repository
+## 課程範例 Repository
 
 [下載 Repository](https://github.com/deancourse/cake-2026-build-with-ai.git) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（預設為 Claude Code）
 
