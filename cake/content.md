@@ -29,6 +29,7 @@ cd cake-2026-build-with-ai
 > 請參考 [GitHub 官方教學](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) 完成設定，或改用 HTTPS：`https://github.com/deancourse/cake-2026-build-with-ai.git`
 
 ## 設定 Agent Skills
+> 第一次接觸的朋友，可以透過[這支影片深入了解](https://youtu.be/xe00zJEtuMo)
 
 目前範例預設的 Agent Skills 為 Claude Code，但每個 AI Agent 的路徑不同，可以使用 [dotagents](https://github.com/iannuttall/dotagents) 來協助建立 symlinks。
 
@@ -39,7 +40,7 @@ npx @iannuttall/dotagents
 ---
 
 # 新專案：用 SDD 讓 AI 根據規格建立專案
-> 規格驅動開發（Spec-Driven Development）— 讓 AI 不只寫程式，還幫你建立完善的規格文件
+> 規格驅動開發（Spec-Driven Development）— 讓 AI 不只寫程式，[還幫你建立完善的規格文件](https://youtu.be/FeQv7mngg6Q)
 
 ## OpenSpec 初始化
 
