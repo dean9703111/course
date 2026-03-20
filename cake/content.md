@@ -1,7 +1,7 @@
 # 前置需求：開始前請先確認環境已就緒
 > 電腦需要安裝以下工具，才能往後續流程操作
 
-### 🔧 必要工具安裝
+## 🔧 必要工具安裝
 
 - **[Git](https://git-scm.com/install/windows)** — 版本控制工具，用來追蹤每次改動
 - **[GitHub 帳號](https://github.com)** — 雲端 Git 儲存庫，用來管理專案
@@ -15,7 +15,7 @@ nvm use --lts
 node -v
 ```
 
-### 📦 課程範例 Repository
+## 📦 課程範例 Repository
 
 [下載 Repository](https://github.com/deancourse/cake-2026-build-with-ai.git) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（預設為 Claude Code）
 
@@ -27,6 +27,14 @@ cd cake-2026-build-with-ai
 > **還沒設定 SSH Key？**
 > 如果 clone 失敗，代表尚未設定 GitHub SSH 金鑰。
 > 請參考 [GitHub 官方教學](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) 完成設定，或改用 HTTPS：`https://github.com/deancourse/cake-2026-build-with-ai.git`
+
+## 設定 Agent Skills
+
+目前範例預設的 Agent Skills 為 Claude Code，但每個 AI Agent 的路徑不同，可以使用 [dotagents](https://github.com/iannuttall/dotagents) 來協助建立 symlinks。
+
+```prompt [label="將 Agent Skills 同步到指定的 AI Agent"]
+npx @iannuttall/dotagents
+```
 
 ---
 
@@ -79,7 +87,7 @@ openspec init
 - 車輛管理頁（可檢視、新增、編輯、刪除車輛資料）
 - 員工管理頁（僅管理者可檢視、新增、編輯、刪除員工資料）
 
-前端使用 React + Vite8，使用 Mock API 模擬後端回應
+前端使用 React + Vite8，使用 MSW Mock API 模擬後端回應
 參考 openspec 的 skill 執行，以最小可行性方案來規劃
 ```
 
@@ -95,13 +103,6 @@ openspec init
 ```prompt [label="開始實作"]
 開始實作
 ```
-
-> **AI 正在改變企業決策**
-> 過去出缺勤、考核這類內部系統，企業通常找廠商購買、支付年費維護。但 Vibe Coding 的出現正讓企業做出不同的選擇。
->
-> 有些企業導入 Vibe Coding 的目標不是取代工程師，而是讓熟悉業務的人有能力設計出符合使用需求的產品原型，再交給工程師做優化與維護。
->
-> 用 OpenSpec 建立規格文件 — 就是讓這個交接過程有據可循，而不是一團無文件的程式碼丟過去。
 
 ### 🚀 啟動專案進行歸檔
 
@@ -122,6 +123,13 @@ openspec init
 ```prompt [label="歸檔"]
 功能符合預期，進行歸檔
 ```
+
+> **AI 正在改變企業決策**
+> 過去出缺勤、考核這類內部系統，企業通常找廠商購買、支付年費維護。但 Vibe Coding 的出現正讓企業做出不同的選擇。
+>
+> 有些企業導入 Vibe Coding 的目標不是取代工程師，而是讓熟悉業務的人有能力設計出符合使用需求的產品原型，再交給工程師做優化與維護。
+>
+> 用 OpenSpec 建立規格文件 — 就是讓這個交接過程有據可循，而不是一團無文件的程式碼丟過去。
 
 ## 建立專案規則
 
