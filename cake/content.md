@@ -185,7 +185,7 @@ with details about my project, tech stack, and conventions
 幫我歸檔
 ```
 
-**Tips**: 不是所有事情都需要觸發 OpenSpec，向 branch 命名直接讓 AI 想就好
+**Tips**: 不是所有事情都需要觸發 OpenSpec，像 branch 命名直接讓 AI 想就好
 
 ```prompt [label="新增分支"]
 分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch
