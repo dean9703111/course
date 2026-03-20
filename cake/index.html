@@ -423,6 +423,30 @@
       font-weight: 500
     }
 
+    .prompt-header .copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      opacity: .5;
+      transition: opacity .2s;
+    }
+
+    .prompt-header .copy-btn:hover {
+      opacity: 1
+    }
+
+    .prompt-header .label ~ .copy-btn {
+      margin-left: 0
+    }
+
+    .prompt-header .label:empty ~ .copy-btn {
+      margin-left: auto
+    }
+
     .prompt-body {
       padding: 1.25rem;
       font-family: 'JetBrains Mono', monospace;
@@ -1775,6 +1799,9 @@
         <div class="dots"><span></span><span></span><span></span></div>
         Terminal
         <span class="label">安裝 Node.js（透過 nvm）</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">nvm install --lts
 nvm use --lts
@@ -1796,6 +1823,9 @@ node -v</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Terminal
         <span class="label">Clone 課程 Repo</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">git clone git@github.com:deancourse/cake-2026-build-with-ai.git
 cd cake-2026-build-with-ai</div>
@@ -1829,6 +1859,9 @@ cd cake-2026-build-with-ai</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Terminal
         <span class="label">將 Agent Skills 同步到指定的 AI Agent</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">npx @iannuttall/dotagents</div>
     </div>
@@ -1874,6 +1907,9 @@ cd cake-2026-build-with-ai</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Terminal
         <span class="label">安裝指令</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">npm install -g @fission-ai/openspec@latest
 openspec init</div>
@@ -1897,6 +1933,9 @@ openspec init</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">查看 Skill</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">我想知道 openspec 目前安裝的 skill 用途
 請使用表格呈現，用白話簡短描述</div>
@@ -1945,6 +1984,9 @@ openspec init</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">建立 MVP 系統</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">設計車輛管理系統，包含以下功能：
 - 登入頁面（帳號密碼驗證，區分管理者與一般使用者）
@@ -1994,6 +2036,9 @@ openspec init</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">開始實作</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">開始實作</div>
     </div>
@@ -2012,6 +2057,9 @@ openspec init</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">讓 AI 協助啟動</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">請幫我啟動專案</div>
     </div>
@@ -2027,6 +2075,9 @@ openspec init</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">讓 AI 協助啟動</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">參考 UI/UX SKill 美化頁面</div>
     </div>
@@ -2042,6 +2093,9 @@ openspec init</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">歸檔</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">功能符合預期，進行歸檔</div>
     </div>
@@ -2073,6 +2127,9 @@ openspec init</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Terminal
         <span class="label">初始化規則</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">/init</div>
     </div>
@@ -2084,6 +2141,9 @@ openspec init</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">OpenSpec 設定</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">Please read openspec/config.yaml and help me fill it out
 with details about my project, tech stack, and conventions</div>
@@ -2103,6 +2163,9 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">設計 .gitignore、README.md</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">請幫我設計專案的「.gitignore」但「.claude、openspec」要加入版本控制
 並且將「專案簡介與啟動方式」寫入 README.md</div>
@@ -2140,6 +2203,9 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">新增功能</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">增加使用者紀錄頁面，供管理者查看
 使用 OpenSpec</div>
@@ -2152,6 +2218,9 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">確認後實作</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">開始實作</div>
     </div>
@@ -2171,6 +2240,9 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">歸檔變更</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">幫我歸檔</div>
     </div>
@@ -2186,6 +2258,9 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">新增分支</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch</div>
     </div>
@@ -2226,6 +2301,9 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">拆分 Commit</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">新增 commit</div>
     </div>
@@ -2252,6 +2330,9 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">生成 PR</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">撰寫 PR，與 main branch 比對</div>
     </div>
@@ -2356,6 +2437,9 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">生成測試案例</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">/Gen Test Cases 
 （拖入要測試的檔案，ex: src/pages/LoginPage.tsx）</div>
@@ -2366,7 +2450,7 @@ with details about my project, tech stack, and conventions</div>
     <div class="insight">
       <div class="insight-title">從玩具到產品，差的就是測試</div>
       <p>很多時候 AI 只是修好了眼前的錯誤，但過程中改壞了過去的邏輯。千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。</p>
-      <p style="margin-top:.5rem">現在有 AI 了，你不用自己寫測試程式，只要審核 AI 給的測試情境是否有遺漏就好。</p>
+      <p style="margin-top:.5rem">現在儘管有 AI 輔助撰寫測試程式，我們還是要仔細檢查 AI 給的測試情境是否合理、有遺漏。</p>
     </div>
   </div>
 
@@ -2403,17 +2487,12 @@ with details about my project, tech stack, and conventions</div>
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">自動化測試</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">我希望在 GitHub Action 加入自動化測試的流程
 每一個分支將更新推送到 GitHub 都會觸發一次自動化測試</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">不可能掌握某個技能就變大師</div>
-      <p>講師設計的教材是最佳體驗路徑，但換到自己的專案情境一定會遇到不一樣的問題。回去後不要只是複製指令，而是把流程搬到自己的專案試一遍。</p>
-      <p style="margin-top:.5rem"><strong>學習 AI 不是搜集指令複製貼上，更重要的是了解應用情境後，透過實踐調整為適合自己的工作流。</strong></p>
     </div>
   </div>
 </section>
@@ -2443,6 +2522,14 @@ with details about my project, tech stack, and conventions</div>
         <h4>導入測試 — CI/CD</h4>
         <p>設計讓 AI 撰寫測試的工作流，搭配 GitHub Action 守住品質底線</p>
       </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">不可能掌握某個技能就變大師</div>
+      <p>講師設計的教材是最佳體驗路徑，但換到自己的專案情境一定會遇到不一樣的問題。回去後不要只是複製指令，而是把流程搬到自己的專案試一遍。</p>
+      <p style="margin-top:.5rem"><strong>學習 AI 不是搜集指令複製貼上，更重要的是了解應用情境後，透過實踐調整為適合自己的工作流。</strong></p>
     </div>
   </div>
 
@@ -2685,6 +2772,19 @@ with details about my project, tech stack, and conventions</div>
         });
       });
     })();
+
+    // Copy prompt
+    function copyPrompt(btn) {
+      var text = btn.closest('.prompt-block').querySelector('.prompt-body').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.style.opacity = '1';
+        setTimeout(function () {
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+          btn.style.opacity = '';
+        }, 1500);
+      });
+    }
 
     // Font size toggle (5 levels)
     var fontSizes = [14, 15, 16, 18, 20];
