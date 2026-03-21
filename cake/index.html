@@ -72,6 +72,24 @@
       overflow-x: hidden;
     }
 
+    a {
+      color: var(--accent2);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    [data-theme="light"] a {
+      color: var(--accent);
+    }
+
+    [data-theme="light"] a:hover {
+      color: var(--accent2);
+    }
+
     /* ===== SCROLLBAR ===== */
     ::-webkit-scrollbar {
       width: 6px
