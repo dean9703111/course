@@ -1511,6 +1511,16 @@
         margin: 0;
       }
 
+      /* ── Print color fidelity ──
+         Ensure backgrounds, borders, gradients render in both light & dark mode.
+         Without this, browsers strip backgrounds → dark mode becomes invisible text on white. */
+      *,
+      *::before,
+      *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
       /* Hide all direct body children except slides */
       body>*:not(#print-slides) {
         display: none !important;
@@ -1580,8 +1590,7 @@
         font-family: 'Noto Sans TC', sans-serif !important;
       }
 
-
-      /* Insight: ensure text visible on white paper */
+      /* Insight: ensure text visible in both themes */
       #print-slides .insight p,
       #print-slides .insight ul li,
       #print-slides .insight .insight-title {
@@ -1748,8 +1757,6 @@
       animation: none !important;
       opacity: 1 !important;
       background: var(--accent) !important;
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
     }
 
     #print-slides .slide-hero .hero-sub {
@@ -1909,8 +1916,6 @@
       background: var(--accent);
       border-radius: 1px;
       margin: .3rem auto;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
     }
 
     /* ===== LIGHT MODE OVERRIDES ===== */
