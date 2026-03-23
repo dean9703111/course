@@ -596,6 +596,114 @@
       color: var(--text-dim)
     }
 
+    /* ===== IMAGES ===== */
+    .content-image {
+      margin: 1.5rem 0;
+      text-align: center
+    }
+
+    .content-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border)
+    }
+
+    .content-image figcaption {
+      margin-top: .5rem;
+      font-size: .8rem;
+      color: var(--text-dim);
+      font-style: italic
+    }
+
+    .inline-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: .25rem 0;
+      vertical-align: middle
+    }
+
+    /* ===== IMAGE-TEXT LAYOUT ===== */
+    .image-text {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin: 1.5rem 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .image-text--img-right {
+      flex-direction: row-reverse
+    }
+
+    .image-text__img {
+      flex: 0 0 var(--img-width, 40%);
+      max-width: var(--img-width, 40%)
+    }
+
+    .image-text__img img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover
+    }
+
+    .image-text__body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .image-text__body p {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: .75rem
+    }
+
+    .image-text__body p:last-child {
+      margin-bottom: 0
+    }
+
+    .image-text__body ul {
+      list-style: none;
+      padding: 0;
+      margin: .5rem 0
+    }
+
+    .image-text__body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+      color: var(--text);
+      line-height: 1.7
+    }
+
+    .image-text__body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .65em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    @media(max-width:900px) {
+      .image-text,
+      .image-text--img-right {
+        flex-direction: column
+      }
+
+      .image-text__img {
+        flex: none;
+        max-width: 100%
+      }
+    }
+
     /* ===== TAGS ===== */
     .tags {
       display: flex;
@@ -1839,6 +1947,26 @@
     }
 
     #print-slides .prompt-body {
+      font-size: .9rem;
+    }
+
+    #print-slides .content-image img {
+      max-height: 400px;
+      width: auto;
+    }
+
+    #print-slides .image-text {
+      padding: 1rem;
+      gap: 1.25rem;
+    }
+
+    #print-slides .image-text__img {
+      flex: 0 0 35%;
+      max-width: 35%;
+    }
+
+    #print-slides .image-text__body p,
+    #print-slides .image-text__body ul li {
       font-size: .9rem;
     }
 
@@ -3822,12 +3950,30 @@ with details about my project, tech stack, and conventions</div>
       printSlides.removeAttribute('style');
       document.body.classList.add('printing');
 
-      window.print();
+      // Wait for all images inside print-slides to load before printing
+      var imgs = Array.from(printSlides.querySelectorAll('img'));
+      var pending = imgs.filter(function (img) { return !img.complete; });
 
-      setTimeout(function () {
-        document.body.classList.remove('printing');
-        if (printSlides.parentNode) document.body.removeChild(printSlides);
-      }, 500);
+      function doPrint() {
+        window.print();
+        setTimeout(function () {
+          document.body.classList.remove('printing');
+          if (printSlides.parentNode) document.body.removeChild(printSlides);
+        }, 500);
+      }
+
+      if (!pending.length) {
+        doPrint();
+      } else {
+        var loaded = 0;
+        pending.forEach(function (img) {
+          img.onload = img.onerror = function () {
+            if (++loaded >= pending.length) doPrint();
+          };
+        });
+        // Safety timeout: print anyway after 3s
+        setTimeout(function () { if (loaded < pending.length) doPrint(); }, 3000);
+      }
     }
 
     function makeSlide(mainTitle, subTitle, pageNum) {
