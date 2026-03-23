@@ -114,7 +114,8 @@
       text-align: center;
       padding: 2rem;
       position: relative;
-      overflow: hidden;
+      overflow: clip;
+      width: 100%;
     }
 
     .hero::before {
@@ -179,10 +180,16 @@
       font-weight: 900;
       line-height: 1.25;
       margin-bottom: 1.5rem;
+      max-width: 100%;
+      width: 100%;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
       background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      padding: 0 0.2em;
     }
 
     .hero-sub {
@@ -457,11 +464,11 @@
       opacity: 1
     }
 
-    .prompt-header .label ~ .copy-btn {
+    .prompt-header .label~.copy-btn {
       margin-left: 0
     }
 
-    .prompt-header .label:empty ~ .copy-btn {
+    .prompt-header .label:empty~.copy-btn {
       margin-left: auto
     }
 
@@ -863,6 +870,7 @@
       color: var(--accent);
       opacity: .2;
       margin-bottom: -1rem;
+      margin-left: -1rem;
       user-select: none;
       text-align: left
     }
@@ -1372,6 +1380,534 @@
       color: var(--accent)
     }
 
+    /* ===== SETTINGS TOGGLE ===== */
+    .settings-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+      color: var(--text-dim);
+    }
+
+    .settings-toggle:hover,
+    .settings-toggle.active {
+      border-color: var(--accent);
+      transform: scale(1.1);
+      color: var(--accent);
+    }
+
+    /* ===== SETTINGS PANEL ===== */
+    .settings-panel {
+      position: fixed;
+      width: 210px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+      padding: .85rem;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity .2s, transform .2s;
+    }
+
+    .settings-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .settings-section {
+      margin-bottom: .6rem;
+    }
+
+    .settings-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: .5rem;
+    }
+
+    .settings-divider {
+      height: 1px;
+      background: var(--border);
+      margin: .7rem 0;
+    }
+
+    .color-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+
+    .color-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: transform .2s, border-color .2s;
+      outline: none;
+      box-shadow: 0 0 0 2px transparent;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.15);
+    }
+
+    .color-swatch.selected {
+      box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px currentColor;
+      border-color: transparent;
+    }
+
+    .settings-export-btn {
+      width: 100%;
+      padding: .45rem .75rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s, transform .15s;
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    .settings-export-btn:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+    }
+
+    /* ===== PRINT / SLIDE STYLES ===== */
+    @media print {
+      html {
+        font-size: var(--print-font-size, 24px) !important;
+      }
+
+      @page {
+        size: 1280px 720px;
+        margin: 0;
+      }
+
+      /* Hide all direct body children except slides */
+      body>*:not(#print-slides) {
+        display: none !important;
+        visibility: hidden !important;
+      }
+
+      /* Explicitly target fixed-position UI that can bleed through in Chrome/Safari */
+      .sidebar,
+      .hamburger,
+      .sidebar-overlay,
+      .sidebar-collapse-btn,
+      .collapsed-progress,
+      .settings-panel,
+      .bonus-overlay,
+      header.hero,
+      footer.footer {
+        display: none !important;
+        visibility: hidden !important;
+        position: static !important;
+      }
+
+      /* Un-hide hero/footer clones inside print-slides */
+      #print-slides header.hero {
+        display: flex !important;
+        visibility: visible !important;
+        min-height: 0 !important;
+        height: 100% !important;
+      }
+
+      /* slide-footer is now a rebuilt "Thank You" page — no longer clones footer.footer */
+
+      #print-slides {
+        display: block !important;
+        visibility: visible !important;
+        position: static !important;
+        overflow: visible !important;
+      }
+
+      #print-slides * {
+        visibility: visible !important;
+      }
+
+      /* Prevent body overflow-x:hidden from clipping print content */
+      body.printing {
+        overflow: visible !important;
+      }
+
+      /* Force reveal animations off in print */
+      #print-slides .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      #print-slides .reveal>* {
+        transform: none !important;
+      }
+
+      /* ## sub-title: left-bar style to distinguish from # bottom-border */
+      #print-slides .sub-title {
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        margin: .5rem 0 .75rem !important;
+        padding-left: .75rem !important;
+        border-left: 3px solid var(--accent) !important;
+        border-bottom: none !important;
+        color: var(--accent) !important;
+        font-family: 'Noto Sans TC', sans-serif !important;
+      }
+
+
+      /* Insight: ensure text visible on white paper */
+      #print-slides .insight p,
+      #print-slides .insight ul li,
+      #print-slides .insight .insight-title {
+        color: var(--text) !important;
+      }
+
+      /* Lead paragraph */
+      #print-slides .lead {
+        color: var(--text) !important;
+      }
+
+      /* quote-line is now a closing quotation mark — no background fix needed */
+      #print-slides .quote-line {
+        background: none !important;
+        height: 0 !important;
+        border-top: 2px solid var(--accent) !important;
+      }
+    }
+
+    #print-slides {
+      display: none;
+    }
+
+    .slide {
+      width: 100%;
+      min-height: 720px;
+      height: auto;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      display: flex;
+      flex-direction: column;
+      padding: 2.2rem 3rem 1.8rem;
+      box-sizing: border-box;
+      background: var(--bg);
+      overflow: visible;
+    }
+
+    .slide:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    .slide-header {
+      flex-shrink: 0;
+      margin-bottom: 1.2rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: .6rem;
+    }
+
+    .slide-label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+    }
+
+    .slide-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      font-family: 'Noto Serif TC', serif;
+      color: var(--text);
+      line-height: 1.3;
+      margin-top: .2rem;
+    }
+
+    .slide-subtitle {
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: var(--accent);
+      margin-top: .3rem;
+      line-height: 1.3;
+    }
+
+    .slide-body {
+      flex: 1;
+      overflow: visible;
+      font-size: .88rem;
+      line-height: 1.65;
+    }
+
+    .slide-body .card {
+      break-inside: avoid;
+    }
+
+    .slide-body .prompt-block {
+      break-inside: avoid;
+    }
+
+    .slide-quote {
+      padding: 0;
+      justify-content: center;
+    }
+
+    .slide-quote .quote-page {
+      min-height: 0;
+      flex: 1;
+      width: 100%;
+    }
+
+    .slide-quote .quote-line {
+      background: none;
+      height: 0;
+      border-top: 2px solid var(--accent);
+    }
+
+    /* ===== PRINT-SLIDES FONT SCALING ===== */
+    /* Base: 16px root becomes 24px universally in print. Slide body font is set to 1rem. */
+    #print-slides .slide-body {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ── Hero slide ──────────────────────────────────────────
+       In print, background-clip:text + text-fill-color:transparent
+       makes h1 completely invisible → force solid color.
+       Keep nav links; they serve as a visual chapter overview.
+    ─────────────────────────────────────────────────────────── */
+    #print-slides .slide-hero {
+      padding: 0;
+    }
+
+    #print-slides .slide-hero .hero {
+      flex: 1;
+      min-height: 0 !important;
+      height: 100% !important;
+      padding: 3rem 4rem;
+      justify-content: center;
+      overflow: visible !important;
+    }
+
+    /* Prevent hero ::before/::after pseudo-elements from triggering clip */
+    #print-slides .slide-hero .hero::before,
+    #print-slides .slide-hero .hero::after {
+      display: none !important;
+    }
+
+    /* Fix invisible title + prevent text clipping */
+    #print-slides .slide-hero .hero h1 {
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: var(--text) !important;
+      color: var(--text) !important;
+      font-size: 3.36rem;
+      margin-bottom: 1rem;
+      padding: 0.1em 0.5em !important;
+      overflow: visible !important;
+    }
+
+    #print-slides .slide-hero .hero-badge {
+      font-size: .96rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent) !important;
+      border-color: var(--accent) !important;
+      backdrop-filter: none !important;
+      display: inline-flex !important;
+      opacity: 1 !important;
+    }
+
+    #print-slides .slide-hero .hero-badge .dot {
+      animation: none !important;
+      opacity: 1 !important;
+      background: var(--accent) !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    #print-slides .slide-hero .hero-sub {
+      font-size: 1.25rem;
+      margin-bottom: .6rem;
+    }
+
+    #print-slides .slide-hero .hero-author {
+      font-size: 1.07rem;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Nav links → chapter overview tags */
+    #print-slides .slide-hero .hero-nav {
+      gap: .5rem;
+    }
+
+    #print-slides .slide-hero .hero-nav a {
+      font-size: .96rem;
+      padding: .4rem 1rem;
+    }
+
+    /* Quote slide: scale quote mark for 720px height */
+    #print-slides .slide-quote .quote-mark {
+      font-size: 5rem;
+    }
+
+    #print-slides .slide-quote blockquote {
+      font-size: 2rem;
+      line-height: 2;
+    }
+
+    /* Slide header */
+    #print-slides .slide-label {
+      font-size: .8rem;
+    }
+
+    #print-slides .slide-title {
+      font-size: 1.4rem;
+    }
+
+    #print-slides .slide-subtitle {
+      font-size: 1.1rem;
+    }
+
+    /* Content elements */
+    #print-slides .card {
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .card h3 {
+      font-size: 1.1rem;
+    }
+
+    #print-slides .card ul li,
+    #print-slides .card p {
+      font-size: .95rem;
+    }
+
+    #print-slides .checklist li {
+      font-size: .95rem;
+      padding: .45rem 0;
+    }
+
+    #print-slides .insight {
+      padding: 1rem 1.25rem;
+    }
+
+    #print-slides .insight-title {
+      font-size: 1rem;
+    }
+
+    #print-slides .insight p {
+      font-size: .9rem;
+    }
+
+    #print-slides .prompt-block {
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .prompt-body {
+      font-size: .9rem;
+    }
+
+    #print-slides .sub-lead {
+      font-size: .9rem;
+    }
+
+    /* Footer slide — "Thank You" closing page */
+    #print-slides .slide-footer {
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #print-slides .slide-footer .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      width: 100%;
+      padding: 3rem 4rem;
+    }
+
+    #print-slides .slide-footer .footer-thanks {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+
+    #print-slides .slide-footer .footer-cta {
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: .8rem;
+      line-height: 1.6;
+    }
+
+    #print-slides .slide-footer .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .slide-footer .footer-socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: 1rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: .4rem .9rem;
+      border: 1.5px solid var(--accent);
+      border-radius: 2rem;
+    }
+
+    #print-slides .slide-footer .footer-socials a svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    #print-slides .slide-footer .footer-copyright {
+      font-size: .85rem;
+      color: var(--text-dim);
+      margin-top: .4rem;
+    }
+
+    #print-slides .slide-footer .footer-line {
+      width: 40%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      margin: .3rem auto;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
     /* ===== LIGHT MODE OVERRIDES ===== */
     [data-theme="light"] .prompt-header {
       background: rgba(0, 0, 0, .03)
@@ -1662,7 +2198,8 @@
       <div class="sidebar-brand-title">AI 開發工作流</div>
       <div class="sidebar-brand-controls"><button class="fontsize-toggle" id="fontsize-toggle"
           aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle"
-          aria-label="Toggle theme">🌙</button></div>
+          aria-label="Toggle theme">🌙</button><button class="settings-toggle" id="settings-toggle"
+          aria-label="設定">⚙</button></div>
     </div>
     <ul class="toc">
       <li class="toc-group" data-section="instructor">
@@ -1743,7 +2280,7 @@
     <p class="hero-sub">Vibe Coding 讓你快速啟動，但「品質、維護、擴充」才決定產品能走多遠</p>
     <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
     <nav class="hero-nav">
-      <a href="#section-1" class="primary">前置需求</a>
+      <a href="#section-1">前置需求</a>
     <a href="#new-project">新專案</a>
     <a href="#old-project">舊專案</a>
     <a href="#testing">導入測試</a>
@@ -2585,6 +3122,31 @@ with details about my project, tech stack, and conventions</div>
     <p>© 林鼎淵 Dean Lin</p>
   </footer>
 
+    <div class="settings-panel" id="settings-panel">
+    <div class="settings-section">
+      <div class="settings-label">主題色彩</div>
+      <div class="color-swatches" id="color-swatches">
+        <button class="color-swatch" data-theme-id="coral" data-accent="#f0804e" data-accent-light="#e0672e" title="珊瑚橘"
+          style="background:#f0804e"></button>
+        <button class="color-swatch" data-theme-id="ocean" data-accent="#3b82f6" data-accent-light="#2563eb" title="海洋藍"
+          style="background:#3b82f6"></button>
+        <button class="color-swatch" data-theme-id="forest" data-accent="#22c55e" data-accent-light="#16a34a"
+          title="森林綠" style="background:#22c55e"></button>
+        <button class="color-swatch" data-theme-id="galaxy" data-accent="#8b5cf6" data-accent-light="#7c3aed"
+          title="星河紫" style="background:#8b5cf6"></button>
+        <button class="color-swatch" data-theme-id="sakura" data-accent="#ec4899" data-accent-light="#db2777" title="粉櫻"
+          style="background:#ec4899"></button>
+        <button class="color-swatch" data-theme-id="gold" data-accent="#f59e0b" data-accent-light="#d97706" title="黃金"
+          style="background:#f59e0b"></button>
+      </div>
+    </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <div class="settings-label">匯出</div>
+      <button class="settings-export-btn" id="export-pdf-btn">⬇ 匯出 PDF（投影片版）</button>
+    </div>
+  </div>
+
     <div class="bonus-overlay" id="bonus-overlay">
     <div class="bonus-modal">
       <div class="bonus-modal-header">
@@ -2611,6 +3173,15 @@ with details about my project, tech stack, and conventions</div>
       if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
       var b = document.getElementById('theme-toggle');
       if (b) b.textContent = t === 'light' ? '☀️' : '🌙';
+      // Restore accent color
+      var accentData = localStorage.getItem('accentTheme');
+      if (accentData) {
+        try {
+          var ac = JSON.parse(accentData);
+          var isLight = t === 'light';
+          document.documentElement.style.setProperty('--accent', isLight ? ac.light : ac.dark);
+        } catch (e) { }
+      }
     })();
   </script>
 
@@ -2723,51 +3294,52 @@ with details about my project, tech stack, and conventions</div>
       else { document.documentElement.setAttribute('data-theme', 'light'); themeToggle.textContent = '☀️' }
     });
 
+    // Shared markdown helpers (used by bonus modal and PDF export)
+    function fmtInline(s) {
+      return s
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
+    function renderMd(text) {
+      var lines = text.split('\n');
+      var html = '';
+      var paraLines = [];
+      var inList = false;
+      var inSteps = false;
+      function flushPara() {
+        if (paraLines.length) { html += '<p>' + paraLines.map(fmtInline).join('<br>') + '</p>'; paraLines = []; }
+      }
+      function flushList() { if (inList) { html += '</ul>'; inList = false; } }
+      function flushSteps() { if (inSteps) { html += '</div>'; inSteps = false; } }
+      for (var i = 0; i < lines.length; i++) {
+        var l = lines[i];
+        var stepMatch = l.match(/^(\d+)\.\s+(.*)/);
+        if (stepMatch) {
+          flushPara(); flushList();
+          if (!inSteps) { html += '<div class="bonus-steps">'; inSteps = true; }
+          html += '<div class="bonus-step"><span class="bonus-step-num">' + stepMatch[1] + '</span><span class="bonus-step-text">' + fmtInline(stepMatch[2]) + '</span></div>';
+        } else if (/^- /.test(l)) {
+          flushPara(); flushSteps();
+          if (!inList) { html += '<ul>'; inList = true; }
+          html += '<li>' + fmtInline(l.replace(/^- /, '')) + '</li>';
+        } else if (l.trim() === '') {
+          flushSteps(); flushList(); flushPara();
+        } else {
+          flushSteps(); flushList(); paraLines.push(l);
+        }
+      }
+      flushSteps(); flushList(); flushPara();
+      return html;
+    }
+
     // Bonus Modal
     (function () {
       var overlay = document.getElementById('bonus-overlay');
       var closeBtn = document.getElementById('bonus-modal-close');
       var titleEl = document.getElementById('bonus-modal-title');
       var bodyEl = document.getElementById('bonus-modal-body');
-
-      function fmtInline(s) {
-        return s
-          .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
-          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-          .replace(/`([^`]+)`/g, '<code>$1</code>');
-      }
-
-      function renderMd(text) {
-        var lines = text.split('\n');
-        var html = '';
-        var paraLines = [];
-        var inList = false;
-        var inSteps = false;
-        function flushPara() {
-          if (paraLines.length) { html += '<p>' + paraLines.map(fmtInline).join('<br>') + '</p>'; paraLines = []; }
-        }
-        function flushList() { if (inList) { html += '</ul>'; inList = false; } }
-        function flushSteps() { if (inSteps) { html += '</div>'; inSteps = false; } }
-        for (var i = 0; i < lines.length; i++) {
-          var l = lines[i];
-          var stepMatch = l.match(/^(\d+)\.\s+(.*)/);
-          if (stepMatch) {
-            flushPara(); flushList();
-            if (!inSteps) { html += '<div class="bonus-steps">'; inSteps = true; }
-            html += '<div class="bonus-step"><span class="bonus-step-num">' + stepMatch[1] + '</span><span class="bonus-step-text">' + fmtInline(stepMatch[2]) + '</span></div>';
-          } else if (/^- /.test(l)) {
-            flushPara(); flushSteps();
-            if (!inList) { html += '<ul>'; inList = true; }
-            html += '<li>' + fmtInline(l.replace(/^- /, '')) + '</li>';
-          } else if (l.trim() === '') {
-            flushSteps(); flushList(); flushPara();
-          } else {
-            flushSteps(); flushList(); paraLines.push(l);
-          }
-        }
-        flushSteps(); flushList(); flushPara();
-        return html;
-      }
 
       function openModal(title, content) {
         titleEl.textContent = title;
@@ -2820,6 +3392,414 @@ with details about my project, tech stack, and conventions</div>
       fontIdx = (fontIdx + 1) % fontSizes.length;
       applyFontSize();
     });
+
+    // ===== SETTINGS PANEL =====
+    (function () {
+      var settingsToggle = document.getElementById('settings-toggle');
+      var settingsPanel = document.getElementById('settings-panel');
+
+      function openSettings() {
+        var rect = settingsToggle.getBoundingClientRect();
+        settingsPanel.style.top = (rect.bottom + 8) + 'px';
+        settingsPanel.style.left = Math.min(rect.left, window.innerWidth - 218) + 'px';
+        settingsPanel.classList.add('open');
+        settingsToggle.classList.add('active');
+      }
+      function closeSettings() {
+        settingsPanel.classList.remove('open');
+        settingsToggle.classList.remove('active');
+      }
+
+      settingsToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        settingsPanel.classList.contains('open') ? closeSettings() : openSettings();
+      });
+
+      settingsPanel.addEventListener('click', function (e) { e.stopPropagation(); });
+
+      document.addEventListener('click', closeSettings);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSettings(); });
+
+      // ===== COLOR THEMES =====
+      function applyAccent(darkColor, lightColor) {
+        var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        document.documentElement.style.setProperty('--accent', isLight ? lightColor : darkColor);
+        localStorage.setItem('accentTheme', JSON.stringify({ dark: darkColor, light: lightColor }));
+      }
+
+      function updateSwatchSelection(activeId) {
+        document.querySelectorAll('.color-swatch').forEach(function (sw) {
+          sw.classList.toggle('selected', sw.dataset.themeId === activeId);
+        });
+      }
+
+      // Restore saved swatch selection on load
+      var savedAccent = localStorage.getItem('accentTheme');
+      if (savedAccent) {
+        try {
+          var savedAc = JSON.parse(savedAccent);
+          document.querySelectorAll('.color-swatch').forEach(function (sw) {
+            if (sw.dataset.accent === savedAc.dark) sw.classList.add('selected');
+          });
+        } catch (e) { }
+      } else {
+        // Default: coral
+        var firstSwatch = document.querySelector('.color-swatch[data-theme-id="coral"]');
+        if (firstSwatch) firstSwatch.classList.add('selected');
+      }
+
+      document.querySelectorAll('.color-swatch').forEach(function (sw) {
+        sw.addEventListener('click', function () {
+          applyAccent(sw.dataset.accent, sw.dataset.accentLight);
+          updateSwatchSelection(sw.dataset.themeId);
+        });
+      });
+
+      // Also re-apply accent when theme (dark/light) is toggled
+      var origThemeClick = themeToggle.onclick;
+      themeToggle.addEventListener('click', function () {
+        var accentData = localStorage.getItem('accentTheme');
+        if (!accentData) return;
+        try {
+          var ac = JSON.parse(accentData);
+          // After theme toggle, data-theme may have just changed — read it after current event loop
+          setTimeout(function () {
+            var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            document.documentElement.style.setProperty('--accent', isLight ? ac.light : ac.dark);
+          }, 0);
+        } catch (e) { }
+      });
+
+      // ===== PDF EXPORT =====
+      document.getElementById('export-pdf-btn').addEventListener('click', function () {
+        closeSettings();
+        exportPDF();
+      });
+    })();
+
+    function exportPDF() {
+      var sections = document.querySelectorAll('section.section');
+      if (!sections.length) { alert('找不到課程章節，請確認頁面已正常載入。'); return; }
+
+      var printSlides = document.createElement('div');
+      printSlides.id = 'print-slides';
+      // Off-screen for height measurement
+      printSlides.style.cssText = 'position:fixed;left:-9999px;width:1280px;display:block;visibility:hidden;';
+      document.body.appendChild(printSlides);
+
+      // Hero title page
+      var heroEl = document.querySelector('header.hero');
+      if (heroEl) {
+        var heroSlide = document.createElement('div');
+        heroSlide.className = 'slide slide-hero';
+        heroSlide.appendChild(heroEl.cloneNode(true));
+        printSlides.appendChild(heroSlide);
+      }
+
+      // Opening quote (before first section.section)
+      document.querySelectorAll('section.quote-page').forEach(function (qp) {
+        var qSlide = document.createElement('div');
+        qSlide.className = 'slide slide-quote';
+        var clone = qp.cloneNode(true);
+        clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+        qSlide.appendChild(clone);
+        // Insert opening quotes before sections, closing quotes after
+        var isClosing = qp.compareDocumentPosition(sections[0]) & Node.DOCUMENT_POSITION_PRECEDING;
+        if (isClosing) {
+          printSlides._closingQuotes = printSlides._closingQuotes || [];
+          printSlides._closingQuotes.push(qSlide);
+        } else {
+          printSlides.appendChild(qSlide);
+        }
+      });
+
+      sections.forEach(function (section) {
+        var h2El = section.querySelector('h2');
+        var mainTitle = h2El ? h2El.textContent.trim() : '';
+
+        var leadClone = null;
+        var contentChildren = [];
+        section.childNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;
+          if (node.classList.contains('reveal') && node.querySelector('.section-label')) {
+            var lead = node.querySelector('.lead');
+            if (lead) leadClone = lead.cloneNode(true);
+            return;
+          }
+          contentChildren.push(node);
+        });
+
+        // Separate [bonus] blocks from normal content — bonus gets standalone slides
+        var bonusChildren = [];
+        var normalChildren = [];
+        contentChildren.forEach(function (child) {
+          if (child.querySelector && child.querySelector(':scope > .bonus-btn')) {
+            bonusChildren.push(child);
+          } else {
+            normalChildren.push(child);
+          }
+        });
+
+        // Split normal content by ## sub-sections; ### (card) stays within the same page
+        var pages = [[]];
+        normalChildren.forEach(function (child) {
+          var isSub = child.querySelector && child.querySelector(':scope > .sub-title');
+          if (isSub && pages[pages.length - 1].length > 0) {
+            pages.push([]);
+          }
+          pages[pages.length - 1].push(child);
+        });
+
+        pages.forEach(function (pageChildren, pIdx) {
+          // Extract ## sub-title text for header
+          var subTitle = '';
+          for (var i = 0; i < pageChildren.length; i++) {
+            var subEl = pageChildren[i].querySelector && pageChildren[i].querySelector(':scope > .sub-title');
+            if (subEl) { subTitle = subEl.textContent.trim(); break; }
+          }
+
+          var slide = makeSlide(mainTitle, subTitle, 0);
+          var body = slide.querySelector('.slide-body');
+          if (pIdx === 0 && leadClone) body.appendChild(leadClone.cloneNode(true));
+          pageChildren.forEach(function (child) {
+            var clone = child.cloneNode(true);
+            // ## sub-title is shown in the header, remove it from body to avoid duplication
+            var subTitleInBody = clone.querySelector(':scope > .sub-title');
+            if (subTitleInBody) subTitleInBody.remove();
+            if (clone.classList.contains('reveal')) clone.classList.add('visible');
+            clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+            body.appendChild(clone);
+          });
+          printSlides.appendChild(slide);
+        });
+
+        // Bonus blocks → standalone headerless slides
+        bonusChildren.forEach(function (child) {
+          var slide = document.createElement('div');
+          slide.className = 'slide slide-bonus';
+          var body = document.createElement('div');
+          body.className = 'slide-body';
+          child.querySelectorAll('.bonus-btn').forEach(function (btn) {
+            var card = document.createElement('div');
+            card.className = 'card';
+            var h3 = document.createElement('h3');
+            h3.textContent = btn.dataset.bonusTitle || '';
+            card.appendChild(h3);
+            var inner = document.createElement('div');
+            inner.innerHTML = renderMd(btn.dataset.bonusContent || '');
+            card.appendChild(inner);
+            body.appendChild(card);
+          });
+          slide.appendChild(body);
+          printSlides.appendChild(slide);
+        });
+      });
+
+      // Append closing quote pages after all content sections
+      if (printSlides._closingQuotes) {
+        printSlides._closingQuotes.forEach(function (s) { printSlides.appendChild(s); });
+        delete printSlides._closingQuotes;
+      }
+
+      // Footer → "Thank You" closing slide
+      var footerEl = document.querySelector('footer.footer');
+      if (footerEl) {
+        var footerSlide = document.createElement('div');
+        footerSlide.className = 'slide slide-footer';
+
+        var inner = document.createElement('div');
+        inner.className = 'footer-inner';
+
+        // Thank you title
+        var thanks = document.createElement('div');
+        thanks.className = 'footer-thanks';
+        thanks.textContent = 'Thank You';
+        inner.appendChild(thanks);
+
+        // Accent line
+        var line = document.createElement('div');
+        line.className = 'footer-line';
+        inner.appendChild(line);
+
+        // CTA text (from original footer)
+        var ctaSrc = footerEl.querySelector('p[style*="font-size"]');
+        if (ctaSrc) {
+          var cta = document.createElement('div');
+          cta.className = 'footer-cta';
+          cta.textContent = ctaSrc.textContent.trim();
+          inner.appendChild(cta);
+        }
+
+        // Social links (clone from original footer, re-wrap)
+        var socialsSrc = footerEl.querySelector('.social-links');
+        if (socialsSrc) {
+          var socials = socialsSrc.cloneNode(true);
+          socials.className = 'footer-socials';
+          socials.removeAttribute('style');
+          inner.appendChild(socials);
+        }
+
+        // Copyright
+        var copySrc = footerEl.querySelectorAll('p');
+        var copyText = '';
+        copySrc.forEach(function (p) {
+          if (!p.getAttribute('style')) copyText = p.textContent.trim();
+        });
+        if (copyText) {
+          var copy = document.createElement('div');
+          copy.className = 'footer-copyright';
+          copy.textContent = copyText;
+          inner.appendChild(copy);
+        }
+
+        footerSlide.appendChild(inner);
+        printSlides.appendChild(footerSlide);
+      }
+
+      // Force layout before measuring
+      // Scale print font-size proportionally from the user's A1–A5 selection (1.5× web size)
+      var PRINT_SCALE = 1.2;
+      var webFontSize = fontSizes[fontIdx] || 16;
+      var printFontSize = webFontSize * PRINT_SCALE;
+      var origFontSize = document.documentElement.style.fontSize;
+      document.documentElement.style.fontSize = printFontSize + 'px';
+      void printSlides.offsetHeight;
+
+      // Overflow detection: split slides taller than 720px (skip hero/quote pages)
+      var MAX_H = 720;
+      Array.from(printSlides.children).forEach(function (firstSlide) {
+        if (firstSlide.classList.contains('slide-hero') || firstSlide.classList.contains('slide-quote')) return;
+        var group = [firstSlide];
+        var curSlide = firstSlide;
+
+        while (curSlide.scrollHeight > MAX_H) {
+          var body = curSlide.querySelector('.slide-body');
+          if (!body || body.children.length <= 1) {
+            // Cannot split further — allow the browser to break inside gracefully
+            // instead of forcing a blank overflow page
+            curSlide.style.minHeight = '0';
+            curSlide.style.pageBreakInside = 'auto';
+            curSlide.style.breakInside = 'auto';
+            break;
+          }
+
+          var overflow = [];
+          while (curSlide.scrollHeight > MAX_H && body.children.length > 1) {
+            overflow.unshift(body.lastChild);
+            body.removeChild(body.lastChild);
+          }
+          if (!overflow.length) break;
+
+          var hdr = curSlide.querySelector('.slide-header');
+          var mt = hdr.querySelector('.slide-title').textContent;
+          var stEl = hdr.querySelector('.slide-subtitle');
+          var stBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
+
+          var nextSlide = makeSlide(mt, stBase, 0);
+          var nextBody = nextSlide.querySelector('.slide-body');
+          overflow.forEach(function (c) { nextBody.appendChild(c); });
+          printSlides.insertBefore(nextSlide, curSlide.nextSibling || null);
+
+          group.push(nextSlide);
+          curSlide = nextSlide;
+          void curSlide.offsetHeight; // reflow
+        }
+
+        // Add page numbers if this section split into multiple slides
+        if (group.length > 1) {
+          group.forEach(function (s, i) {
+            var stEl = s.querySelector('.slide-subtitle');
+            if (stEl) stEl.textContent = (stEl.dataset.base || stEl.textContent) + ' (' + (i + 1) + '/' + group.length + ')';
+          });
+        }
+      });
+
+      // Remove ghost slides whose body is empty or has negligible content height
+      Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+        if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
+        var body = s.querySelector('.slide-body');
+        if (!body || body.children.length === 0 || body.scrollHeight < 50) {
+          s.remove();
+        }
+      });
+
+      // Fix ALL remaining slides to prevent blank second pages.
+      // Three tiers:
+      //   1. Fits (scrollHeight <= MAX_H) → clamp to prevent print drift
+      //   2. Slightly over (<=1.25×) → shrink font-size to fit in one page
+      //   3. Way over (>1.25×) → allow natural page breaks
+      var SHRINK_LIMIT = MAX_H * 1.25;  // 900px — beyond this, allow multi-page
+      Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+        void s.offsetHeight;
+        var h = s.scrollHeight;
+        if (h <= MAX_H) {
+          // Tier 1: fits — clamp to prevent print rendering drift
+          s.style.setProperty('max-height', MAX_H + 'px', 'important');
+          s.style.setProperty('overflow', 'hidden', 'important');
+        } else if (h <= SHRINK_LIMIT) {
+          // Tier 2: slightly over — shrink font to fit one page
+          var body = s.querySelector('.slide-body') || s;
+          var attempts = 0;
+          while (s.scrollHeight > MAX_H && attempts < 6) {
+            var cur = parseFloat(getComputedStyle(body).fontSize);
+            var ratio = (MAX_H - 4) / s.scrollHeight;  // 4px breathing room
+            body.style.fontSize = (cur * ratio) + 'px';
+            void s.offsetHeight;
+            attempts++;
+          }
+          s.style.setProperty('max-height', MAX_H + 'px', 'important');
+          s.style.setProperty('overflow', 'hidden', 'important');
+        } else {
+          // Tier 3: way over — allow natural page breaks
+          s.style.minHeight = '0';
+          s.style.pageBreakInside = 'auto';
+          s.style.breakInside = 'auto';
+        }
+      });
+
+      // Set CSS variable so @media print uses the scaled font-size,
+      // then restore the original web font-size for the live page.
+      document.documentElement.style.setProperty('--print-font-size', printFontSize + 'px');
+      document.documentElement.style.fontSize = origFontSize;
+
+      // Remove measurement styles and start printing
+      printSlides.removeAttribute('style');
+      document.body.classList.add('printing');
+
+      window.print();
+
+      setTimeout(function () {
+        document.body.classList.remove('printing');
+        if (printSlides.parentNode) document.body.removeChild(printSlides);
+      }, 500);
+    }
+
+    function makeSlide(mainTitle, subTitle, pageNum) {
+      var slide = document.createElement('div');
+      slide.className = 'slide';
+
+      var header = document.createElement('div');
+      header.className = 'slide-header';
+
+      var titleEl = document.createElement('h2');
+      titleEl.className = 'slide-title';
+      titleEl.textContent = mainTitle;
+      header.appendChild(titleEl);
+
+      if (subTitle) {
+        var subEl = document.createElement('h3');
+        subEl.className = 'slide-subtitle';
+        subEl.dataset.base = subTitle;
+        subEl.textContent = pageNum > 0 ? subTitle + ' (' + pageNum + ')' : subTitle;
+        header.appendChild(subEl);
+      }
+
+      var body = document.createElement('div');
+      body.className = 'slide-body';
+      slide.appendChild(header);
+      slide.appendChild(body);
+      return slide;
+    }
   </script>
 </body>
 
