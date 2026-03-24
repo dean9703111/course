@@ -1,547 +1,2378 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vibe Coding 全端實戰 — Google Antigravity 教學</title>
-<link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Vibe Coding 全端實戰 — Google Antigravity 教學">
-<meta property="og:description" content="AI 開發工作流與實戰教學">
-<meta property="og:image" content="config/assets/og-default.jpg">
-<meta property="og:url" content="">
-<meta property="og:site_name" content="林鼎淵 Dean Lin">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-/* ===== RESET & VARIABLES ===== */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0f1117;
-  --bg-card:#181b25;
-  --bg-card-alt:#1e2130;
-  --text:#e4e4e7;
-  --text-dim:#8b8d9a;
-  --accent:#e8845a;
-  --accent-rgb:232 132 90;
-  --accent2:#e8b878;
-  --accent2-rgb:232 184 120;
-  --accent3:#e08898;
-  --accent3-rgb:224 136 152;
-  --border:#2a2d3a;
-  --code-bg:#12141c;
-  --radius:12px;
-}
-[data-theme="light"]{
-  --bg:#f5f5f7;
-  --bg-card:#ffffff;
-  --bg-card-alt:#f0f0f3;
-  --text:#1a1a2e;
-  --text-dim:#5a5b6a;
-  --accent:#c45c28;
-  --accent-rgb:196 92 40;
-  --accent2:#9a7028;
-  --accent2-rgb:154 112 40;
-  --accent3:#b04860;
-  --accent3-rgb:176 72 96;
-  --border:#d4d4d8;
-  --code-bg:#eaeaef;
-}
-html{scroll-behavior:smooth;font-size:16px}
-[id]{scroll-margin-top:0}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Noto Sans TC',sans-serif;
-  line-height:1.8;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Antigravity 全端實戰</title>
+  <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Google Antigravity 全端實戰">
+  <meta property="og:description" content="AI 開發工作流與實戰教學">
+  <meta property="og:image" content="config/assets/og-default.jpg">
+  <meta property="og:url" content="">
+  <meta property="og:site_name" content="林鼎淵 Dean Lin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+    :root {
+      --bg: #0f1117;
+      --bg-card: #181b25;
+      --bg-card-alt: #1e2130;
+      --text: #e4e4e7;
+      --text-dim: #8b8d9a;
+      --accent: #e8845a;
+      --accent-rgb: 232 132 90;
+      --accent2: #e8b878;
+      --accent2-rgb: 232 184 120;
+      --accent3: #e08898;
+      --accent3-rgb: 224 136 152;
+      --border: #2a2d3a;
+      --code-bg: #12141c;
+      --radius: 12px;
+    }
 
-/* ===== HERO ===== */
-.hero{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:2rem;
-  position:relative;
-  overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;top:-30%;left:-20%;
-  width:600px;height:600px;
-  background:radial-gradient(circle,rgb(var(--accent-rgb) / .12) 0%,transparent 70%);
-  pointer-events:none;
-}
-.hero::after{
-  content:'';position:absolute;bottom:-20%;right:-10%;
-  width:500px;height:500px;
-  background:radial-gradient(circle,rgb(var(--accent2-rgb) / .08) 0%,transparent 70%);
-  pointer-events:none;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.4rem 1rem;border:1px solid var(--border);border-radius:100px;
-  font-size:.8rem;color:var(--text-dim);letter-spacing:.05em;
-  margin-bottom:2rem;backdrop-filter:blur(4px);
-}
-.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{
-  font-family:'Noto Serif TC',serif;
-  font-size:clamp(2.2rem,5vw,4rem);font-weight:900;line-height:1.25;
-  margin-bottom:1.5rem;
-  background:linear-gradient(135deg,var(--text) 30%,var(--accent) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-dim);max-width:600px;margin-bottom:1rem;font-weight:300}
-.hero-author{font-size:.95rem;color:var(--accent);font-weight:500;margin-bottom:3rem}
-.hero-nav{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
-.hero-nav a{
-  padding:.65rem 1.4rem;border-radius:100px;font-size:.85rem;font-weight:500;
-  text-decoration:none;transition:all .3s ease;border:1px solid var(--border);color:var(--text);
-}
-.hero-nav a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-.hero-nav a.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-.hero-nav a.primary:hover{filter:brightness(1.15)}
+    [data-theme="light"] {
+      --bg: #f5f5f7;
+      --bg-card: #ffffff;
+      --bg-card-alt: #f0f0f3;
+      --text: #1a1a2e;
+      --text-dim: #5a5b6a;
+      --accent: #c45c28;
+      --accent-rgb: 196 92 40;
+      --accent2: #9a7028;
+      --accent2-rgb: 154 112 40;
+      --accent3: #b04860;
+      --accent3-rgb: 176 72 96;
+      --border: #d4d4d8;
+      --code-bg: #eaeaef;
+    }
 
-/* ===== SECTION ===== */
-.section{max-width:860px;margin:0 auto;padding:5rem 1.5rem}
-.section-label{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-size:1.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:1rem;
-}
-.section-label .num{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:28px;height:28px;border-radius:6px;
-  background:rgb(var(--accent-rgb) / .15);font-size:1.2rem;
-}
-.section h2{
-  font-family:'Noto Serif TC',serif;
-  font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;line-height:1.3;margin-bottom:.75rem;
-}
-.section .lead{
-  font-size:1.05rem;color:var(--text-dim);margin-bottom:2.5rem;
-  padding-left:1rem;border-left:3px solid var(--accent);
-}
-.divider{max-width:860px;margin:0 auto;border:none;border-top:1px solid var(--border)}
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px
+    }
 
-/* ===== CARD ===== */
-.card{
-  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:1.75rem;margin-bottom:1.5rem;transition:border-color .3s;
-}
-.card:hover{border-color:rgb(var(--accent-rgb) / .3)}
-.card h3{font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
-.card h3 .icon{font-size:1.1rem}
-.card ul{list-style:none;padding:0}
-.card ul li{position:relative;padding-left:1.2rem;margin-bottom:.5rem;color:var(--text-dim);font-size:.95rem}
-.card ul li::before{content:'';position:absolute;left:0;top:.7em;width:5px;height:5px;border-radius:50%;background:var(--accent2)}
-.card p{color:var(--text-dim);font-size:.95rem}
+    [id] {
+      scroll-margin-top: 20px
+    }
 
-/* ===== INLINE CODE ===== */
-code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-radius:4px;font-size:.875em;font-family:'JetBrains Mono',monospace}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-/* ===== LOOSE TEXT & LIST ===== */
-.loose-text{color:var(--text-dim);font-size:.9rem;margin-bottom:.75rem}
-.loose-list{list-style:none;padding:0;margin:1rem 0}
-.loose-list li{position:relative;padding-left:1.4rem;margin-bottom:.6rem;color:var(--text-dim);font-size:.95rem;line-height:1.8}
-.loose-list li::before{content:'';position:absolute;left:0;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--accent2)}
+    a {
+      color: var(--accent2);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
 
-/* ===== PROMPT BLOCK ===== */
-.prompt-block{
-  background:var(--code-bg);border:1px solid var(--border);border-radius:var(--radius);
-  overflow:hidden;margin-bottom:1.5rem;
-}
-.prompt-header{
-  display:flex;align-items:center;gap:.5rem;
-  padding:.6rem 1rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);
-  font-size:.75rem;color:var(--text-dim);font-family:'JetBrains Mono',monospace;
-}
-.prompt-header .dots{display:flex;gap:5px}
-.prompt-header .dots span{width:8px;height:8px;border-radius:50%;display:block}
-.prompt-header .dots span:nth-child(1){background:#ff5f57}
-.prompt-header .dots span:nth-child(2){background:#febc2e}
-.prompt-header .dots span:nth-child(3){background:#28c840}
-.prompt-header .label{margin-left:auto;color:var(--accent);font-weight:500}
-.prompt-body{
-  padding:1.25rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;
-  line-height:1.7;color:var(--accent2);white-space:pre-wrap;overflow-x:auto;
-}
+    a:hover {
+      color: var(--accent);
+    }
 
-/* ===== INSIGHT BOX ===== */
-.insight{
-  background:linear-gradient(135deg,rgb(var(--accent3-rgb) / .06),rgb(var(--accent2-rgb) / .04));
-  border:1px solid rgb(var(--accent3-rgb) / .2);border-radius:var(--radius);
-  padding:1.75rem;margin:2rem 0;position:relative;
-}
-.insight::before{
-  content:'💡';position:absolute;top:-14px;left:20px;
-  width:28px;height:28px;display:flex;align-items:center;justify-content:center;
-  background:var(--bg-card);border:1px solid rgb(var(--accent3-rgb) / .25);
-  border-radius:50%;font-size:.85rem;line-height:1;
-}
-.insight .insight-title{font-weight:700;color:var(--accent3);margin-bottom:.5rem;font-size:.95rem}
-.insight p{color:var(--text-dim);font-size:.9rem;line-height:1.9}
-.insight ul{list-style:none;padding:0;margin:.75rem 0 0}
-.insight ul li{position:relative;padding-left:1.2rem;margin-bottom:.4rem;color:var(--text-dim);font-size:.9rem;line-height:1.9}
-.insight ul li::before{content:'';position:absolute;left:0;top:.75em;width:5px;height:5px;border-radius:50%;background:var(--accent3)}
+    [data-theme="light"] a {
+      color: var(--accent);
+    }
 
-/* ===== FLOW STEPS ===== */
-.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
-.flow-step{
-  background:var(--bg-card-alt);border:1px solid var(--border);border-radius:var(--radius);
-  padding:1.25rem;text-align:center;position:relative;
-}
-.flow-step .step-num{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:32px;height:32px;border-radius:50%;
-  background:rgb(var(--accent-rgb) / .12);color:var(--accent);
-  font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;margin-bottom:.75rem;
-}
-.flow-step .step-title{font-size:.9rem;font-weight:700;margin-bottom:.35rem}
-.flow-step .step-desc{font-size:.8rem;color:var(--text-dim)}
+    [data-theme="light"] a:hover {
+      color: var(--accent2);
+    }
 
-/* ===== TAGS ===== */
-.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
-.tag{padding:.3rem .8rem;border-radius:100px;font-size:.75rem;font-weight:500;border:1px solid var(--border);color:var(--text-dim)}
-.tag.green{border-color:rgb(var(--accent2-rgb) / .3);color:var(--accent2)}
-.tag.orange{border-color:rgb(var(--accent-rgb) / .3);color:var(--accent)}
-.tag.purple{border-color:rgb(var(--accent3-rgb) / .3);color:var(--accent3)}
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 6px
+    }
 
-/* ===== CHECKLIST ===== */
-.checklist{list-style:none;padding:0;margin:1rem 0}
-.checklist li{position:relative;padding:.5rem 0 .5rem 2rem;font-size:.9rem;color:var(--text-dim);border-bottom:1px solid rgba(255,255,255,.04)}
-.checklist li::before{
-  content:'✓';position:absolute;left:0;top:.5rem;
-  display:inline-flex;align-items:center;justify-content:center;
-  width:20px;height:20px;border-radius:5px;
-  background:rgb(var(--accent2-rgb) / .1);color:var(--accent2);font-size:.7rem;font-weight:700;
-}
+    ::-webkit-scrollbar-track {
+      background: var(--bg)
+    }
 
-/* ===== SUMMARY GRID ===== */
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin:2rem 0}
-.summary-card{
-  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:1.75rem;transition:all .3s;
-}
-.summary-card:hover{transform:translateY(-4px);border-color:var(--accent)}
-.summary-card .sc-icon{font-size:1.5rem;margin-bottom:1rem}
-.summary-card h4{font-family:'Noto Serif TC',serif;font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
-.summary-card p{font-size:.85rem;color:var(--text-dim);line-height:1.7}
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px
+    }
 
-/* ===== INSTRUCTOR ===== */
-.instructor{display:flex;gap:2rem;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin:2rem 0}
-.instructor-avatar{width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);flex-shrink:0;background:var(--bg-card-alt);display:flex;align-items:center;justify-content:center}
-.instructor-avatar-placeholder{width:130px;height:130px;border-radius:50%;border:3px dashed var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--bg-card-alt);color:var(--text-dim)}
-.instructor-info h3{font-family:'Noto Serif TC',serif;font-size:1.3rem;font-weight:700;margin-bottom:.25rem}
-.instructor-info .tagline{color:var(--accent);font-size:.85rem;font-weight:500;margin-bottom:.75rem}
-.instructor-info p{color:var(--text-dim);font-size:.9rem;line-height:1.8}
-.instructor-stats{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
-.instructor-stats a{font-size:.8rem;color:var(--text-dim);display:inline-flex;align-items:center;gap:.35rem;text-decoration:none;transition:color .2s}
-.instructor-stats a:hover{color:var(--accent)}
-.instructor-stats a strong{color:var(--text);font-weight:700;transition:color .2s}
-.instructor-stats a:hover strong{color:var(--accent)}
-.social-links{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
-.social-links a{
-  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
-  padding:.45rem .9rem;border-radius:100px;border:1px solid var(--border);
-  color:var(--text-dim);text-decoration:none;font-size:.78rem;font-weight:500;transition:all .3s;
-}
-.social-links a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-.social-links a svg{flex-shrink:0;width:18px;height:18px}
-@media(max-width:640px){
-  .instructor{flex-direction:column;align-items:center;text-align:center}
-  .instructor-stats{justify-content:center}
-  .social-links{justify-content:center}
-}
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: clip;
+      width: 100%;
+    }
 
-/* ===== QUOTE PAGE ===== */
-.quote-page{
-  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;padding:3rem 2rem;position:relative;overflow:hidden;
-}
-.quote-page::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 50% at 20% 40%,rgb(var(--accent-rgb) / .06) 0%,transparent 70%),radial-gradient(ellipse 50% 60% at 80% 60%,rgb(var(--accent2-rgb) / .05) 0%,transparent 70%);
-  pointer-events:none;
-}
-.quote-page .reveal{max-width:740px;width:100%}
-.quote-page .quote-mark{font-family:'Noto Serif TC',serif;font-size:clamp(4rem,10vw,8rem);line-height:1;color:var(--accent);opacity:.2;margin-bottom:-1rem;user-select:none;text-align:left}
-.quote-page blockquote{font-family:'Noto Serif TC',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;line-height:1.9;color:var(--text);max-width:740px;position:relative}
-.quote-page .quote-author{margin-top:2rem;font-size:.85rem;color:var(--text-dim);letter-spacing:.08em}
-.quote-page .quote-line{width:50%;height:2px;background:var(--accent);border-radius:1px;margin:1.5rem auto 0}
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgb(var(--accent-rgb) / .12) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-/* ===== FOOTER ===== */
-.footer{text-align:center;padding:3rem 1.5rem;border-top:1px solid var(--border);color:var(--text-dim);font-size:.8rem}
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgb(var(--accent2-rgb) / .08) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-/* ===== SUB-TITLE ===== */
-.sub-title{font-family:'Noto Serif TC',serif;font-size:1.5rem;font-weight:700;margin:3.5rem 0 1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--accent);display:flex;align-items:center;gap:.75rem}
-.sub-title .bar{display:none}
-.sub-lead{color:var(--text-dim);font-size:.9rem;margin-top:.25rem}
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: .8rem;
+      color: var(--text-dim);
+      letter-spacing: .05em;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(4px);
+    }
 
-/* ===== ANIMATIONS ===== */
-.reveal{opacity:0;transition:opacity .7s ease}
-.reveal>*{transform:translateY(20px);transition:transform .7s ease}
-.reveal.visible{opacity:1}
-.reveal.visible>*{transform:translateY(0)}
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite
+    }
 
-/* ===== SIDEBAR (SHELL) ===== */
-.sidebar{
-  position:fixed;top:0;left:0;width:260px;height:100vh;
-  background:rgba(15,17,23,.92);backdrop-filter:blur(16px);
-  border-right:1px solid var(--border);padding:0;z-index:100;
-  display:flex;flex-direction:column;
-  transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
-  overflow:hidden;
-}
-[data-theme="light"] .sidebar{background:rgba(245,245,247,.94)}
-.sidebar.open{transform:translateX(0)}
-@media(min-width:1100px){
-  .sidebar{transform:translateX(0)}
-  body{padding-left:260px;transition:padding-left .35s cubic-bezier(.4,0,.2,1)}
-  .sidebar.collapsed{transform:translateX(-100%)}
-  body.sidebar-collapsed{padding-left:0}
-}
-.sidebar-collapse-btn{
-  position:fixed;top:50%;left:260px;transform:translateY(-50%);z-index:101;
-  width:20px;height:48px;border:none;border-radius:0 8px 8px 0;
-  background:var(--bg-card);border:1px solid var(--border);border-left:none;
-  cursor:pointer;display:none;align-items:center;justify-content:center;
-  color:var(--text-dim);font-size:.6rem;transition:all .35s cubic-bezier(.4,0,.2,1);padding:0;
-}
-.sidebar-collapse-btn:hover{width:24px;color:var(--accent);background:var(--bg-card-alt)}
-.sidebar-collapse-btn svg{transition:transform .35s}
-.sidebar.collapsed ~ .sidebar-collapse-btn{left:0}
-.sidebar.collapsed ~ .sidebar-collapse-btn svg{transform:rotate(180deg)}
-@media(min-width:1100px){.sidebar-collapse-btn{display:flex}}
-@media(max-width:1099px){.sidebar-collapse-btn{display:none}}
+    @keyframes pulse {
 
-/* ===== SIDEBAR BRAND (TOP) ===== */
-.sidebar-brand{
-  padding:.75rem 1.5rem 1rem;border-bottom:1px solid var(--border);
-  flex-shrink:0;display:flex;flex-direction:column;gap:.4rem;
-}
-.sidebar-brand-controls{display:flex;align-items:center;gap:.5rem}
-.sidebar-brand-title{
-  font-family:'Noto Serif TC',serif;font-size:1.5rem;
-  font-weight:700;color:var(--accent);line-height:1.4;
-}
+      0%,
+      100% {
+        opacity: 1
+      }
 
-/* ===== SIDEBAR TOC (MIDDLE) ===== */
-.toc{list-style:none;padding:.75rem 0;flex:1;overflow-y:auto;overscroll-behavior:contain}
-.toc-group{margin-bottom:.25rem}
-.toc-group-title{
-  display:flex;align-items:center;gap:.5rem;padding:.55rem 1.5rem;
-  font-size:.78rem;font-weight:700;letter-spacing:.06em;color:var(--text-dim);
-  text-decoration:none;transition:all .25s;position:relative;
-}
-.toc-group-title::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--accent);border-radius:0 2px 2px 0;opacity:0;transition:opacity .25s}
-.toc-group-title:hover{color:var(--text)}
-.toc-group-title.active{color:var(--accent)}
-.toc-group-title.active::before{opacity:1}
-.toc-group-title .toc-num{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:20px;height:20px;border-radius:5px;
-  background:rgb(var(--accent-rgb) / .1);font-size:.65rem;color:var(--accent);flex-shrink:0;
-}
-.toc-sub{list-style:none;padding:0;overflow:hidden;max-height:0;transition:max-height .35s ease}
-.toc-group.expanded .toc-sub{max-height:500px}
-.toc-sub a{display:block;padding:.35rem 1.5rem .35rem 3.25rem;font-size:.75rem;color:var(--text-dim);text-decoration:none;transition:all .2s;position:relative}
-.toc-sub a::before{content:'';position:absolute;left:2.25rem;top:50%;width:4px;height:4px;border-radius:50%;background:var(--border);transform:translateY(-50%);transition:background .2s}
-.toc-sub a:hover{color:var(--text)}
-.toc-sub a.active{color:var(--accent2)}
-.toc-sub a.active::before{background:var(--accent2)}
+      50% {
+        opacity: .3
+      }
+    }
 
-/* ===== SIDEBAR PROGRESS (BOTTOM) ===== */
-.sidebar-progress{flex-shrink:0;padding:.75rem 1.5rem 1.5rem;border-top:1px solid var(--border)}
-.sidebar-progress-label{font-size:.65rem;color:var(--text-dim);margin-bottom:.4rem;display:flex;justify-content:space-between}
-.sidebar-progress-track{width:100%;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
-.sidebar-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;width:0%;transition:width .3s ease}
+    .hero h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+      max-width: 100%;
+      width: 100%;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
+      background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding: 0 0.2em;
+    }
 
-/* ===== HAMBURGER ===== */
-.hamburger{
-  position:fixed;bottom:1.25rem;right:1.25rem;top:auto;left:auto;z-index:200;
-  width:48px;height:48px;border-radius:50%;
-  background:rgb(var(--accent-rgb) / .92);backdrop-filter:blur(12px);border:none;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
-  transition:all .3s;box-shadow:0 4px 20px rgb(var(--accent-rgb) / .35);
-}
-.hamburger:hover{transform:scale(1.08)}
-.hamburger span{display:block;width:18px;height:2px;background:#fff;border-radius:1px;transition:all .3s}
-.hamburger.active{background:rgba(24,27,37,.92);box-shadow:0 4px 20px rgba(0,0,0,.4)}
-[data-theme="light"] .hamburger.active{background:rgba(255,255,255,.92)}
-.hamburger.active span{background:var(--text)}
-.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(3.5px,3.5px)}
-.hamburger.active span:nth-child(2){opacity:0}
-.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(3.5px,-3.5px)}
-@media(min-width:1100px){.hamburger{display:none}}
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-dim);
+      max-width: 600px;
+      margin-bottom: 1rem;
+      font-weight: 300
+    }
 
-.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;opacity:0;pointer-events:none;transition:opacity .3s}
-.sidebar-overlay.visible{opacity:1;pointer-events:auto}
+    .hero-author {
+      font-size: .95rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 3rem
+    }
 
-/* ===== THEME TOGGLE ===== */
-.theme-toggle{
-  width:32px;height:32px;border-radius:50%;background:var(--bg-card-alt);
-  border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;
-  justify-content:center;font-size:.95rem;transition:all .3s;flex-shrink:0;line-height:1;padding:0;
-}
-.theme-toggle:hover{border-color:var(--accent);transform:scale(1.1)}
+    .hero-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      justify-content: center
+    }
 
-/* ===== FONT SIZE TOGGLE ===== */
-.fontsize-toggle{
-  width:32px;height:32px;border-radius:50%;background:var(--bg-card-alt);
-  border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;
-  justify-content:center;font-size:.7rem;font-weight:700;transition:all .3s;flex-shrink:0;
-  line-height:1;padding:0;color:var(--text-dim);font-family:'Noto Sans TC',sans-serif;
-}
-.fontsize-toggle:hover{border-color:var(--accent);transform:scale(1.1);color:var(--accent)}
+    .hero-nav a {
+      padding: .65rem 1.4rem;
+      border-radius: 100px;
+      font-size: .85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .3s ease;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
 
-/* ===== SETTINGS TOGGLE ===== */
-.settings-toggle{
-  width:32px;height:32px;border-radius:50%;background:var(--bg-card-alt);
-  border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;
-  justify-content:center;font-size:.95rem;transition:all .3s;flex-shrink:0;
-  line-height:1;padding:0;color:var(--text-dim);
-}
-.settings-toggle:hover,
-.settings-toggle.active{border-color:var(--accent);transform:scale(1.1);color:var(--accent)}
+    .hero-nav a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px)
+    }
 
-/* ===== SETTINGS PANEL ===== */
-.settings-panel{
-  position:fixed;width:210px;background:var(--bg-card);border:1px solid var(--border);
-  border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.3);padding:.85rem;
-  z-index:500;opacity:0;pointer-events:none;transform:translateY(-6px);
-  transition:opacity .2s,transform .2s;
-}
-.settings-panel.open{opacity:1;pointer-events:auto;transform:translateY(0)}
-.settings-section{margin-bottom:.2rem}
-.settings-label{font-size:.7rem;font-weight:600;color:var(--text-dim);margin-bottom:.45rem;letter-spacing:.04em}
-.settings-divider{height:1px;background:var(--border);margin:.7rem 0}
-.color-swatches{display:flex;flex-wrap:wrap;gap:.45rem}
-.color-swatch{
-  width:28px;height:28px;border-radius:50%;border:2px solid transparent;
-  cursor:pointer;padding:0;transition:transform .2s,border-color .2s;
-  outline:none;box-shadow:0 0 0 2px transparent;
-}
-.color-swatch:hover{transform:scale(1.15)}
-.color-swatch.selected{box-shadow:0 0 0 2px var(--bg-card),0 0 0 4px currentColor;border-color:transparent}
+    .hero-nav a.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent)
+    }
 
-/* ===== LIGHT MODE OVERRIDES ===== */
-[data-theme="light"] .prompt-header{background:rgba(0,0,0,.03)}
-[data-theme="light"] .checklist li{border-bottom-color:rgba(0,0,0,.06)}
-[data-theme="light"] .prompt-body{color:var(--accent2)}
-[data-theme="light"] .insight{background:linear-gradient(135deg,rgb(var(--accent3-rgb) / .06),rgb(var(--accent2-rgb) / .04));border-color:rgb(var(--accent3-rgb) / .2)}
-[data-theme="light"] .hero::before{background:radial-gradient(circle,rgb(var(--accent-rgb) / .08) 0%,transparent 70%)}
-[data-theme="light"] .hero::after{background:radial-gradient(circle,rgb(var(--accent2-rgb) / .06) 0%,transparent 70%)}
-[data-theme="light"] .card:hover{border-color:rgb(var(--accent-rgb) / .35)}
+    .hero-nav a.primary:hover {
+      filter: brightness(1.15);
+    }
 
-/* ===== OG MODE (for square OG thumbnails) ===== */
-html.og-mode body{
-  padding-left:0 !important;
-}
-html.og-mode .sidebar,
-html.og-mode .sidebar-collapse-btn,
-html.og-mode .hamburger,
-html.og-mode .sidebar-overlay{
-  display:none !important;
-}
-html.og-mode .section,
-html.og-mode .quote-page,
-html.og-mode .footer{
-  display:none !important;
-}
-html.og-mode .hero{
-  max-width:960px;
-  margin:0 auto;
-}
+    /* ===== SECTION ===== */
+    .section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem
+    }
 
-/* ===== BONUS BUTTON & MODAL ===== */
-.bonus-btn-wrap{text-align:center;margin:2.5rem 0 1rem}
-.bonus-btn{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.75rem 2rem;border-radius:100px;
-  background:linear-gradient(135deg,rgb(var(--accent-rgb) / .12),rgb(var(--accent3-rgb) / .12));
-  border:1px solid rgb(var(--accent-rgb) / .4);color:var(--accent);
-  font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;
-  font-family:'Noto Sans TC',sans-serif;
-}
-.bonus-btn:hover{background:linear-gradient(135deg,rgb(var(--accent-rgb) / .22),rgb(var(--accent3-rgb) / .22));transform:translateY(-2px);box-shadow:0 8px 24px rgb(var(--accent-rgb) / .2)}
-.bonus-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;
-  opacity:0;pointer-events:none;transition:opacity .3s;
-  display:flex;align-items:center;justify-content:center;padding:1.5rem;
-}
-.bonus-overlay.visible{opacity:1;pointer-events:auto}
-.bonus-modal{
-  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-  max-width:640px;width:100%;max-height:80vh;display:flex;flex-direction:column;
-  transform:translateY(24px);transition:transform .3s;overflow:hidden;
-}
-.bonus-overlay.visible .bonus-modal{transform:translateY(0)}
-.bonus-modal-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);flex-shrink:0;
-}
-.bonus-modal-header h3{font-family:'Noto Serif TC',serif;font-size:1.05rem;font-weight:700;color:var(--accent)}
-.bonus-modal-close{
-  width:30px;height:30px;border-radius:50%;background:var(--bg-card-alt);
-  border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;
-  justify-content:center;font-size:.95rem;color:var(--text-dim);transition:all .2s;
-}
-.bonus-modal-close:hover{border-color:var(--accent);color:var(--accent)}
-.bonus-modal-body{
-  padding:1.5rem 1.75rem;overflow-y:auto;flex:1;
-  line-height:2;font-size:.9rem;color:var(--text-dim);
-}
-.bonus-modal-body p{margin-bottom:.6rem}
-.bonus-modal-body strong{color:var(--text);font-weight:700}
-.bonus-modal-body em{color:var(--accent2)}
-.bonus-modal-body code{background:var(--code-bg);color:var(--accent2);padding:.1em .35em;border-radius:4px;font-size:.875em;font-family:'JetBrains Mono',monospace}
-.bonus-modal-body ul{list-style:none;padding:0;margin:.25rem 0 .75rem}
-.bonus-modal-body ul li{position:relative;padding-left:1.2rem;margin-bottom:.3rem}
-.bonus-modal-body ul li::before{content:'';position:absolute;left:0;top:.75em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
-.bonus-steps{margin:.25rem 0 .5rem}
-.bonus-step{display:flex;align-items:flex-start;gap:.85rem;padding:.75rem 0;border-bottom:1px solid var(--border)}
-.bonus-steps .bonus-step:last-child{border-bottom:none}
-.bonus-step-num{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:rgb(var(--accent-rgb) / .12);border:1px solid rgb(var(--accent-rgb) / .25);color:var(--accent);font-size:.72rem;font-weight:700;flex-shrink:0;margin-top:.1rem;font-family:'JetBrains Mono',monospace}
-.bonus-step-text{font-size:.9rem;color:var(--text-dim);line-height:1.75}
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:640px){
-  .section{padding:3rem 1.25rem}
-  .card{padding:1.25rem}
-  .prompt-body{font-size:.78rem;padding:1rem}
-  .flow{grid-template-columns:1fr}
-  .hero-nav{flex-direction:column;align-items:center}
-  .bonus-modal{max-height:90vh}
-}
-</style>
+    .section-label .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgb(var(--accent-rgb) / .15);
+      font-size: 1.2rem;
+      padding-left: 3px;
+      padding-bottom: 1px;
+    }
+
+    .section h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: .75rem;
+    }
+
+    .section .lead {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .divider {
+      max-width: 860px;
+      margin: 0 auto;
+      border: none;
+      border-top: 1px solid var(--border)
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      transition: border-color .3s;
+    }
+
+    .card:hover {
+      border-color: rgb(var(--accent-rgb) / .3)
+    }
+
+    .card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: .75rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .card h3 .icon {
+      font-size: 1.1rem
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0
+    }
+
+    .card ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .5rem;
+      color: var(--text-dim);
+      font-size: .95rem
+    }
+
+    .card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent2)
+    }
+
+    .card p {
+      color: var(--text-dim);
+      font-size: .95rem
+    }
+
+    /* ===== INLINE CODE ===== */
+    code {
+      background: var(--code-bg);
+      color: var(--accent2);
+      padding: .1em .35em;
+      border-radius: 4px;
+      font-size: .875em;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    /* ===== LOOSE TEXT & LIST ===== */
+    .loose-text {
+      color: var(--text-dim);
+      font-size: .9rem;
+      margin-bottom: .75rem
+    }
+
+    .loose-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0
+    }
+
+    .loose-list li {
+      position: relative;
+      padding-left: 1.4rem;
+      margin-bottom: .6rem;
+      color: var(--text-dim);
+      font-size: .95rem;
+      line-height: 1.8
+    }
+
+    .loose-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2)
+    }
+
+    /* ===== PROMPT BLOCK ===== */
+    .prompt-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .6rem 1rem;
+      background: rgba(255, 255, 255, .03);
+      border-bottom: 1px solid var(--border);
+      font-size: .75rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .prompt-header .dots {
+      display: flex;
+      gap: 5px
+    }
+
+    .prompt-header .dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: block
+    }
+
+    .prompt-header .dots span:nth-child(1) {
+      background: #ff5f57
+    }
+
+    .prompt-header .dots span:nth-child(2) {
+      background: #febc2e
+    }
+
+    .prompt-header .dots span:nth-child(3) {
+      background: #28c840
+    }
+
+    .prompt-header .label {
+      margin-left: auto;
+      color: var(--accent);
+      font-weight: 500
+    }
+
+    .prompt-header .copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      opacity: .5;
+      transition: opacity .2s;
+    }
+
+    .prompt-header .copy-btn:hover {
+      opacity: 1
+    }
+
+    .prompt-header .label~.copy-btn {
+      margin-left: 0
+    }
+
+    .prompt-header .label:empty~.copy-btn {
+      margin-left: auto
+    }
+
+    .prompt-body {
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      line-height: 1.7;
+      color: var(--accent2);
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    /* ===== INSIGHT BOX ===== */
+    .insight {
+      background: linear-gradient(135deg, rgb(var(--accent3-rgb) / .06), rgb(var(--accent2-rgb) / .04));
+      border: 1px solid rgb(var(--accent3-rgb) / .2);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .insight::before {
+      content: '💡';
+      position: absolute;
+      top: -14px;
+      left: 20px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid rgb(var(--accent3-rgb) / .25);
+      border-radius: 50%;
+      font-size: .85rem;
+      line-height: 1;
+    }
+
+    .insight .insight-title {
+      font-weight: 700;
+      color: var(--accent3);
+      margin-bottom: .5rem;
+      font-size: .95rem
+    }
+
+    .insight p {
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.9
+    }
+
+    .insight ul {
+      list-style: none;
+      padding: 0;
+      margin: .75rem 0 0
+    }
+
+    .insight ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.9
+    }
+
+    .insight ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent3)
+    }
+
+    /* ===== FLOW STEPS (Timeline) ===== */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin: 1.5rem 0;
+    }
+
+    .flow-step {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      transition: border-color .2s;
+    }
+
+    .flow-step:hover {
+      border-color: rgb(var(--accent-rgb) / .3);
+    }
+
+    /* Connector line between cards */
+    .flow-step + .flow-step::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -0.75rem;
+      width: 2px;
+      height: .75rem;
+      background: rgb(var(--accent-rgb) / .2);
+      transform: translateX(-50%);
+    }
+
+    .flow-step .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .12);
+      border: 2px solid rgb(var(--accent-rgb) / .25);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
+    .flow-step .step-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .flow-step .step-title {
+      font-size: .9rem;
+      font-weight: 700;
+      margin-bottom: .15rem
+    }
+
+    .flow-step .step-desc {
+      font-size: .8rem;
+      color: var(--text-dim);
+      line-height: 1.6
+    }
+
+    /* ===== IMAGES ===== */
+    .content-image {
+      margin: 1.5rem 0;
+      text-align: center
+    }
+
+    .content-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border)
+    }
+
+    .content-image figcaption {
+      margin-top: .5rem;
+      font-size: .8rem;
+      color: var(--text-dim);
+      font-style: italic
+    }
+
+    .inline-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: .25rem 0;
+      vertical-align: middle
+    }
+
+    /* ===== IMAGE-TEXT LAYOUT ===== */
+    .image-text {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin: 1.5rem 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .image-text--img-right {
+      flex-direction: row-reverse
+    }
+
+    .image-text__img {
+      flex: 0 0 var(--img-width, 40%);
+      max-width: var(--img-width, 40%)
+    }
+
+    .image-text__img img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover
+    }
+
+    .image-text__body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .image-text__body p {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: .75rem
+    }
+
+    .image-text__body p:last-child {
+      margin-bottom: 0
+    }
+
+    .image-text__body ul {
+      list-style: none;
+      padding: 0;
+      margin: .5rem 0
+    }
+
+    .image-text__body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+      color: var(--text);
+      line-height: 1.7
+    }
+
+    .image-text__body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .65em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    @media(max-width:900px) {
+      .image-text,
+      .image-text--img-right {
+        flex-direction: column
+      }
+
+      .image-text__img {
+        flex: none;
+        max-width: 100%
+      }
+    }
+
+    /* ===== TAGS ===== */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin: 1rem 0
+    }
+
+    .tag {
+      padding: .3rem .8rem;
+      border-radius: 100px;
+      font-size: .75rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      color: var(--text-dim)
+    }
+
+    .tag.green {
+      border-color: rgb(76 175 80 / .35);
+      color: rgb(76 175 80)
+    }
+
+    .tag.orange {
+      border-color: rgb(235 150 60 / .35);
+      color: rgb(235 150 60)
+    }
+
+    .tag.purple {
+      border-color: rgb(171 104 210 / .35);
+      color: rgb(171 104 210)
+    }
+
+    .tag.blue {
+      border-color: rgb(100 160 240 / .35);
+      color: rgb(100 160 240)
+    }
+
+    /* ===== CHECKLIST ===== */
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: baseline;
+      gap: .6rem;
+      padding: .5rem 0;
+      font-size: .9rem;
+      color: var(--text-dim);
+      border-bottom: 1px solid rgba(255, 255, 255, .04)
+    }
+
+    .checklist li::before {
+      content: '✓';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: rgb(var(--accent2-rgb) / .1);
+      color: var(--accent2);
+      font-size: .7rem;
+      font-weight: 700;
+      transform: translateY(2px);
+    }
+
+    /* ===== SUMMARY GRID ===== */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: all .3s;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent)
+    }
+
+    .summary-card .sc-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center
+    }
+
+    .summary-card h4 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: .5rem
+    }
+
+    .summary-card p {
+      font-size: .85rem;
+      color: var(--text-dim);
+      line-height: 1.7
+    }
+
+    /* ===== INSTRUCTOR ===== */
+    .instructor {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0
+    }
+
+    .instructor-avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      flex-shrink: 0;
+      background: var(--bg-card-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .instructor-avatar-placeholder {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px dashed var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: var(--bg-card-alt);
+      color: var(--text-dim)
+    }
+
+    .instructor-info h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: .25rem
+    }
+
+    .instructor-info .tagline {
+      color: var(--accent);
+      font-size: .85rem;
+      font-weight: 500;
+      margin-bottom: .75rem
+    }
+
+    .instructor-info p {
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.8
+    }
+
+    .instructor-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.25rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border)
+    }
+
+    .instructor-stats a {
+      font-size: .8rem;
+      color: var(--text-dim);
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .instructor-stats a:hover {
+      color: var(--accent)
+    }
+
+    .instructor-stats a strong {
+      color: var(--text);
+      font-weight: 700;
+      transition: color .2s
+    }
+
+    .instructor-stats a:hover strong {
+      color: var(--accent)
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-top: 1rem
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      padding: .45rem .9rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 500;
+      transition: all .3s;
+    }
+
+    .social-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px)
+    }
+
+    .social-links a svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px
+    }
+
+    @media(max-width:640px) {
+      .instructor {
+        flex-direction: column;
+        align-items: center;
+        text-align: center
+      }
+
+      .instructor-stats {
+        justify-content: center
+      }
+
+      .social-links {
+        justify-content: center
+      }
+    }
+
+    /* ===== QUOTE PAGE ===== */
+    .quote-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 20% 40%, rgb(var(--accent-rgb) / .06) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 60%, rgb(var(--accent2-rgb) / .05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .quote-page .reveal {
+      max-width: 740px;
+      width: 100%
+    }
+
+    .quote-page .quote-mark {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      line-height: 1;
+      color: var(--accent);
+      opacity: .2;
+      margin-bottom: -1rem;
+      margin-left: -1rem;
+      user-select: none;
+      text-align: left
+    }
+
+    .quote-page blockquote {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.9;
+      color: var(--text);
+      max-width: 740px;
+      position: relative
+    }
+
+    .quote-page .quote-author {
+      margin-top: 2rem;
+      font-size: .85rem;
+      color: var(--text-dim);
+      letter-spacing: .08em
+    }
+
+    .quote-page .quote-line {
+      width: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      margin: 1.5rem auto 0
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: .8rem
+    }
+
+    /* ===== SUB-TITLE ===== */
+    .sub-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 3.5rem 0 1.5rem;
+      padding-bottom: .75rem;
+      border-bottom: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: .75rem
+    }
+
+    .sub-title .bar {
+      display: none
+    }
+
+    .sub-lead {
+      color: var(--text-dim);
+      font-size: .9rem;
+      margin-top: .25rem
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transition: opacity .7s ease
+    }
+
+    .reveal>* {
+      transform: translateY(20px);
+      transition: transform .7s ease
+    }
+
+    .reveal.visible {
+      opacity: 1
+    }
+
+    .reveal.visible>* {
+      transform: translateY(0)
+    }
+
+    /* ===== SIDEBAR (SHELL) ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 260px;
+      height: 100vh;
+      background: rgba(15, 17, 23, .92);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid var(--border);
+      padding: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+      overflow: hidden;
+    }
+
+    [data-theme="light"] .sidebar {
+      background: rgba(245, 245, 247, .94)
+    }
+
+    .sidebar.open {
+      transform: translateX(0)
+    }
+
+    @media(min-width:1100px) {
+      .sidebar {
+        transform: translateX(0)
+      }
+
+      body {
+        padding-left: 260px;
+        transition: padding-left .35s cubic-bezier(.4, 0, .2, 1)
+      }
+
+      .sidebar.collapsed {
+        transform: translateX(-100%)
+      }
+
+      body.sidebar-collapsed {
+        padding-left: 0
+      }
+    }
+
+    .sidebar-collapse-btn {
+      position: fixed;
+      top: 50%;
+      left: 260px;
+      transform: translateY(-50%);
+      z-index: 101;
+      width: 20px;
+      height: 48px;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: none;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: .6rem;
+      transition: all .35s cubic-bezier(.4, 0, .2, 1);
+      padding: 0;
+    }
+
+    .sidebar-collapse-btn:hover {
+      width: 24px;
+      color: var(--accent);
+      background: var(--bg-card-alt)
+    }
+
+    .sidebar-collapse-btn svg {
+      transition: transform .35s
+    }
+
+    .sidebar.collapsed~.sidebar-collapse-btn {
+      left: 0
+    }
+
+    .sidebar.collapsed~.sidebar-collapse-btn svg {
+      transform: rotate(180deg)
+    }
+
+    @media(min-width:1100px) {
+      .sidebar-collapse-btn {
+        display: flex
+      }
+    }
+
+    @media(max-width:1099px) {
+      .sidebar-collapse-btn {
+        display: none
+      }
+    }
+
+    /* ===== SIDEBAR BRAND (TOP) ===== */
+    .sidebar-brand {
+      padding: .75rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+
+    .sidebar-brand-controls {
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .sidebar-brand-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.4;
+    }
+
+    /* ===== SIDEBAR TOC (MIDDLE) ===== */
+    .toc {
+      list-style: none;
+      padding: .75rem 0;
+      flex: 1;
+      overflow-y: auto;
+      overscroll-behavior: contain
+    }
+
+    .toc-group {
+      margin-bottom: .25rem
+    }
+
+    .toc-group-title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem 1.5rem;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: all .25s;
+      position: relative;
+    }
+
+    .toc-group-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 0 2px 2px 0;
+      opacity: 0;
+      transition: opacity .25s
+    }
+
+    .toc-group-title:hover {
+      color: var(--text)
+    }
+
+    .toc-group-title.active {
+      color: var(--accent)
+    }
+
+    .toc-group-title.active::before {
+      opacity: 1
+    }
+
+    .toc-group-title .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: rgb(var(--accent-rgb) / .1);
+      font-size: .65rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .toc-sub {
+      list-style: none;
+      padding: 0;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .35s ease
+    }
+
+    .toc-group.expanded .toc-sub {
+      max-height: 500px
+    }
+
+    .toc-sub a {
+      display: block;
+      padding: .35rem 1.5rem .35rem 3.25rem;
+      font-size: .75rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: all .2s;
+      position: relative
+    }
+
+    .toc-sub a::before {
+      content: '';
+      position: absolute;
+      left: 2.25rem;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--border);
+      transform: translateY(-50%);
+      transition: background .2s
+    }
+
+    .toc-sub a:hover {
+      color: var(--text)
+    }
+
+    .toc-sub a.active {
+      color: var(--accent2)
+    }
+
+    .toc-sub a.active::before {
+      background: var(--accent2)
+    }
+
+    /* ===== SIDEBAR PROGRESS (BOTTOM) ===== */
+    .sidebar-progress {
+      flex-shrink: 0;
+      padding: .75rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--border)
+    }
+
+    .sidebar-progress-label {
+      font-size: .65rem;
+      color: var(--text-dim);
+      margin-bottom: .4rem;
+      display: flex;
+      justify-content: space-between
+    }
+
+    .sidebar-progress-track {
+      width: 100%;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden
+    }
+
+    .sidebar-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      width: 0%;
+      transition: width .3s ease
+    }
+
+    /* ===== COLLAPSED PROGRESS BAR (BOTTOM OF VIEWPORT) ===== */
+    .collapsed-progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      z-index: 99;
+      background: var(--border);
+      pointer-events: none;
+      transition: opacity .35s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .collapsed-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .3s ease;
+    }
+
+    @media(min-width:1100px) {
+      .collapsed-progress {
+        opacity: 0
+      }
+
+      body.sidebar-collapsed .collapsed-progress {
+        opacity: 1
+      }
+    }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      top: auto;
+      left: auto;
+      z-index: 200;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .92);
+      backdrop-filter: blur(12px);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all .3s;
+      box-shadow: 0 4px 20px rgb(var(--accent-rgb) / .35);
+    }
+
+    .hamburger:hover {
+      transform: scale(1.08)
+    }
+
+    .hamburger span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+      transition: all .3s
+    }
+
+    .hamburger.active {
+      background: rgba(24, 27, 37, .92);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .4)
+    }
+
+    [data-theme="light"] .hamburger.active {
+      background: rgba(255, 255, 255, .92)
+    }
+
+    .hamburger.active span {
+      background: var(--text)
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(3.5px, 3.5px)
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(3.5px, -3.5px)
+    }
+
+    @media(min-width:1100px) {
+      .hamburger {
+        display: none
+      }
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s
+    }
+
+    .sidebar-overlay.visible {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.1)
+    }
+
+    /* ===== FONT SIZE TOGGLE ===== */
+    .fontsize-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      font-weight: 700;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+      color: var(--text-dim);
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .fontsize-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.1);
+      color: var(--accent)
+    }
+
+    /* ===== SETTINGS TOGGLE ===== */
+    .settings-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+      color: var(--text-dim);
+    }
+
+    .settings-toggle:hover,
+    .settings-toggle.active {
+      border-color: var(--accent);
+      transform: scale(1.1);
+      color: var(--accent);
+    }
+
+    /* ===== SETTINGS PANEL ===== */
+    .settings-panel {
+      position: fixed;
+      width: 210px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+      padding: .85rem;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity .2s, transform .2s;
+    }
+
+    .settings-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .settings-section {
+      margin-bottom: .6rem;
+    }
+
+    .settings-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: .5rem;
+    }
+
+    .settings-divider {
+      height: 1px;
+      background: var(--border);
+      margin: .7rem 0;
+    }
+
+    .color-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+
+    .color-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: transform .2s, border-color .2s;
+      outline: none;
+      box-shadow: 0 0 0 2px transparent;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.15);
+    }
+
+    .color-swatch.selected {
+      box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px currentColor;
+      border-color: transparent;
+    }
+
+    .settings-export-btn {
+      width: 100%;
+      padding: .45rem .75rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s, transform .15s;
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    .settings-export-btn:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+    }
+
+    /* ===== PRINT / SLIDE STYLES ===== */
+    @media print {
+      html {
+        font-size: var(--print-font-size, 24px) !important;
+      }
+
+      @page {
+        size: 1280px 720px;
+        margin: 0;
+      }
+
+      /* ── Print color fidelity ──
+         Ensure backgrounds, borders, gradients render in both light & dark mode.
+         Without this, browsers strip backgrounds → dark mode becomes invisible text on white. */
+      *,
+      *::before,
+      *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      /* Hide all direct body children except slides */
+      body>*:not(#print-slides) {
+        display: none !important;
+        visibility: hidden !important;
+      }
+
+      /* Explicitly target fixed-position UI that can bleed through in Chrome/Safari */
+      .sidebar,
+      .hamburger,
+      .sidebar-overlay,
+      .sidebar-collapse-btn,
+      .collapsed-progress,
+      .settings-panel,
+      .bonus-overlay,
+      header.hero,
+      footer.footer {
+        display: none !important;
+        visibility: hidden !important;
+        position: static !important;
+      }
+
+      /* Un-hide hero/footer clones inside print-slides */
+      #print-slides header.hero {
+        display: flex !important;
+        visibility: visible !important;
+        min-height: 0 !important;
+        height: 100% !important;
+      }
+
+      /* slide-footer is now a rebuilt "Thank You" page — no longer clones footer.footer */
+
+      #print-slides {
+        display: block !important;
+        visibility: visible !important;
+        position: static !important;
+        overflow: visible !important;
+      }
+
+      #print-slides * {
+        visibility: visible !important;
+      }
+
+      /* Prevent body overflow-x:hidden from clipping print content */
+      body.printing {
+        overflow: visible !important;
+      }
+
+      /* Force reveal animations off in print */
+      #print-slides .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      #print-slides .reveal>* {
+        transform: none !important;
+      }
+
+      /* ## sub-title: left-bar style to distinguish from # bottom-border */
+      #print-slides .sub-title {
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        margin: .5rem 0 .75rem !important;
+        padding-left: .75rem !important;
+        border-left: 3px solid var(--accent) !important;
+        border-bottom: none !important;
+        color: var(--accent) !important;
+        font-family: 'Noto Sans TC', sans-serif !important;
+      }
+
+      /* Insight: ensure text visible in both themes */
+      #print-slides .insight p,
+      #print-slides .insight ul li,
+      #print-slides .insight .insight-title {
+        color: var(--text) !important;
+      }
+
+      /* Lead paragraph */
+      #print-slides .lead {
+        color: var(--text) !important;
+      }
+
+      /* quote-line is now a closing quotation mark — no background fix needed */
+      #print-slides .quote-line {
+        background: none !important;
+        height: 0 !important;
+        border-top: 2px solid var(--accent) !important;
+      }
+    }
+
+    #print-slides {
+      display: none;
+    }
+
+    .slide {
+      width: 100%;
+      min-height: 720px;
+      height: auto;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      display: flex;
+      flex-direction: column;
+      padding: 2.2rem 3rem 1.8rem;
+      box-sizing: border-box;
+      background: var(--bg);
+      overflow: visible;
+    }
+
+    .slide:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    .slide-header {
+      flex-shrink: 0;
+      margin-bottom: 1.2rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: .6rem;
+    }
+
+    .slide-label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+    }
+
+    .slide-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      font-family: 'Noto Serif TC', serif;
+      color: var(--text);
+      line-height: 1.3;
+      margin-top: .2rem;
+    }
+
+    .slide-subtitle {
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: var(--accent);
+      margin-top: .3rem;
+      line-height: 1.3;
+    }
+
+    .slide-body {
+      flex: 1;
+      overflow: visible;
+      font-size: .88rem;
+      line-height: 1.65;
+    }
+
+    .slide-body .card {
+      break-inside: avoid;
+    }
+
+    .slide-body .prompt-block {
+      break-inside: avoid;
+    }
+
+    .slide-quote {
+      padding: 0;
+      justify-content: center;
+    }
+
+    .slide-quote .quote-page {
+      min-height: 0;
+      flex: 1;
+      width: 100%;
+    }
+
+    .slide-quote .quote-line {
+      background: none;
+      height: 0;
+      border-top: 2px solid var(--accent);
+    }
+
+    /* ===== PRINT-SLIDES FONT SCALING ===== */
+    /* Base: 16px root becomes 24px universally in print. Slide body font is set to 1rem. */
+    #print-slides .slide-body {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ── Hero slide ──────────────────────────────────────────
+       In print, background-clip:text + text-fill-color:transparent
+       makes h1 completely invisible → force solid color.
+       Keep nav links; they serve as a visual chapter overview.
+    ─────────────────────────────────────────────────────────── */
+    #print-slides .slide-hero {
+      padding: 0;
+    }
+
+    #print-slides .slide-hero .hero {
+      flex: 1;
+      min-height: 0 !important;
+      height: 100% !important;
+      padding: 3rem 4rem;
+      justify-content: center;
+      overflow: visible !important;
+    }
+
+    /* Prevent hero ::before/::after pseudo-elements from triggering clip */
+    #print-slides .slide-hero .hero::before,
+    #print-slides .slide-hero .hero::after {
+      display: none !important;
+    }
+
+    /* Fix invisible title + prevent text clipping */
+    #print-slides .slide-hero .hero h1 {
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: var(--text) !important;
+      color: var(--text) !important;
+      font-size: 3.36rem;
+      margin-bottom: 1rem;
+      padding: 0.1em 0.5em !important;
+      overflow: visible !important;
+    }
+
+    #print-slides .slide-hero .hero-badge {
+      font-size: .96rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent) !important;
+      border-color: var(--accent) !important;
+      backdrop-filter: none !important;
+      display: inline-flex !important;
+      opacity: 1 !important;
+    }
+
+    #print-slides .slide-hero .hero-badge .dot {
+      animation: none !important;
+      opacity: 1 !important;
+      background: var(--accent) !important;
+    }
+
+    #print-slides .slide-hero .hero-sub {
+      font-size: 1.25rem;
+      margin-bottom: .6rem;
+    }
+
+    #print-slides .slide-hero .hero-author {
+      font-size: 1.07rem;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Nav links → chapter overview tags */
+    #print-slides .slide-hero .hero-nav {
+      gap: .5rem;
+    }
+
+    #print-slides .slide-hero .hero-nav a {
+      font-size: .96rem;
+      padding: .4rem 1rem;
+    }
+
+    /* Quote slide: scale quote mark for 720px height */
+    #print-slides .slide-quote .quote-mark {
+      font-size: 5rem;
+    }
+
+    #print-slides .slide-quote blockquote {
+      font-size: 2rem;
+      line-height: 2;
+    }
+
+    /* Slide header */
+    #print-slides .slide-label {
+      font-size: .8rem;
+    }
+
+    #print-slides .slide-title {
+      font-size: 1.4rem;
+    }
+
+    #print-slides .slide-subtitle {
+      font-size: 1.1rem;
+    }
+
+    /* Content elements */
+    #print-slides .card {
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .card h3 {
+      font-size: 1.1rem;
+    }
+
+    #print-slides .card ul li,
+    #print-slides .card p {
+      font-size: .95rem;
+    }
+
+    #print-slides .checklist li {
+      font-size: .95rem;
+      padding: .45rem 0;
+    }
+
+    #print-slides .insight {
+      padding: 1rem 1.25rem;
+    }
+
+    #print-slides .insight-title {
+      font-size: 1rem;
+    }
+
+    #print-slides .insight p {
+      font-size: .9rem;
+    }
+
+    #print-slides .prompt-block {
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .prompt-body {
+      font-size: .9rem;
+    }
+
+    #print-slides .content-image img {
+      max-height: 400px;
+      width: auto;
+    }
+
+    #print-slides .image-text {
+      padding: 1rem;
+      gap: 1.25rem;
+    }
+
+    #print-slides .image-text__img {
+      flex: 0 0 35%;
+      max-width: 35%;
+    }
+
+    #print-slides .image-text__body p,
+    #print-slides .image-text__body ul li {
+      font-size: .9rem;
+    }
+
+    #print-slides .sub-lead {
+      font-size: .9rem;
+    }
+
+    /* Footer slide — "Thank You" closing page */
+    #print-slides .slide-footer {
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #print-slides .slide-footer .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      width: 100%;
+      padding: 3rem 4rem;
+    }
+
+    #print-slides .slide-footer .footer-thanks {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+
+    #print-slides .slide-footer .footer-cta {
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: .8rem;
+      line-height: 1.6;
+    }
+
+    #print-slides .slide-footer .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .slide-footer .footer-socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: 1rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: .4rem .9rem;
+      border: 1.5px solid var(--accent);
+      border-radius: 2rem;
+    }
+
+    #print-slides .slide-footer .footer-socials a svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    #print-slides .slide-footer .footer-copyright {
+      font-size: .85rem;
+      color: var(--text-dim);
+      margin-top: .4rem;
+    }
+
+    #print-slides .slide-footer .footer-line {
+      width: 40%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      margin: .3rem auto;
+    }
+
+    /* ===== LIGHT MODE OVERRIDES ===== */
+    [data-theme="light"] .prompt-header {
+      background: rgba(0, 0, 0, .03)
+    }
+
+    [data-theme="light"] .checklist li {
+      border-bottom-color: rgba(0, 0, 0, .06)
+    }
+
+    [data-theme="light"] .prompt-body {
+      color: var(--accent2)
+    }
+
+    [data-theme="light"] .insight {
+      background: linear-gradient(135deg, rgb(var(--accent3-rgb) / .06), rgb(var(--accent2-rgb) / .04));
+      border-color: rgb(var(--accent3-rgb) / .2)
+    }
+
+    [data-theme="light"] .hero::before {
+      background: radial-gradient(circle, rgb(var(--accent-rgb) / .08) 0%, transparent 70%)
+    }
+
+    [data-theme="light"] .hero::after {
+      background: radial-gradient(circle, rgb(var(--accent2-rgb) / .06) 0%, transparent 70%)
+    }
+
+    [data-theme="light"] .card:hover {
+      border-color: rgb(var(--accent-rgb) / .35)
+    }
+
+    /* ===== OG MODE (for square OG thumbnails) ===== */
+    html.og-mode body {
+      padding-left: 0 !important;
+    }
+
+    html.og-mode .sidebar,
+    html.og-mode .sidebar-collapse-btn,
+    html.og-mode .hamburger,
+    html.og-mode .sidebar-overlay {
+      display: none !important;
+    }
+
+    html.og-mode .section,
+    html.og-mode .quote-page,
+    html.og-mode .footer {
+      display: none !important;
+    }
+
+    html.og-mode .hero {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ===== BONUS BUTTON & MODAL ===== */
+    .bonus-btn-wrap {
+      text-align: center;
+      margin: 2.5rem 0 1rem
+    }
+
+    .bonus-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 2rem;
+      border-radius: 100px;
+      background: linear-gradient(135deg, rgb(var(--accent-rgb) / .12), rgb(var(--accent3-rgb) / .12));
+      border: 1px solid rgb(var(--accent-rgb) / .4);
+      color: var(--accent);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .bonus-btn:hover {
+      background: linear-gradient(135deg, rgb(var(--accent-rgb) / .22), rgb(var(--accent3-rgb) / .22));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgb(var(--accent-rgb) / .2)
+    }
+
+    .bonus-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .65);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .bonus-overlay.visible {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    .bonus-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 640px;
+      width: 100%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(24px);
+      transition: transform .3s;
+      overflow: hidden;
+    }
+
+    .bonus-overlay.visible .bonus-modal {
+      transform: translateY(0)
+    }
+
+    .bonus-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .bonus-modal-header h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent)
+    }
+
+    .bonus-modal-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      color: var(--text-dim);
+      transition: all .2s;
+    }
+
+    .bonus-modal-close:hover {
+      border-color: var(--accent);
+      color: var(--accent)
+    }
+
+    .bonus-modal-body {
+      padding: 1.5rem 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+      line-height: 2;
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    .bonus-modal-body p {
+      margin-bottom: .6rem
+    }
+
+    .bonus-modal-body strong {
+      color: var(--text);
+      font-weight: 700
+    }
+
+    .bonus-modal-body em {
+      color: var(--accent2)
+    }
+
+    .bonus-modal-body code {
+      background: var(--code-bg);
+      color: var(--accent2);
+      padding: .1em .35em;
+      border-radius: 4px;
+      font-size: .875em;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .bonus-modal-body ul {
+      list-style: none;
+      padding: 0;
+      margin: .25rem 0 .75rem
+    }
+
+    .bonus-modal-body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .3rem
+    }
+
+    .bonus-modal-body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    .bonus-steps {
+      margin: .25rem 0 .5rem
+    }
+
+    .bonus-step {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .bonus-steps .bonus-step:last-child {
+      border-bottom: none
+    }
+
+    .bonus-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .12);
+      border: 1px solid rgb(var(--accent-rgb) / .25);
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: .1rem;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .bonus-step-text {
+      font-size: .9rem;
+      color: var(--text-dim);
+      line-height: 1.75
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:640px) {
+      .section {
+        padding: 3rem 1.25rem
+      }
+
+      .card {
+        padding: 1.25rem
+      }
+
+      .prompt-body {
+        font-size: .78rem;
+        padding: 1rem
+      }
+
+      .flow {
+        gap: .75rem
+      }
+
+      .hero-nav {
+        flex-direction: column;
+        align-items: center
+      }
+
+      .bonus-modal {
+        max-height: 90vh
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<button class="hamburger" id="hamburger" aria-label="Toggle menu">
-  <span></span><span></span><span></span>
-</button>
-<div class="sidebar-overlay" id="overlay"></div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="sidebar-overlay" id="overlay"></div>
 
-<nav class="sidebar" id="sidebar">
-  <div class="sidebar-brand">
-    <div class="sidebar-brand-title">Vibe Coding 全端實戰<br>Google Antigravity 教學</div>
-    <div class="sidebar-brand-controls"><button class="fontsize-toggle" id="fontsize-toggle" aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button><button class="settings-toggle" id="settings-toggle" aria-label="設定">⚙</button></div>
-  </div>
-  <ul class="toc">
-    <li class="toc-group" data-section="instructor">
+    <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-title">Google Antigravity 全端實戰</div>
+      <div class="sidebar-brand-controls"><button class="fontsize-toggle" id="fontsize-toggle"
+          aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle"
+          aria-label="Toggle theme">🌙</button><button class="settings-toggle" id="settings-toggle"
+          aria-label="設定">⚙</button></div>
+    </div>
+    <ul class="toc">
+      <li class="toc-group" data-section="instructor">
       <a href="#instructor" class="toc-group-title">
         <span class="toc-num">👤</span> 講師簡介
       </a>
@@ -549,55 +2380,82 @@ html.og-mode .hero{
     </li>
     <li class="toc-group" data-section="section-1">
       <a href="#section-1" class="toc-group-title">
-        <span class="toc-num">1</span> 技術選型
+        <span class="toc-num">1</span> 課前複習
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-1">全端三層架構</a></li>
+        <li><a href="#sub-gemini-google-ai-studio-antigravity">Gemini ⮕ Google AI Studio ⮕ Antigravity</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="antigravity-ai">
-      <a href="#antigravity-ai" class="toc-group-title">
-        <span class="toc-num">2</span> Antigravity 設定
+    <li class="toc-group" data-section="ide-ai">
+      <a href="#ide-ai" class="toc-group-title">
+        <span class="toc-num">2</span> 為什麼使用 IDE
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-2">工作區初始化</a></li>
-        <li><a href="#sub-section-3">模型與對話模式</a></li>
+        <li><a href="#sub-section-2">工具越多，流程越碎</a></li>
+        <li><a href="#sub-ai">轉念：讓 AI 代勞</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="section-3">
-      <a href="#section-3" class="toc-group-title">
-        <span class="toc-num">3</span> 提示詞設計
+    <li class="toc-group" data-section="ai-agent">
+      <a href="#ai-agent" class="toc-group-title">
+        <span class="toc-num">3</span> 前置工具安裝
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-4">提示詞四要素</a></li>
-        <li><a href="#sub-section-5">提示詞設計解析</a></li>
-        <li><a href="#sub-section-6">執行與調整</a></li>
+        <li><a href="#sub-python">① Python — 突破文件與爬蟲限制</a></li>
+        <li><a href="#sub-nodejs">② Node.js — 讓網頁從堪用變專業</a></li>
+        <li><a href="#sub-git-vibe-coding">③ Git — Vibe Coding 的後悔藥</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-4">
       <a href="#section-4" class="toc-group-title">
-        <span class="toc-num">4</span> 安全上線
+        <span class="toc-num">4</span> 技術選擇
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-7">認識專案結構</a></li>
-        <li><a href="#sub-section-8">部署前的兩個準備</a></li>
+        <li><a href="#sub-section-7">全端三層架構</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="github-pages">
-      <a href="#github-pages" class="toc-group-title">
-        <span class="toc-num">5</span> GitHub Pages 部署
+    <li class="toc-group" data-section="antigravity-ai">
+      <a href="#antigravity-ai" class="toc-group-title">
+        <span class="toc-num">5</span> Antigravity 設定
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-9">初次部署流程</a></li>
-        <li><a href="#sub-section-10">常見踩坑整理</a></li>
+        <li><a href="#sub-section-8">工作區初始化</a></li>
+        <li><a href="#sub-section-9">模型與對話模式</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-6">
       <a href="#section-6" class="toc-group-title">
-        <span class="toc-num">6</span> 比工具更重要的思維
+        <span class="toc-num">6</span> 提示詞設計
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-11">選工具的態度</a></li>
+        <li><a href="#sub-section-10">提示詞四要素</a></li>
+        <li><a href="#sub-section-11">提示詞設計解析</a></li>
+        <li><a href="#sub-section-12">執行與調整</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="section-7">
+      <a href="#section-7" class="toc-group-title">
+        <span class="toc-num">7</span> 安全上線
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section-13">認識專案結構</a></li>
+        <li><a href="#sub-section-14">部署前的兩個準備</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="github-pages">
+      <a href="#github-pages" class="toc-group-title">
+        <span class="toc-num">8</span> GitHub Pages 部署
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section-15">初次部署流程</a></li>
+        <li><a href="#sub-section-16">常見踩坑整理</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="section-9">
+      <a href="#section-9" class="toc-group-title">
+        <span class="toc-num">9</span> 比工具更重要的思維
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section-17">選工具的態度</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="summary">
@@ -608,43 +2466,55 @@ html.og-mode .hero{
       </ul>
     </li>
 
-      </ul>
-  <div class="sidebar-progress">
-    <div class="sidebar-progress-label"><span>閱讀進度</span><span id="progress-pct">0%</span></div>
-    <div class="sidebar-progress-track"><div class="sidebar-progress-fill" id="progress-fill"></div></div>
+          </ul>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress-label"><span>閱讀進度</span><span id="progress-pct">0%</span></div>
+      <div class="sidebar-progress-track">
+        <div class="sidebar-progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </nav>
+  <button class="sidebar-collapse-btn" id="sidebar-collapse" aria-label="收合側邊欄">
+    <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 1L2 7l6 6" />
+    </svg>
+  </button>
+
+  <div class="collapsed-progress">
+    <div class="collapsed-progress-fill" id="collapsed-progress-fill"></div>
   </div>
-</nav>
-<button class="sidebar-collapse-btn" id="sidebar-collapse" aria-label="收合側邊欄">
-  <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L2 7l6 6"/></svg>
-</button>
 
-<header class="hero">
-  <div class="hero-badge"><span class="dot"></span>Vibe Coding 教學</div>
-  <h1>用 Vibe Coding 完成<br>輕量級全端專案並部署上線</h1>
-  <p class="hero-sub">Google Antigravity 手把手實戰：從 Prompt 設計、專案生成到 GitHub Pages 部署，掌握 AI 時代的全端開發思維</p>
-  <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
-  <nav class="hero-nav">
-    <a href="#section-1" class="primary">技術選型</a>
+    <header class="hero">
+    <div class="hero-badge"><span class="dot"></span>Vibe Coding 教學</div>
+    <h1>用 Vibe Coding 完成<br>輕量級全端專案並部署上線</h1>
+    <p class="hero-sub">Google Antigravity 實戰：從認識 AI Agent 的能力範圍、Prompt 設計、專案生成到 GitHub Pages 部署，掌握 AI 時代的開發思維</p>
+    <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
+    <nav class="hero-nav">
+      <a href="#section-1">課前複習</a>
+    <a href="#ide-ai">為什麼使用 IDE</a>
+    <a href="#ai-agent">前置工具安裝</a>
+    <a href="#section-4">技術選擇</a>
     <a href="#antigravity-ai">Antigravity 設定</a>
-    <a href="#section-3">提示詞設計</a>
-    <a href="#section-4">安全上線</a>
+    <a href="#section-6">提示詞設計</a>
+    <a href="#section-7">安全上線</a>
     <a href="#github-pages">GitHub Pages 部署</a>
-    <a href="#section-6">比工具更重要的思維</a>
+    <a href="#section-9">比工具更重要的思維</a>
     <a href="#summary">總結</a>
-      </nav>
-</header>
+          </nav>
+  </header>
 
-<section class="quote-page">
+  <section class="quote-page">
   <div class="reveal">
     <div class="quote-mark">“</div>
     <blockquote>越精準的提示詞，越短的時間得到期待的結果。</blockquote>
     <div class="quote-line"></div>
   </div>
 </section>
-
-<section class="section" id="instructor">
+  
+  <section class="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">👤</span> 講師簡介</span>
+    <span class="section-label" id="instructor"><span class="num">👤</span> 講師簡介</span>
     <h2>關於講師</h2>
   </div>
   <div class="reveal">
@@ -670,18 +2540,577 @@ html.og-mode .hero{
     </div>
   </div>
 </section>
+  
+  
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="section-1"><span class="num">1</span> 課前複習</span>
+    <h2>三個工具，三種定位</h2>
+    <p class="lead">上週介紹了 Gemini、Google AI Studio 和 Antigravity — 先幫大家回憶它們各自的角色</p>
+  </div>
 
+  <div class="reveal">
+    <div class="sub-title" id="sub-gemini-google-ai-studio-antigravity"><span class="bar"></span>Gemini ⮕ Google AI Studio ⮕ Antigravity</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🧠</span> Gemini（入門）<a href="https://gemini.google.com" target="_blank" rel="noopener">官網</a></h3>
+      <ul>
+        <li>打開網頁就能做網站</li>
+        <li>透過對話就能拿到網頁草稿、版面結構</li>
+        <li>適合腦力激盪、嘗試風格</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🧪</span> Google AI Studio（進階）<a href="https://aistudio.google.com/" target="_blank" rel="noopener">官網</a></h3>
+      <ul>
+        <li>能做出完整的 App 原型</li>
+        <li>可以直接在瀏覽器上操作</li>
+        <li>結果可以部署或是搭配 GitHub 版本控制</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🚀</span> Antigravity（AI 程式編輯器）<a href="https://antigravity.google/" target="_blank" rel="noopener">官網</a></h3>
+      <ul>
+        <li>讓 Vibe Coding 可維護、擴充的工具</li>
+        <li>能清楚知道 AI 每次做了哪些事</li>
+        <li>可以透過限制範圍增加成功率</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag blue">Gemini — 聊天問答，快速取得靈感</span>
+      <span class="tag purple">AI Studio — 產品原型，過渡期工具</span>
+      <span class="tag green">Antigravity — 寫程式的主力工具</span>
+    </div>
+  </div>
+</section>
 
 <hr class="divider">
-<section class="section" id="section-1">
+<section class="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">1</span> 技術選型</span>
+    <span class="section-label" id="ide-ai"><span class="num">2</span> 為什麼使用 IDE</span>
+    <h2>我厭倦在 AI 工具間複製貼上</h2>
+    <p class="lead">網頁版的 AI 只能告訴你該怎麼做，AI Agent 能直接幫你完成工作</p>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-2"><span class="bar"></span>工具越多，流程越碎</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3>‍💻 一開始的工作方式</h3>
+      <ul>
+        <li>本職是工程師，只拿程式碼編輯器來寫程式</li>
+        <li>創作文章、資料彙整還是靠 ChatGPT 或 NotebookLM</li>
+        <li>不同任務需要切換不同工具</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">😩</span> 痛點 1：複製貼上讓人煩躁</h3>
+      <ul>
+        <li>企業內訓時，主辦方提供的參考資料格式不一（Word / PDF / PPT）</li>
+        <li>資料之間有重複內容，需要人工比對與彙整</li>
+        <li>NotebookLM 雖然能幫忙整理，但上傳 → 複製 → 貼上的動作無趣又耗時</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🎬</span> 痛點 2：瑣碎的事情太多</h3>
+      <ul>
+        <li>每支影片都要處理：腳本設計、字卡規劃、音效建議、宣傳導流</li>
+        <li>這些事情各自不難，但加在一起非常耗時</li>
+        <li>拍了幾支影片後，熱情快被瑣碎的流程消耗殆盡</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-ai"><span class="bar"></span>轉念：讓 AI 代勞</div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>於是我開始思考 — 有哪些任務可以交給 AI 處理？ 有沒有可能，把任務集中到一個工具搞定？</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">格式轉換</div>
+          <div class="step-desc">Word / PDF / PPT 丟進來，AI 自動解析</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">資訊彙整</div>
+          <div class="step-desc">去除重複資訊、合併重點</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">內容生成</div>
+          <div class="step-desc">影片腳本、字卡、宣傳文案一條龍產出</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">流程自動化</div>
+          <div class="step-desc">設計工作流，讓 AI 自動執行每一步</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">這就是 AI Agent 的潛力：</div>
+      <p>不只是「問一句答一句」的聊天機器人，而是能理解你的任務脈絡、操作你的檔案、串接多個步驟，幫你從頭到尾把事情做完的 AI 助手。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="ai-agent"><span class="num">3</span> 前置工具安裝</span>
+    <h2>解鎖 AI Agent 的完整能力</h2>
+    <p class="lead">AI Agent 能做多少事，取決於你給它多少工具 — Python、Node.js、Git 三件套裝好，能力直接翻倍</p>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-python"><span class="bar"></span>① Python — 突破文件與爬蟲限制</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🎯</span> 為什麼要裝 Python？</h3>
+      <ul>
+        <li>安裝 Python <strong>不只是為了寫程式</strong>，而是讓 AI Agent 有更多解決方案</li>
+        <li>沒裝 Python 的 AI Agent，遇到不同格式的檔案會無法辨識、處理</li>
+        <li>裝了之後，AI 會自動安裝對應套件來處理各種格式</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> 安裝 Python</h3>
+      <p>到 <a href="https://www.python.org/" target="_blank" rel="noopener">Python 官網</a> 根據作業系統下載安裝檔，安裝完成後開啟終端機。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">輸入 <code>python --version</code> 確認，如果沒有反應，請改用 <code>python3 --version</code>。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3>課程範例 Repository</h3>
+      <p><a href="https://github.com/dean9703111/vibe-coding-ai-agent-practice" target="_blank" rel="noopener">下載 Repository</a> 後，可以跟著課程進度操作</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">Clone 課程 Repo</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">git clone git@github.com:dean9703111/vibe-coding-ai-agent-practice.git
+cd vibe-coding-ai-agent-practice</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📄</span> 實戰：提取文件資訊</h3>
+      <p>許多人把程式碼編輯器（IDE）當成 RAG 工具，用它快速檢索、分析、統整資訊。</p>
+      <p>但他只能檢索「文字檔」（Markdown / txt / JavaScript / Python 等），遇到 Word / PPT / PDF 預設無法解析。</p>
+      <p>有了 Python，這一切就變成了可能。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">提取文件內容</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">資料夾有 pdf/ppt/doc 等多種格式的文件，我想請你用 python 套件把所有文件內的「文字」取出來，並確定可以用繁體中文顯示。
+並建立一個「doc」的資料夾，用 Markdown 的格式儲存，並整理文字結構，設計合適的大標、中標、小標，方便閱讀。
+如果 ppt/doc 裡面有圖片，請建立一個「img」的資料夾，然後辨識完圖片後命名圖片檔名。</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">AI Agent 會自動設計執行步驟</div>
+      <p>安裝 Python 套件 → 解析文件 → 提取文字與圖片 → 建立資料夾並儲存 → 辨識圖片命名檔名。</p>
+      <p style="margin-top:.5rem">完成後，「doc」與「img」資料夾中就能看到提取的內容，省去手動複製貼上的步驟。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔍</span> 實戰：用 RAG 彙整資料</h3>
+      <p>文字提取完成後，把「doc」資料夾拖到 AI 對話框，讓 AI 知道要處理的範圍，接著讓他彙整資訊</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">彙整講師形象素材</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">我是個講師，正在準備個人形象網站的素材，內容要呈現如下資訊：
+- 擅長領域: 搭配可以佐證的資訊
+- 個人成就: 找出可數據化的成就，展現實力的強大
+- 課程資訊: 課程主題、說明、價格、受眾、預期成果
+請先建立「integrate」資料夾，並將上面提到的面向用 Markdown 格式建立，並像個善於推銷自己的 KOL 般，用自信的語氣撰寫文案</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">稍等一段時間，「integrate」資料夾就會出現 AI 按需求彙整好的內容。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🎙</span> ️ 實戰：將音訊檔變成 SRT 逐字稿</h3>
+      <p>如果有會議、訪談、錄音的等資訊，想要把它轉換成 SRT 逐字稿，也可以直接交給 AI 處理</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">將音訊檔變成 SRT 逐字稿</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">透過 python whisper 套件將檔案轉換成 srt 逐字稿
+完成後檢查是否都轉換成繁體中文，並優化錯漏字</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🕷</span> ️ 實戰：用網頁爬蟲蒐集資訊</h3>
+      <p>許多網站禁止爬蟲 — 像 NotebookLM 貼上 ChatGPT 分享連結會解析錯誤，Medium 文章也常無法辨識。</p>
+      <p>但請 AI Agent 用 Selenium 模擬真實使用者，就能突破這個限制</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">爬取 ChatGPT 對話</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">先建立「crawler」資料夾，然使用 Selenium 模擬 Chrome 瀏覽器來設計爬蟲程式
+取得下面 ChatGPT 分享連結的對話內容，這個網頁有反爬蟲設計，所以網頁開啟後，先等 5 秒鐘渲染元素再去抓取與 ChatGPT 的對話
+https://chatgpt.com/s/t_68d21677946081918576092e1c2d37c1
+抓到對話後建立「output」，將資料寫入 Markdown 檔案，檔名使用網頁標題，並優化 Markdown 格式為好閱讀的結構</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">這段 Prompt 有兩個重點：</p>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">1. 要求使用 <strong>Selenium 模擬 Chrome 瀏覽器</strong></p>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">2. 提醒網頁有反爬蟲設計，需<strong>等待 5 秒渲染</strong>後再抓取</p>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">專業知識，是 AI 時代的護城河。</div>
+      <p>這個爬蟲的成功建立在指令非常明確之上 — 如果沒有網路爬蟲的基礎概念，AI 的失敗率會非常高。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-nodejs"><span class="bar"></span>② Node.js — 讓網頁從堪用變專業</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🎯</span> 為什麼要裝 Node.js？</h3>
+      <ul>
+        <li>沒有 Node.js，AI 只能用基礎 HTML + CSS 做簡單網頁</li>
+        <li>裝了之後，就能使用 Vue / React / Angular 三大前端框架</li>
+        <li>框架生成的結果更符合現代審美，未來擴充功能也有豐富套件可用</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> 安裝 Node.js（透過 NVM）</h3>
+      <p>建議透過 NVM 安裝，方便日後在不同 Node.js 版本間切換。</p>
+      <ul>
+        <li><strong>Mac</strong> — 終端機執行 <code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | terminal</code></li>
+        <li><strong>Windows</strong> — 到 <a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener">NVM for Windows</a> 下載 exe 安裝檔。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">安裝完成後，確認 NVM 已就緒：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label"></span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">nvm -v</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">接著安裝最新 LTS 版本的 Node.js：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label"></span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">nvm install --lts</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">最後確認安裝成功：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label"></span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">node -v</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-git-vibe-coding"><span class="bar"></span>③ Git — Vibe Coding 的後悔藥</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🎯</span> 為什麼要裝 Git？</h3>
+      <ul>
+        <li>Vibe Coding 時，每個指令都可能大幅調整專案程式碼</li>
+        <li>AI 修改的結果未必正確，甚至可能把正常功能改壞</li>
+        <li>Git 能幫你記錄每次變更，隨時退回任何版本</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> 安裝 Git</h3>
+      <p>到 <a href="https://git-scm.com/" target="_blank" rel="noopener">Git 官網</a> 下載安裝檔，安裝後確認：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label"></span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">git -v</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">完成初始化設定（請替換成自己的名字與信箱）：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label"></span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">git config --global user.name &quot;baobao&quot;
+git config --global user.email &quot;baobao@gmail.com&quot;</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔑</span> 產生 SSH Key</h3>
+      <p>SSH Key 用來確保這台電腦有權限操作 GitHub 上的專案</p>
+      <p><strong>注意：請不要使用公司信箱註冊</strong></p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label"></span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">ssh-keygen -t ed25519 -C &quot;baobao@gmail.com&quot;</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">生成後，顯示公鑰（下一步會用到）：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label"></span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">cat ~/.ssh/id_ed25519.pub</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🐙</span> 註冊 GitHub 並綁定 SSH Key</h3>
+      <p>必須要完成這一步，後續專案才能上傳到雲端控制</p>
+      <p><strong>注意：請不要使用公司信箱註冊</strong></p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">到 <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> 使用 Gmail 註冊帳號</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">點擊右上角頭像 → Settings</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">側邊欄選擇「SSH and GPG Keys」</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">點擊「New SSH Key」，貼上剛剛的公鑰</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag green">Python — 解鎖文件解析、網頁爬蟲能力</span>
+      <span class="tag blue">Node.js — 使用前端框架，網頁更專業</span>
+      <span class="tag orange">Git — 版本控制，改壞隨時退回</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="section-4"><span class="num">4</span> 技術選擇</span>
     <h2>零成本全端架構</h2>
     <p class="lead">不需要伺服器、不用綁信用卡 — React + Google Apps Script + Google Sheets，免費打造可上線的全端專案</p>
   </div>
 
-  <div class="reveal" id="sub-section-1">
-    <div class="sub-title"><span class="bar"></span>全端三層架構</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-7"><span class="bar"></span>全端三層架構</div>
   </div>
 
   <div class="reveal">
@@ -728,22 +3157,22 @@ html.og-mode .hero{
   <div class="reveal">
     <div class="tags">
       <span class="tag green">免費 — 不需要伺服器、不用綁信用卡</span>
-      <span class="tag green">可部署 — GitHub Pages 免費公開上線</span>
+      <span class="tag blue">可部署 — GitHub Pages 免費公開上線</span>
       <span class="tag orange">適合學習 — 不適合高流量或複雜邏輯場景</span>
     </div>
   </div>
 </section>
 
 <hr class="divider">
-<section class="section" id="antigravity-ai">
+<section class="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">2</span> Antigravity 設定</span>
+    <span class="section-label" id="antigravity-ai"><span class="num">5</span> Antigravity 設定</span>
     <h2>讓 AI 更懂你</h2>
     <p class="lead">工具設定做對了，AI 才能給你更精準的回覆 — Rules、模型選擇、對話模式三大設定一次搞定</p>
   </div>
 
-  <div class="reveal" id="sub-section-2">
-    <div class="sub-title"><span class="bar"></span>工作區初始化</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-8"><span class="bar"></span>工作區初始化</div>
   </div>
 
   <div class="reveal">
@@ -760,7 +3189,7 @@ html.og-mode .hero{
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">🔧</span> 設定 Global Rules</h3>
-      <p>開啟「Customizations → Rules → Global」，貼上通用規則讓 AI 回覆更精準：</p>
+      <p>開啟「Customizations → Rules → Global」，貼上通用規則讓 AI 回覆更精準</p>
     </div>
   </div>
 
@@ -770,6 +3199,9 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">Global Rules（推薦）</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL CODE OR EXPLANATION!!!
 
@@ -792,6 +3224,9 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">語言設定</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">- Always respond in 繁體中文</div>
     </div>
@@ -801,8 +3236,8 @@ html.og-mode .hero{
     <p class="loose-text">若只針對當前專案設定（如程式碼規範），改點「Workspace」設定即可。</p>
   </div>
 
-  <div class="reveal" id="sub-section-3">
-    <div class="sub-title"><span class="bar"></span>模型與對話模式</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-9"><span class="bar"></span>模型與對話模式</div>
   </div>
 
   <div class="reveal">
@@ -818,50 +3253,55 @@ html.og-mode .hero{
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">⚡</span> 對話模式選擇</h3>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="tags">
-      <span class="tag purple">Planning — 適合複雜任務（如專案初始規劃），思考更深入</span>
-      <span class="tag green">Fast — 適合快速解答，省時省力</span>
+      <ul>
+        <li>Planning — 適合複雜任務（如專案初始規劃），思考更深入</li>
+        <li>Fast — 適合快速解答，省時省力</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <hr class="divider">
-<section class="section" id="section-3">
+<section class="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">3</span> 提示詞設計</span>
+    <span class="section-label" id="section-6"><span class="num">6</span> 提示詞設計</span>
     <h2>從需求到專案</h2>
     <p class="lead">越精準的提示詞，越短的時間得到期待的結果 — 角色設定、UI/UX、功能需求、資料庫設計四大架構</p>
   </div>
 
-  <div class="reveal" id="sub-section-4">
-    <div class="sub-title"><span class="bar"></span>提示詞四要素</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-10"><span class="bar"></span>提示詞四要素</div>
   </div>
 
   <div class="reveal">
     <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
-        <div class="step-title">角色設定</div>
-        <div class="step-desc">讓 AI 扮演對應領域的資深工程師</div>
+        <div class="step-content">
+          <div class="step-title">角色設定</div>
+          <div class="step-desc">讓 AI 扮演對應領域的資深工程師</div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
-        <div class="step-title">UI/UX 需求</div>
-        <div class="step-desc">框架選擇與設計風格</div>
+        <div class="step-content">
+          <div class="step-title">UI/UX 需求</div>
+          <div class="step-desc">框架選擇與設計風格</div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
-        <div class="step-title">功能需求</div>
-        <div class="step-desc">明確的操作流程與邏輯說明</div>
+        <div class="step-content">
+          <div class="step-title">功能需求</div>
+          <div class="step-desc">明確的操作流程與邏輯說明</div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
-        <div class="step-title">資料設計</div>
-        <div class="step-desc">詳細的欄位定義與工具相依性說明</div>
+        <div class="step-content">
+          <div class="step-title">資料設計</div>
+          <div class="step-desc">詳細的欄位定義與工具相依性說明</div>
+        </div>
       </div>
     </div>
   </div>
@@ -869,6 +3309,7 @@ html.og-mode .hero{
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">🎯</span> 完整專案 Prompt 範例</h3>
+      <p>如果不知道如何下 Prompt，也可以先提出簡單的需求，然後與 AI 釐清細節。</p>
     </div>
   </div>
 
@@ -878,6 +3319,9 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">闖關問答遊戲（完整需求）</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body"># 角色
 你是一位資深的 React 前端工程師與遊戲設計師。請根據需求描述協助我設計一個網頁的「闖關問答遊戲」
@@ -906,8 +3350,8 @@ html.og-mode .hero{
     </div>
   </div>
 
-  <div class="reveal" id="sub-section-5">
-    <div class="sub-title"><span class="bar"></span>提示詞設計解析</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-11"><span class="bar"></span>提示詞設計解析</div>
   </div>
 
   <div class="reveal">
@@ -915,7 +3359,7 @@ html.og-mode .hero{
       <h3><span class="icon">💡</span> 角色設定的作用</h3>
       <ul>
         <li>讓 AI 進入對應領域的思維框架</li>
-        <li>框架選擇提前指定，避免 AI 自行發揮造成技術棧不一致</li>
+        <li>框架選擇提前指定，避免 AI 自行發揮造成技術不一致</li>
         <li>風格描述越具體，畫面越接近預期（像素風 vs 現代風差異很大）</li>
       </ul>
     </div>
@@ -924,14 +3368,8 @@ html.og-mode .hero{
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">🔒</span> 為什麼透過 Apps Script 取題？</h3>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">保護資料來源的關鍵設計</div>
       <p>若直接從前端呼叫 Google Sheets API，解答欄位也會被前端取得。透過 Google Apps Script 作為中間層，可以過濾掉「解答」欄位，只回傳題目與選項。</p>
-      <p style="margin-top:.5rem">這就是前後端分離的核心概念：前端只拿它需要的資料，敏感邏輯留在後端處理。</p>
+      <p>這就是前後端分離的核心概念：<code>前端只拿它需要的資料，敏感邏輯留在後端處理。</code></p>
     </div>
   </div>
 
@@ -939,7 +3377,7 @@ html.og-mode .hero{
     <div class="card">
       <h3><span class="icon">🗄</span> ️ 資料庫設計的精確度</h3>
       <ul>
-        <li>明確列出每個工作表的欄位名稱，減少 AI 自行詮釋的空間</li>
+        <li>明確列出每個工作表的<code>欄位名稱</code>，減少 AI 自行詮釋的空間</li>
         <li>針對特殊業務邏輯額外說明（「同 ID 已通關過，後續分數不覆蓋」）</li>
         <li>說明工具相依性（Apps Script 從 Google Sheet 擴充功能配置）</li>
       </ul>
@@ -956,13 +3394,15 @@ html.og-mode .hero{
     </div>
   </div>
 
-  <div class="reveal" id="sub-section-6">
-    <div class="sub-title"><span class="bar"></span>執行與調整</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-12"><span class="bar"></span>執行與調整</div>
   </div>
 
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">🔄</span> AI 執行流程</h3>
+      <p>執行過程 AI 常常會跑出來跟你確認是否執行，我強烈建議要看懂 AI 做了什麼事。</p>
+      <p><strong>如果全部無腦接受，可能幾分鐘後電腦就被格式化了。</strong></p>
     </div>
   </div>
 
@@ -970,25 +3410,37 @@ html.og-mode .hero{
     <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
-        <div class="step-title">貼上 Prompt → AI 思考並規劃任務清單</div>
-        <div class="step-desc"></div>
+        <div class="step-content">
+          <div class="step-title">貼上 Prompt → AI 思考並規劃任務清單</div>
+          <div class="step-desc"></div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
-        <div class="step-title">確認 AI 要執行的指令（不懂可開新視窗詢問）</div>
-        <div class="step-desc"></div>
+        <div class="step-content">
+          <div class="step-title">確認 AI 要執行的指令（不懂可開新視窗詢問）</div>
+          <div class="step-desc"></div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
-        <div class="step-title">Accept All → 在瀏覽器預覽結果</div>
-        <div class="step-desc"></div>
+        <div class="step-content">
+          <div class="step-title">第一次調整完畢後 Accept All → 在瀏覽器預覽結果</div>
+          <div class="step-desc"></div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
-        <div class="step-title">針對不符預期的地方，直接描述調整需求</div>
-        <div class="step-desc"></div>
+        <div class="step-content">
+          <div class="step-title">針對不符預期的地方，直接描述調整需求</div>
+          <div class="step-desc"></div>
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">不懂一定要問，AI Agent 可以做的事很多，包含把你的電腦弄壞</p>
   </div>
 
   <div class="reveal">
@@ -997,10 +3449,17 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">確認指令安全性</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">請說明下面這段指令，並告訴我是否有危害
 [貼上指令]</div>
     </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">現在 AI Agent 有能力自行打開瀏覽器、尋找元素、操作畫面、截圖結果。</p>
   </div>
 
   <div class="reveal">
@@ -1009,9 +3468,16 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">開啟瀏覽器預覽</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">請開啟瀏覽器，模擬執行並檢查是否有錯誤</div>
     </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">有錯誤是很正常的，明確描述並讓他開瀏覽器自我檢核即可</p>
   </div>
 
   <div class="reveal">
@@ -1020,10 +3486,17 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">優化 UI（附自我驗證）</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">我覺得畫面沒有考量到 RWD，白底的部分有破版
 我希望關主的頭像只占據螢幕高度的 1/3，請你完成後自己打開瀏覽器檢查設計結果是否符合預期</div>
     </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">請 AI 協助生成專案文件與模擬資訊</p>
   </div>
 
   <div class="reveal">
@@ -1032,6 +3505,9 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">產生 README 與測試資料</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">請為這個專案撰寫操作的 README.md 的文件
 讓使用者知道如何完成安裝、Google Sheets、Google Apps Script 的詳細操作
@@ -1048,15 +3524,15 @@ html.og-mode .hero{
 </section>
 
 <hr class="divider">
-<section class="section" id="section-4">
+<section class="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">4</span> 安全上線</span>
+    <span class="section-label" id="section-7"><span class="num">7</span> 安全上線</span>
     <h2>部署前的必要準備</h2>
     <p class="lead">寫完程式 ≠ 可以部署 — .gitignore、.env 安全、GitHub Actions 自動化，三件事確認完再上線</p>
   </div>
 
-  <div class="reveal" id="sub-section-7">
-    <div class="sub-title"><span class="bar"></span>認識專案結構</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-13"><span class="bar"></span>認識專案結構</div>
   </div>
 
   <div class="reveal">
@@ -1074,26 +3550,25 @@ html.og-mode .hero{
     <div class="card">
       <h3><span class="icon">🚫</span> .gitignore 的作用</h3>
       <p>告訴 Git 哪些檔案或資料夾不需版本控制：</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="tags">
-      <span class="tag orange">node_modules — 套件版本由 package.json 管控，不需上傳</span>
-      <span class="tag orange">build — 自動生成的靜態檔案，每次 build 都會重建</span>
-      <span class="tag orange">.env — 個人設定與密鑰，絕對不能上傳到公開 repo</span>
+      <ul>
+        <li>node_modules — 套件版本由 package.json 管控，不需上傳</li>
+        <li>build — 自動生成的靜態檔案，每次 build 都會重建</li>
+        <li>.env — 個人設定與密鑰，絕對不能上傳到公開 repo</li>
+        <li>log — 執行日誌，僅供本機除錯使用</li>
+        <li>tmp — 系統暫存檔，沒有紀錄意義</li>
+      </ul>
     </div>
   </div>
 
   <div class="reveal">
     <div class="insight">
       <div class="insight-title">絕對不能上傳 .env 到 Git！</div>
-      <p><code>.env</code> 存放 Google Apps Script 連結等敏感資訊，一旦上傳到公開 repo，任何人都能讀取你的後端連結，造成資安風險。</p>
+      <p><code>.env</code> 通常存放敏感資訊（ex: 資料庫帳密、API Key），一旦上傳到公開 repo，除了資安問題外，你的信用卡也可能被刷爆。</p>
     </div>
   </div>
 
-  <div class="reveal" id="sub-section-8">
-    <div class="sub-title"><span class="bar"></span>部署前的兩個準備</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-14"><span class="bar"></span>部署前的兩個準備</div>
   </div>
 
   <div class="reveal">
@@ -1108,6 +3583,9 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">建立環境變數範例檔</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">請幫我建立一個 .env.example 的範例檔</div>
     </div>
@@ -1132,6 +3610,9 @@ html.og-mode .hero{
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
         <span class="label">GitHub Actions 設定</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
       </div>
       <div class="prompt-body">請設計能自動部署到 Github Pages 的 Action，會使用到的環境變數請參考 .env.example 檔
 並將操作流程更新到 README.md 文件</div>
@@ -1140,43 +3621,53 @@ html.og-mode .hero{
 </section>
 
 <hr class="divider">
-<section class="section" id="github-pages">
+<section class="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">5</span> GitHub Pages 部署</span>
+    <span class="section-label" id="github-pages"><span class="num">8</span> GitHub Pages 部署</span>
     <h2>從本地到上線</h2>
     <p class="lead">Source Control → GitHub → Pages → 環境變數設定 — 完整部署流程一步步操作</p>
   </div>
 
-  <div class="reveal" id="sub-section-9">
-    <div class="sub-title"><span class="bar"></span>初次部署流程</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-15"><span class="bar"></span>初次部署流程</div>
   </div>
 
   <div class="reveal">
     <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
-        <div class="step-title">Source Control → Initialize Repository</div>
-        <div class="step-desc">初始化 Git</div>
+        <div class="step-content">
+          <div class="step-title">Source Control → Initialize Repository</div>
+          <div class="step-desc">初始化 Git</div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
-        <div class="step-title">Generate → 讓 AI 生成 commit 訊息 → Commit → Push</div>
-        <div class="step-desc"></div>
+        <div class="step-content">
+          <div class="step-title">Generate → 讓 AI 生成 commit 訊息 → Commit → Push</div>
+          <div class="step-desc"></div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
-        <div class="step-title">GitHub 彈窗：輸入專案名稱、選擇 Public</div>
-        <div class="step-desc"></div>
+        <div class="step-content">
+          <div class="step-title">GitHub 彈窗：輸入專案名稱、選擇 Public</div>
+          <div class="step-desc"></div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
-        <div class="step-title">Settings → Pages → 部署來源選「GitHub Actions」</div>
-        <div class="step-desc"></div>
+        <div class="step-content">
+          <div class="step-title">Settings → Pages → 部署來源選「GitHub Actions」</div>
+          <div class="step-desc"></div>
+        </div>
       </div>
       <div class="flow-step">
         <div class="step-num">5</div>
-        <div class="step-title">Actions 分頁確認部署狀況（綠色✓=成功，紅色✗=需排錯）</div>
-        <div class="step-desc"></div>
+        <div class="step-content">
+          <div class="step-title">Actions 分頁確認部署狀況（綠色✓=成功，紅色✗=需排錯）</div>
+          <div class="step-desc"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1189,10 +3680,10 @@ html.og-mode .hero{
   </div>
 
   <div class="reveal">
-    <div class="tags">
-      <span class="tag purple">Secrets — 存放敏感資訊（如 Google Apps Script URL）</span>
-      <span class="tag green">Variables — 存放較不敏感的環境變數（如題目數量、通過門檻）</span>
-    </div>
+    <ul class="loose-list">
+      <li><strong>Secrets</strong> — 存放敏感資訊（如 Google Apps Script URL）</li>
+      <li><strong>Variables</strong> — 存放較不敏感的環境變數（如題目數量、通過門檻）</li>
+    </ul>
   </div>
 
   <div class="reveal">
@@ -1216,14 +3707,14 @@ html.og-mode .hero{
     </div>
   </div>
 
-  <div class="reveal" id="sub-section-10">
-    <div class="sub-title"><span class="bar"></span>常見踩坑整理</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-16"><span class="bar"></span>常見踩坑整理</div>
   </div>
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">⚠</span> ️ Vibe Coding 後的品質關卡</h3>
-      <p>AI 可以幫我們加速，但品質需要有經驗的人把關——這個專案實際踩到的坑：</p>
+      <h3><span class="icon">⚠</span> ️ Vibe Coding 的品質需要自己把關</h3>
+      <p>AI 可以幫我們加速，但品質需要有經驗的人把關。我過去在這個專案踩過的坑：</p>
     </div>
   </div>
 
@@ -1239,15 +3730,15 @@ html.og-mode .hero{
 </section>
 
 <hr class="divider">
-<section class="section" id="section-6">
+<section class="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">6</span> 比工具更重要的思維</span>
+    <span class="section-label" id="section-9"><span class="num">9</span> 比工具更重要的思維</span>
     <h2>比工具更重要的思維</h2>
     <p class="lead">工具永遠在更新，但解決問題的能力才是你真正的護城河</p>
   </div>
 
-  <div class="reveal" id="sub-section-11">
-    <div class="sub-title"><span class="bar"></span>選工具的態度</div>
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-17"><span class="bar"></span>選工具的態度</div>
   </div>
 
   <div class="reveal">
@@ -1264,40 +3755,35 @@ html.og-mode .hero{
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">🧱</span> 技術底蘊的價值</h3>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">AI 寫出「看起來能動」的程式</div>
-      <p>畫面正常、功能正常，但背後邏輯可能有問題，或你看到的只是假資料。如果沒有前後端概念，不了解資料庫如何運作，你就沒有能力判斷 AI 給的結果是否正確。</p>
-      <p style="margin-top:.5rem">過去 AI 寫錯程式會跑不動，你會知道他錯了。現在他有能力寫出看起來能動的工具，判斷力反而更重要。</p>
+      <p><strong>AI 可能只是寫出「看起來能動」的程式</strong></p>
+      <p>畫面正常、功能正常，但背後邏輯可能有問題，或你看到的只是假資料。</p>
+      <p>如果沒有前後端概念，不了解資料庫如何運作，你就沒有能力判斷 AI 給的結果是否正確。</p>
+      <p>過去 AI 寫錯程式會跑不動，你會知道他錯了。現在他有能力寫出看起來能動的工具，判斷力反而更重要。</p>
     </div>
   </div>
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">💡</span> 給學習者的建議</h3>
+      <h3><span class="icon">💡</span> 給初學者的建議</h3>
+      <ul>
+        <li>從實際需求出發，而不是複製別人的提示詞</li>
+        <li>選一門程式語言深入研究，而不是一直追新工具</li>
+        <li>了解前後端概念後，換技術會輕鬆很多</li>
+      </ul>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="tags">
-      <span class="tag green">從實際需求出發，而不是複製別人的提示詞</span>
-      <span class="tag orange">選一門程式語言深入研究，而不是一直追新工具</span>
-      <span class="tag purple">了解前後端概念後，換技術棧會輕鬆很多</span>
+    <div class="insight">
+      <p>基礎知識在 AI 時代依舊重要，不要讓 Vibe Coding 的「快」，成為你未來的「債」。</p>
     </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">基礎知識在 AI 時代依舊重要，不要讓 Vibe Coding 的「快」，成為你未來的「債」。</p>
   </div>
 </section>
 
 <hr class="divider">
-<section class="section" id="summary">
+<section class="section">
   <div class="reveal">
-    <span class="section-label"><span class="num">★</span> 總結</span>
+    <span class="section-label" id="summary"><span class="num">★</span> 總結</span>
     <h2>總結</h2>
     
   </div>
@@ -1333,8 +3819,8 @@ html.og-mode .hero{
   </div>
 </section>
 
-
-<section class="quote-page">
+  
+  <section class="quote-page">
   <div class="reveal">
     <div class="quote-mark">“</div>
     <blockquote>AI 可以幫我們加速，<br> 但品質絕對需要有經驗的人來把關。<br><br> 基礎知識在 AI 時代依舊重要，<br> 不要讓 Vibe Coding 的「快」，成為你未來的「債」。</blockquote>
@@ -1342,8 +3828,8 @@ html.og-mode .hero{
   </div>
 </section>
 
-<footer class="footer">
-  <p style="font-size:.9rem;color:var(--text);margin-bottom:1rem">歡迎追蹤我的社群，獲取更多 AI 開發實戰內容</p>
+    <footer class="footer">
+    <p style="font-size:.9rem;color:var(--text);margin-bottom:1rem">歡迎追蹤我的社群，獲取更多 AI 開發實戰內容</p>
   <div class="social-links" style="justify-content:center;margin-bottom:1.5rem">
     <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm2.94 0c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75c.66 0 1.19 2.58 1.19 5.75z"/></svg> Medium</a>
     <a href="https://www.facebook.com/deanlinbao" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
@@ -1351,371 +3837,752 @@ html.og-mode .hero{
     <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
     <a href="https://github.com/dean9703111" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
   </div>
-  <p>© 林鼎淵 Dean Lin</p>
-</footer>
+    <p>© 林鼎淵 Dean Lin</p>
+  </footer>
 
-<div class="settings-panel" id="settings-panel">
-  <div class="settings-section">
-    <div class="settings-label">主題色彩</div>
-    <div class="color-swatches" id="color-swatches">
-      <button class="color-swatch" data-theme-id="coral" title="暖陽珊瑚"
-        data-accent="#e8845a" data-accent-light="#c45c28"
-        data-accent2="#e8b878" data-accent2-light="#9a7028"
-        data-accent3="#e08898" data-accent3-light="#b04860"
-        style="background:linear-gradient(135deg,#e8845a 40%,#e8b878 70%,#e08898)"></button>
-      <button class="color-swatch" data-theme-id="ocean" title="深海藍"
-        data-accent="#60a5fa" data-accent-light="#2563eb"
-        data-accent2="#5eead4" data-accent2-light="#0d9488"
-        data-accent3="#a5b4fc" data-accent3-light="#6366f1"
-        style="background:linear-gradient(135deg,#60a5fa 40%,#5eead4 70%,#a5b4fc)"></button>
-      <button class="color-swatch" data-theme-id="forest" title="翡翠森林"
-        data-accent="#50d890" data-accent-light="#15803d"
-        data-accent2="#c8d858" data-accent2-light="#6a7a18"
-        data-accent3="#50c0a8" data-accent3-light="#0d7060"
-        style="background:linear-gradient(135deg,#50d890 40%,#c8d858 70%,#50c0a8)"></button>
-      <button class="color-swatch" data-theme-id="galaxy" title="星河紫"
-        data-accent="#a78bfa" data-accent-light="#7c3aed"
-        data-accent2="#e8a8e0" data-accent2-light="#a21caf"
-        data-accent3="#7db8f8" data-accent3-light="#2563eb"
-        style="background:linear-gradient(135deg,#a78bfa 40%,#e8a8e0 70%,#7db8f8)"></button>
-      <button class="color-swatch" data-theme-id="sakura" title="花見櫻"
-        data-accent="#f472b6" data-accent-light="#db2777"
-        data-accent2="#b0a8f0" data-accent2-light="#6d28d9"
-        data-accent3="#f0a8a0" data-accent3-light="#c05050"
-        style="background:linear-gradient(135deg,#f472b6 40%,#b0a8f0 70%,#f0a8a0)"></button>
-      <button class="color-swatch" data-theme-id="amber" title="琥珀"
-        data-accent="#f0b840" data-accent-light="#a87808"
-        data-accent2="#e09870" data-accent2-light="#a86040"
-        data-accent3="#c8b080" data-accent3-light="#887048"
-        style="background:linear-gradient(135deg,#f0b840 40%,#e09870 70%,#c8b080)"></button>
+    <div class="settings-panel" id="settings-panel">
+    <div class="settings-section">
+      <div class="settings-label">主題色彩</div>
+      <div class="color-swatches" id="color-swatches">
+        <button class="color-swatch" data-theme-id="coral" title="暖陽珊瑚"
+          data-accent="#e8845a" data-accent-light="#c45c28"
+          data-accent2="#e8b878" data-accent2-light="#9a7028"
+          data-accent3="#e08898" data-accent3-light="#b04860"
+          style="background:linear-gradient(135deg,#e8845a 40%,#e8b878 70%,#e08898)"></button>
+        <button class="color-swatch" data-theme-id="ocean" title="深海藍"
+          data-accent="#60a5fa" data-accent-light="#2563eb"
+          data-accent2="#5eead4" data-accent2-light="#0d9488"
+          data-accent3="#a5b4fc" data-accent3-light="#6366f1"
+          style="background:linear-gradient(135deg,#60a5fa 40%,#5eead4 70%,#a5b4fc)"></button>
+        <button class="color-swatch" data-theme-id="forest" title="翡翠森林"
+          data-accent="#50d890" data-accent-light="#15803d"
+          data-accent2="#c8d858" data-accent2-light="#6a7a18"
+          data-accent3="#50c0a8" data-accent3-light="#0d7060"
+          style="background:linear-gradient(135deg,#50d890 40%,#c8d858 70%,#50c0a8)"></button>
+        <button class="color-swatch" data-theme-id="galaxy" title="星河紫"
+          data-accent="#a78bfa" data-accent-light="#7c3aed"
+          data-accent2="#e8a8e0" data-accent2-light="#a21caf"
+          data-accent3="#7db8f8" data-accent3-light="#2563eb"
+          style="background:linear-gradient(135deg,#a78bfa 40%,#e8a8e0 70%,#7db8f8)"></button>
+        <button class="color-swatch" data-theme-id="sakura" title="花見櫻"
+          data-accent="#f472b6" data-accent-light="#db2777"
+          data-accent2="#b0a8f0" data-accent2-light="#6d28d9"
+          data-accent3="#f0a8a0" data-accent3-light="#c05050"
+          style="background:linear-gradient(135deg,#f472b6 40%,#b0a8f0 70%,#f0a8a0)"></button>
+        <button class="color-swatch" data-theme-id="amber" title="琥珀"
+          data-accent="#f0b840" data-accent-light="#a87808"
+          data-accent2="#e09870" data-accent2-light="#a86040"
+          data-accent3="#c8b080" data-accent3-light="#887048"
+          style="background:linear-gradient(135deg,#f0b840 40%,#e09870 70%,#c8b080)"></button>
+      </div>
+    </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <div class="settings-label">匯出</div>
+      <button class="settings-export-btn" id="export-pdf-btn">⬇ 匯出 PDF（投影片版）</button>
     </div>
   </div>
-</div>
 
-<div class="bonus-overlay" id="bonus-overlay">
-  <div class="bonus-modal">
-    <div class="bonus-modal-header">
-      <h3 id="bonus-modal-title"></h3>
-      <button class="bonus-modal-close" id="bonus-modal-close">✕</button>
+    <div class="bonus-overlay" id="bonus-overlay">
+    <div class="bonus-modal">
+      <div class="bonus-modal-header">
+        <h3 id="bonus-modal-title"></h3>
+        <button class="bonus-modal-close" id="bonus-modal-close">✕</button>
+      </div>
+      <div class="bonus-modal-body" id="bonus-modal-body"></div>
     </div>
-    <div class="bonus-modal-body" id="bonus-modal-body"></div>
   </div>
-</div>
 
-<script>
-(function(){
-  // OG mode: ?og=1 → hide sidebar/sections, hero-only layout for thumbnails
-  try {
-    var search = window.location.search || '';
-    if (search.indexOf('og=1') !== -1) {
-      document.documentElement.classList.add('og-mode');
+    <script>
+    (function () {
+      // OG mode: ?og=1 → hide sidebar/sections, hero-only layout for thumbnails
+      try {
+        var search = window.location.search || '';
+        if (search.indexOf('og=1') !== -1) {
+          document.documentElement.classList.add('og-mode');
+        }
+      } catch (e) { }
+
+      var s = localStorage.getItem('theme');
+      var d = window.matchMedia('(prefers-color-scheme:dark)').matches;
+      var t = s || (d ? 'dark' : 'light');
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      var b = document.getElementById('theme-toggle');
+      if (b) b.textContent = t === 'light' ? '☀️' : '🌙';
+      // Restore accent color
+      var accentData = localStorage.getItem('accentTheme');
+      if (accentData) {
+        try {
+          var ac = JSON.parse(accentData);
+          var isLight = t === 'light';
+          document.documentElement.style.setProperty('--accent', isLight ? ac.light : ac.dark);
+        } catch (e) { }
+      }
+    })();
+  </script>
+
+  <script>
+    // Reveal on scroll
+    var revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible') });
+    }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealObs.observe(el) });
+
+    // Sidebar / Hamburger
+    var sidebar = document.getElementById('sidebar');
+    var hamburger = document.getElementById('hamburger');
+    var overlay = document.getElementById('overlay');
+
+    function toggleSidebar() {
+      var open = sidebar.classList.toggle('open');
+      hamburger.classList.toggle('active', open);
+      overlay.classList.toggle('visible', open);
+      document.body.style.overflow = open ? 'hidden' : '';
     }
-  } catch(e) {}
-
-  var s=localStorage.getItem('theme');
-  var d=window.matchMedia('(prefers-color-scheme:dark)').matches;
-  var t=s||(d?'dark':'light');
-  if(t==='light')document.documentElement.setAttribute('data-theme','light');
-  var b=document.getElementById('theme-toggle');
-  if(b)b.textContent=t==='light'?'☀️':'🌙';
-})();
-</script>
-
-<script>
-// Reveal on scroll
-var revealObs=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal').forEach(function(el){revealObs.observe(el)});
-
-// Sidebar / Hamburger
-var sidebar=document.getElementById('sidebar');
-var hamburger=document.getElementById('hamburger');
-var overlay=document.getElementById('overlay');
-
-function toggleSidebar(){
-  var open=sidebar.classList.toggle('open');
-  hamburger.classList.toggle('active',open);
-  overlay.classList.toggle('visible',open);
-  document.body.style.overflow=open?'hidden':'';
-}
-function closeSidebar(){
-  sidebar.classList.remove('open');
-  hamburger.classList.remove('active');
-  overlay.classList.remove('visible');
-  document.body.style.overflow='';
-}
-hamburger.addEventListener('click',toggleSidebar);
-overlay.addEventListener('click',closeSidebar);
-sidebar.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){
-  if(window.innerWidth<1100)closeSidebar();
-})});
-
-// Desktop sidebar collapse
-var collapseBtn=document.getElementById('sidebar-collapse');
-if(localStorage.getItem('sidebar-collapsed')==='true'&&window.innerWidth>=1100){
-  sidebar.classList.add('collapsed');
-  document.body.classList.add('sidebar-collapsed');
-}
-collapseBtn.addEventListener('click',function(){
-  var c=sidebar.classList.toggle('collapsed');
-  document.body.classList.toggle('sidebar-collapsed',c);
-  localStorage.setItem('sidebar-collapsed',c);
-});
-
-// Scroll spy — 這兩個陣列需根據實際內容填入
-var sectionIds=["instructor","section-1","antigravity-ai","section-3","section-4","github-pages","section-6","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-var allAnchorIds=["instructor","section-1","sub-section-1","antigravity-ai","sub-section-2","sub-section-3","section-3","sub-section-4","sub-section-5","sub-section-6","section-4","sub-section-7","sub-section-8","github-pages","sub-section-9","sub-section-10","section-6","sub-section-11","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
-
-var sectionForAnchor={};
-allAnchorIds.forEach(function(id){
-  if(sectionIds.includes(id)){sectionForAnchor[id]=id}
-  else{
-    for(var i=sectionIds.length-1;i>=0;i--){
-      var idx=allAnchorIds.indexOf(sectionIds[i]);
-      if(idx<=allAnchorIds.indexOf(id)){sectionForAnchor[id]=sectionIds[i];break}
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      hamburger.classList.remove('active');
+      overlay.classList.remove('visible');
+      document.body.style.overflow = '';
     }
-  }
-});
+    hamburger.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+    sidebar.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (window.innerWidth < 1100) closeSidebar();
+      })
+    });
 
-function updateToc(){
-  var scrollY=window.scrollY+150;
-  var activeAnchor=allAnchorIds[0];
-  allAnchorIds.forEach(function(id){
-    var el=document.getElementById(id);
-    if(el&&el.offsetTop<=scrollY)activeAnchor=id;
-  });
-  var activeSection=sectionForAnchor[activeAnchor]||sectionIds[0];
-  document.querySelectorAll('.toc-group').forEach(function(g){
-    var isActive=g.dataset.section===activeSection;
-    g.classList.toggle('expanded',isActive);
-    g.querySelector('.toc-group-title').classList.toggle('active',isActive);
-  });
-  document.querySelectorAll('.toc-sub a').forEach(function(a){
-    var href=a.getAttribute('href').replace('#','');
-    a.classList.toggle('active',href===activeAnchor);
-  });
-  var docH=document.documentElement.scrollHeight-window.innerHeight;
-  var pct=docH>0?Math.round((window.scrollY/docH)*100):0;
-  document.getElementById('progress-fill').style.width=pct+'%';
-  document.getElementById('progress-pct').textContent=pct+'%';
-}
-
-var ticking=false;
-window.addEventListener('scroll',function(){
-  if(!ticking){requestAnimationFrame(function(){updateToc();ticking=false});ticking=true}
-});
-updateToc();
-
-// Theme toggle
-var themeToggle=document.getElementById('theme-toggle');
-themeToggle.addEventListener('click',function(){
-  var isLight=document.documentElement.getAttribute('data-theme')==='light';
-  if(isLight){
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('theme','dark');
-    themeToggle.textContent='🌙';
-  }else{
-    document.documentElement.setAttribute('data-theme','light');
-    localStorage.setItem('theme','light');
-    themeToggle.textContent='☀️';
-  }
-});
-window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){
-  if(localStorage.getItem('theme'))return;
-  if(e.matches){document.documentElement.removeAttribute('data-theme');themeToggle.textContent='🌙'}
-  else{document.documentElement.setAttribute('data-theme','light');themeToggle.textContent='☀️'}
-});
-
-// Bonus Modal
-(function(){
-  var overlay=document.getElementById('bonus-overlay');
-  var closeBtn=document.getElementById('bonus-modal-close');
-  var titleEl=document.getElementById('bonus-modal-title');
-  var bodyEl=document.getElementById('bonus-modal-body');
-
-  function fmtInline(s){
-    return s
-      .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')
-      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-      .replace(/`([^`]+)`/g,'<code>$1</code>');
-  }
-
-  function renderMd(text){
-    var lines=text.split('\n');
-    var html='';
-    var paraLines=[];
-    var inList=false;
-    var inSteps=false;
-    function flushPara(){
-      if(paraLines.length){html+='<p>'+paraLines.map(fmtInline).join('<br>')+'</p>';paraLines=[];}
+    // Desktop sidebar collapse
+    var collapseBtn = document.getElementById('sidebar-collapse');
+    if (localStorage.getItem('sidebar-collapsed') === 'true' && window.innerWidth >= 1100) {
+      sidebar.classList.add('collapsed');
+      document.body.classList.add('sidebar-collapsed');
     }
-    function flushList(){if(inList){html+='</ul>';inList=false;}}
-    function flushSteps(){if(inSteps){html+='</div>';inSteps=false;}}
-    for(var i=0;i<lines.length;i++){
-      var l=lines[i];
-      var stepMatch=l.match(/^(\d+)\.\s+(.*)/);
-      if(stepMatch){
-        flushPara();flushList();
-        if(!inSteps){html+='<div class="bonus-steps">';inSteps=true;}
-        html+='<div class="bonus-step"><span class="bonus-step-num">'+stepMatch[1]+'</span><span class="bonus-step-text">'+fmtInline(stepMatch[2])+'</span></div>';
-      } else if(/^- /.test(l)){
-        flushPara();flushSteps();
-        if(!inList){html+='<ul>';inList=true;}
-        html+='<li>'+fmtInline(l.replace(/^- /,''))+'</li>';
-      } else if(l.trim()===''){
-        flushSteps();flushList();flushPara();
+    collapseBtn.addEventListener('click', function () {
+      var c = sidebar.classList.toggle('collapsed');
+      document.body.classList.toggle('sidebar-collapsed', c);
+      localStorage.setItem('sidebar-collapsed', c);
+    });
+
+    // Scroll spy — 這兩個陣列需根據實際內容填入
+    var sectionIds = ["instructor","section-1","ide-ai","ai-agent","section-4","antigravity-ai","section-6","section-7","github-pages","section-9","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+    var allAnchorIds = ["instructor","section-1","sub-gemini-google-ai-studio-antigravity","ide-ai","sub-section-2","sub-ai","ai-agent","sub-python","sub-nodejs","sub-git-vibe-coding","section-4","sub-section-7","antigravity-ai","sub-section-8","sub-section-9","section-6","sub-section-10","sub-section-11","sub-section-12","section-7","sub-section-13","sub-section-14","github-pages","sub-section-15","sub-section-16","section-9","sub-section-17","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
+
+    var sectionForAnchor = {};
+    allAnchorIds.forEach(function (id) {
+      if (sectionIds.includes(id)) { sectionForAnchor[id] = id }
+      else {
+        for (var i = sectionIds.length - 1; i >= 0; i--) {
+          var idx = allAnchorIds.indexOf(sectionIds[i]);
+          if (idx <= allAnchorIds.indexOf(id)) { sectionForAnchor[id] = sectionIds[i]; break }
+        }
+      }
+    });
+
+    function updateToc() {
+      var scrollY = window.scrollY + 20;
+      var activeAnchor = allAnchorIds[0];
+      allAnchorIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) activeAnchor = id;
+      });
+      var activeSection = sectionForAnchor[activeAnchor] || sectionIds[0];
+      document.querySelectorAll('.toc-group').forEach(function (g) {
+        var isActive = g.dataset.section === activeSection;
+        g.classList.toggle('expanded', isActive);
+        g.querySelector('.toc-group-title').classList.toggle('active', isActive);
+      });
+      document.querySelectorAll('.toc-sub a').forEach(function (a) {
+        var href = a.getAttribute('href').replace('#', '');
+        a.classList.toggle('active', href === activeAnchor);
+      });
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docH > 0 ? Math.round((window.scrollY / docH) * 100) : 0;
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-pct').textContent = pct + '%';
+      document.getElementById('collapsed-progress-fill').style.width = pct + '%';
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(function () { updateToc(); ticking = false }); ticking = true }
+    });
+    updateToc();
+
+    // Theme toggle
+    var themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', function () {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+        themeToggle.textContent = '🌙';
       } else {
-        flushSteps();flushList();paraLines.push(l);
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        themeToggle.textContent = '☀️';
+      }
+    });
+    window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', function (e) {
+      if (localStorage.getItem('theme')) return;
+      if (e.matches) { document.documentElement.removeAttribute('data-theme'); themeToggle.textContent = '🌙' }
+      else { document.documentElement.setAttribute('data-theme', 'light'); themeToggle.textContent = '☀️' }
+    });
+
+    // Shared markdown helpers (used by bonus modal and PDF export)
+    function fmtInline(s) {
+      return s
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
+    function renderMd(text) {
+      var lines = text.split('\n');
+      var html = '';
+      var paraLines = [];
+      var inList = false;
+      var inSteps = false;
+      function flushPara() {
+        if (paraLines.length) { html += '<p>' + paraLines.map(fmtInline).join('<br>') + '</p>'; paraLines = []; }
+      }
+      function flushList() { if (inList) { html += '</ul>'; inList = false; } }
+      function flushSteps() { if (inSteps) { html += '</div>'; inSteps = false; } }
+      for (var i = 0; i < lines.length; i++) {
+        var l = lines[i];
+        var stepMatch = l.match(/^(\d+)\.\s+(.*)/);
+        if (stepMatch) {
+          flushPara(); flushList();
+          if (!inSteps) { html += '<div class="bonus-steps">'; inSteps = true; }
+          html += '<div class="bonus-step"><span class="bonus-step-num">' + stepMatch[1] + '</span><span class="bonus-step-text">' + fmtInline(stepMatch[2]) + '</span></div>';
+        } else if (/^- /.test(l)) {
+          flushPara(); flushSteps();
+          if (!inList) { html += '<ul>'; inList = true; }
+          html += '<li>' + fmtInline(l.replace(/^- /, '')) + '</li>';
+        } else if (l.trim() === '') {
+          flushSteps(); flushList(); flushPara();
+        } else {
+          flushSteps(); flushList(); paraLines.push(l);
+        }
+      }
+      flushSteps(); flushList(); flushPara();
+      return html;
+    }
+
+    // Bonus Modal
+    (function () {
+      var overlay = document.getElementById('bonus-overlay');
+      var closeBtn = document.getElementById('bonus-modal-close');
+      var titleEl = document.getElementById('bonus-modal-title');
+      var bodyEl = document.getElementById('bonus-modal-body');
+
+      function openModal(title, content) {
+        titleEl.textContent = title;
+        bodyEl.innerHTML = renderMd(content);
+        overlay.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        overlay.classList.remove('visible');
+        document.body.style.overflow = '';
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+      document.querySelectorAll('.bonus-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openModal(btn.dataset.bonusTitle || '', btn.dataset.bonusContent || '');
+        });
+      });
+    })();
+
+    // Copy prompt
+    function copyPrompt(btn) {
+      var text = btn.closest('.prompt-block').querySelector('.prompt-body').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.style.opacity = '1';
+        setTimeout(function () {
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+          btn.style.opacity = '';
+        }, 1500);
+      });
+    }
+
+    // Font size toggle (5 levels)
+    var fontSizes = [14, 15, 16, 18, 20];
+    var fontLabels = ['A1', 'A2', 'A3', 'A4', 'A5'];
+    var fontIdx = fontSizes.indexOf(parseInt(localStorage.getItem('fontSize')) || 16);
+    if (fontIdx < 0) fontIdx = 2;
+    var fontBtn = document.getElementById('fontsize-toggle');
+    function applyFontSize() {
+      document.documentElement.style.fontSize = fontSizes[fontIdx] + 'px';
+      fontBtn.textContent = fontLabels[fontIdx];
+      localStorage.setItem('fontSize', fontSizes[fontIdx]);
+    }
+    applyFontSize();
+    fontBtn.addEventListener('click', function () {
+      fontIdx = (fontIdx + 1) % fontSizes.length;
+      applyFontSize();
+    });
+
+    // ===== SETTINGS PANEL =====
+    (function () {
+      var settingsToggle = document.getElementById('settings-toggle');
+      var settingsPanel = document.getElementById('settings-panel');
+
+      function openSettings() {
+        var rect = settingsToggle.getBoundingClientRect();
+        settingsPanel.style.top = (rect.bottom + 8) + 'px';
+        settingsPanel.style.left = Math.min(rect.left, window.innerWidth - 218) + 'px';
+        settingsPanel.classList.add('open');
+        settingsToggle.classList.add('active');
+      }
+      function closeSettings() {
+        settingsPanel.classList.remove('open');
+        settingsToggle.classList.remove('active');
+      }
+
+      settingsToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        settingsPanel.classList.contains('open') ? closeSettings() : openSettings();
+      });
+
+      settingsPanel.addEventListener('click', function (e) { e.stopPropagation(); });
+
+      document.addEventListener('click', closeSettings);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSettings(); });
+
+      // ===== COLOR THEMES =====
+      function hexToRgbStr(hex) {
+        var r = parseInt(hex.slice(1, 3), 16);
+        var g = parseInt(hex.slice(3, 5), 16);
+        var b = parseInt(hex.slice(5, 7), 16);
+        return r + ' ' + g + ' ' + b;
+      }
+
+      function applyPalette(data, isLight) {
+        var root = document.documentElement;
+        var suffix = isLight ? 'Light' : '';
+        var a = isLight ? (data.accentLight || data.accent) : data.accent;
+        var a2 = isLight ? (data.accent2Light || data.accent2) : data.accent2;
+        var a3 = isLight ? (data.accent3Light || data.accent3) : data.accent3;
+        root.style.setProperty('--accent', a);
+        root.style.setProperty('--accent-rgb', hexToRgbStr(a));
+        root.style.setProperty('--accent2', a2);
+        root.style.setProperty('--accent2-rgb', hexToRgbStr(a2));
+        root.style.setProperty('--accent3', a3);
+        root.style.setProperty('--accent3-rgb', hexToRgbStr(a3));
+      }
+
+      function getSwatchData(sw) {
+        return {
+          accent: sw.dataset.accent,
+          accentLight: sw.dataset.accentLight,
+          accent2: sw.dataset.accent2,
+          accent2Light: sw.dataset.accent2Light,
+          accent3: sw.dataset.accent3,
+          accent3Light: sw.dataset.accent3Light
+        };
+      }
+
+      function updateSwatchSelection(activeId) {
+        document.querySelectorAll('.color-swatch').forEach(function (sw) {
+          sw.classList.toggle('selected', sw.dataset.themeId === activeId);
+        });
+      }
+
+      // Restore saved palette on load
+      var savedPalette = localStorage.getItem('colorPalette');
+      if (savedPalette) {
+        try {
+          var sp = JSON.parse(savedPalette);
+          var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          applyPalette(sp, isLight);
+          document.querySelectorAll('.color-swatch').forEach(function (sw) {
+            if (sw.dataset.accent === sp.accent) sw.classList.add('selected');
+          });
+        } catch (e) { }
+      } else {
+        var firstSwatch = document.querySelector('.color-swatch[data-theme-id="coral"]');
+        if (firstSwatch) firstSwatch.classList.add('selected');
+      }
+
+      document.querySelectorAll('.color-swatch').forEach(function (sw) {
+        sw.addEventListener('click', function () {
+          var data = getSwatchData(sw);
+          var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          applyPalette(data, isLight);
+          localStorage.setItem('colorPalette', JSON.stringify(data));
+          updateSwatchSelection(sw.dataset.themeId);
+        });
+      });
+
+      // Re-apply palette when theme (dark/light) is toggled
+      themeToggle.addEventListener('click', function () {
+        var paletteData = localStorage.getItem('colorPalette');
+        if (!paletteData) return;
+        try {
+          var pd = JSON.parse(paletteData);
+          setTimeout(function () {
+            var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            applyPalette(pd, isLight);
+          }, 0);
+        } catch (e) { }
+      });
+
+      // ===== PDF EXPORT =====
+      document.getElementById('export-pdf-btn').addEventListener('click', function () {
+        closeSettings();
+        exportPDF();
+      });
+    })();
+
+    function exportPDF() {
+      var sections = document.querySelectorAll('section.section');
+      if (!sections.length) { alert('找不到課程章節，請確認頁面已正常載入。'); return; }
+
+      var printSlides = document.createElement('div');
+      printSlides.id = 'print-slides';
+      // Off-screen for height measurement
+      printSlides.style.cssText = 'position:fixed;left:-9999px;width:1280px;display:block;visibility:hidden;';
+      document.body.appendChild(printSlides);
+
+      // Hero title page
+      var heroEl = document.querySelector('header.hero');
+      if (heroEl) {
+        var heroSlide = document.createElement('div');
+        heroSlide.className = 'slide slide-hero';
+        heroSlide.appendChild(heroEl.cloneNode(true));
+        printSlides.appendChild(heroSlide);
+      }
+
+      // Opening quote (before first section.section)
+      document.querySelectorAll('section.quote-page').forEach(function (qp) {
+        var qSlide = document.createElement('div');
+        qSlide.className = 'slide slide-quote';
+        var clone = qp.cloneNode(true);
+        clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+        qSlide.appendChild(clone);
+        // Insert opening quotes before sections, closing quotes after
+        var isClosing = qp.compareDocumentPosition(sections[0]) & Node.DOCUMENT_POSITION_PRECEDING;
+        if (isClosing) {
+          printSlides._closingQuotes = printSlides._closingQuotes || [];
+          printSlides._closingQuotes.push(qSlide);
+        } else {
+          printSlides.appendChild(qSlide);
+        }
+      });
+
+      sections.forEach(function (section) {
+        var h2El = section.querySelector('h2');
+        var mainTitle = h2El ? h2El.textContent.trim() : '';
+
+        var leadClone = null;
+        var contentChildren = [];
+        section.childNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;
+          if (node.classList.contains('reveal') && node.querySelector('.section-label')) {
+            var lead = node.querySelector('.lead');
+            if (lead) leadClone = lead.cloneNode(true);
+            return;
+          }
+          contentChildren.push(node);
+        });
+
+        // Separate [bonus] blocks from normal content — bonus gets standalone slides
+        var bonusChildren = [];
+        var normalChildren = [];
+        contentChildren.forEach(function (child) {
+          if (child.querySelector && child.querySelector(':scope > .bonus-btn')) {
+            bonusChildren.push(child);
+          } else {
+            normalChildren.push(child);
+          }
+        });
+
+        // Split normal content by ## sub-sections; ### (card) stays within the same page
+        var pages = [[]];
+        normalChildren.forEach(function (child) {
+          var isSub = child.querySelector && child.querySelector(':scope > .sub-title');
+          if (isSub && pages[pages.length - 1].length > 0) {
+            pages.push([]);
+          }
+          pages[pages.length - 1].push(child);
+        });
+
+        pages.forEach(function (pageChildren, pIdx) {
+          // Extract ## sub-title text for header
+          var subTitle = '';
+          for (var i = 0; i < pageChildren.length; i++) {
+            var subEl = pageChildren[i].querySelector && pageChildren[i].querySelector(':scope > .sub-title');
+            if (subEl) { subTitle = subEl.textContent.trim(); break; }
+          }
+
+          var slide = makeSlide(mainTitle, subTitle, 0);
+          var body = slide.querySelector('.slide-body');
+          if (pIdx === 0 && leadClone) body.appendChild(leadClone.cloneNode(true));
+          pageChildren.forEach(function (child) {
+            var clone = child.cloneNode(true);
+            // ## sub-title is shown in the header, remove it from body to avoid duplication
+            var subTitleInBody = clone.querySelector(':scope > .sub-title');
+            if (subTitleInBody) subTitleInBody.remove();
+            if (clone.classList.contains('reveal')) clone.classList.add('visible');
+            clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+            body.appendChild(clone);
+          });
+          printSlides.appendChild(slide);
+        });
+
+        // Bonus blocks → standalone headerless slides
+        bonusChildren.forEach(function (child) {
+          var slide = document.createElement('div');
+          slide.className = 'slide slide-bonus';
+          var body = document.createElement('div');
+          body.className = 'slide-body';
+          child.querySelectorAll('.bonus-btn').forEach(function (btn) {
+            var card = document.createElement('div');
+            card.className = 'card';
+            var h3 = document.createElement('h3');
+            h3.textContent = btn.dataset.bonusTitle || '';
+            card.appendChild(h3);
+            var inner = document.createElement('div');
+            inner.innerHTML = renderMd(btn.dataset.bonusContent || '');
+            card.appendChild(inner);
+            body.appendChild(card);
+          });
+          slide.appendChild(body);
+          printSlides.appendChild(slide);
+        });
+      });
+
+      // Append closing quote pages after all content sections
+      if (printSlides._closingQuotes) {
+        printSlides._closingQuotes.forEach(function (s) { printSlides.appendChild(s); });
+        delete printSlides._closingQuotes;
+      }
+
+      // Footer → "Thank You" closing slide
+      var footerEl = document.querySelector('footer.footer');
+      if (footerEl) {
+        var footerSlide = document.createElement('div');
+        footerSlide.className = 'slide slide-footer';
+
+        var inner = document.createElement('div');
+        inner.className = 'footer-inner';
+
+        // Thank you title
+        var thanks = document.createElement('div');
+        thanks.className = 'footer-thanks';
+        thanks.textContent = 'Thank You';
+        inner.appendChild(thanks);
+
+        // Accent line
+        var line = document.createElement('div');
+        line.className = 'footer-line';
+        inner.appendChild(line);
+
+        // CTA text (from original footer)
+        var ctaSrc = footerEl.querySelector('p[style*="font-size"]');
+        if (ctaSrc) {
+          var cta = document.createElement('div');
+          cta.className = 'footer-cta';
+          cta.textContent = ctaSrc.textContent.trim();
+          inner.appendChild(cta);
+        }
+
+        // Social links (clone from original footer, re-wrap)
+        var socialsSrc = footerEl.querySelector('.social-links');
+        if (socialsSrc) {
+          var socials = socialsSrc.cloneNode(true);
+          socials.className = 'footer-socials';
+          socials.removeAttribute('style');
+          inner.appendChild(socials);
+        }
+
+        // Copyright
+        var copySrc = footerEl.querySelectorAll('p');
+        var copyText = '';
+        copySrc.forEach(function (p) {
+          if (!p.getAttribute('style')) copyText = p.textContent.trim();
+        });
+        if (copyText) {
+          var copy = document.createElement('div');
+          copy.className = 'footer-copyright';
+          copy.textContent = copyText;
+          inner.appendChild(copy);
+        }
+
+        footerSlide.appendChild(inner);
+        printSlides.appendChild(footerSlide);
+      }
+
+      // Force layout before measuring
+      // Scale print font-size proportionally from the user's A1–A5 selection (1.5× web size)
+      var PRINT_SCALE = 1.2;
+      var webFontSize = fontSizes[fontIdx] || 16;
+      var printFontSize = webFontSize * PRINT_SCALE;
+      var origFontSize = document.documentElement.style.fontSize;
+      document.documentElement.style.fontSize = printFontSize + 'px';
+      void printSlides.offsetHeight;
+
+      // Overflow detection: split slides taller than 720px (skip hero/quote pages)
+      var MAX_H = 720;
+      Array.from(printSlides.children).forEach(function (firstSlide) {
+        if (firstSlide.classList.contains('slide-hero') || firstSlide.classList.contains('slide-quote')) return;
+        var group = [firstSlide];
+        var curSlide = firstSlide;
+
+        while (curSlide.scrollHeight > MAX_H) {
+          var body = curSlide.querySelector('.slide-body');
+          if (!body || body.children.length <= 1) {
+            // Cannot split further — allow the browser to break inside gracefully
+            // instead of forcing a blank overflow page
+            curSlide.style.minHeight = '0';
+            curSlide.style.pageBreakInside = 'auto';
+            curSlide.style.breakInside = 'auto';
+            break;
+          }
+
+          var overflow = [];
+          while (curSlide.scrollHeight > MAX_H && body.children.length > 1) {
+            overflow.unshift(body.lastChild);
+            body.removeChild(body.lastChild);
+          }
+          if (!overflow.length) break;
+
+          var hdr = curSlide.querySelector('.slide-header');
+          var mt = hdr.querySelector('.slide-title').textContent;
+          var stEl = hdr.querySelector('.slide-subtitle');
+          var stBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
+
+          var nextSlide = makeSlide(mt, stBase, 0);
+          var nextBody = nextSlide.querySelector('.slide-body');
+          overflow.forEach(function (c) { nextBody.appendChild(c); });
+          printSlides.insertBefore(nextSlide, curSlide.nextSibling || null);
+
+          group.push(nextSlide);
+          curSlide = nextSlide;
+          void curSlide.offsetHeight; // reflow
+        }
+
+        // Add page numbers if this section split into multiple slides
+        if (group.length > 1) {
+          group.forEach(function (s, i) {
+            var stEl = s.querySelector('.slide-subtitle');
+            if (stEl) stEl.textContent = (stEl.dataset.base || stEl.textContent) + ' (' + (i + 1) + '/' + group.length + ')';
+          });
+        }
+      });
+
+      // Remove ghost slides whose body is empty or has negligible content height
+      Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+        if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
+        var body = s.querySelector('.slide-body');
+        if (!body || body.children.length === 0 || body.scrollHeight < 50) {
+          s.remove();
+        }
+      });
+
+      // Fix ALL remaining slides to prevent blank second pages.
+      // Three tiers:
+      //   1. Fits (scrollHeight <= MAX_H) → clamp to prevent print drift
+      //   2. Slightly over (<=1.25×) → shrink font-size to fit in one page
+      //   3. Way over (>1.25×) → allow natural page breaks
+      var SHRINK_LIMIT = MAX_H * 1.25;  // 900px — beyond this, allow multi-page
+      Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+        void s.offsetHeight;
+        var h = s.scrollHeight;
+        if (h <= MAX_H) {
+          // Tier 1: fits — clamp to prevent print rendering drift
+          s.style.setProperty('max-height', MAX_H + 'px', 'important');
+          s.style.setProperty('overflow', 'hidden', 'important');
+        } else if (h <= SHRINK_LIMIT) {
+          // Tier 2: slightly over — shrink font to fit one page
+          var body = s.querySelector('.slide-body') || s;
+          var attempts = 0;
+          while (s.scrollHeight > MAX_H && attempts < 6) {
+            var cur = parseFloat(getComputedStyle(body).fontSize);
+            var ratio = (MAX_H - 4) / s.scrollHeight;  // 4px breathing room
+            body.style.fontSize = (cur * ratio) + 'px';
+            void s.offsetHeight;
+            attempts++;
+          }
+          s.style.setProperty('max-height', MAX_H + 'px', 'important');
+          s.style.setProperty('overflow', 'hidden', 'important');
+        } else {
+          // Tier 3: way over — allow natural page breaks
+          s.style.minHeight = '0';
+          s.style.pageBreakInside = 'auto';
+          s.style.breakInside = 'auto';
+        }
+      });
+
+      // Set CSS variable so @media print uses the scaled font-size,
+      // then restore the original web font-size for the live page.
+      document.documentElement.style.setProperty('--print-font-size', printFontSize + 'px');
+      document.documentElement.style.fontSize = origFontSize;
+
+      // Remove measurement styles and start printing
+      printSlides.removeAttribute('style');
+      document.body.classList.add('printing');
+
+      // Wait for all images inside print-slides to load before printing
+      var imgs = Array.from(printSlides.querySelectorAll('img'));
+      var pending = imgs.filter(function (img) { return !img.complete; });
+
+      function doPrint() {
+        window.print();
+        setTimeout(function () {
+          document.body.classList.remove('printing');
+          if (printSlides.parentNode) document.body.removeChild(printSlides);
+        }, 500);
+      }
+
+      if (!pending.length) {
+        doPrint();
+      } else {
+        var loaded = 0;
+        pending.forEach(function (img) {
+          img.onload = img.onerror = function () {
+            if (++loaded >= pending.length) doPrint();
+          };
+        });
+        // Safety timeout: print anyway after 3s
+        setTimeout(function () { if (loaded < pending.length) doPrint(); }, 3000);
       }
     }
-    flushSteps();flushList();flushPara();
-    return html;
-  }
 
-  function openModal(title,content){
-    titleEl.textContent=title;
-    bodyEl.innerHTML=renderMd(content);
-    overlay.classList.add('visible');
-    document.body.style.overflow='hidden';
-  }
-  function closeModal(){
-    overlay.classList.remove('visible');
-    document.body.style.overflow='';
-  }
+    function makeSlide(mainTitle, subTitle, pageNum) {
+      var slide = document.createElement('div');
+      slide.className = 'slide';
 
-  closeBtn.addEventListener('click',closeModal);
-  overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+      var header = document.createElement('div');
+      header.className = 'slide-header';
 
-  document.querySelectorAll('.bonus-btn').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      openModal(btn.dataset.bonusTitle||'',btn.dataset.bonusContent||'');
-    });
-  });
-})();
+      var titleEl = document.createElement('h2');
+      titleEl.className = 'slide-title';
+      titleEl.textContent = mainTitle;
+      header.appendChild(titleEl);
 
-// Font size toggle (5 levels)
-var fontSizes=[14,15,16,18,20];
-var fontLabels=['A1','A2','A3','A4','A5'];
-var fontIdx=fontSizes.indexOf(parseInt(localStorage.getItem('fontSize'))||16);
-if(fontIdx<0)fontIdx=2;
-var fontBtn=document.getElementById('fontsize-toggle');
-function applyFontSize(){
-  document.documentElement.style.fontSize=fontSizes[fontIdx]+'px';
-  fontBtn.textContent=fontLabels[fontIdx];
-  localStorage.setItem('fontSize',fontSizes[fontIdx]);
-}
-applyFontSize();
-fontBtn.addEventListener('click',function(){
-  fontIdx=(fontIdx+1)%fontSizes.length;
-  applyFontSize();
-});
+      if (subTitle) {
+        var subEl = document.createElement('h3');
+        subEl.className = 'slide-subtitle';
+        subEl.dataset.base = subTitle;
+        subEl.textContent = pageNum > 0 ? subTitle + ' (' + pageNum + ')' : subTitle;
+        header.appendChild(subEl);
+      }
 
-// ===== SETTINGS PANEL =====
-(function(){
-  var settingsToggle=document.getElementById('settings-toggle');
-  var settingsPanel=document.getElementById('settings-panel');
-
-  function openSettings(){
-    var rect=settingsToggle.getBoundingClientRect();
-    settingsPanel.style.top=(rect.bottom+8)+'px';
-    settingsPanel.style.left=Math.min(rect.left,window.innerWidth-218)+'px';
-    settingsPanel.classList.add('open');
-    settingsToggle.classList.add('active');
-  }
-  function closeSettings(){
-    settingsPanel.classList.remove('open');
-    settingsToggle.classList.remove('active');
-  }
-
-  settingsToggle.addEventListener('click',function(e){
-    e.stopPropagation();
-    settingsPanel.classList.contains('open')?closeSettings():openSettings();
-  });
-
-  settingsPanel.addEventListener('click',function(e){e.stopPropagation();});
-
-  document.addEventListener('click',closeSettings);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSettings();});
-
-  // ===== COLOR THEMES =====
-  function hexToRgbStr(hex) {
-    var r = parseInt(hex.slice(1, 3), 16);
-    var g = parseInt(hex.slice(3, 5), 16);
-    var b = parseInt(hex.slice(5, 7), 16);
-    return r + ' ' + g + ' ' + b;
-  }
-
-  function applyPalette(data, isLight) {
-    var root = document.documentElement;
-    var a = isLight ? (data.accentLight || data.accent) : data.accent;
-    var a2 = isLight ? (data.accent2Light || data.accent2) : data.accent2;
-    var a3 = isLight ? (data.accent3Light || data.accent3) : data.accent3;
-    root.style.setProperty('--accent', a);
-    root.style.setProperty('--accent-rgb', hexToRgbStr(a));
-    root.style.setProperty('--accent2', a2);
-    root.style.setProperty('--accent2-rgb', hexToRgbStr(a2));
-    root.style.setProperty('--accent3', a3);
-    root.style.setProperty('--accent3-rgb', hexToRgbStr(a3));
-  }
-
-  function getSwatchData(sw) {
-    return {
-      accent: sw.dataset.accent,
-      accentLight: sw.dataset.accentLight,
-      accent2: sw.dataset.accent2,
-      accent2Light: sw.dataset.accent2Light,
-      accent3: sw.dataset.accent3,
-      accent3Light: sw.dataset.accent3Light
-    };
-  }
-
-  function updateSwatchSelection(activeId) {
-    document.querySelectorAll('.color-swatch').forEach(function (sw) {
-      sw.classList.toggle('selected', sw.dataset.themeId === activeId);
-    });
-  }
-
-  // Restore saved palette on load
-  var savedPalette = localStorage.getItem('colorPalette');
-  if (savedPalette) {
-    try {
-      var sp = JSON.parse(savedPalette);
-      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      applyPalette(sp, isLight);
-      document.querySelectorAll('.color-swatch').forEach(function (sw) {
-        if (sw.dataset.accent === sp.accent) sw.classList.add('selected');
-      });
-    } catch (e) { }
-  } else {
-    var firstSwatch = document.querySelector('.color-swatch[data-theme-id="coral"]');
-    if (firstSwatch) firstSwatch.classList.add('selected');
-  }
-
-  document.querySelectorAll('.color-swatch').forEach(function (sw) {
-    sw.addEventListener('click', function () {
-      var data = getSwatchData(sw);
-      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      applyPalette(data, isLight);
-      localStorage.setItem('colorPalette', JSON.stringify(data));
-      updateSwatchSelection(sw.dataset.themeId);
-    });
-  });
-
-  // Re-apply palette when theme (dark/light) is toggled
-  themeToggle.addEventListener('click', function () {
-    var paletteData = localStorage.getItem('colorPalette');
-    if (!paletteData) return;
-    try {
-      var pd = JSON.parse(paletteData);
-      setTimeout(function () {
-        var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        applyPalette(pd, isLight);
-      }, 0);
-    } catch (e) { }
-  });
-})();
-</script>
+      var body = document.createElement('div');
+      body.className = 'slide-body';
+      slide.appendChild(header);
+      slide.appendChild(body);
+      return slide;
+    }
+  </script>
 </body>
+
 </html>
