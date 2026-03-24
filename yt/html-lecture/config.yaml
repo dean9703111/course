@@ -1,0 +1,15 @@
+page:
+  title: "從 Vibe Coding 到可複用框架 — 我怎麼把 AI 生成的 HTML 變成講義系統"
+  badge: "YouTube · Vibe Coding 實戰"
+  hero_title: "從 AI 生成的 HTML<br>到可複用的講義框架"
+  subtitle: "不是做出一份講義，而是把工作方式變成系統 — Vibe Coding 從 Demo 走向長期複用的完整歷程"
+
+quotes:
+  opening:
+    text: "做得出來，不是最難的。<br>難的是，它下次還是不是你的。"
+  closing:
+    text: >
+      AI 真正厲害的地方，<br>
+      也許從來都不是幫你省下一次工作的時間。<br><br>
+      而是它開始讓你有機會，<br>
+      把工作習慣固定成下一次還能繼續使用的能力。
