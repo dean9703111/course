@@ -2833,50 +2833,6 @@ cd vibe-coding-ai-agent-practice</div>
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🕷</span> ️ 實戰：用網頁爬蟲蒐集資訊</h3>
-      <p>許多網站禁止爬蟲 — 像 NotebookLM 貼上 ChatGPT 分享連結會解析錯誤，Medium 文章也常無法辨識。</p>
-      <p>但請 AI Agent 用 Selenium 模擬真實使用者，就能突破這個限制</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">爬取 ChatGPT 對話</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">先建立「crawler」資料夾，然使用 Selenium 模擬 Chrome 瀏覽器來設計爬蟲程式
-取得下面 ChatGPT 分享連結的對話內容，這個網頁有反爬蟲設計，所以網頁開啟後，先等 5 秒鐘渲染元素再去抓取與 ChatGPT 的對話
-https://chatgpt.com/s/t_68d21677946081918576092e1c2d37c1
-抓到對話後建立「output」，將資料寫入 Markdown 檔案，檔名使用網頁標題，並優化 Markdown 格式為好閱讀的結構</div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">這段 Prompt 有兩個重點：</p>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">1. 要求使用 <strong>Selenium 模擬 Chrome 瀏覽器</strong></p>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">2. 提醒網頁有反爬蟲設計，需<strong>等待 5 秒渲染</strong>後再抓取</p>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">專業知識，是 AI 時代的護城河。</div>
-      <p>這個爬蟲的成功建立在指令非常明確之上 — 如果沒有網路爬蟲的基礎概念，AI 的失敗率會非常高。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
     <div class="sub-title" id="sub-nodejs"><span class="bar"></span>② Node.js — 讓網頁從堪用變專業</div>
   </div>
 

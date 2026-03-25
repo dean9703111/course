@@ -122,23 +122,6 @@ cd vibe-coding-ai-agent-practice
 完成後檢查是否都轉換成繁體中文，並優化錯漏字
 ```
 
-### 🕷️ 實戰：用網頁爬蟲蒐集資訊
-許多網站禁止爬蟲 — 像 NotebookLM 貼上 ChatGPT 分享連結會解析錯誤，Medium 文章也常無法辨識。
-但請 AI Agent 用 Selenium 模擬真實使用者，就能突破這個限制
-
-```prompt [label="爬取 ChatGPT 對話"]
-先建立「crawler」資料夾，然使用 Selenium 模擬 Chrome 瀏覽器來設計爬蟲程式
-取得下面 ChatGPT 分享連結的對話內容，這個網頁有反爬蟲設計，所以網頁開啟後，先等 5 秒鐘渲染元素再去抓取與 ChatGPT 的對話
-https://chatgpt.com/s/t_68d21677946081918576092e1c2d37c1
-抓到對話後建立「output」，將資料寫入 Markdown 檔案，檔名使用網頁標題，並優化 Markdown 格式為好閱讀的結構
-```
-
-這段 Prompt 有兩個重點：
-1. 要求使用 **Selenium 模擬 Chrome 瀏覽器**
-2. 提醒網頁有反爬蟲設計，需**等待 5 秒渲染**後再抓取
-
-> **專業知識，是 AI 時代的護城河。** 這個爬蟲的成功建立在指令非常明確之上 — 如果沒有網路爬蟲的基礎概念，AI 的失敗率會非常高。
-
 ---
 
 ## ② Node.js — 讓網頁從堪用變專業
