@@ -1980,11 +1980,21 @@
 
     #print-slides .prompt-body {
       font-size: .9rem;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+      overflow: hidden;
+    }
+
+    #print-slides .content-image,
+    #print-slides .image-text {
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
 
     #print-slides .content-image img {
-      max-height: 400px;
+      max-height: 320px;
       width: auto;
+      object-fit: contain;
     }
 
     #print-slides .image-text {
@@ -1995,6 +2005,11 @@
     #print-slides .image-text__img {
       flex: 0 0 35%;
       max-width: 35%;
+    }
+
+    #print-slides .image-text__img img {
+      max-height: 280px;
+      object-fit: contain;
     }
 
     #print-slides .image-text__body p,
@@ -3738,8 +3753,15 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
   <div class="reveal">
     <div class="insight">
       <div class="insight-title">部署失敗很正常</div>
-      <p>一開始失敗很正常，把錯誤訊息複製起來，貼到與 AI 的對話視窗，讓他幫忙解決。看到綠色勾勾後，點擊進去就能看到專案的上線網址。</p>
+      <p>一開始失敗很正常，把錯誤訊息複製起來，貼到與 AI 的對話視窗，讓他幫忙解決。 看到綠色勾勾後，點擊進去就能看到專案的上線網址。</p>
     </div>
+  </div>
+
+  <div class="reveal">
+    <figure class="content-image">
+      <img src="assets/deploy.png" alt="部署順利時會有打勾與網址" loading="lazy">
+      <figcaption>部署順利時會有打勾與網址</figcaption>
+    </figure>
   </div>
 
   <div class="reveal">
@@ -4455,6 +4477,18 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
         printSlides.appendChild(footerSlide);
       }
 
+      // Strip loading="lazy" — lazy images have 0 height off-screen,
+      // which makes all slide measurements wrong.
+      Array.from(printSlides.querySelectorAll('img[loading]')).forEach(function (img) {
+        img.removeAttribute('loading');
+      });
+
+      // Wait for ALL images to load before measuring slides.
+      // Most are cached from the live page; uncached ones need a real load.
+      var allImgs = Array.from(printSlides.querySelectorAll('img'));
+      var unloaded = allImgs.filter(function (i) { return !i.complete; });
+
+      function runPackerAndPrint() {
       // Force layout before measuring
       // Scale print font-size proportionally from the user's A1–A5 selection (1.5× web size)
       var PRINT_SCALE = 1.2;
@@ -4464,56 +4498,124 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
       document.documentElement.style.fontSize = printFontSize + 'px';
       void printSlides.offsetHeight;
 
-      // Overflow detection: split slides taller than 720px (skip hero/quote pages)
+      // ── Greedy slide packer ──
+      // Add children one by one; when adding one causes overflow, start a new
+      // slide. If a single child alone overflows (e.g. a big image), shrink it
+      // to fit. Consecutive images naturally get separate slides.
       var MAX_H = 720;
-      Array.from(printSlides.children).forEach(function (firstSlide) {
-        if (firstSlide.classList.contains('slide-hero') || firstSlide.classList.contains('slide-quote')) return;
-        var group = [firstSlide];
-        var curSlide = firstSlide;
 
-        while (curSlide.scrollHeight > MAX_H) {
-          var body = curSlide.querySelector('.slide-body');
-          if (!body || body.children.length <= 1) {
-            // Cannot split further — allow the browser to break inside gracefully
-            // instead of forcing a blank overflow page
-            curSlide.style.minHeight = '0';
-            curSlide.style.pageBreakInside = 'auto';
-            curSlide.style.breakInside = 'auto';
-            break;
+      function shrinkImagesInSlide(slide) {
+        var imgs = Array.from(slide.querySelectorAll('img'));
+        imgs.forEach(function (img) {
+          var attempts = 0;
+          while (attempts < 14 && slide.scrollHeight > MAX_H) {
+            var curH = img.offsetHeight;
+            if (curH < 50) break;
+            img.style.maxHeight = Math.max(50, curH * 0.78) + 'px';
+            img.style.width = 'auto';
+            void slide.offsetHeight;
+            attempts++;
           }
+        });
+      }
 
-          var overflow = [];
-          while (curSlide.scrollHeight > MAX_H && body.children.length > 1) {
-            overflow.unshift(body.lastChild);
-            body.removeChild(body.lastChild);
+      function shrinkFontInSlide(slide) {
+        var body = slide.querySelector('.slide-body') || slide;
+        var attempts = 0;
+        while (slide.scrollHeight > MAX_H && attempts < 8) {
+          var cur = parseFloat(getComputedStyle(body).fontSize);
+          var ratio = (MAX_H - 4) / slide.scrollHeight;
+          body.style.fontSize = (cur * ratio) + 'px';
+          void slide.offsetHeight;
+          attempts++;
+        }
+      }
+
+      Array.from(printSlides.children).forEach(function (origSlide) {
+        if (origSlide.classList.contains('slide-hero') || origSlide.classList.contains('slide-quote')
+            || origSlide.classList.contains('slide-footer') || origSlide.classList.contains('slide-bonus')) return;
+
+        var body = origSlide.querySelector('.slide-body');
+        if (!body || body.children.length <= 1) {
+          // Single-child slide that overflows → shrink to fit
+          void origSlide.offsetHeight;
+          if (origSlide.scrollHeight > MAX_H) {
+            shrinkImagesInSlide(origSlide);
+            if (origSlide.scrollHeight > MAX_H) shrinkFontInSlide(origSlide);
           }
-          if (!overflow.length) break;
-
-          var hdr = curSlide.querySelector('.slide-header');
-          var mt = hdr.querySelector('.slide-title').textContent;
-          var stEl = hdr.querySelector('.slide-subtitle');
-          var stBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
-
-          var nextSlide = makeSlide(mt, stBase, 0);
-          var nextBody = nextSlide.querySelector('.slide-body');
-          overflow.forEach(function (c) { nextBody.appendChild(c); });
-          printSlides.insertBefore(nextSlide, curSlide.nextSibling || null);
-
-          group.push(nextSlide);
-          curSlide = nextSlide;
-          void curSlide.offsetHeight; // reflow
+          return;
         }
 
-        // Add page numbers if this section split into multiple slides
+        void origSlide.offsetHeight;
+        if (origSlide.scrollHeight <= MAX_H) return;
+
+        var header = origSlide.querySelector('.slide-header');
+        var mainTitle = header ? (header.querySelector('.slide-title') || {}).textContent || '' : '';
+        var stEl = header ? header.querySelector('.slide-subtitle') : null;
+        var subBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
+
+        var allChildren = Array.from(body.children);
+        while (body.firstChild) body.removeChild(body.firstChild);
+
+        var curSlide = origSlide;
+        var curBody = body;
+        var group = [curSlide];
+
+        allChildren.forEach(function (child) {
+          curBody.appendChild(child);
+          void curSlide.offsetHeight;
+
+          if (curSlide.scrollHeight <= MAX_H) return;
+
+          // This child causes overflow — move it to a new slide
+          curBody.removeChild(child);
+
+          var newSlide = makeSlide(mainTitle, subBase, 0);
+          var newBody = newSlide.querySelector('.slide-body');
+          newBody.appendChild(child);
+          printSlides.insertBefore(newSlide, curSlide.nextSibling);
+
+          curSlide = newSlide;
+          curBody = newBody;
+          group.push(curSlide);
+
+          void curSlide.offsetHeight;
+
+          // Single child alone exceeds MAX_H → shrink to fit
+          if (curSlide.scrollHeight > MAX_H) {
+            shrinkImagesInSlide(curSlide);
+            if (curSlide.scrollHeight > MAX_H) shrinkFontInSlide(curSlide);
+          }
+        });
+
         if (group.length > 1) {
           group.forEach(function (s, i) {
-            var stEl = s.querySelector('.slide-subtitle');
-            if (stEl) stEl.textContent = (stEl.dataset.base || stEl.textContent) + ' (' + (i + 1) + '/' + group.length + ')';
+            var st = s.querySelector('.slide-subtitle');
+            if (st) st.textContent = (st.dataset.base || st.textContent) + ' (' + (i + 1) + '/' + group.length + ')';
           });
         }
       });
 
-      // Remove ghost slides whose body is empty or has negligible content height
+      // Auto-shrink individual prompt-body blocks that are too wide/tall
+      Array.from(printSlides.querySelectorAll('.prompt-body')).forEach(function (pb) {
+        var slide = pb.closest('.slide');
+        if (!slide) return;
+        var MIN_FONT = 8;
+        var cur = parseFloat(getComputedStyle(pb).fontSize);
+        var attempts = 0;
+        while (attempts < 12 && cur > MIN_FONT) {
+          void slide.offsetHeight;
+          var slideOver = slide.scrollHeight > MAX_H;
+          var pbOver = pb.scrollWidth > pb.clientWidth + 2;
+          if (!slideOver && !pbOver) break;
+          cur = Math.max(MIN_FONT, cur * 0.88);
+          pb.style.fontSize = cur + 'px';
+          pb.style.lineHeight = '1.5';
+          attempts++;
+        }
+      });
+
+      // Remove ghost slides whose body is empty or has negligible content
       Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
         if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
         var body = s.querySelector('.slide-body');
@@ -4522,38 +4624,10 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
         }
       });
 
-      // Fix ALL remaining slides to prevent blank second pages.
-      // Three tiers:
-      //   1. Fits (scrollHeight <= MAX_H) → clamp to prevent print drift
-      //   2. Slightly over (<=1.25×) → shrink font-size to fit in one page
-      //   3. Way over (>1.25×) → allow natural page breaks
-      var SHRINK_LIMIT = MAX_H * 1.25;  // 900px — beyond this, allow multi-page
+      // Final clamp: every slide is strictly 720px, no bleeding
       Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
-        void s.offsetHeight;
-        var h = s.scrollHeight;
-        if (h <= MAX_H) {
-          // Tier 1: fits — clamp to prevent print rendering drift
-          s.style.setProperty('max-height', MAX_H + 'px', 'important');
-          s.style.setProperty('overflow', 'hidden', 'important');
-        } else if (h <= SHRINK_LIMIT) {
-          // Tier 2: slightly over — shrink font to fit one page
-          var body = s.querySelector('.slide-body') || s;
-          var attempts = 0;
-          while (s.scrollHeight > MAX_H && attempts < 6) {
-            var cur = parseFloat(getComputedStyle(body).fontSize);
-            var ratio = (MAX_H - 4) / s.scrollHeight;  // 4px breathing room
-            body.style.fontSize = (cur * ratio) + 'px';
-            void s.offsetHeight;
-            attempts++;
-          }
-          s.style.setProperty('max-height', MAX_H + 'px', 'important');
-          s.style.setProperty('overflow', 'hidden', 'important');
-        } else {
-          // Tier 3: way over — allow natural page breaks
-          s.style.minHeight = '0';
-          s.style.pageBreakInside = 'auto';
-          s.style.breakInside = 'auto';
-        }
+        s.style.setProperty('max-height', MAX_H + 'px', 'important');
+        s.style.setProperty('overflow', 'hidden', 'important');
       });
 
       // Set CSS variable so @media print uses the scaled font-size,
@@ -4561,33 +4635,28 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
       document.documentElement.style.setProperty('--print-font-size', printFontSize + 'px');
       document.documentElement.style.fontSize = origFontSize;
 
-      // Remove measurement styles and start printing
+      // Remove measurement styles and print
       printSlides.removeAttribute('style');
       document.body.classList.add('printing');
+      window.print();
+      setTimeout(function () {
+        document.body.classList.remove('printing');
+        if (printSlides.parentNode) document.body.removeChild(printSlides);
+      }, 500);
 
-      // Wait for all images inside print-slides to load before printing
-      var imgs = Array.from(printSlides.querySelectorAll('img'));
-      var pending = imgs.filter(function (img) { return !img.complete; });
+      } // end runPackerAndPrint
 
-      function doPrint() {
-        window.print();
-        setTimeout(function () {
-          document.body.classList.remove('printing');
-          if (printSlides.parentNode) document.body.removeChild(printSlides);
-        }, 500);
-      }
-
-      if (!pending.length) {
-        doPrint();
+      // Kick off: wait for images then run packer
+      if (!unloaded.length) {
+        runPackerAndPrint();
       } else {
-        var loaded = 0;
-        pending.forEach(function (img) {
+        var imgLoaded = 0;
+        unloaded.forEach(function (img) {
           img.onload = img.onerror = function () {
-            if (++loaded >= pending.length) doPrint();
+            if (++imgLoaded >= unloaded.length) runPackerAndPrint();
           };
         });
-        // Safety timeout: print anyway after 3s
-        setTimeout(function () { if (loaded < pending.length) doPrint(); }, 3000);
+        setTimeout(function () { if (imgLoaded < unloaded.length) runPackerAndPrint(); }, 3000);
       }
     }
 
