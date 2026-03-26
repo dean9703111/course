@@ -5,13 +5,13 @@
 
 ### 🧠 Gemini（入門）[官網](https://gemini.google.com)
 - 打開網頁就能做網站
-- 透過對話就能拿到網頁草稿、版面結構
+- 透過對話生成網頁草稿、版面結構
 - 適合腦力激盪、嘗試風格
 
 ### 🧪 Google AI Studio（進階）[官網](https://aistudio.google.com/)
 - 能做出完整的 App 原型
 - 可以直接在瀏覽器上操作
-- 結果可以部署或是搭配 GitHub 版本控制
+- 結果可以直接部署並搭配 GitHub 版本控制
 
 ### 🚀 Antigravity（AI 程式編輯器）[官網](https://antigravity.google/)
 - 讓 Vibe Coding 可維護、擴充的工具
@@ -37,9 +37,9 @@
 - 不同任務需要切換不同工具
 
 ### 😩 痛點 1：複製貼上讓人煩躁
-- 企業內訓時，主辦方提供的參考資料格式不一（Word / PDF / PPT）
+- 企業內訓時，主辦方提供的參考資料格式不 一 Word / PDF / PPT
 - 資料之間有重複內容，需要人工比對與彙整
-- NotebookLM 雖然能幫忙整理，但上傳 → 複製 → 貼上的動作無趣又耗時
+- NotebookLM 雖然能幫忙整理，但「上傳 → 複製 → 貼上」的動作無趣又耗時
 
 ### 🎬 痛點 2：瑣碎的事情太多
 - 每支影片都要處理：腳本設計、字卡規劃、音效建議、宣傳導流
@@ -65,15 +65,7 @@
 # 前置工具安裝：解鎖 AI Agent 的完整能力
 > AI Agent 能做多少事，取決於你給它多少工具 — Python、Node.js、Git 三件套裝好，能力直接翻倍
 
-## Gemini CLI - 在終端機免費使用
-
-### 安裝 Gemini CLI 
-Install globally with npm: `npm install -g @google/gemini-cli`
-在終端機輸入 `gemini` 即可使用
-
-![確認 AI Agent 可以執行的資料夾範圍](assets/gemini.png)
-
-![登入 Google 帳號](assets/gemini-login.png)
+![開啟 Teminal 下指令](assets/antigravity-teminal.png)
 
 ## ① Python — 突破文件與爬蟲限制
 
@@ -95,6 +87,14 @@ Install globally with npm: `npm install -g @google/gemini-cli`
 git clone git@github.com:dean9703111/vibe-coding-ai-agent-practice.git
 cd vibe-coding-ai-agent-practice
 ```
+
+### 安裝 Gemini CLI 
+Install globally with npm: `npm install -g @google/gemini-cli`
+在終端機輸入 `gemini` 即可使用
+
+![確認 AI Agent 可以執行的資料夾範圍](assets/gemini.png)
+
+![登入 Google 帳號](assets/gemini-login.png)
 
 ### 📄 實戰：提取文件資訊
 許多人把程式碼編輯器（IDE）當成 RAG 工具，用它快速檢索、分析、統整資訊。
@@ -261,18 +261,32 @@ cat ~/.ssh/id_ed25519.pub
 - AI 才能知道工作區位置，確保操作範圍正確
 
 ### 🔧 設定 Global Rules
+這些 Rules 會在每次對話時載入，所以設定通用的就好，千萬不要放太多。
 
-開啟「Customizations → Rules → Global」，貼上通用規則讓 AI 回覆更精準
+![開啟「Customizations → Rules → Global」，貼上通用規則讓 AI 回覆更精準](assets/antigravity-rule.png)
 
 ```prompt [label="Global Rules（推薦）"]
-DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL CODE OR EXPLANATION!!!
+DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL CODE OR EXPLANATION!!! I DON'T WANT "Here's how you can blablabla"
 
 - Be casual unless otherwise specified
 - Be terse
 - Suggest solutions that I didn't think about—anticipate my needs
 - Treat me as an expert
-- Give the answer immediately. Provide detailed explanations after giving the answer
+- Be accurate and thorough
+- Give the answer immediately. Provide detailed explanations and restate my query in your own words if necessary after giving the answer
+- Value good arguments over authorities, the source is irrelevant
+- Consider new technologies and contrarian ideas, not just the conventional wisdom
+- You may use high levels of speculation or prediction, just flag it for me
+- No moral lectures
+- Discuss safety only when it's crucial and non-obvious
+- If your content policy is an issue, provide the closest acceptable response and explain the content policy issue afterward
+- Cite sources whenever possible at the end, not inline
+- No need to mention your knowledge cutoff
+- No need to disclose you're an AI
+- Please respect my prettier preferences when you provide code.
 - Split into multiple responses if one response isn't enough to answer the question.
+
+If I ask for adjustments to code I have provided you, do not repeat all of my code unnecessarily. Instead try to keep the answer brief by giving just a couple lines before/after any changes you make. Multiple code blocks are ok.
 ```
 
 此規則貼上後在「所有專案」生效，也可額外加上語言偏好：
@@ -340,8 +354,8 @@ DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL C
 ## 提示詞設計解析
 
 ### 💡 角色設定的作用
-- 讓 AI 進入對應領域的思維框架
-- 框架選擇提前指定，避免 AI 自行發揮造成技術不一致
+- 讓 AI 了解自己要扮演的角色、職位、任務
+- 框架提前指定，避免 AI 自行發揮造成技術不一致
 - 風格描述越具體，畫面越接近預期（像素風 vs 現代風差異很大）
 
 ### 🔒 為什麼透過 Apps Script 取題？
@@ -377,7 +391,7 @@ DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL C
 [貼上指令]
 ```
 
-現在 AI Agent 有能力自行打開瀏覽器、尋找元素、操作畫面、截圖結果。
+等 AI 執行完畢後，可以請他自行打開瀏覽器、尋找元素、操作畫面、截圖結果。
 
 ```prompt [label="開啟瀏覽器預覽"]
 請開啟瀏覽器，模擬執行並檢查是否有錯誤
@@ -390,16 +404,22 @@ DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL C
 我希望關主的頭像只占據螢幕高度的 1/3，請你完成後自己打開瀏覽器檢查設計結果是否符合預期
 ```
 
+```prompt [label="明確指出問題點"]
+我覺得題目、選項的中英文字大小落差太大，我希望一致，並且方便閱讀
+```
+
 請 AI 協助生成專案文件與模擬資訊
 
 ```prompt [label="產生 README 與測試資料"]
-請為這個專案撰寫操作的 README.md 的文件
+用中文為這個專案撰寫操作的 README.md 的文件
 讓使用者知道如何完成安裝、Google Sheets、Google Apps Script 的詳細操作
 並給我 10 個可以複製貼上測試的選擇題，題目主題為「生成式 AI 基礎知識」，用表格呈現
 ```
 
 > **生成式 AI 的隨機性**
-> AI 每次生成的結果都充滿隨機性，你得到的結果和遇到的問題可能完全不一樣。遇到問題，把錯誤訊息複製貼到對話視窗中，讓 AI 幫你解決。
+> AI 每次生成的結果都充滿隨機性，你得到的結果和遇到的問題可能跟我完全不一樣。
+> 
+> 但不要太擔心，現在遇到問題，先把錯誤訊息複製貼到對話視窗中，嘗試讓 AI 幫你解決。
 
 ---
 
@@ -420,6 +440,10 @@ DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL C
 - .env — 個人設定與密鑰，絕對不能上傳到公開 repo
 - log — 執行日誌，僅供本機除錯使用
 - tmp — 系統暫存檔，沒有紀錄意義
+
+```prompt [label="如果沒設計要記得補"]
+根據專案設計合適的 .gitignore
+```
 
 > **絕對不能上傳 .env 到 Git！**
 > `.env` 通常存放敏感資訊（ex: 資料庫帳密、API Key），一旦上傳到公開 repo，除了資安問題外，你的信用卡也可能被刷爆。
@@ -474,7 +498,10 @@ DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL C
 3. 環境變數的變更才會在新的部署中生效
 
 > **部署失敗很正常**
-> 一開始失敗很正常，把錯誤訊息複製起來，貼到與 AI 的對話視窗，讓他幫忙解決。看到綠色勾勾後，點擊進去就能看到專案的上線網址。
+> 一開始失敗很正常，把錯誤訊息複製起來，貼到與 AI 的對話視窗，讓他幫忙解決。
+> 看到綠色勾勾後，點擊進去就能看到專案的上線網址。
+
+![部署順利時會有打勾與網址](assets/deploy.png)
 
 ## 常見踩坑整理
 
