@@ -65,6 +65,16 @@
 # 前置工具安裝：解鎖 AI Agent 的完整能力
 > AI Agent 能做多少事，取決於你給它多少工具 — Python、Node.js、Git 三件套裝好，能力直接翻倍
 
+## Gemini CLI - 在終端機免費使用
+
+### 安裝 Gemini CLI 
+Install globally with npm: `npm install -g @google/gemini-cli`
+在終端機輸入 `gemini` 即可使用
+
+![確認 AI Agent 可以執行的資料夾範圍](assets/gemini.png)
+
+![登入 Google 帳號](assets/gemini-login.png)
+
 ## ① Python — 突破文件與爬蟲限制
 
 ### 🎯 為什麼要裝 Python？
@@ -94,12 +104,14 @@ cd vibe-coding-ai-agent-practice
 ```prompt [label="提取文件內容"]
 資料夾有 pdf/ppt/doc 等多種格式的文件，我想請你用 python 套件把所有文件內的「文字」取出來，並確定可以用繁體中文顯示。
 並建立一個「doc」的資料夾，用 Markdown 的格式儲存，並整理文字結構，設計合適的大標、中標、小標，方便閱讀。
-如果 ppt/doc 裡面有圖片，請建立一個「img」的資料夾，然後辨識完圖片後命名圖片檔名。
+如果 ppt/doc 裡面有圖片，請建立一個「img」的資料夾。
 ```
 
-> **AI Agent 會自動設計執行步驟** 安裝 Python 套件 → 解析文件 → 提取文字與圖片 → 建立資料夾並儲存 → 辨識圖片命名檔名。
+> **AI Agent 會自動設計執行步驟** 安裝 Python 套件 → 解析文件 → 提取文字與圖片 → 建立資料夾並儲存
 >
 > 完成後，「doc」與「img」資料夾中就能看到提取的內容，省去手動複製貼上的步驟。
+>
+> 如果你希望 AI 辨識圖片後，更改檔名，也是可以直接跟他要求的。
 
 ### 🔍 實戰：用 RAG 彙整資料
 文字提取完成後，把「doc」資料夾拖到 AI 對話框，讓 AI 知道要處理的範圍，接著讓他彙整資訊

@@ -2400,6 +2400,7 @@
         <span class="toc-num">3</span> 前置工具安裝
       </a>
       <ul class="toc-sub">
+        <li><a href="#sub-gemini-cli">Gemini CLI - 在終端機免費使用</a></li>
         <li><a href="#sub-python">① Python — 突破文件與爬蟲限制</a></li>
         <li><a href="#sub-nodejs">② Node.js — 讓網頁從堪用變專業</a></li>
         <li><a href="#sub-git-vibe-coding">③ Git — Vibe Coding 的後悔藥</a></li>
@@ -2410,7 +2411,7 @@
         <span class="toc-num">4</span> 技術選擇
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-7">全端三層架構</a></li>
+        <li><a href="#sub-section-8">全端三層架構</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="antigravity-ai">
@@ -2418,8 +2419,8 @@
         <span class="toc-num">5</span> Antigravity 設定
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-8">工作區初始化</a></li>
-        <li><a href="#sub-section-9">模型與對話模式</a></li>
+        <li><a href="#sub-section-9">工作區初始化</a></li>
+        <li><a href="#sub-section-10">模型與對話模式</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-6">
@@ -2427,9 +2428,9 @@
         <span class="toc-num">6</span> 提示詞設計
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-10">提示詞四要素</a></li>
-        <li><a href="#sub-section-11">提示詞設計解析</a></li>
-        <li><a href="#sub-section-12">執行與調整</a></li>
+        <li><a href="#sub-section-11">提示詞四要素</a></li>
+        <li><a href="#sub-section-12">提示詞設計解析</a></li>
+        <li><a href="#sub-section-13">執行與調整</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-7">
@@ -2437,8 +2438,8 @@
         <span class="toc-num">7</span> 安全上線
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-13">認識專案結構</a></li>
-        <li><a href="#sub-section-14">部署前的兩個準備</a></li>
+        <li><a href="#sub-section-14">認識專案結構</a></li>
+        <li><a href="#sub-section-15">部署前的兩個準備</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="github-pages">
@@ -2446,8 +2447,8 @@
         <span class="toc-num">8</span> GitHub Pages 部署
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-15">初次部署流程</a></li>
-        <li><a href="#sub-section-16">常見踩坑整理</a></li>
+        <li><a href="#sub-section-16">初次部署流程</a></li>
+        <li><a href="#sub-section-17">常見踩坑整理</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-9">
@@ -2455,7 +2456,7 @@
         <span class="toc-num">9</span> 比工具更重要的思維
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-17">選工具的態度</a></li>
+        <li><a href="#sub-section-18">選工具的態度</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="summary">
@@ -2701,6 +2702,32 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-gemini-cli"><span class="bar"></span>Gemini CLI - 在終端機免費使用</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3>安裝 Gemini CLI</h3>
+      <p>Install globally with npm: <code>npm install -g @google/gemini-cli</code></p>
+      <p>在終端機輸入 <code>gemini</code> 即可使用</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <figure class="content-image">
+      <img src="assets/gemini.png" alt="確認 AI Agent 可以執行的資料夾範圍" loading="lazy">
+      <figcaption>確認 AI Agent 可以執行的資料夾範圍</figcaption>
+    </figure>
+  </div>
+
+  <div class="reveal">
+    <figure class="content-image">
+      <img src="assets/gemini-login.png" alt="登入 Google 帳號" loading="lazy">
+      <figcaption>登入 Google 帳號</figcaption>
+    </figure>
+  </div>
+
+  <div class="reveal">
     <div class="sub-title" id="sub-python"><span class="bar"></span>① Python — 突破文件與爬蟲限制</div>
   </div>
 
@@ -2769,15 +2796,16 @@ cd vibe-coding-ai-agent-practice</div>
       </div>
       <div class="prompt-body">資料夾有 pdf/ppt/doc 等多種格式的文件，我想請你用 python 套件把所有文件內的「文字」取出來，並確定可以用繁體中文顯示。
 並建立一個「doc」的資料夾，用 Markdown 的格式儲存，並整理文字結構，設計合適的大標、中標、小標，方便閱讀。
-如果 ppt/doc 裡面有圖片，請建立一個「img」的資料夾，然後辨識完圖片後命名圖片檔名。</div>
+如果 ppt/doc 裡面有圖片，請建立一個「img」的資料夾。</div>
     </div>
   </div>
 
   <div class="reveal">
     <div class="insight">
       <div class="insight-title">AI Agent 會自動設計執行步驟</div>
-      <p>安裝 Python 套件 → 解析文件 → 提取文字與圖片 → 建立資料夾並儲存 → 辨識圖片命名檔名。</p>
+      <p>安裝 Python 套件 → 解析文件 → 提取文字與圖片 → 建立資料夾並儲存</p>
       <p style="margin-top:.5rem">完成後，「doc」與「img」資料夾中就能看到提取的內容，省去手動複製貼上的步驟。</p>
+      <p style="margin-top:.5rem">如果你希望 AI 辨識圖片後，更改檔名，也是可以直接跟他要求的。</p>
     </div>
   </div>
 
@@ -3066,7 +3094,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-7"><span class="bar"></span>全端三層架構</div>
+    <div class="sub-title" id="sub-section-8"><span class="bar"></span>全端三層架構</div>
   </div>
 
   <div class="reveal">
@@ -3128,7 +3156,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-8"><span class="bar"></span>工作區初始化</div>
+    <div class="sub-title" id="sub-section-9"><span class="bar"></span>工作區初始化</div>
   </div>
 
   <div class="reveal">
@@ -3193,7 +3221,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-9"><span class="bar"></span>模型與對話模式</div>
+    <div class="sub-title" id="sub-section-10"><span class="bar"></span>模型與對話模式</div>
   </div>
 
   <div class="reveal">
@@ -3226,7 +3254,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-10"><span class="bar"></span>提示詞四要素</div>
+    <div class="sub-title" id="sub-section-11"><span class="bar"></span>提示詞四要素</div>
   </div>
 
   <div class="reveal">
@@ -3307,7 +3335,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-11"><span class="bar"></span>提示詞設計解析</div>
+    <div class="sub-title" id="sub-section-12"><span class="bar"></span>提示詞設計解析</div>
   </div>
 
   <div class="reveal">
@@ -3351,7 +3379,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-12"><span class="bar"></span>執行與調整</div>
+    <div class="sub-title" id="sub-section-13"><span class="bar"></span>執行與調整</div>
   </div>
 
   <div class="reveal">
@@ -3488,7 +3516,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-13"><span class="bar"></span>認識專案結構</div>
+    <div class="sub-title" id="sub-section-14"><span class="bar"></span>認識專案結構</div>
   </div>
 
   <div class="reveal">
@@ -3524,7 +3552,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-14"><span class="bar"></span>部署前的兩個準備</div>
+    <div class="sub-title" id="sub-section-15"><span class="bar"></span>部署前的兩個準備</div>
   </div>
 
   <div class="reveal">
@@ -3585,7 +3613,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-15"><span class="bar"></span>初次部署流程</div>
+    <div class="sub-title" id="sub-section-16"><span class="bar"></span>初次部署流程</div>
   </div>
 
   <div class="reveal">
@@ -3664,7 +3692,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-16"><span class="bar"></span>常見踩坑整理</div>
+    <div class="sub-title" id="sub-section-17"><span class="bar"></span>常見踩坑整理</div>
   </div>
 
   <div class="reveal">
@@ -3694,7 +3722,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-17"><span class="bar"></span>選工具的態度</div>
+    <div class="sub-title" id="sub-section-18"><span class="bar"></span>選工具的態度</div>
   </div>
 
   <div class="reveal">
@@ -3923,7 +3951,7 @@ git config --global user.email &quot;baobao@gmail.com&quot;</div>
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
     var sectionIds = ["instructor","section-1","ide-ai","ai-agent","section-4","antigravity-ai","section-6","section-7","github-pages","section-9","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","section-1","sub-gemini-google-ai-studio-antigravity","ide-ai","sub-section-2","sub-ai","ai-agent","sub-python","sub-nodejs","sub-git-vibe-coding","section-4","sub-section-7","antigravity-ai","sub-section-8","sub-section-9","section-6","sub-section-10","sub-section-11","sub-section-12","section-7","sub-section-13","sub-section-14","github-pages","sub-section-15","sub-section-16","section-9","sub-section-17","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var allAnchorIds = ["instructor","section-1","sub-gemini-google-ai-studio-antigravity","ide-ai","sub-section-2","sub-ai","ai-agent","sub-gemini-cli","sub-python","sub-nodejs","sub-git-vibe-coding","section-4","sub-section-8","antigravity-ai","sub-section-9","sub-section-10","section-6","sub-section-11","sub-section-12","sub-section-13","section-7","sub-section-14","sub-section-15","github-pages","sub-section-16","sub-section-17","section-9","sub-section-18","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
 
     var sectionForAnchor = {};
     allAnchorIds.forEach(function (id) {
