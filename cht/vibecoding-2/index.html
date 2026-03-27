@@ -584,7 +584,7 @@
     }
 
     /* Connector line between cards */
-    .flow-step + .flow-step::before {
+    .flow-step+.flow-step::before {
       content: '';
       position: absolute;
       left: 50%;
@@ -660,6 +660,7 @@
     .youtube-embed {
       margin: 1.5rem 0;
     }
+
     .youtube-wrapper {
       position: relative;
       padding-bottom: 56.25%;
@@ -668,6 +669,7 @@
       border-radius: var(--radius);
       border: 1px solid var(--border);
     }
+
     .youtube-wrapper iframe {
       position: absolute;
       top: 0;
@@ -675,6 +677,7 @@
       width: 100%;
       height: 100%;
     }
+
     .youtube-local-notice {
       display: none;
       position: absolute;
@@ -688,24 +691,30 @@
         radial-gradient(circle at top, rgb(var(--accent-rgb) / .18), transparent 55%),
         linear-gradient(135deg, rgb(var(--accent-rgb) / .14), rgb(var(--accent2-rgb) / .08));
     }
+
     .youtube-local-notice p {
       margin: 0;
     }
+
     .youtube-local-notice a {
       color: var(--accent2);
       font-weight: 700;
     }
+
     html[data-local-preview="true"] .youtube-wrapper {
       height: auto;
       min-height: 240px;
       padding-bottom: 0;
     }
+
     html[data-local-preview="true"] .youtube-wrapper iframe {
       display: none;
     }
+
     html[data-local-preview="true"] .youtube-local-notice {
       display: flex;
     }
+
     .youtube-caption {
       text-align: center;
       font-size: .85rem;
@@ -783,6 +792,7 @@
     }
 
     @media(max-width:900px) {
+
       .image-text,
       .image-text--img-right {
         flex-direction: column
@@ -1730,6 +1740,23 @@
       max-width: 360px;
       box-shadow: 0 16px 48px rgba(0, 0, 0, .4);
       position: relative;
+      overflow: hidden;
+    }
+
+    .break-modal::after {
+      content: '';
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 62%);
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.75);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .break-modal.done::after {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .break-modal-close {
@@ -1752,6 +1779,12 @@
     .break-modal-icon {
       font-size: 3rem;
       margin-bottom: .75rem;
+      transition: transform .35s ease, filter .35s ease;
+    }
+
+    .break-modal.done .break-modal-icon {
+      animation: break-icon-ring .9s ease-in-out 2;
+      filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 40%, transparent));
     }
 
     .break-modal h3 {
@@ -1764,6 +1797,11 @@
       margin: 0 0 1.25rem;
       font-size: .85rem;
       color: var(--text-dim);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .break-modal p.hidden {
+      display: none;
     }
 
     .break-input-row {
@@ -1830,6 +1868,32 @@
       color: var(--accent);
       font-variant-numeric: tabular-nums;
       margin-bottom: .75rem;
+      transition: transform .25s ease, color .25s ease;
+    }
+
+    .break-countdown.done .break-countdown-time {
+      color: #ff7a59;
+      animation: break-time-pop .75s ease;
+    }
+
+    .break-done-message {
+      display: none;
+      margin: 0 0 1rem;
+      font-size: .95rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .break-countdown.done .break-done-message {
+      display: block;
+      animation: break-done-reveal .8s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .break-done-message strong {
+      display: inline-block;
+      color: #ff7a59;
+      animation: break-done-glow 1.2s ease-in-out infinite alternate;
     }
 
     .break-end-btn {
@@ -1847,6 +1911,36 @@
     .break-end-btn:hover {
       border-color: var(--accent);
       color: var(--accent);
+    }
+
+    @keyframes break-icon-ring {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      20% { transform: rotate(-14deg) scale(1.08); }
+      40% { transform: rotate(14deg) scale(1.08); }
+      60% { transform: rotate(-10deg) scale(1.06); }
+      80% { transform: rotate(10deg) scale(1.06); }
+    }
+
+    @keyframes break-time-pop {
+      0% { transform: scale(.92); }
+      55% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes break-done-reveal {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes break-done-glow {
+      0% { text-shadow: 0 0 0 rgba(255, 122, 89, 0); }
+      100% { text-shadow: 0 0 18px rgba(255, 122, 89, .35); }
     }
 
     /* ===== PRINT / SLIDE STYLES ===== */
@@ -2204,6 +2298,7 @@
     #print-slides .youtube-wrapper iframe {
       display: none;
     }
+
     #print-slides .youtube-wrapper {
       padding-bottom: 0;
       height: auto;
@@ -2211,14 +2306,17 @@
       text-align: center;
       background: var(--bg-card);
     }
+
     #print-slides .youtube-wrapper::after {
       content: '\25B6  https://youtu.be/' attr(data-id);
       font-size: .9rem;
       color: var(--text-dim);
     }
+
     #print-slides .slide-youtube .slide-body {
       justify-content: center;
     }
+
     #print-slides .youtube-print-link {
       display: flex;
       flex-direction: column;
@@ -2236,17 +2334,20 @@
       text-align: center;
       color: var(--text);
     }
+
     #print-slides .youtube-print-link-title {
       font-family: 'Noto Serif TC', serif;
       font-size: 1.3rem;
       font-weight: 700;
       color: var(--text);
     }
+
     #print-slides .youtube-print-link-url {
       font-size: .95rem;
       color: var(--accent2);
       word-break: break-all;
     }
+
     #print-slides .youtube-print-link-hint {
       font-size: .82rem;
       color: var(--text-dim);
@@ -4174,35 +4275,27 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
     <div class="settings-section">
       <div class="settings-label">主題色彩</div>
       <div class="color-swatches" id="color-swatches">
-        <button class="color-swatch" data-theme-id="coral" title="暖陽珊瑚"
-          data-accent="#e8845a" data-accent-light="#c45c28"
-          data-accent2="#e8b878" data-accent2-light="#9a7028"
-          data-accent3="#e08898" data-accent3-light="#b04860"
+        <button class="color-swatch" data-theme-id="coral" title="暖陽珊瑚" data-accent="#e8845a"
+          data-accent-light="#c45c28" data-accent2="#e8b878" data-accent2-light="#9a7028" data-accent3="#e08898"
+          data-accent3-light="#b04860"
           style="background:linear-gradient(135deg,#e8845a 40%,#e8b878 70%,#e08898)"></button>
-        <button class="color-swatch" data-theme-id="ocean" title="深海藍"
-          data-accent="#60a5fa" data-accent-light="#2563eb"
-          data-accent2="#5eead4" data-accent2-light="#0d9488"
-          data-accent3="#a5b4fc" data-accent3-light="#6366f1"
+        <button class="color-swatch" data-theme-id="ocean" title="深海藍" data-accent="#60a5fa" data-accent-light="#2563eb"
+          data-accent2="#5eead4" data-accent2-light="#0d9488" data-accent3="#a5b4fc" data-accent3-light="#6366f1"
           style="background:linear-gradient(135deg,#60a5fa 40%,#5eead4 70%,#a5b4fc)"></button>
-        <button class="color-swatch" data-theme-id="forest" title="翡翠森林"
-          data-accent="#50d890" data-accent-light="#15803d"
-          data-accent2="#c8d858" data-accent2-light="#6a7a18"
-          data-accent3="#50c0a8" data-accent3-light="#0d7060"
+        <button class="color-swatch" data-theme-id="forest" title="翡翠森林" data-accent="#50d890"
+          data-accent-light="#15803d" data-accent2="#c8d858" data-accent2-light="#6a7a18" data-accent3="#50c0a8"
+          data-accent3-light="#0d7060"
           style="background:linear-gradient(135deg,#50d890 40%,#c8d858 70%,#50c0a8)"></button>
-        <button class="color-swatch" data-theme-id="galaxy" title="星河紫"
-          data-accent="#a78bfa" data-accent-light="#7c3aed"
-          data-accent2="#e8a8e0" data-accent2-light="#a21caf"
-          data-accent3="#7db8f8" data-accent3-light="#2563eb"
+        <button class="color-swatch" data-theme-id="galaxy" title="星河紫" data-accent="#a78bfa"
+          data-accent-light="#7c3aed" data-accent2="#e8a8e0" data-accent2-light="#a21caf" data-accent3="#7db8f8"
+          data-accent3-light="#2563eb"
           style="background:linear-gradient(135deg,#a78bfa 40%,#e8a8e0 70%,#7db8f8)"></button>
-        <button class="color-swatch" data-theme-id="sakura" title="花見櫻"
-          data-accent="#f472b6" data-accent-light="#db2777"
-          data-accent2="#b0a8f0" data-accent2-light="#6d28d9"
-          data-accent3="#f0a8a0" data-accent3-light="#c05050"
+        <button class="color-swatch" data-theme-id="sakura" title="花見櫻" data-accent="#f472b6"
+          data-accent-light="#db2777" data-accent2="#b0a8f0" data-accent2-light="#6d28d9" data-accent3="#f0a8a0"
+          data-accent3-light="#c05050"
           style="background:linear-gradient(135deg,#f472b6 40%,#b0a8f0 70%,#f0a8a0)"></button>
-        <button class="color-swatch" data-theme-id="amber" title="琥珀"
-          data-accent="#f0b840" data-accent-light="#a87808"
-          data-accent2="#e09870" data-accent2-light="#a86040"
-          data-accent3="#c8b080" data-accent3-light="#887048"
+        <button class="color-swatch" data-theme-id="amber" title="琥珀" data-accent="#f0b840" data-accent-light="#a87808"
+          data-accent2="#e09870" data-accent2-light="#a86040" data-accent3="#c8b080" data-accent3-light="#887048"
           style="background:linear-gradient(135deg,#f0b840 40%,#e09870 70%,#c8b080)"></button>
       </div>
     </div>
@@ -4221,9 +4314,9 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
     <div class="break-overlay" id="break-overlay">
     <div class="break-modal">
       <button class="break-modal-close" id="break-modal-close">✕</button>
-      <div class="break-modal-icon">☕</div>
+      <div class="break-modal-icon" id="break-modal-icon">☕</div>
       <h3>休息一下</h3>
-      <p>設定休息時間，時間到會提醒你</p>
+      <p id="break-intro-text">設定休息時間，時間到會提醒你</p>
       <div id="break-setup">
         <div class="break-input-row">
           <input type="number" id="break-minutes" value="10" min="1" max="120">
@@ -4233,6 +4326,7 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
       </div>
       <div class="break-countdown" id="break-countdown">
         <div class="break-countdown-time" id="break-countdown-time">10:00</div>
+        <p class="break-done-message" id="break-done-message"><strong>休息時間到</strong><br>回來繼續下一段內容吧。</p>
         <button class="break-end-btn" id="break-end-btn">結束休息</button>
       </div>
     </div>
@@ -4364,6 +4458,56 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
       if (!ticking) { requestAnimationFrame(function () { updateToc(); ticking = false }); ticking = true }
     });
     updateToc();
+
+    // Anchor scroll stabilization — images may change layout after initial jump.
+    var hashScrollTimer = null;
+    function scrollToHashTarget(hash, behavior) {
+      if (!hash || hash === '#') return;
+      var id = hash.charAt(0) === '#' ? hash.slice(1) : hash;
+      var el = document.getElementById(id);
+      if (!el) return;
+      var top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 20);
+      window.scrollTo({ top: top, behavior: behavior || 'auto' });
+    }
+    function scheduleHashScrollFix(delay, behavior) {
+      if (!window.location.hash) return;
+      clearTimeout(hashScrollTimer);
+      hashScrollTimer = setTimeout(function () {
+        scrollToHashTarget(window.location.hash, behavior || 'auto');
+        updateToc();
+      }, delay || 0);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var hash = a.getAttribute('href');
+        if (!hash || hash === '#') return;
+        var id = hash.slice(1);
+        if (!document.getElementById(id)) return;
+        e.preventDefault();
+        if (window.location.hash !== hash) history.pushState(null, '', hash);
+        scrollToHashTarget(hash, 'smooth');
+        scheduleHashScrollFix(220, 'auto');
+        scheduleHashScrollFix(900, 'auto');
+      });
+    });
+
+    window.addEventListener('hashchange', function () {
+      scheduleHashScrollFix(0, 'auto');
+      scheduleHashScrollFix(220, 'auto');
+      scheduleHashScrollFix(900, 'auto');
+    });
+
+    Array.from(document.images).forEach(function (img) {
+      if (img.complete) return;
+      img.addEventListener('load', function () { scheduleHashScrollFix(0, 'auto'); }, { passive: true });
+      img.addEventListener('error', function () { scheduleHashScrollFix(0, 'auto'); }, { passive: true });
+    });
+
+    window.addEventListener('load', function () {
+      scheduleHashScrollFix(0, 'auto');
+      scheduleHashScrollFix(300, 'auto');
+    });
 
     // Theme toggle
     var themeToggle = document.getElementById('theme-toggle');
@@ -4600,20 +4744,33 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
     (function () {
       var overlay = document.getElementById('break-overlay');
       var closeBtn = document.getElementById('break-modal-close');
+      var modal = overlay.querySelector('.break-modal');
+      var modalIcon = document.getElementById('break-modal-icon');
+      var introText = document.getElementById('break-intro-text');
       var minutesInput = document.getElementById('break-minutes');
       var startBtn = document.getElementById('break-start-btn');
       var setupDiv = document.getElementById('break-setup');
       var countdownDiv = document.getElementById('break-countdown');
       var countdownTime = document.getElementById('break-countdown-time');
+      var doneMessage = document.getElementById('break-done-message');
       var endBtn = document.getElementById('break-end-btn');
       var timer = null;
+
+      function resetBreakState() {
+        setupDiv.style.display = '';
+        countdownDiv.classList.remove('active', 'done');
+        modal.classList.remove('done');
+        introText.classList.remove('hidden');
+        doneMessage.style.display = '';
+        modalIcon.textContent = '☕';
+        endBtn.textContent = '結束休息';
+      }
 
       document.getElementById('break-timer-btn').addEventListener('click', function () {
         var settingsPanel = document.getElementById('settings-panel');
         settingsPanel.classList.remove('open');
         document.getElementById('settings-toggle').classList.remove('active');
-        setupDiv.style.display = '';
-        countdownDiv.classList.remove('active');
+        resetBreakState();
         overlay.classList.add('open');
         minutesInput.focus();
       });
@@ -4621,6 +4778,7 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
       function closeBreak() {
         overlay.classList.remove('open');
         if (timer) { clearInterval(timer); timer = null; }
+        resetBreakState();
       }
 
       closeBtn.addEventListener('click', closeBreak);
@@ -4639,6 +4797,7 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
 
         setupDiv.style.display = 'none';
         countdownDiv.classList.add('active');
+        introText.classList.add('hidden');
 
         function update() {
           var m = Math.floor(remaining / 60);
@@ -4653,8 +4812,10 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
             clearInterval(timer);
             timer = null;
             countdownTime.textContent = '00:00';
-            alert('休息時間結束！該回來上課囉 📖');
-            closeBreak();
+            countdownDiv.classList.add('done');
+            modal.classList.add('done');
+            modalIcon.textContent = '⏰';
+            endBtn.textContent = '回到課程';
             return;
           }
           update();
@@ -4800,7 +4961,7 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
 
           var hint = document.createElement('div');
           hint.className = 'youtube-print-link-hint';
-          hint.textContent = '匯出 PDF 後可點擊此頁面直接開啟影片';
+          hint.textContent = '可點擊此頁面直接開啟影片';
           link.appendChild(hint);
 
           youtubeBody.appendChild(link);
@@ -4902,160 +5063,160 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
       var unloaded = allImgs.filter(function (i) { return !i.complete; });
 
       function runPackerAndPrint() {
-      // Force layout before measuring
-      // Scale print font-size proportionally from the user's A1–A5 selection (1.5× web size)
-      var PRINT_SCALE = 1.2;
-      var webFontSize = fontSizes[fontIdx] || 16;
-      var printFontSize = webFontSize * PRINT_SCALE;
-      var origFontSize = document.documentElement.style.fontSize;
-      document.documentElement.style.fontSize = printFontSize + 'px';
-      void printSlides.offsetHeight;
+        // Force layout before measuring
+        // Scale print font-size proportionally from the user's A1–A5 selection (1.5× web size)
+        var PRINT_SCALE = 1.2;
+        var webFontSize = fontSizes[fontIdx] || 16;
+        var printFontSize = webFontSize * PRINT_SCALE;
+        var origFontSize = document.documentElement.style.fontSize;
+        document.documentElement.style.fontSize = printFontSize + 'px';
+        void printSlides.offsetHeight;
 
-      // ── Greedy slide packer ──
-      // Add children one by one; when adding one causes overflow, start a new
-      // slide. If a single child alone overflows (e.g. a big image), shrink it
-      // to fit. Consecutive images naturally get separate slides.
-      var MAX_H = 720;
+        // ── Greedy slide packer ──
+        // Add children one by one; when adding one causes overflow, start a new
+        // slide. If a single child alone overflows (e.g. a big image), shrink it
+        // to fit. Consecutive images naturally get separate slides.
+        var MAX_H = 720;
 
-      function shrinkImagesInSlide(slide) {
-        var imgs = Array.from(slide.querySelectorAll('img'));
-        imgs.forEach(function (img) {
+        function shrinkImagesInSlide(slide) {
+          var imgs = Array.from(slide.querySelectorAll('img'));
+          imgs.forEach(function (img) {
+            var attempts = 0;
+            while (attempts < 14 && slide.scrollHeight > MAX_H) {
+              var curH = img.offsetHeight;
+              if (curH < 50) break;
+              img.style.maxHeight = Math.max(50, curH * 0.78) + 'px';
+              img.style.width = 'auto';
+              void slide.offsetHeight;
+              attempts++;
+            }
+          });
+        }
+
+        function shrinkFontInSlide(slide) {
+          var body = slide.querySelector('.slide-body') || slide;
           var attempts = 0;
-          while (attempts < 14 && slide.scrollHeight > MAX_H) {
-            var curH = img.offsetHeight;
-            if (curH < 50) break;
-            img.style.maxHeight = Math.max(50, curH * 0.78) + 'px';
-            img.style.width = 'auto';
+          while (slide.scrollHeight > MAX_H && attempts < 8) {
+            var cur = parseFloat(getComputedStyle(body).fontSize);
+            var ratio = (MAX_H - 4) / slide.scrollHeight;
+            body.style.fontSize = (cur * ratio) + 'px';
             void slide.offsetHeight;
             attempts++;
           }
-        });
-      }
-
-      function shrinkFontInSlide(slide) {
-        var body = slide.querySelector('.slide-body') || slide;
-        var attempts = 0;
-        while (slide.scrollHeight > MAX_H && attempts < 8) {
-          var cur = parseFloat(getComputedStyle(body).fontSize);
-          var ratio = (MAX_H - 4) / slide.scrollHeight;
-          body.style.fontSize = (cur * ratio) + 'px';
-          void slide.offsetHeight;
-          attempts++;
         }
-      }
 
-      Array.from(printSlides.children).forEach(function (origSlide) {
-        if (origSlide.classList.contains('slide-hero') || origSlide.classList.contains('slide-quote')
+        Array.from(printSlides.children).forEach(function (origSlide) {
+          if (origSlide.classList.contains('slide-hero') || origSlide.classList.contains('slide-quote')
             || origSlide.classList.contains('slide-footer') || origSlide.classList.contains('slide-bonus')) return;
 
-        var body = origSlide.querySelector('.slide-body');
-        if (!body || body.children.length <= 1) {
-          // Single-child slide that overflows → shrink to fit
-          void origSlide.offsetHeight;
-          if (origSlide.scrollHeight > MAX_H) {
-            shrinkImagesInSlide(origSlide);
-            if (origSlide.scrollHeight > MAX_H) shrinkFontInSlide(origSlide);
+          var body = origSlide.querySelector('.slide-body');
+          if (!body || body.children.length <= 1) {
+            // Single-child slide that overflows → shrink to fit
+            void origSlide.offsetHeight;
+            if (origSlide.scrollHeight > MAX_H) {
+              shrinkImagesInSlide(origSlide);
+              if (origSlide.scrollHeight > MAX_H) shrinkFontInSlide(origSlide);
+            }
+            return;
           }
-          return;
-        }
 
-        void origSlide.offsetHeight;
-        if (origSlide.scrollHeight <= MAX_H) return;
+          void origSlide.offsetHeight;
+          if (origSlide.scrollHeight <= MAX_H) return;
 
-        var header = origSlide.querySelector('.slide-header');
-        var mainTitle = header ? (header.querySelector('.slide-title') || {}).textContent || '' : '';
-        var stEl = header ? header.querySelector('.slide-subtitle') : null;
-        var subBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
+          var header = origSlide.querySelector('.slide-header');
+          var mainTitle = header ? (header.querySelector('.slide-title') || {}).textContent || '' : '';
+          var stEl = header ? header.querySelector('.slide-subtitle') : null;
+          var subBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
 
-        var allChildren = Array.from(body.children);
-        while (body.firstChild) body.removeChild(body.firstChild);
+          var allChildren = Array.from(body.children);
+          while (body.firstChild) body.removeChild(body.firstChild);
 
-        var curSlide = origSlide;
-        var curBody = body;
-        var group = [curSlide];
+          var curSlide = origSlide;
+          var curBody = body;
+          var group = [curSlide];
 
-        allChildren.forEach(function (child) {
-          curBody.appendChild(child);
-          void curSlide.offsetHeight;
+          allChildren.forEach(function (child) {
+            curBody.appendChild(child);
+            void curSlide.offsetHeight;
 
-          if (curSlide.scrollHeight <= MAX_H) return;
+            if (curSlide.scrollHeight <= MAX_H) return;
 
-          // This child causes overflow — move it to a new slide
-          curBody.removeChild(child);
+            // This child causes overflow — move it to a new slide
+            curBody.removeChild(child);
 
-          var newSlide = makeSlide(mainTitle, subBase, 0);
-          var newBody = newSlide.querySelector('.slide-body');
-          newBody.appendChild(child);
-          printSlides.insertBefore(newSlide, curSlide.nextSibling);
+            var newSlide = makeSlide(mainTitle, subBase, 0);
+            var newBody = newSlide.querySelector('.slide-body');
+            newBody.appendChild(child);
+            printSlides.insertBefore(newSlide, curSlide.nextSibling);
 
-          curSlide = newSlide;
-          curBody = newBody;
-          group.push(curSlide);
+            curSlide = newSlide;
+            curBody = newBody;
+            group.push(curSlide);
 
-          void curSlide.offsetHeight;
+            void curSlide.offsetHeight;
 
-          // Single child alone exceeds MAX_H → shrink to fit
-          if (curSlide.scrollHeight > MAX_H) {
-            shrinkImagesInSlide(curSlide);
-            if (curSlide.scrollHeight > MAX_H) shrinkFontInSlide(curSlide);
+            // Single child alone exceeds MAX_H → shrink to fit
+            if (curSlide.scrollHeight > MAX_H) {
+              shrinkImagesInSlide(curSlide);
+              if (curSlide.scrollHeight > MAX_H) shrinkFontInSlide(curSlide);
+            }
+          });
+
+          if (group.length > 1) {
+            group.forEach(function (s, i) {
+              var st = s.querySelector('.slide-subtitle');
+              if (st) st.textContent = (st.dataset.base || st.textContent) + ' (' + (i + 1) + '/' + group.length + ')';
+            });
           }
         });
 
-        if (group.length > 1) {
-          group.forEach(function (s, i) {
-            var st = s.querySelector('.slide-subtitle');
-            if (st) st.textContent = (st.dataset.base || st.textContent) + ' (' + (i + 1) + '/' + group.length + ')';
-          });
-        }
-      });
+        // Auto-shrink individual prompt-body blocks that are too wide/tall
+        Array.from(printSlides.querySelectorAll('.prompt-body')).forEach(function (pb) {
+          var slide = pb.closest('.slide');
+          if (!slide) return;
+          var MIN_FONT = 8;
+          var cur = parseFloat(getComputedStyle(pb).fontSize);
+          var attempts = 0;
+          while (attempts < 12 && cur > MIN_FONT) {
+            void slide.offsetHeight;
+            var slideOver = slide.scrollHeight > MAX_H;
+            var pbOver = pb.scrollWidth > pb.clientWidth + 2;
+            if (!slideOver && !pbOver) break;
+            cur = Math.max(MIN_FONT, cur * 0.88);
+            pb.style.fontSize = cur + 'px';
+            pb.style.lineHeight = '1.5';
+            attempts++;
+          }
+        });
 
-      // Auto-shrink individual prompt-body blocks that are too wide/tall
-      Array.from(printSlides.querySelectorAll('.prompt-body')).forEach(function (pb) {
-        var slide = pb.closest('.slide');
-        if (!slide) return;
-        var MIN_FONT = 8;
-        var cur = parseFloat(getComputedStyle(pb).fontSize);
-        var attempts = 0;
-        while (attempts < 12 && cur > MIN_FONT) {
-          void slide.offsetHeight;
-          var slideOver = slide.scrollHeight > MAX_H;
-          var pbOver = pb.scrollWidth > pb.clientWidth + 2;
-          if (!slideOver && !pbOver) break;
-          cur = Math.max(MIN_FONT, cur * 0.88);
-          pb.style.fontSize = cur + 'px';
-          pb.style.lineHeight = '1.5';
-          attempts++;
-        }
-      });
+        // Remove ghost slides whose body is empty or has negligible content
+        Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+          if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
+          var body = s.querySelector('.slide-body');
+          if (!body || body.children.length === 0 || body.scrollHeight < 50) {
+            s.remove();
+          }
+        });
 
-      // Remove ghost slides whose body is empty or has negligible content
-      Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
-        if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
-        var body = s.querySelector('.slide-body');
-        if (!body || body.children.length === 0 || body.scrollHeight < 50) {
-          s.remove();
-        }
-      });
+        // Final clamp: every slide is strictly 720px, no bleeding
+        Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+          s.style.setProperty('max-height', MAX_H + 'px', 'important');
+          s.style.setProperty('overflow', 'hidden', 'important');
+        });
 
-      // Final clamp: every slide is strictly 720px, no bleeding
-      Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
-        s.style.setProperty('max-height', MAX_H + 'px', 'important');
-        s.style.setProperty('overflow', 'hidden', 'important');
-      });
+        // Set CSS variable so @media print uses the scaled font-size,
+        // then restore the original web font-size for the live page.
+        document.documentElement.style.setProperty('--print-font-size', printFontSize + 'px');
+        document.documentElement.style.fontSize = origFontSize;
 
-      // Set CSS variable so @media print uses the scaled font-size,
-      // then restore the original web font-size for the live page.
-      document.documentElement.style.setProperty('--print-font-size', printFontSize + 'px');
-      document.documentElement.style.fontSize = origFontSize;
-
-      // Remove measurement styles and print
-      printSlides.removeAttribute('style');
-      document.body.classList.add('printing');
-      window.print();
-      setTimeout(function () {
-        document.body.classList.remove('printing');
-        if (printSlides.parentNode) document.body.removeChild(printSlides);
-      }, 500);
+        // Remove measurement styles and print
+        printSlides.removeAttribute('style');
+        document.body.classList.add('printing');
+        window.print();
+        setTimeout(function () {
+          document.body.classList.remove('printing');
+          if (printSlides.parentNode) document.body.removeChild(printSlides);
+        }, 500);
 
       } // end runPackerAndPrint
 
