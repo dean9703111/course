@@ -650,6 +650,33 @@
       vertical-align: middle
     }
 
+    /* ===== YOUTUBE EMBED ===== */
+    .youtube-embed {
+      margin: 1.5rem 0;
+    }
+    .youtube-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .youtube-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .youtube-caption {
+      text-align: center;
+      font-size: .85rem;
+      color: var(--text-dim);
+      margin-top: .5rem;
+      font-style: italic;
+    }
+
     /* ===== IMAGE-TEXT LAYOUT ===== */
     .image-text {
       display: flex;
@@ -1640,6 +1667,151 @@
       transform: translateY(-1px);
     }
 
+    /* ===== BREAK TIMER MODAL ===== */
+    .break-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .65);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .break-overlay.open {
+      display: flex;
+    }
+
+    .break-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      min-width: 300px;
+      max-width: 360px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, .4);
+      position: relative;
+    }
+
+    .break-modal-close {
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-dim);
+      line-height: 1;
+      padding: 4px;
+    }
+
+    .break-modal-close:hover {
+      color: var(--text);
+    }
+
+    .break-modal-icon {
+      font-size: 3rem;
+      margin-bottom: .75rem;
+    }
+
+    .break-modal h3 {
+      margin: 0 0 .5rem;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+
+    .break-modal p {
+      margin: 0 0 1.25rem;
+      font-size: .85rem;
+      color: var(--text-dim);
+    }
+
+    .break-input-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .break-input-row input {
+      width: 64px;
+      padding: .4rem .5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-card-alt);
+      color: var(--text);
+      font-size: 1.1rem;
+      text-align: center;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .break-input-row input:focus {
+      border-color: var(--accent);
+    }
+
+    .break-input-row span {
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    .break-start-btn {
+      width: 100%;
+      padding: .6rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .2s;
+    }
+
+    .break-start-btn:hover {
+      opacity: .9;
+    }
+
+    .break-countdown {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .break-countdown.active {
+      display: flex;
+    }
+
+    .break-countdown-time {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: .75rem;
+    }
+
+    .break-end-btn {
+      padding: .45rem 1.5rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .8rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+
+    .break-end-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
     /* ===== PRINT / SLIDE STYLES ===== */
     @media print {
       html {
@@ -1986,9 +2158,26 @@
     }
 
     #print-slides .content-image,
-    #print-slides .image-text {
+    #print-slides .image-text,
+    #print-slides .youtube-embed {
       break-inside: avoid;
       page-break-inside: avoid;
+    }
+
+    #print-slides .youtube-wrapper iframe {
+      display: none;
+    }
+    #print-slides .youtube-wrapper {
+      padding-bottom: 0;
+      height: auto;
+      padding: 2rem;
+      text-align: center;
+      background: var(--bg-card);
+    }
+    #print-slides .youtube-wrapper::after {
+      content: '\25B6  https://youtu.be/' attr(data-id);
+      font-size: .9rem;
+      color: var(--text-dim);
     }
 
     #print-slides .content-image img {
@@ -3938,6 +4127,31 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
       <div class="settings-label">匯出</div>
       <button class="settings-export-btn" id="export-pdf-btn">⬇ 匯出 PDF（投影片版）</button>
     </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <div class="settings-label">休息</div>
+      <button class="settings-export-btn" id="break-timer-btn">☕ 休息一下</button>
+    </div>
+  </div>
+
+    <div class="break-overlay" id="break-overlay">
+    <div class="break-modal">
+      <button class="break-modal-close" id="break-modal-close">✕</button>
+      <div class="break-modal-icon">☕</div>
+      <h3>休息一下</h3>
+      <p>設定休息時間，時間到會提醒你</p>
+      <div id="break-setup">
+        <div class="break-input-row">
+          <input type="number" id="break-minutes" value="10" min="1" max="120">
+          <span>分鐘</span>
+        </div>
+        <button class="break-start-btn" id="break-start-btn">開始休息</button>
+      </div>
+      <div class="break-countdown" id="break-countdown">
+        <div class="break-countdown-time" id="break-countdown-time">10:00</div>
+        <button class="break-end-btn" id="break-end-btn">結束休息</button>
+      </div>
+    </div>
   </div>
 
     <div class="bonus-overlay" id="bonus-overlay">
@@ -4296,6 +4510,74 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
         closeSettings();
         exportPDF();
       });
+    })();
+
+    // ===== BREAK TIMER =====
+    (function () {
+      var overlay = document.getElementById('break-overlay');
+      var closeBtn = document.getElementById('break-modal-close');
+      var minutesInput = document.getElementById('break-minutes');
+      var startBtn = document.getElementById('break-start-btn');
+      var setupDiv = document.getElementById('break-setup');
+      var countdownDiv = document.getElementById('break-countdown');
+      var countdownTime = document.getElementById('break-countdown-time');
+      var endBtn = document.getElementById('break-end-btn');
+      var timer = null;
+
+      document.getElementById('break-timer-btn').addEventListener('click', function () {
+        var settingsPanel = document.getElementById('settings-panel');
+        settingsPanel.classList.remove('open');
+        document.getElementById('settings-toggle').classList.remove('active');
+        setupDiv.style.display = '';
+        countdownDiv.classList.remove('active');
+        overlay.classList.add('open');
+        minutesInput.focus();
+      });
+
+      function closeBreak() {
+        overlay.classList.remove('open');
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      closeBtn.addEventListener('click', closeBreak);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeBreak();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeBreak();
+      });
+
+      startBtn.addEventListener('click', function () {
+        var mins = parseInt(minutesInput.value) || 10;
+        if (mins < 1) mins = 1;
+        if (mins > 120) mins = 120;
+        var remaining = mins * 60;
+
+        setupDiv.style.display = 'none';
+        countdownDiv.classList.add('active');
+
+        function update() {
+          var m = Math.floor(remaining / 60);
+          var s = remaining % 60;
+          countdownTime.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        }
+        update();
+
+        timer = setInterval(function () {
+          remaining--;
+          if (remaining <= 0) {
+            clearInterval(timer);
+            timer = null;
+            countdownTime.textContent = '00:00';
+            alert('休息時間結束！該回來上課囉 📖');
+            closeBreak();
+            return;
+          }
+          update();
+        }, 1000);
+      });
+
+      endBtn.addEventListener('click', closeBreak);
     })();
 
     function exportPDF() {
