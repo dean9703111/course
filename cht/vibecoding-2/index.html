@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Google Antigravity 全端實戰</title>
   <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
   <meta property="og:type" content="article">
@@ -17,6 +18,11 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
     rel="stylesheet">
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.documentElement.setAttribute('data-local-preview', 'true');
+    }
+  </script>
   <style>
     /* ===== RESET & VARIABLES ===== */
     *,
@@ -668,6 +674,37 @@
       left: 0;
       width: 100%;
       height: 100%;
+    }
+    .youtube-local-notice {
+      display: none;
+      position: absolute;
+      inset: 0;
+      padding: 1.5rem;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgb(var(--accent-rgb) / .18), transparent 55%),
+        linear-gradient(135deg, rgb(var(--accent-rgb) / .14), rgb(var(--accent2-rgb) / .08));
+    }
+    .youtube-local-notice p {
+      margin: 0;
+    }
+    .youtube-local-notice a {
+      color: var(--accent2);
+      font-weight: 700;
+    }
+    html[data-local-preview="true"] .youtube-wrapper {
+      height: auto;
+      min-height: 240px;
+      padding-bottom: 0;
+    }
+    html[data-local-preview="true"] .youtube-wrapper iframe {
+      display: none;
+    }
+    html[data-local-preview="true"] .youtube-local-notice {
+      display: flex;
     }
     .youtube-caption {
       text-align: center;
@@ -2177,6 +2214,41 @@
     #print-slides .youtube-wrapper::after {
       content: '\25B6  https://youtu.be/' attr(data-id);
       font-size: .9rem;
+      color: var(--text-dim);
+    }
+    #print-slides .slide-youtube .slide-body {
+      justify-content: center;
+    }
+    #print-slides .youtube-print-link {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at top, rgb(var(--accent-rgb) / .12), transparent 58%),
+        linear-gradient(135deg, rgb(var(--accent-rgb) / .08), rgb(var(--accent2-rgb) / .05));
+      text-decoration: none;
+      text-align: center;
+      color: var(--text);
+    }
+    #print-slides .youtube-print-link-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    #print-slides .youtube-print-link-url {
+      font-size: .95rem;
+      color: var(--accent2);
+      word-break: break-all;
+    }
+    #print-slides .youtube-print-link-hint {
+      font-size: .82rem;
       color: var(--text-dim);
     }
 
@@ -4063,6 +4135,18 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
       </div>
     </div>
   </div>
+
+  <div class="reveal">
+    <div class="youtube-embed">
+      <div class="youtube-wrapper" data-id="-FW5DgQEV0M">
+        <iframe src="https://www.youtube.com/embed/-FW5DgQEV0M" title="課後複習影片" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="youtube-local-notice">
+          <p>本機直接開啟 HTML 時，YouTube 可能因缺少 HTTP referrer 而拒絕播放。請改用本機伺服器預覽，或直接前往 <a href="https://www.youtube.com/watch?v=-FW5DgQEV0M" target="_blank" rel="noopener">YouTube 觀看影片</a>。</p>
+        </div>
+      </div>
+      <p class="youtube-caption">課後複習影片</p>
+    </div>
+  </div>
 </section>
 
   
@@ -4643,37 +4727,84 @@ If I ask for adjustments to code I have provided you, do not repeat all of my co
           }
         });
 
-        // Split normal content by ## sub-sections; ### (card) stays within the same page
-        var pages = [[]];
+        // Split normal content by ## sub-sections; ### (card) stays within the same page.
+        // YouTube embeds become dedicated print slides so PDFs get one video per page.
+        var entries = [];
+        var currentPage = [];
+        var activeSubTitle = '';
+        function flushCurrentPage() {
+          if (!currentPage.length) return;
+          entries.push({ type: 'page', subTitle: activeSubTitle, children: currentPage });
+          currentPage = [];
+        }
         normalChildren.forEach(function (child) {
           var isSub = child.querySelector && child.querySelector(':scope > .sub-title');
-          if (isSub && pages[pages.length - 1].length > 0) {
-            pages.push([]);
+          var isYoutube = child.querySelector && child.querySelector(':scope > .youtube-embed');
+          if (isSub) {
+            var subEl = child.querySelector(':scope > .sub-title');
+            activeSubTitle = subEl ? subEl.textContent.trim() : activeSubTitle;
           }
-          pages[pages.length - 1].push(child);
+          if (isYoutube) {
+            flushCurrentPage();
+            entries.push({ type: 'youtube', subTitle: activeSubTitle, child: child });
+            return;
+          }
+          if (isSub && currentPage.length > 0) {
+            flushCurrentPage();
+          }
+          currentPage.push(child);
         });
+        flushCurrentPage();
 
-        pages.forEach(function (pageChildren, pIdx) {
-          // Extract ## sub-title text for header
-          var subTitle = '';
-          for (var i = 0; i < pageChildren.length; i++) {
-            var subEl = pageChildren[i].querySelector && pageChildren[i].querySelector(':scope > .sub-title');
-            if (subEl) { subTitle = subEl.textContent.trim(); break; }
+        var leadAttached = false;
+        entries.forEach(function (entry) {
+          if (entry.type === 'page') {
+            var slide = makeSlide(mainTitle, entry.subTitle, 0);
+            var body = slide.querySelector('.slide-body');
+            if (!leadAttached && leadClone) {
+              body.appendChild(leadClone.cloneNode(true));
+              leadAttached = true;
+            }
+            entry.children.forEach(function (child) {
+              var clone = child.cloneNode(true);
+              // ## sub-title is shown in the header, remove it from body to avoid duplication
+              var subTitleInBody = clone.querySelector(':scope > .sub-title');
+              if (subTitleInBody) subTitleInBody.remove();
+              if (clone.classList.contains('reveal')) clone.classList.add('visible');
+              clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+              body.appendChild(clone);
+            });
+            printSlides.appendChild(slide);
+            return;
           }
 
-          var slide = makeSlide(mainTitle, subTitle, 0);
-          var body = slide.querySelector('.slide-body');
-          if (pIdx === 0 && leadClone) body.appendChild(leadClone.cloneNode(true));
-          pageChildren.forEach(function (child) {
-            var clone = child.cloneNode(true);
-            // ## sub-title is shown in the header, remove it from body to avoid duplication
-            var subTitleInBody = clone.querySelector(':scope > .sub-title');
-            if (subTitleInBody) subTitleInBody.remove();
-            if (clone.classList.contains('reveal')) clone.classList.add('visible');
-            clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
-            body.appendChild(clone);
-          });
-          printSlides.appendChild(slide);
+          var embed = entry.child.querySelector(':scope > .youtube-embed');
+          var wrapper = embed ? embed.querySelector('.youtube-wrapper') : null;
+          var captionEl = embed ? embed.querySelector('.youtube-caption') : null;
+          var videoId = wrapper ? wrapper.getAttribute('data-id') : '';
+          var videoUrl = 'https://www.youtube.com/watch?v=' + videoId;
+          var videoTitle = captionEl ? captionEl.textContent.trim() : 'YouTube 影片';
+          var youtubeSlide = makeSlide(videoTitle, '', 0);
+          youtubeSlide.classList.add('slide-youtube');
+          var youtubeBody = youtubeSlide.querySelector('.slide-body');
+          var link = document.createElement('a');
+          link.className = 'youtube-print-link';
+          link.href = videoUrl;
+          link.target = '_blank';
+          link.rel = 'noopener';
+
+          var url = document.createElement('div');
+          url.className = 'youtube-print-link-url';
+          url.textContent = videoUrl;
+          link.appendChild(url);
+
+          var hint = document.createElement('div');
+          hint.className = 'youtube-print-link-hint';
+          hint.textContent = '匯出 PDF 後可點擊此頁面直接開啟影片';
+          link.appendChild(hint);
+
+          youtubeBody.appendChild(link);
+          printSlides.appendChild(youtubeSlide);
         });
 
         // Bonus blocks → standalone headerless slides
