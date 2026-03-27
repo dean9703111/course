@@ -4,6 +4,12 @@ page:
   hero_title: "用 Vibe Coding 完成<br>輕量級全端專案並部署上線"
   subtitle: "Google Antigravity 實戰：從認識 AI Agent 的能力範圍、Prompt 設計、專案生成到 GitHub Pages 部署，掌握 AI 時代的開發思維"
 
+seo:
+  title: "Google Antigravity 全端實戰｜Vibe Coding 教學"
+  description: "Google Antigravity 實戰：從認識 AI Agent 的能力範圍、Prompt 設計、專案生成到 GitHub Pages 部署，掌握 AI 時代的開發思維"
+  image: "https://deanlin.net/course/cht/vibecoding-2/assets/og-image.jpg"
+  url: "https://deanlin.net/course/cht/vibecoding-2/"
+
 quotes:
   opening:
     text: >
