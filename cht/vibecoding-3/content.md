@@ -102,13 +102,14 @@
 
 # Workflow 篇：讓 AI 幫你寫測試
 
-> 工作流讓 AI 根據明確步驟執行，產出可信、可追蹤的測試程式。
+> 工作流讓 AI 根據明確步驟執行，產出可信、可追蹤的測試程式（部分 AI Agent 名詞為 Command）。
 
 ---
 
 ## Rule / Workflow / Skill 的差異
 
 ### 📋 三者使用場景
+在合適的時機點使用，才會得到最大的效果，並節省 Token 的消耗
 
 [flow]
 1. Rule — 全場景適用的通用規範，每次對話都會自動載入
@@ -121,7 +122,8 @@
 
 ## gen-test-cases 工作流設計
 
-### 📝 五步驟工作流
+### 📝 設計工作流執行步驟
+讓他扮演一位經驗豐富的軟體測試專家
 
 [flow]
 1. STEP 1：建立 test 資料夾，存放 Markdown 格式的測試清單
@@ -131,6 +133,9 @@
 5. STEP 5：限制最多嘗試 5 次，避免 AI 在錯誤方向狂奔
 [/flow]
 
+> **小技巧**
+> 以「狀態」的概念來管理，有測試通過才會標記；並給他幾個測試類型的範例參考
+
 ### 💡 先文件、後程式的設計邏輯
 
 - 先確認 AI 發想的測試情境是否有遺漏
@@ -139,6 +144,36 @@
 
 > **建議每個頁面都有獨立的測試程式**
 > 這樣日後修改遇到問題時，可以快速定位是哪個頁面的功能出了問題。
+
+## 實際操作 Demo
+> 這套工作流主要用來撰寫**前端專案的單元測試**，你可以根據自己的需求自行調整。
+>
+> 比如你想設計 Code Review 的 Workflow，也可以輸入 `code-review`，這樣就會新增一個同名的工作流檔案，可以自行撰寫，也可以透過與 AI 互動來生成工作流細節。
+
+### ⚠️ 先用一個檔案來測試
+建議大家請 AI 撰寫測試程式時，不要讓他一口氣生成，而是先放一個檔案。
+確認執行結果與期待相符在擴大範圍，否則一口氣生成，如果結果不是你要的，那不但浪費時間還浪費 Token。
+
+[flow]
+1. AI 要求建立對應的 test 資料夾 → 點擊 Accept 接受
+2. AI 參考 Markdown 文件撰寫測試案例清單，初始狀態皆為空（未通過）
+3. 根據測試類型分類，確認輸入輸出的描述與期待相符
+4. 如有缺漏可直接討論；確認沒問題後請他「**繼續**」
+5. AI 寫好測試程式後詢問是否執行 → 點擊 Accept 執行
+6. 測試通過後，AI 回頭更新測試清單，標注通過狀態 ✅
+[/flow]
+
+> ** 安全提醒：不要無腦點擊 Accept**
+> 如果看不懂 AI 執行的指令，建議先把指令複製起來詢問確認，曾有網友遇過 [AI 直接刪除整顆硬碟的案例](https://www.reddit.com/r/google_antigravity/comments/1p82or6/google_antigravity_just_deleted_the_contents_of/)
+
+### 🤔 為什麼這樣做
+
+- 光是 3 個功能不多的頁面，就涵蓋相當多的測試情境。
+- 若用人工測試，即便是小專案，也要花好幾分鐘手動跑完流程，且容易有遺漏。
+- 加入自動化測試後，你只要放給他跑就好。
+
+> **隨著專案擴增，效益會更加明顯**
+> 功能動輒成千上萬的大型專案，沒有自動化測試，任何不起眼的改動都可能在意想不到的地方引發問題。
 
 ---
 
@@ -152,51 +187,95 @@
 
 ### 🌿 分支策略基礎
 
-- **main**：主分支，對外的穩定版本
+- **main**：主分支，對外的穩定版本，只接受來自 develop 的 Pull Request
 - **develop**：開發分支，日常更新都推送到這裡
-- 功能完善後，透過 **Pull Request** 合併到 main
+- **feature/xxx**：功能分支，開發單一功能時從 develop 切出，完成後合併回 develop
+- **hotfix/xxx**：緊急修復分支，直接從 main 切出，修完後同時合併回 main 與 develop
 
 > **為什麼需要分支策略？**
 > 如果把邏輯錯誤或功能不完善的版本直接推送到主分支，產品就壞掉了。分支策略的目的，是保護對外服務的穩定性。
 
+### 🚀 建立第一個分支
+
+如果你是第一次接觸，可以先從 main 分支出 develop，來了解為什麼需要用不同分支開發。
+
+```terminal [label="進行分支"]
+git checkout -b develop
+```
+
 ## 設定 GitHub Action
 
 ### ⚙️ 自動化測試指令
+到與 AI 的對話窗中輸入以下內
 
 ```prompt [label="請 AI 設定 GitHub Action"]
 我希望在 GitHub Action 加入自動化測試的流程
-
 每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
-
 測試完畢後，要生成覆蓋率報告讓我下載
 ```
 
-### 📊 測試報告說明
+### 📤 推送到 GitHub
+等 AI 將 GitHub Action 內容更新完畢後，將變更推送到 GitHub
+Commit 訊息可以由 AI 自動生成，或自己手動輸入
 
+```terminal [label="撰寫 commit"]
+1. 撰寫 pages 頁面下的測試案例
+2. 在 GitHub Action 增加自動測試的流程
+```
+
+### 📊 測試報告說明
+到 [GitHub](https://github.com/) 查看執行結果：
 - 成功是綠色勾勾，失敗是紅色叉叉
 - Artifacts 區塊可下載測試覆蓋率報告
 - 可了解哪些功能測試完整、哪些還需要補充
 
-[tags]
-- [green] 測試覆蓋率高的模組
-- [orange] 覆蓋率不足，需補充測試
-- [purple] 不需追求 100%，重要邏輯測到才是重點
-[/tags]
+> **經驗分享**
+> 在測試覆蓋率這塊，我們沒必要追求 100%；而是重要的邏輯都要測試到，這才是最重要的。
 
 ## 用 Ruleset 保護主分支
 
 ### 🔒 GitHub Ruleset 設定步驟
+如果你希望只有「通過測試」的分支才能合併到主分支，就需要多做一設定。
 
 [flow]
 1. Settings → Rules → Ruleset → New branch ruleset
-2. Target branch 選擇 main（預設主分支）
-3. 勾選「Require a pull request before merging」
-4. 勾選「Require status checks to pass」
-5. 新增 Test 作為必須通過的檢查項目，儲存設定
+2. 將「Enforcement status」切換到 Active
+3. Target branch 選擇 main（預設主分支）
+4. 勾選「Require a pull request before merging」用 PR 才能合併的選項
+5. 勾選「Require status checks to pass」限制測試必須通過才能合併
+6. 勾選「Require branches to be up to date before merging」確保合併前分支有更新到最新版
+7. 點擊「Add Checks」，新增 Test 作為必須通過的檢查項目，儲存設定
 [/flow]
 
 > **設定完成後，只有測試通過的分支才能合併到主分支**
 > 這是在多人協作時，保護專案品質不被破壞的基礎設計。
+
+## 驗證分支保護有生效
+
+### 🧪 實際驗證：故意製造錯誤
+故意讓一個測試失敗，驗證 Pull Request 是否真的會被擋下。
+
+[flow]
+1. 到專案挑一個測試案例，故意把預期結果弄壞
+2. 在終端機執行 `npm run test`，確認看到錯誤訊息
+3. 將這個錯誤推上去，commit 填寫 `test PR failure condition`
+4. 回到 GitHub，點擊「Pull requests」→ 建立新的 PR
+5. **注意**：如果你是 fork 的專案，base 要改成自己的帳號，compare 選擇 develop
+[/flow]
+
+填寫 PR 的 description（幫助其他人與未來的自己了解更新內容）：
+```prompt [label="撰寫 PR"]
+1. 撰寫 pages 頁面下的測試案例
+2. 在 GitHub Action 增加自動測試的流程
+```
+
+開出 PR 後會自動觸發一次測試，因為測試有錯誤，合併按鈕會是**灰色**，符合預期。
+
+### ✅ 修正後驗證通過
+接著回到專案，把問題修正回來，commit 填寫 `test PR success condition`。
+推上去後回到 GitHub，稍等一段時間，合併按鈕會變成**綠色**，可以順利合併。
+
+> 有了 Ruleset 保護主分支後，至少能保證合併進來的功能都是經過基礎驗證的。
 
 ---
 

@@ -2774,6 +2774,7 @@
       <ul class="toc-sub">
         <li><a href="#sub-rule-workflow-skill">Rule / Workflow / Skill 的差異</a></li>
         <li><a href="#sub-gen-test">gen-test-cases 工作流設計</a></li>
+        <li><a href="#sub-demo">實際操作 Demo</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="github-action">
@@ -2784,6 +2785,7 @@
         <li><a href="#sub-git-flow">先了解 Git Flow</a></li>
         <li><a href="#sub-github-action">設定 GitHub Action</a></li>
         <li><a href="#sub-ruleset">用 Ruleset 保護主分支</a></li>
+        <li><a href="#sub-section-12">驗證分支保護有生效</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="skills-ai">
@@ -3151,7 +3153,7 @@
 
   <div class="reveal">
     <div class="insight">
-      <p>工作流讓 AI 根據明確步驟執行，產出可信、可追蹤的測試程式。</p>
+      <p>工作流讓 AI 根據明確步驟執行，產出可信、可追蹤的測試程式（部分 AI Agent 名詞為 Command）。</p>
     </div>
   </div>
 
@@ -3162,6 +3164,7 @@
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">📋</span> 三者使用場景</h3>
+      <p>在合適的時機點使用，才會得到最大的效果，並節省 Token 的消耗</p>
     </div>
   </div>
 
@@ -3204,7 +3207,8 @@
 
   <div class="reveal">
     <div class="card">
-      <h3><span class="icon">📝</span> 五步驟工作流</h3>
+      <h3><span class="icon">📝</span> 設計工作流執行步驟</h3>
+      <p>讓他扮演一位經驗豐富的軟體測試專家</p>
     </div>
   </div>
 
@@ -3249,6 +3253,13 @@
   </div>
 
   <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">小技巧</div>
+      <p>以「狀態」的概念來管理，有測試通過才會標記；並給他幾個測試類型的範例參考</p>
+    </div>
+  </div>
+
+  <div class="reveal">
     <div class="card">
       <h3><span class="icon">💡</span> 先文件、後程式的設計邏輯</h3>
       <ul>
@@ -3263,6 +3274,97 @@
     <div class="insight">
       <div class="insight-title">建議每個頁面都有獨立的測試程式</div>
       <p>這樣日後修改遇到問題時，可以快速定位是哪個頁面的功能出了問題。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-demo"><span class="bar"></span>實際操作 Demo</div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>這套工作流主要用來撰寫<strong>前端專案的單元測試</strong>，你可以根據自己的需求自行調整。</p>
+      <p style="margin-top:.5rem">比如你想設計 Code Review 的 Workflow，也可以輸入 <code>code-review</code>，這樣就會新增一個同名的工作流檔案，可以自行撰寫，也可以透過與 AI 互動來生成工作流細節。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚠</span> ️ 先用一個檔案來測試</h3>
+      <p>建議大家請 AI 撰寫測試程式時，不要讓他一口氣生成，而是先放一個檔案。</p>
+      <p>確認執行結果與期待相符在擴大範圍，否則一口氣生成，如果結果不是你要的，那不但浪費時間還浪費 Token。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">AI 要求建立對應的 test 資料夾 → 點擊 Accept 接受</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">AI 參考 Markdown 文件撰寫測試案例清單，初始狀態皆為空（未通過）</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">根據測試類型分類，確認輸入輸出的描述與期待相符</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">如有缺漏可直接討論；確認沒問題後請他「<strong>繼續</strong>」</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">AI 寫好測試程式後詢問是否執行 → 點擊 Accept 執行</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">測試通過後，AI 回頭更新測試清單，標注通過狀態 ✅</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title"> 安全提醒：不要無腦點擊 Accept</div>
+      <p>如果看不懂 AI 執行的指令，建議先把指令複製起來詢問確認，曾有網友遇過 <a href="https://www.reddit.com/r/google_antigravity/comments/1p82or6/google_antigravity_just_deleted_the_contents_of/" target="_blank" rel="noopener">AI 直接刪除整顆硬碟的案例</a></p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🤔</span> 為什麼這樣做</h3>
+      <ul>
+        <li>光是 3 個功能不多的頁面，就涵蓋相當多的測試情境。</li>
+        <li>若用人工測試，即便是小專案，也要花好幾分鐘手動跑完流程，且容易有遺漏。</li>
+        <li>加入自動化測試後，你只要放給他跑就好。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">隨著專案擴增，效益會更加明顯</div>
+      <p>功能動輒成千上萬的大型專案，沒有自動化測試，任何不起眼的改動都可能在意想不到的地方引發問題。</p>
     </div>
   </div>
 </section>
@@ -3289,9 +3391,10 @@
     <div class="card">
       <h3><span class="icon">🌿</span> 分支策略基礎</h3>
       <ul>
-        <li><strong>main</strong>：主分支，對外的穩定版本</li>
+        <li><strong>main</strong>：主分支，對外的穩定版本，只接受來自 develop 的 Pull Request</li>
         <li><strong>develop</strong>：開發分支，日常更新都推送到這裡</li>
-        <li>功能完善後，透過 <strong>Pull Request</strong> 合併到 main</li>
+        <li><strong>feature/xxx</strong>：功能分支，開發單一功能時從 develop 切出，完成後合併回 develop</li>
+        <li><strong>hotfix/xxx</strong>：緊急修復分支，直接從 main 切出，修完後同時合併回 main 與 develop</li>
       </ul>
     </div>
   </div>
@@ -3304,12 +3407,34 @@
   </div>
 
   <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🚀</span> 建立第一個分支</h3>
+      <p>如果你是第一次接觸，可以先從 main 分支出 develop，來了解為什麼需要用不同分支開發。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">進行分支</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">git checkout -b develop</div>
+    </div>
+  </div>
+
+  <div class="reveal">
     <div class="sub-title" id="sub-github-action"><span class="bar"></span>設定 GitHub Action</div>
   </div>
 
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">⚙</span> ️ 自動化測試指令</h3>
+      <p>到與 AI 的對話窗中輸入以下內</p>
     </div>
   </div>
 
@@ -3324,16 +3449,38 @@
         </button>
       </div>
       <div class="prompt-body">我希望在 GitHub Action 加入自動化測試的流程
-
 每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
-
 測試完畢後，要生成覆蓋率報告讓我下載</div>
     </div>
   </div>
 
   <div class="reveal">
     <div class="card">
+      <h3><span class="icon">📤</span> 推送到 GitHub</h3>
+      <p>等 AI 將 GitHub Action 內容更新完畢後，將變更推送到 GitHub</p>
+      <p>Commit 訊息可以由 AI 自動生成，或自己手動輸入</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">撰寫 commit</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">1. 撰寫 pages 頁面下的測試案例
+2. 在 GitHub Action 增加自動測試的流程</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
       <h3><span class="icon">📊</span> 測試報告說明</h3>
+      <p>到 <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> 查看執行結果：</p>
       <ul>
         <li>成功是綠色勾勾，失敗是紅色叉叉</li>
         <li>Artifacts 區塊可下載測試覆蓋率報告</li>
@@ -3343,10 +3490,9 @@
   </div>
 
   <div class="reveal">
-    <div class="tags">
-      <span class="tag green">測試覆蓋率高的模組</span>
-      <span class="tag orange">覆蓋率不足，需補充測試</span>
-      <span class="tag purple">不需追求 100%，重要邏輯測到才是重點</span>
+    <div class="insight">
+      <div class="insight-title">經驗分享</div>
+      <p>在測試覆蓋率這塊，我們沒必要追求 100%；而是重要的邏輯都要測試到，這才是最重要的。</p>
     </div>
   </div>
 
@@ -3357,6 +3503,7 @@
   <div class="reveal">
     <div class="card">
       <h3><span class="icon">🔒</span> GitHub Ruleset 設定步驟</h3>
+      <p>如果你希望只有「通過測試」的分支才能合併到主分支，就需要多做一設定。</p>
     </div>
   </div>
 
@@ -3372,28 +3519,42 @@
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title">Target branch 選擇 main（預設主分支）</div>
+          <div class="step-title">將「Enforcement status」切換到 Active</div>
           <div class="step-desc"></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">勾選「Require a pull request before merging」</div>
+          <div class="step-title">Target branch 選擇 main（預設主分支）</div>
           <div class="step-desc"></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
         <div class="step-content">
-          <div class="step-title">勾選「Require status checks to pass」</div>
+          <div class="step-title">勾選「Require a pull request before merging」用 PR 才能合併的選項</div>
           <div class="step-desc"></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">5</div>
         <div class="step-content">
-          <div class="step-title">新增 Test 作為必須通過的檢查項目，儲存設定</div>
+          <div class="step-title">勾選「Require status checks to pass」限制測試必須通過才能合併</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">勾選「Require branches to be up to date before merging」確保合併前分支有更新到最新版</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <div class="step-title">點擊「Add Checks」，新增 Test 作為必須通過的檢查項目，儲存設定</div>
           <div class="step-desc"></div>
         </div>
       </div>
@@ -3404,6 +3565,94 @@
     <div class="insight">
       <div class="insight-title">設定完成後，只有測試通過的分支才能合併到主分支</div>
       <p>這是在多人協作時，保護專案品質不被破壞的基礎設計。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-12"><span class="bar"></span>驗證分支保護有生效</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🧪</span> 實際驗證：故意製造錯誤</h3>
+      <p>故意讓一個測試失敗，驗證 Pull Request 是否真的會被擋下。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">到專案挑一個測試案例，故意把預期結果弄壞</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">在終端機執行 <code>npm run test</code>，確認看到錯誤訊息</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">將這個錯誤推上去，commit 填寫 <code>test PR failure condition</code></div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">回到 GitHub，點擊「Pull requests」→ 建立新的 PR</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title"><strong>注意</strong>：如果你是 fork 的專案，base 要改成自己的帳號，compare 選擇 develop</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">填寫 PR 的 description（幫助其他人與未來的自己了解更新內容）：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">撰寫 PR</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">1. 撰寫 pages 頁面下的測試案例
+2. 在 GitHub Action 增加自動測試的流程</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">開出 PR 後會自動觸發一次測試，因為測試有錯誤，合併按鈕會是<strong>灰色</strong>，符合預期。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">✅</span> 修正後驗證通過</h3>
+      <p>接著回到專案，把問題修正回來，commit 填寫 <code>test PR success condition</code>。</p>
+      <p>推上去後回到 GitHub，稍等一段時間，合併按鈕會變成<strong>綠色</strong>，可以順利合併。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>有了 Ruleset 保護主分支後，至少能保證合併進來的功能都是經過基礎驗證的。</p>
     </div>
   </div>
 </section>
@@ -3810,7 +4059,7 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
     var sectionIds = ["instructor","vibe-coding","workflow-ai","github-action","skills-ai"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","vibe-coding","sub-section-1","sub-section-2","sub-section-3","sub-section-4","sub-section-5","workflow-ai","sub-rule-workflow-skill","sub-gen-test","github-action","sub-git-flow","sub-github-action","sub-ruleset","skills-ai","sub-agent-skill","sub-skill","sub-skill","sub-skill","sub-workflow-skill"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var allAnchorIds = ["instructor","vibe-coding","sub-section-1","sub-section-2","sub-section-3","sub-section-4","sub-section-5","workflow-ai","sub-rule-workflow-skill","sub-gen-test","sub-demo","github-action","sub-git-flow","sub-github-action","sub-ruleset","sub-section-12","skills-ai","sub-agent-skill","sub-skill","sub-skill","sub-skill","sub-workflow-skill"];   // e.g. ['instructor','new-project','sub-create-project',...]
 
     var sectionForAnchor = {};
     allAnchorIds.forEach(function (id) {
