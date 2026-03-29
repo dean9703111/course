@@ -1,0 +1,4660 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Vibe Coding 自動化測試 × Agent Skills</title>
+  <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Vibe Coding 自動化測試 × Agent Skills｜Vibe Coding 教學">
+  <meta property="og:description" content="學會用 Workflow 建立自動化測試、GitHub Action 守住品質底線，再銜接 Agent Skills 讓 AI 持續累積專業能力">
+  <meta property="og:image" content="https://deanlin.net/course/cht/vibecoding-3/assets/og-image.jpg">
+  <meta property="og:url" content="https://deanlin.net/course/cht/vibecoding-3/">
+  <meta property="og:site_name" content="林鼎淵 Dean Lin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.documentElement.setAttribute('data-local-preview', 'true');
+    }
+  </script>
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --bg: #0f1117;
+      --bg-card: #181b25;
+      --bg-card-alt: #1e2130;
+      --text: #e4e4e7;
+      --text-dim: #8b8d9a;
+      --accent: #e8845a;
+      --accent-rgb: 232 132 90;
+      --accent2: #e8b878;
+      --accent2-rgb: 232 184 120;
+      --accent3: #e08898;
+      --accent3-rgb: 224 136 152;
+      --border: #2a2d3a;
+      --code-bg: #12141c;
+      --radius: 12px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f5f7;
+      --bg-card: #ffffff;
+      --bg-card-alt: #f0f0f3;
+      --text: #1a1a2e;
+      --text-dim: #5a5b6a;
+      --accent: #c45c28;
+      --accent-rgb: 196 92 40;
+      --accent2: #9a7028;
+      --accent2-rgb: 154 112 40;
+      --accent3: #b04860;
+      --accent3-rgb: 176 72 96;
+      --border: #d4d4d8;
+      --code-bg: #eaeaef;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px
+    }
+
+    [id] {
+      scroll-margin-top: 20px
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--accent2);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    [data-theme="light"] a {
+      color: var(--accent);
+    }
+
+    [data-theme="light"] a:hover {
+      color: var(--accent2);
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 6px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: clip;
+      width: 100%;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgb(var(--accent-rgb) / .12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgb(var(--accent2-rgb) / .08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: .8rem;
+      color: var(--text-dim);
+      letter-spacing: .05em;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      max-width: 100%;
+      width: 100%;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
+      background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding: 0.08em 0.2em 0.16em;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-dim);
+      max-width: 600px;
+      margin-bottom: 1rem;
+      font-weight: 300
+    }
+
+    .hero-author {
+      font-size: .95rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 3rem
+    }
+
+    .hero-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      justify-content: center
+    }
+
+    .hero-nav a {
+      padding: .65rem 1.4rem;
+      border-radius: 100px;
+      font-size: .85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .3s ease;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .hero-nav a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px)
+    }
+
+    .hero-nav a.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent)
+    }
+
+    .hero-nav a.primary:hover {
+      filter: brightness(1.15);
+    }
+
+    /* ===== SECTION ===== */
+    .section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-label .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgb(var(--accent-rgb) / .15);
+      font-size: 1.2rem;
+      padding-left: 3px;
+      padding-bottom: 1px;
+    }
+
+    .section h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: .75rem;
+    }
+
+    .section .lead {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .divider {
+      max-width: 860px;
+      margin: 0 auto;
+      border: none;
+      border-top: 1px solid var(--border)
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      transition: border-color .3s;
+    }
+
+    .card:hover {
+      border-color: rgb(var(--accent-rgb) / .3)
+    }
+
+    .card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: .75rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .card h3 .icon {
+      font-size: 1.1rem
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0
+    }
+
+    .card ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .5rem;
+      color: var(--text-dim);
+      font-size: .95rem
+    }
+
+    .card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent2)
+    }
+
+    .card p {
+      color: var(--text-dim);
+      font-size: .95rem
+    }
+
+    /* ===== INLINE CODE ===== */
+    code {
+      background: var(--code-bg);
+      color: var(--accent2);
+      padding: .1em .35em;
+      border-radius: 4px;
+      font-size: .875em;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    /* ===== LOOSE TEXT & LIST ===== */
+    .loose-text {
+      color: var(--text-dim);
+      font-size: .9rem;
+      margin-bottom: .75rem
+    }
+
+    .loose-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0
+    }
+
+    .loose-list li {
+      position: relative;
+      padding-left: 1.4rem;
+      margin-bottom: .6rem;
+      color: var(--text-dim);
+      font-size: .95rem;
+      line-height: 1.8
+    }
+
+    .loose-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2)
+    }
+
+    /* ===== PROMPT BLOCK ===== */
+    .prompt-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .6rem 1rem;
+      background: rgba(255, 255, 255, .03);
+      border-bottom: 1px solid var(--border);
+      font-size: .75rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .prompt-header .dots {
+      display: flex;
+      gap: 5px
+    }
+
+    .prompt-header .dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: block
+    }
+
+    .prompt-header .dots span:nth-child(1) {
+      background: #ff5f57
+    }
+
+    .prompt-header .dots span:nth-child(2) {
+      background: #febc2e
+    }
+
+    .prompt-header .dots span:nth-child(3) {
+      background: #28c840
+    }
+
+    .prompt-header .label {
+      margin-left: auto;
+      color: var(--accent);
+      font-weight: 500
+    }
+
+    .prompt-header .copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      opacity: .5;
+      transition: opacity .2s;
+    }
+
+    .prompt-header .copy-btn:hover {
+      opacity: 1
+    }
+
+    .prompt-header .label~.copy-btn {
+      margin-left: 0
+    }
+
+    .prompt-header .label:empty~.copy-btn {
+      margin-left: auto
+    }
+
+    .prompt-body {
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      line-height: 1.7;
+      color: var(--accent2);
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    /* ===== INSIGHT BOX ===== */
+    .insight {
+      background: linear-gradient(135deg, rgb(var(--accent3-rgb) / .06), rgb(var(--accent2-rgb) / .04));
+      border: 1px solid rgb(var(--accent3-rgb) / .2);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .insight::before {
+      content: '💡';
+      position: absolute;
+      top: -14px;
+      left: 20px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid rgb(var(--accent3-rgb) / .25);
+      border-radius: 50%;
+      font-size: .85rem;
+      line-height: 1;
+    }
+
+    .insight .insight-title {
+      font-weight: 700;
+      color: var(--accent3);
+      margin-bottom: .5rem;
+      font-size: .95rem
+    }
+
+    .insight p {
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.9
+    }
+
+    .insight ul {
+      list-style: none;
+      padding: 0;
+      margin: .75rem 0 0
+    }
+
+    .insight ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.9
+    }
+
+    .insight ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent3)
+    }
+
+    /* ===== FLOW STEPS (Timeline) ===== */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin: 1.5rem 0;
+    }
+
+    .flow-step {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      transition: border-color .2s;
+    }
+
+    .flow-step:hover {
+      border-color: rgb(var(--accent-rgb) / .3);
+    }
+
+    /* Connector line between cards */
+    .flow-step+.flow-step::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -0.75rem;
+      width: 2px;
+      height: .75rem;
+      background: rgb(var(--accent-rgb) / .2);
+      transform: translateX(-50%);
+    }
+
+    .flow-step .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .12);
+      border: 2px solid rgb(var(--accent-rgb) / .25);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
+    .flow-step .step-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .flow-step .step-title {
+      font-size: .9rem;
+      font-weight: 700;
+      margin-bottom: .15rem
+    }
+
+    .flow-step .step-desc {
+      font-size: .8rem;
+      color: var(--text-dim);
+      line-height: 1.6
+    }
+
+    /* ===== IMAGES ===== */
+    .content-image {
+      margin: 1.5rem 0;
+      text-align: center
+    }
+
+    .content-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border)
+    }
+
+    .content-image figcaption {
+      margin-top: .5rem;
+      font-size: .8rem;
+      color: var(--text-dim);
+      font-style: italic
+    }
+
+    .inline-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: .25rem 0;
+      vertical-align: middle
+    }
+
+    /* ===== YOUTUBE EMBED ===== */
+    .youtube-embed {
+      margin: 1.5rem 0;
+    }
+
+    .youtube-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .youtube-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .youtube-local-notice {
+      display: none;
+      position: absolute;
+      inset: 0;
+      padding: 1.5rem;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgb(var(--accent-rgb) / .18), transparent 55%),
+        linear-gradient(135deg, rgb(var(--accent-rgb) / .14), rgb(var(--accent2-rgb) / .08));
+    }
+
+    .youtube-local-notice p {
+      margin: 0;
+    }
+
+    .youtube-local-notice a {
+      color: var(--accent2);
+      font-weight: 700;
+    }
+
+    html[data-local-preview="true"] .youtube-wrapper {
+      height: auto;
+      min-height: 240px;
+      padding-bottom: 0;
+    }
+
+    html[data-local-preview="true"] .youtube-wrapper iframe {
+      display: none;
+    }
+
+    html[data-local-preview="true"] .youtube-local-notice {
+      display: flex;
+    }
+
+    .youtube-caption {
+      text-align: center;
+      font-size: .85rem;
+      color: var(--text-dim);
+      margin-top: .5rem;
+      font-style: italic;
+    }
+
+    /* ===== IMAGE-TEXT LAYOUT ===== */
+    .image-text {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin: 1.5rem 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .image-text--img-right {
+      flex-direction: row-reverse
+    }
+
+    .image-text__img {
+      flex: 0 0 var(--img-width, 40%);
+      max-width: var(--img-width, 40%)
+    }
+
+    .image-text__img img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover
+    }
+
+    .image-text__body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .image-text__body p {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: .75rem
+    }
+
+    .image-text__body p:last-child {
+      margin-bottom: 0
+    }
+
+    .image-text__body ul {
+      list-style: none;
+      padding: 0;
+      margin: .5rem 0
+    }
+
+    .image-text__body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+      color: var(--text);
+      line-height: 1.7
+    }
+
+    .image-text__body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .65em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    @media(max-width:900px) {
+
+      .image-text,
+      .image-text--img-right {
+        flex-direction: column
+      }
+
+      .image-text__img {
+        flex: none;
+        max-width: 100%
+      }
+    }
+
+    /* ===== TAGS ===== */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin: 1rem 0
+    }
+
+    .tag {
+      padding: .3rem .8rem;
+      border-radius: 100px;
+      font-size: .75rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      color: var(--text-dim)
+    }
+
+    .tag.green {
+      border-color: rgb(76 175 80 / .35);
+      color: rgb(76 175 80)
+    }
+
+    .tag.orange {
+      border-color: rgb(235 150 60 / .35);
+      color: rgb(235 150 60)
+    }
+
+    .tag.purple {
+      border-color: rgb(171 104 210 / .35);
+      color: rgb(171 104 210)
+    }
+
+    .tag.blue {
+      border-color: rgb(100 160 240 / .35);
+      color: rgb(100 160 240)
+    }
+
+    /* ===== CHECKLIST ===== */
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: baseline;
+      gap: .6rem;
+      padding: .5rem 0;
+      font-size: .9rem;
+      color: var(--text-dim);
+      border-bottom: 1px solid rgba(255, 255, 255, .04)
+    }
+
+    .checklist li::before {
+      content: '✓';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: rgb(var(--accent2-rgb) / .1);
+      color: var(--accent2);
+      font-size: .7rem;
+      font-weight: 700;
+      transform: translateY(2px);
+    }
+
+    /* ===== SUMMARY GRID ===== */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: all .3s;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent)
+    }
+
+    .summary-card .sc-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center
+    }
+
+    .summary-card h4 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: .5rem
+    }
+
+    .summary-card p {
+      font-size: .85rem;
+      color: var(--text-dim);
+      line-height: 1.7
+    }
+
+    /* ===== INSTRUCTOR ===== */
+    .instructor {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0
+    }
+
+    .instructor-avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      flex-shrink: 0;
+      background: var(--bg-card-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .instructor-avatar-placeholder {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px dashed var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: var(--bg-card-alt);
+      color: var(--text-dim)
+    }
+
+    .instructor-info h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: .25rem
+    }
+
+    .instructor-info .tagline {
+      color: var(--accent);
+      font-size: .85rem;
+      font-weight: 500;
+      margin-bottom: .75rem
+    }
+
+    .instructor-info p {
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.8
+    }
+
+    .instructor-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.25rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border)
+    }
+
+    .instructor-stats a {
+      font-size: .8rem;
+      color: var(--text-dim);
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .instructor-stats a:hover {
+      color: var(--accent)
+    }
+
+    .instructor-stats a strong {
+      color: var(--text);
+      font-weight: 700;
+      transition: color .2s
+    }
+
+    .instructor-stats a:hover strong {
+      color: var(--accent)
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-top: 1rem
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      padding: .45rem .9rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 500;
+      transition: all .3s;
+    }
+
+    .social-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px)
+    }
+
+    .social-links a svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px
+    }
+
+    @media(max-width:640px) {
+      .instructor {
+        flex-direction: column;
+        align-items: center;
+        text-align: center
+      }
+
+      .instructor-stats {
+        justify-content: center
+      }
+
+      .social-links {
+        justify-content: center
+      }
+    }
+
+    /* ===== QUOTE PAGE ===== */
+    .quote-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 20% 40%, rgb(var(--accent-rgb) / .06) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 60%, rgb(var(--accent2-rgb) / .05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .quote-page .reveal {
+      max-width: 740px;
+      width: 100%
+    }
+
+    .quote-page .quote-mark {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      line-height: 1;
+      color: var(--accent);
+      opacity: .2;
+      margin-bottom: -1rem;
+      margin-left: -1rem;
+      user-select: none;
+      text-align: left
+    }
+
+    .quote-page blockquote {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.9;
+      color: var(--text);
+      max-width: 740px;
+      position: relative
+    }
+
+    .quote-page .quote-author {
+      margin-top: 2rem;
+      font-size: .85rem;
+      color: var(--text-dim);
+      letter-spacing: .08em
+    }
+
+    .quote-page .quote-line {
+      width: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      margin: 1.5rem auto 0
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: .8rem
+    }
+
+    /* ===== SUB-TITLE ===== */
+    .sub-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 3.5rem 0 1.5rem;
+      padding-bottom: .75rem;
+      border-bottom: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: .75rem
+    }
+
+    .sub-title .bar {
+      display: none
+    }
+
+    .sub-lead {
+      color: var(--text-dim);
+      font-size: .9rem;
+      margin-top: .25rem
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transition: opacity .7s ease
+    }
+
+    .reveal>* {
+      transform: translateY(20px);
+      transition: transform .7s ease
+    }
+
+    .reveal.visible {
+      opacity: 1
+    }
+
+    .reveal.visible>* {
+      transform: translateY(0)
+    }
+
+    /* ===== SIDEBAR (SHELL) ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 260px;
+      height: 100vh;
+      background: rgba(15, 17, 23, .92);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid var(--border);
+      padding: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+      overflow: hidden;
+    }
+
+    [data-theme="light"] .sidebar {
+      background: rgba(245, 245, 247, .94)
+    }
+
+    .sidebar.open {
+      transform: translateX(0)
+    }
+
+    @media(min-width:1100px) {
+      .sidebar {
+        transform: translateX(0)
+      }
+
+      body {
+        padding-left: 260px;
+        transition: padding-left .35s cubic-bezier(.4, 0, .2, 1)
+      }
+
+      .sidebar.collapsed {
+        transform: translateX(-100%)
+      }
+
+      body.sidebar-collapsed {
+        padding-left: 0
+      }
+    }
+
+    .sidebar-collapse-btn {
+      position: fixed;
+      top: 50%;
+      left: 260px;
+      transform: translateY(-50%);
+      z-index: 101;
+      width: 20px;
+      height: 48px;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: none;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: .6rem;
+      transition: all .35s cubic-bezier(.4, 0, .2, 1);
+      padding: 0;
+    }
+
+    .sidebar-collapse-btn:hover {
+      width: 24px;
+      color: var(--accent);
+      background: var(--bg-card-alt)
+    }
+
+    .sidebar-collapse-btn svg {
+      transition: transform .35s
+    }
+
+    .sidebar.collapsed~.sidebar-collapse-btn {
+      left: 0
+    }
+
+    .sidebar.collapsed~.sidebar-collapse-btn svg {
+      transform: rotate(180deg)
+    }
+
+    @media(min-width:1100px) {
+      .sidebar-collapse-btn {
+        display: flex
+      }
+    }
+
+    @media(max-width:1099px) {
+      .sidebar-collapse-btn {
+        display: none
+      }
+    }
+
+    /* ===== SIDEBAR BRAND (TOP) ===== */
+    .sidebar-brand {
+      padding: .75rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+
+    .sidebar-brand-controls {
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .sidebar-brand-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.4;
+    }
+
+    /* ===== SIDEBAR TOC (MIDDLE) ===== */
+    .toc {
+      list-style: none;
+      padding: .75rem 0;
+      flex: 1;
+      overflow-y: auto;
+      overscroll-behavior: contain
+    }
+
+    .toc-group {
+      margin-bottom: .25rem
+    }
+
+    .toc-group-title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem 1.5rem;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: all .25s;
+      position: relative;
+    }
+
+    .toc-group-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 0 2px 2px 0;
+      opacity: 0;
+      transition: opacity .25s
+    }
+
+    .toc-group-title:hover {
+      color: var(--text)
+    }
+
+    .toc-group-title.active {
+      color: var(--accent)
+    }
+
+    .toc-group-title.active::before {
+      opacity: 1
+    }
+
+    .toc-group-title .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: rgb(var(--accent-rgb) / .1);
+      font-size: .65rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .toc-sub {
+      list-style: none;
+      padding: 0;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .35s ease
+    }
+
+    .toc-group.expanded .toc-sub {
+      max-height: 500px
+    }
+
+    .toc-sub a {
+      display: block;
+      padding: .35rem 1.5rem .35rem 3.25rem;
+      font-size: .75rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: all .2s;
+      position: relative
+    }
+
+    .toc-sub a::before {
+      content: '';
+      position: absolute;
+      left: 2.25rem;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--border);
+      transform: translateY(-50%);
+      transition: background .2s
+    }
+
+    .toc-sub a:hover {
+      color: var(--text)
+    }
+
+    .toc-sub a.active {
+      color: var(--accent2)
+    }
+
+    .toc-sub a.active::before {
+      background: var(--accent2)
+    }
+
+    /* ===== SIDEBAR PROGRESS (BOTTOM) ===== */
+    .sidebar-progress {
+      flex-shrink: 0;
+      padding: .75rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--border)
+    }
+
+    .sidebar-progress-label {
+      font-size: .65rem;
+      color: var(--text-dim);
+      margin-bottom: .4rem;
+      display: flex;
+      justify-content: space-between
+    }
+
+    .sidebar-progress-track {
+      width: 100%;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden
+    }
+
+    .sidebar-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      width: 0%;
+      transition: width .3s ease
+    }
+
+    /* ===== COLLAPSED PROGRESS BAR (BOTTOM OF VIEWPORT) ===== */
+    .collapsed-progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      z-index: 99;
+      background: var(--border);
+      pointer-events: none;
+      transition: opacity .35s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .collapsed-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .3s ease;
+    }
+
+    @media(min-width:1100px) {
+      .collapsed-progress {
+        opacity: 0
+      }
+
+      body.sidebar-collapsed .collapsed-progress {
+        opacity: 1
+      }
+    }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      top: auto;
+      left: auto;
+      z-index: 200;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .92);
+      backdrop-filter: blur(12px);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all .3s;
+      box-shadow: 0 4px 20px rgb(var(--accent-rgb) / .35);
+    }
+
+    .hamburger:hover {
+      transform: scale(1.08)
+    }
+
+    .hamburger span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+      transition: all .3s
+    }
+
+    .hamburger.active {
+      background: rgba(24, 27, 37, .92);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .4)
+    }
+
+    [data-theme="light"] .hamburger.active {
+      background: rgba(255, 255, 255, .92)
+    }
+
+    .hamburger.active span {
+      background: var(--text)
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(3.5px, 3.5px)
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(3.5px, -3.5px)
+    }
+
+    @media(min-width:1100px) {
+      .hamburger {
+        display: none
+      }
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s
+    }
+
+    .sidebar-overlay.visible {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.1)
+    }
+
+    /* ===== FONT SIZE TOGGLE ===== */
+    .fontsize-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      font-weight: 700;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+      color: var(--text-dim);
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .fontsize-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.1);
+      color: var(--accent)
+    }
+
+    /* ===== SETTINGS TOGGLE ===== */
+    .settings-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+      color: var(--text-dim);
+    }
+
+    .settings-toggle:hover,
+    .settings-toggle.active {
+      border-color: var(--accent);
+      transform: scale(1.1);
+      color: var(--accent);
+    }
+
+    /* ===== SETTINGS PANEL ===== */
+    .settings-panel {
+      position: fixed;
+      width: 210px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+      padding: .85rem;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity .2s, transform .2s;
+    }
+
+    .settings-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .settings-section {
+      margin-bottom: .6rem;
+    }
+
+    .settings-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: .5rem;
+    }
+
+    .settings-divider {
+      height: 1px;
+      background: var(--border);
+      margin: .7rem 0;
+    }
+
+    .color-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+
+    .color-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: transform .2s, border-color .2s;
+      outline: none;
+      box-shadow: 0 0 0 2px transparent;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.15);
+    }
+
+    .color-swatch.selected {
+      box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px currentColor;
+      border-color: transparent;
+    }
+
+    .settings-export-btn {
+      width: 100%;
+      padding: .45rem .75rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s, transform .15s;
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    .settings-export-btn:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+    }
+
+    /* ===== BREAK TIMER MODAL ===== */
+    .break-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .65);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .break-overlay.open {
+      display: flex;
+    }
+
+    .break-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      min-width: 300px;
+      max-width: 360px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, .4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .break-modal::after {
+      content: '';
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 62%);
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.75);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .break-modal.done::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .break-modal-close {
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-dim);
+      line-height: 1;
+      padding: 4px;
+    }
+
+    .break-modal-close:hover {
+      color: var(--text);
+    }
+
+    .break-modal-icon {
+      font-size: 3rem;
+      margin-bottom: .75rem;
+      transition: transform .35s ease, filter .35s ease;
+    }
+
+    .break-modal.done .break-modal-icon {
+      animation: break-icon-ring .9s ease-in-out 2;
+      filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 40%, transparent));
+    }
+
+    .break-modal h3 {
+      margin: 0 0 .5rem;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+
+    .break-modal p {
+      margin: 0 0 1.25rem;
+      font-size: .85rem;
+      color: var(--text-dim);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .break-modal p.hidden {
+      display: none;
+    }
+
+    .break-input-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .break-input-row input {
+      width: 64px;
+      padding: .4rem .5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-card-alt);
+      color: var(--text);
+      font-size: 1.1rem;
+      text-align: center;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .break-input-row input:focus {
+      border-color: var(--accent);
+    }
+
+    .break-input-row span {
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    .break-start-btn {
+      width: 100%;
+      padding: .6rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .2s;
+    }
+
+    .break-start-btn:hover {
+      opacity: .9;
+    }
+
+    .break-countdown {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .break-countdown.active {
+      display: flex;
+    }
+
+    .break-countdown-time {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: .75rem;
+      transition: transform .25s ease, color .25s ease;
+    }
+
+    .break-countdown.done .break-countdown-time {
+      color: #ff7a59;
+      animation: break-time-pop .75s ease;
+    }
+
+    .break-done-message {
+      display: none;
+      margin: 0 0 1rem;
+      font-size: .95rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .break-countdown.done .break-done-message {
+      display: block;
+      animation: break-done-reveal .8s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .break-done-message strong {
+      display: inline-block;
+      color: #ff7a59;
+      animation: break-done-glow 1.2s ease-in-out infinite alternate;
+    }
+
+    .break-end-btn {
+      padding: .45rem 1.5rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .8rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+
+    .break-end-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @keyframes break-icon-ring {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      20% { transform: rotate(-14deg) scale(1.08); }
+      40% { transform: rotate(14deg) scale(1.08); }
+      60% { transform: rotate(-10deg) scale(1.06); }
+      80% { transform: rotate(10deg) scale(1.06); }
+    }
+
+    @keyframes break-time-pop {
+      0% { transform: scale(.92); }
+      55% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes break-done-reveal {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes break-done-glow {
+      0% { text-shadow: 0 0 0 rgba(255, 122, 89, 0); }
+      100% { text-shadow: 0 0 18px rgba(255, 122, 89, .35); }
+    }
+
+    /* ===== PRINT / SLIDE STYLES ===== */
+    @media print {
+      html {
+        font-size: var(--print-font-size, 24px) !important;
+      }
+
+      @page {
+        size: 1280px 720px;
+        margin: 0;
+      }
+
+      /* ── Print color fidelity ──
+         Ensure backgrounds, borders, gradients render in both light & dark mode.
+         Without this, browsers strip backgrounds → dark mode becomes invisible text on white. */
+      *,
+      *::before,
+      *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      /* Hide all direct body children except slides */
+      body>*:not(#print-slides) {
+        display: none !important;
+        visibility: hidden !important;
+      }
+
+      /* Explicitly target fixed-position UI that can bleed through in Chrome/Safari */
+      .sidebar,
+      .hamburger,
+      .sidebar-overlay,
+      .sidebar-collapse-btn,
+      .collapsed-progress,
+      .settings-panel,
+      .bonus-overlay,
+      header.hero,
+      footer.footer {
+        display: none !important;
+        visibility: hidden !important;
+        position: static !important;
+      }
+
+      /* Un-hide hero/footer clones inside print-slides */
+      #print-slides header.hero {
+        display: flex !important;
+        visibility: visible !important;
+        min-height: 0 !important;
+        height: 100% !important;
+      }
+
+      /* slide-footer is now a rebuilt "Thank You" page — no longer clones footer.footer */
+
+      #print-slides {
+        display: block !important;
+        visibility: visible !important;
+        position: static !important;
+        overflow: visible !important;
+      }
+
+      #print-slides * {
+        visibility: visible !important;
+      }
+
+      /* Prevent body overflow-x:hidden from clipping print content */
+      body.printing {
+        overflow: visible !important;
+      }
+
+      /* Force reveal animations off in print */
+      #print-slides .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      #print-slides .reveal>* {
+        transform: none !important;
+      }
+
+      /* ## sub-title: left-bar style to distinguish from # bottom-border */
+      #print-slides .sub-title {
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        margin: .5rem 0 .75rem !important;
+        padding-left: .75rem !important;
+        border-left: 3px solid var(--accent) !important;
+        border-bottom: none !important;
+        color: var(--accent) !important;
+        font-family: 'Noto Sans TC', sans-serif !important;
+      }
+
+      /* Insight: ensure text visible in both themes */
+      #print-slides .insight p,
+      #print-slides .insight ul li,
+      #print-slides .insight .insight-title {
+        color: var(--text) !important;
+      }
+
+      /* Lead paragraph */
+      #print-slides .lead {
+        color: var(--text) !important;
+      }
+
+      /* quote-line is now a closing quotation mark — no background fix needed */
+      #print-slides .quote-line {
+        background: none !important;
+        height: 0 !important;
+        border-top: 2px solid var(--accent) !important;
+      }
+    }
+
+    #print-slides {
+      display: none;
+    }
+
+    .slide {
+      width: 100%;
+      min-height: 720px;
+      height: auto;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      display: flex;
+      flex-direction: column;
+      padding: 2.2rem 3rem 1.8rem;
+      box-sizing: border-box;
+      background: var(--bg);
+      overflow: visible;
+    }
+
+    .slide:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    .slide-header {
+      flex-shrink: 0;
+      margin-bottom: 1.2rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: .6rem;
+    }
+
+    .slide-label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+    }
+
+    .slide-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      font-family: 'Noto Serif TC', serif;
+      color: var(--text);
+      line-height: 1.3;
+      margin-top: .2rem;
+    }
+
+    .slide-subtitle {
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: var(--accent);
+      margin-top: .3rem;
+      line-height: 1.3;
+    }
+
+    .slide-body {
+      flex: 1;
+      overflow: visible;
+      font-size: .88rem;
+      line-height: 1.65;
+    }
+
+    .slide-body .card {
+      break-inside: avoid;
+    }
+
+    .slide-body .prompt-block {
+      break-inside: avoid;
+    }
+
+    .slide-quote {
+      padding: 0;
+      justify-content: center;
+    }
+
+    .slide-quote .quote-page {
+      min-height: 0;
+      flex: 1;
+      width: 100%;
+    }
+
+    .slide-quote .quote-line {
+      background: none;
+      height: 0;
+      border-top: 2px solid var(--accent);
+    }
+
+    /* ===== PRINT-SLIDES FONT SCALING ===== */
+    /* Base: 16px root becomes 24px universally in print. Slide body font is set to 1rem. */
+    #print-slides .slide-body {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ── Hero slide ──────────────────────────────────────────
+       In print, background-clip:text + text-fill-color:transparent
+       makes h1 completely invisible → force solid color.
+       Keep nav links; they serve as a visual chapter overview.
+    ─────────────────────────────────────────────────────────── */
+    #print-slides .slide-hero {
+      padding: 0;
+    }
+
+    #print-slides .slide-hero .hero {
+      flex: 1;
+      min-height: 0 !important;
+      height: 100% !important;
+      padding: 3rem 4rem;
+      justify-content: center;
+      overflow: visible !important;
+    }
+
+    /* Prevent hero ::before/::after pseudo-elements from triggering clip */
+    #print-slides .slide-hero .hero::before,
+    #print-slides .slide-hero .hero::after {
+      display: none !important;
+    }
+
+    /* Fix invisible title + prevent text clipping */
+    #print-slides .slide-hero .hero h1 {
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: var(--text) !important;
+      color: var(--text) !important;
+      font-size: 3.36rem;
+      margin-bottom: 1rem;
+      padding: 0.1em 0.5em !important;
+      overflow: visible !important;
+    }
+
+    #print-slides .slide-hero .hero-badge {
+      font-size: .96rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent) !important;
+      border-color: var(--accent) !important;
+      backdrop-filter: none !important;
+      display: inline-flex !important;
+      opacity: 1 !important;
+    }
+
+    #print-slides .slide-hero .hero-badge .dot {
+      animation: none !important;
+      opacity: 1 !important;
+      background: var(--accent) !important;
+    }
+
+    #print-slides .slide-hero .hero-sub {
+      font-size: 1.25rem;
+      margin-bottom: .6rem;
+    }
+
+    #print-slides .slide-hero .hero-author {
+      font-size: 1.07rem;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Nav links → chapter overview tags */
+    #print-slides .slide-hero .hero-nav {
+      gap: .5rem;
+    }
+
+    #print-slides .slide-hero .hero-nav a {
+      font-size: .96rem;
+      padding: .4rem 1rem;
+    }
+
+    /* Quote slide: scale quote mark for 720px height */
+    #print-slides .slide-quote .quote-mark {
+      font-size: 5rem;
+    }
+
+    #print-slides .slide-quote blockquote {
+      font-size: 2rem;
+      line-height: 2;
+    }
+
+    /* Slide header */
+    #print-slides .slide-label {
+      font-size: .8rem;
+    }
+
+    #print-slides .slide-title {
+      font-size: 1.4rem;
+    }
+
+    #print-slides .slide-subtitle {
+      font-size: 1.1rem;
+    }
+
+    /* Content elements */
+    #print-slides .card {
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .card h3 {
+      font-size: 1.1rem;
+    }
+
+    #print-slides .card ul li,
+    #print-slides .card p {
+      font-size: .95rem;
+    }
+
+    #print-slides .checklist li {
+      font-size: .95rem;
+      padding: .45rem 0;
+    }
+
+    #print-slides .insight {
+      padding: 1rem 1.25rem;
+    }
+
+    #print-slides .insight-title {
+      font-size: 1rem;
+    }
+
+    #print-slides .insight p {
+      font-size: .9rem;
+    }
+
+    #print-slides .prompt-block {
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .prompt-body {
+      font-size: .9rem;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+      overflow: hidden;
+    }
+
+    #print-slides .content-image,
+    #print-slides .image-text,
+    #print-slides .youtube-embed {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    #print-slides .youtube-wrapper iframe {
+      display: none;
+    }
+
+    #print-slides .youtube-wrapper {
+      padding-bottom: 0;
+      height: auto;
+      padding: 2rem;
+      text-align: center;
+      background: var(--bg-card);
+    }
+
+    #print-slides .youtube-wrapper::after {
+      content: '\25B6  https://youtu.be/' attr(data-id);
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    #print-slides .slide-youtube .slide-body {
+      justify-content: center;
+    }
+
+    #print-slides .youtube-print-link {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at top, rgb(var(--accent-rgb) / .12), transparent 58%),
+        linear-gradient(135deg, rgb(var(--accent-rgb) / .08), rgb(var(--accent2-rgb) / .05));
+      text-decoration: none;
+      text-align: center;
+      color: var(--text);
+    }
+
+    #print-slides .youtube-print-link-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    #print-slides .youtube-print-link-url {
+      font-size: .95rem;
+      color: var(--accent2);
+      word-break: break-all;
+    }
+
+    #print-slides .youtube-print-link-hint {
+      font-size: .82rem;
+      color: var(--text-dim);
+    }
+
+    #print-slides .content-image img {
+      max-height: 320px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    #print-slides .image-text {
+      padding: 1rem;
+      gap: 1.25rem;
+    }
+
+    #print-slides .image-text__img {
+      flex: 0 0 35%;
+      max-width: 35%;
+    }
+
+    #print-slides .image-text__img img {
+      max-height: 280px;
+      object-fit: contain;
+    }
+
+    #print-slides .image-text__body p,
+    #print-slides .image-text__body ul li {
+      font-size: .9rem;
+    }
+
+    #print-slides .sub-lead {
+      font-size: .9rem;
+    }
+
+    /* Footer slide — "Thank You" closing page */
+    #print-slides .slide-footer {
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #print-slides .slide-footer .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      width: 100%;
+      padding: 3rem 4rem;
+    }
+
+    #print-slides .slide-footer .footer-thanks {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+
+    #print-slides .slide-footer .footer-cta {
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: .8rem;
+      line-height: 1.6;
+    }
+
+    #print-slides .slide-footer .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .slide-footer .footer-socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: 1rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: .4rem .9rem;
+      border: 1.5px solid var(--accent);
+      border-radius: 2rem;
+    }
+
+    #print-slides .slide-footer .footer-socials a svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    #print-slides .slide-footer .footer-copyright {
+      font-size: .85rem;
+      color: var(--text-dim);
+      margin-top: .4rem;
+    }
+
+    #print-slides .slide-footer .footer-line {
+      width: 40%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      margin: .3rem auto;
+    }
+
+    /* ===== LIGHT MODE OVERRIDES ===== */
+    [data-theme="light"] .prompt-header {
+      background: rgba(0, 0, 0, .03)
+    }
+
+    [data-theme="light"] .checklist li {
+      border-bottom-color: rgba(0, 0, 0, .06)
+    }
+
+    [data-theme="light"] .prompt-body {
+      color: var(--accent2)
+    }
+
+    [data-theme="light"] .insight {
+      background: linear-gradient(135deg, rgb(var(--accent3-rgb) / .06), rgb(var(--accent2-rgb) / .04));
+      border-color: rgb(var(--accent3-rgb) / .2)
+    }
+
+    [data-theme="light"] .hero::before {
+      background: radial-gradient(circle, rgb(var(--accent-rgb) / .08) 0%, transparent 70%)
+    }
+
+    [data-theme="light"] .hero::after {
+      background: radial-gradient(circle, rgb(var(--accent2-rgb) / .06) 0%, transparent 70%)
+    }
+
+    [data-theme="light"] .card:hover {
+      border-color: rgb(var(--accent-rgb) / .35)
+    }
+
+    /* ===== OG MODE (for square OG thumbnails) ===== */
+    html.og-mode body {
+      padding-left: 0 !important;
+    }
+
+    html.og-mode .sidebar,
+    html.og-mode .sidebar-collapse-btn,
+    html.og-mode .hamburger,
+    html.og-mode .sidebar-overlay {
+      display: none !important;
+    }
+
+    html.og-mode .section,
+    html.og-mode .quote-page,
+    html.og-mode .footer {
+      display: none !important;
+    }
+
+    html.og-mode .hero {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ===== BONUS BUTTON & MODAL ===== */
+    .bonus-btn-wrap {
+      text-align: center;
+      margin: 2.5rem 0 1rem
+    }
+
+    .bonus-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 2rem;
+      border-radius: 100px;
+      background: linear-gradient(135deg, rgb(var(--accent-rgb) / .12), rgb(var(--accent3-rgb) / .12));
+      border: 1px solid rgb(var(--accent-rgb) / .4);
+      color: var(--accent);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .bonus-btn:hover {
+      background: linear-gradient(135deg, rgb(var(--accent-rgb) / .22), rgb(var(--accent3-rgb) / .22));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgb(var(--accent-rgb) / .2)
+    }
+
+    .bonus-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .65);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .bonus-overlay.visible {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    .bonus-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 640px;
+      width: 100%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(24px);
+      transition: transform .3s;
+      overflow: hidden;
+    }
+
+    .bonus-overlay.visible .bonus-modal {
+      transform: translateY(0)
+    }
+
+    .bonus-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .bonus-modal-header h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent)
+    }
+
+    .bonus-modal-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      color: var(--text-dim);
+      transition: all .2s;
+    }
+
+    .bonus-modal-close:hover {
+      border-color: var(--accent);
+      color: var(--accent)
+    }
+
+    .bonus-modal-body {
+      padding: 1.5rem 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+      line-height: 2;
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    .bonus-modal-body p {
+      margin-bottom: .6rem
+    }
+
+    .bonus-modal-body strong {
+      color: var(--text);
+      font-weight: 700
+    }
+
+    .bonus-modal-body em {
+      color: var(--accent2)
+    }
+
+    .bonus-modal-body code {
+      background: var(--code-bg);
+      color: var(--accent2);
+      padding: .1em .35em;
+      border-radius: 4px;
+      font-size: .875em;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .bonus-modal-body ul {
+      list-style: none;
+      padding: 0;
+      margin: .25rem 0 .75rem
+    }
+
+    .bonus-modal-body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .3rem
+    }
+
+    .bonus-modal-body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    .bonus-steps {
+      margin: .25rem 0 .5rem
+    }
+
+    .bonus-step {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .bonus-steps .bonus-step:last-child {
+      border-bottom: none
+    }
+
+    .bonus-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .12);
+      border: 1px solid rgb(var(--accent-rgb) / .25);
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: .1rem;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .bonus-step-text {
+      font-size: .9rem;
+      color: var(--text-dim);
+      line-height: 1.75
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:640px) {
+      .section {
+        padding: 3rem 1.25rem
+      }
+
+      .card {
+        padding: 1.25rem
+      }
+
+      .prompt-body {
+        font-size: .78rem;
+        padding: 1rem
+      }
+
+      .flow {
+        gap: .75rem
+      }
+
+      .hero-nav {
+        flex-direction: column;
+        align-items: center
+      }
+
+      .bonus-modal {
+        max-height: 90vh
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-title">Vibe Coding 自動化測試 × Agent Skills</div>
+      <div class="sidebar-brand-controls"><button class="fontsize-toggle" id="fontsize-toggle"
+          aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle"
+          aria-label="Toggle theme">🌙</button><button class="settings-toggle" id="settings-toggle"
+          aria-label="設定">⚙</button></div>
+    </div>
+    <ul class="toc">
+      <li class="toc-group" data-section="instructor">
+      <a href="#instructor" class="toc-group-title">
+        <span class="toc-num">👤</span> 講師簡介
+      </a>
+      <ul class="toc-sub"></ul>
+    </li>
+    <li class="toc-group" data-section="vibe-coding">
+      <a href="#vibe-coding" class="toc-group-title">
+        <span class="toc-num">1</span> 測試篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section-1">你一定遇過這些問題</a></li>
+        <li><a href="#sub-section-2">測試程式的設計流程</a></li>
+        <li><a href="#sub-section-3">前置作業</a></li>
+        <li><a href="#sub-section-4">從登入頁了解測試範圍</a></li>
+        <li><a href="#sub-section-5">測試的重要性</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="workflow-ai">
+      <a href="#workflow-ai" class="toc-group-title">
+        <span class="toc-num">2</span> Workflow 篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-rule-workflow-skill">Rule / Workflow / Skill 的差異</a></li>
+        <li><a href="#sub-gen-test">gen-test-cases 工作流設計</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="github-action">
+      <a href="#github-action" class="toc-group-title">
+        <span class="toc-num">3</span> CI/CD 篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-git-flow">先了解 Git Flow</a></li>
+        <li><a href="#sub-github-action">設定 GitHub Action</a></li>
+        <li><a href="#sub-ruleset">用 Ruleset 保護主分支</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="skills-ai">
+      <a href="#skills-ai" class="toc-group-title">
+        <span class="toc-num">4</span> Skills 篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-agent-skill">什麼是 Agent Skill？</a></li>
+        <li><a href="#sub-skill">安裝別人的 Skill</a></li>
+        <li><a href="#sub-skill">使用 Skill 的安全注意事項</a></li>
+        <li><a href="#sub-skill">建立自己的 Skill</a></li>
+        <li><a href="#sub-workflow-skill">Workflow + Skill 組合應用</a></li>
+      </ul>
+    </li>
+
+          </ul>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress-label"><span>閱讀進度</span><span id="progress-pct">0%</span></div>
+      <div class="sidebar-progress-track">
+        <div class="sidebar-progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </nav>
+  <button class="sidebar-collapse-btn" id="sidebar-collapse" aria-label="收合側邊欄">
+    <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 1L2 7l6 6" />
+    </svg>
+  </button>
+
+  <div class="collapsed-progress">
+    <div class="collapsed-progress-fill" id="collapsed-progress-fill"></div>
+  </div>
+
+    <header class="hero">
+    <div class="hero-badge"><span class="dot"></span>Vibe Coding 教學</div>
+    <h1>自動化測試 × Agent Skills</h1>
+    <p class="hero-sub">學會用 Workflow 建立自動化測試、GitHub Action 守住品質底線，再銜接 Agent Skills 讓 AI 持續累積專業能力</p>
+    <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
+    <nav class="hero-nav">
+      <a href="#vibe-coding">測試篇</a>
+    <a href="#workflow-ai">Workflow 篇</a>
+    <a href="#github-action">CI/CD 篇</a>
+    <a href="#skills-ai">Skills 篇</a>
+          </nav>
+  </header>
+
+  <section class="quote-page">
+  <div class="reveal">
+    <div class="quote-mark">“</div>
+    <blockquote>市場不會為爛產品買單；加入自動化測試，是讓 Vibe Coding 的成果從玩具走向產品的過程。</blockquote>
+    <div class="quote-line"></div>
+  </div>
+</section>
+  
+  <section class="section">
+  <div class="reveal">
+    <span class="section-label" id="instructor"><span class="num">👤</span> 講師簡介</span>
+    <h2>關於講師</h2>
+  </div>
+  <div class="reveal">
+    <div class="instructor">
+      <img class="instructor-avatar" src="../../config/assets/author.jpg" alt="林鼎淵 Dean Lin">
+      <div class="instructor-info">
+        <h3>林鼎淵 Dean Lin</h3>
+        <div class="tagline">外商工程師 · 企業內訓講師 · 暢銷書作家</div>
+        <p>專注於 AI 開發工作流的實踐與推廣，協助企業導入 AI 輔助開發流程。<br> 擅長將複雜的技術概念轉化為可落地的工作流程，讓團隊真正提升開發效率而非盲目追逐工具。</p>
+        <div class="instructor-stats">
+          <a href="https://www.tenlong.com.tw/products/9786264142083" target="_blank" rel="noopener">📚 出版 <strong>7</strong> 本專業書籍</a>
+          <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener">🎤 超過 <strong>100</strong> 場講座</a>
+          <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener">✍️ 發表超過 <strong>400</strong> 篇文章</a>
+        </div>
+        <div class="social-links">
+          <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm2.94 0c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75c.66 0 1.19 2.58 1.19 5.75z"/></svg> Medium</a>
+          <a href="https://www.facebook.com/deanlinbao" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
+          <a href="https://www.threads.com/@deanlin5288" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 878 1000" fill="currentColor"><path d="M446.7,1000h-0.3c-149.2-1-263.9-50.2-341-146.2C36.9,768.3,1.5,649.4,0.3,500.4v-0.7c1.2-149.1,36.6-267.9,105.2-353.4C182.5,50.2,297.3,1,446.4,0h0.3h0.3c114.4,0.8,210.1,30.2,284.4,87.4c69.9,53.8,119.1,130.4,146.2,227.8l-85,23.7c-46-165-162.4-249.3-346-250.6c-121.2,0.9-212.9,39-272.5,113.2C118.4,271,89.6,371.4,88.5,500c1.1,128.6,29.9,229,85.7,298.5c59.6,74.3,151.3,112.4,272.5,113.2c109.3-0.8,181.6-26.3,241.7-85.2c68.6-67.2,67.4-149.7,45.4-199.9c-12.9-29.6-36.4-54.2-68.1-72.9c-8,56.3-25.9,101.9-53.5,136.3c-36.9,45.9-89.2,71-155.4,74.6c-50.1,2.7-98.4-9.1-135.8-33.4c-44.3-28.7-70.2-72.5-73-123.5c-2.7-49.6,17-95.2,55.4-128.4c36.7-31.7,88.3-50.3,149.3-53.8c44.9-2.5,87-0.5,125.8,5.9c-5.2-30.9-15.6-55.5-31.2-73.2c-21.4-24.4-54.5-36.8-98.3-37.1c-0.4,0-0.8,0-1.2,0c-35.2,0-83,9.7-113.4,55L261.2,327c40.8-60.6,107-94,186.6-94c0.6,0,1.2,0,1.8,0c133.1,0.8,212.4,82.3,220.3,224.5c4.5,1.9,9,3.9,13.4,5.9c62.1,29.2,107.5,73.4,131.4,127.9c33.2,75.9,36.3,199.6-64.5,298.3C673.1,965,579.6,999.1,447,1000L446.7,1000L446.7,1000z M488.5,512.9c-10.1,0-20.3,0.3-30.8,0.9c-76.5,4.3-124.2,39.4-121.5,89.3c2.8,52.3,60.5,76.6,116,73.6c51-2.7,117.4-22.6,128.6-154.6C552.6,516,521.7,512.9,488.5,512.9z"/></svg> Threads</a>
+          <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
+          <a href="https://github.com/dean9703111" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+  
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="vibe-coding"><span class="num">1</span> 測試篇</span>
+    <h2>為什麼自動化測試是 Vibe Coding 的必修課</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-1"><span class="bar"></span>你一定遇過這些問題</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">😓</span> 三大痛點</h3>
+      <ul>
+        <li><strong>穩定性</strong>：請 AI 解決目前的問題，改完後發現過去正常的功能被改壞了</li>
+        <li><strong>複雜度</strong>：功能持續增加，靠人工逐一確認流程，耗時又容易有遺漏</li>
+        <li><strong>擴充性</strong>：架構逐漸複雜後，任何修改都可能引發連鎖影響，出狀況時連問題都不知道如何定位</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">如果這幾個問題能引起你的共鳴，恭喜你</div>
+      <p>這代表你已經進入了下一個階段，開始思考如何讓 Vibe Coding 的成果真正可靠。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-2"><span class="bar"></span>測試程式的設計流程</div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">哪裡需要測試</div>
+          <div class="step-desc">透過實際案例了解系統設計的基礎概念，從前端網頁功能、後端 API 回覆、使用者權限等角度，說明測試的重要性</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">生成測試程式</div>
+          <div class="step-desc">分享如何設計工作流讓 AI 撰寫測試程式，以及人類應該在哪些環節審核，避免重要功能沒有被測到</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">加入 GitHub Action</div>
+          <div class="step-desc">把測試加入 GitHub Action，每次更新專案都會自動化測試；限制只有測試通過才能合併到主分支，保證專案品質</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">獲得測試報告</div>
+          <div class="step-desc">每次測試完成後獲得漂亮的測試報告，用來檢驗產品的穩定性</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-3"><span class="bar"></span>前置作業</div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">參考資源</div>
+      <ul>
+        <li>第一次接觸 Git 與 Node.js 的朋友，可以參考我<a href="https://youtu.be/5DEV_K0JauQ" target="_blank" rel="noopener">過去拍的影片複習</a></li>
+        <li>教學使用的工具為 Antigravity，設定與使用可以<a href="https://youtu.be/-FW5DgQEV0M" target="_blank" rel="noopener">參考這個影片</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3>‍💻 下載與啟動專案</h3>
+      <p>我用 Vibe Coding 寫了一個有「登入頁、儀表板、管理後台、Mock API」的<a href="https://github.com/deancourse/vibe-coding-testing-practice" target="_blank" rel="noopener">前端專案</a> 讓大家一起練習</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">點擊 Fork，將專案複製到自己的帳號下</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">點擊 Code，複製專案網址</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">打開程式碼編輯器，點擊 <code>Clone Repository</code>，貼上網址並選擇下載路徑</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">打開 <code>package.json</code>，確認 <code>dependencies</code> 與 <code>devDependencies</code> 中的套件</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">打開終端機，輸入 <code>npm install</code> 安裝套件（安裝後會存放到 <code>node_modules</code> 資料夾）</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">輸入 <code>npm run dev</code> 啟動專案，點擊網址即可瀏覽網頁</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">多了解專案的架構，Vibe Coding 可以走得更遠</div>
+      <p>你也可以直接在 AI 對話視窗說「幫我安裝套件並啟動專案」來搞定一切，但理解專案結構會讓你受益更多。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-4"><span class="bar"></span>從登入頁了解測試範圍</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔐</span> 格式驗證（前端）</h3>
+      <ul>
+        <li>電子郵件格式錯誤時，有錯誤提示</li>
+        <li>密碼格式錯誤時，有對應的錯誤提示</li>
+        <li>格式正確時，才會呼叫後端 API</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">判斷是否有傳送到後端</div>
+      <p>打開 F12（點擊滑鼠右鍵），選擇檢查，來開啟「開發人員工具」，可在「網路」的分頁瀏覽（Fetch/XHR）</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔌</span> API 回傳模擬（Mock API）</h3>
+      <ul>
+        <li>密碼錯誤時，有錯誤提示</li>
+        <li>帳號不存在時，有錯誤提示</li>
+        <li>登入成功後，有拿到 Token</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">前後端任務未必是並行</div>
+      <p>這邊用 Mock Service Worker 來模擬後端，方便釐清錯誤方向</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🛡</span> ️ 角色與權限</h3>
+      <ul>
+        <li>把資訊儲存在「應用程式 ⭢ 本機儲存空間 ⭢ localhost」下面的 msw_user_role</li>
+        <li>有 Token，才能呼叫後續 API；沒有 Token，直接導向登入頁</li>
+        <li>管理者才能看到「管理後台」；一般用戶看不到，也無法誤闖</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">寫測試不是浪費時間，是在加速開發</div>
+      <p>有了測試，你才能更放心地新增與修改功能；遇到問題時也能快速定位，而不是一個個慢慢嘗試。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-5"><span class="bar"></span>測試的重要性</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📋</span> 應涵蓋的測試情境</h3>
+      <p>根據十幾年的開發經驗，寫測試其實是在加速開發；讓你更放心地新增與修改功能，遇到問題時也能快速定位。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">登入功能</div>
+          <div class="step-desc">帳號密碼輸入、格式驗證、登入成功與失敗</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">API 回傳</div>
+          <div class="step-desc">各種回應狀態的處理（成功、錯誤、例外）</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">角色權限</div>
+          <div class="step-desc">不同角色看到的畫面與可執行的操作</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Token 驗證</div>
+          <div class="step-desc">有無 Token 時的存取控制與頁面導向</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">介面差異</div>
+          <div class="step-desc">根據角色或狀態呈現不同的 UI 元素</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔄</span> 為什麼 Vibe Coding 更需要測試</h3>
+      <ul>
+        <li>Vibe Coding 經常修改流程、調整權限、變動 API</li>
+        <li>缺少測試案例，無法判斷這次修改是否影響其他功能</li>
+        <li>測試案例會隨規格變更與實際操作持續調整，不太可能一次到位</li>
+        <li>有了測試，需求規格的內容才能真正被驗證</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">前端驗證不等於安全</div>
+      <p>前端做的格式驗證（如帳號格式、密碼格式），後端也不能少。</p>
+      <p style="margin-top:.5rem">知道 API 路徑的人可以直接用 Terminal（curl）繞過前端呼叫 API，這是設計上必須注意的細節。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="workflow-ai"><span class="num">2</span> Workflow 篇</span>
+    <h2>讓 AI 幫你寫測試</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>工作流讓 AI 根據明確步驟執行，產出可信、可追蹤的測試程式。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-rule-workflow-skill"><span class="bar"></span>Rule / Workflow / Skill 的差異</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📋</span> 三者使用場景</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Rule</div>
+          <div class="step-desc">全場景適用的通用規範，每次對話都會自動載入</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Workflow</div>
+          <div class="step-desc">有明確步驟、需要主動用 <code>/</code> 觸發的工作流</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Skill</div>
+          <div class="step-desc">特定情境的專業技能包，AI 根據需求自行判斷使用</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">不建議把 Rule 寫太多</div>
+      <p>每次開啟新對話，AI 都會讀取完整的 Rule 文件。過多的 Rule 不僅佔用上下文空間、浪費 Token，還可能因資訊過載導致 AI 忽略規則。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-gen-test"><span class="bar"></span>gen-test-cases 工作流設計</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📝</span> 五步驟工作流</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">STEP 1：建立 test 資料夾，存放 Markdown 格式的測試清單</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">STEP 2：AI 根據指定模板撰寫測試案例清單（測試類型、說明、範例輸入、期待輸出）</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">STEP 3：確認範圍符合預期後，AI 撰寫測試程式，描述與文件一致</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">STEP 4：AI 自主執行驗證，通過後回頭在文件內打勾</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">STEP 5：限制最多嘗試 5 次，避免 AI 在錯誤方向狂奔</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">💡</span> 先文件、後程式的設計邏輯</h3>
+      <ul>
+        <li>先確認 AI 發想的測試情境是否有遺漏</li>
+        <li>確認後才讓 AI 開始撰寫程式</li>
+        <li>一口氣生成的話，如果結果不對，不但浪費時間還浪費 Token</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">建議每個頁面都有獨立的測試程式</div>
+      <p>這樣日後修改遇到問題時，可以快速定位是哪個頁面的功能出了問題。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="github-action"><span class="num">3</span> CI/CD 篇</span>
+    <h2>GitHub Action 自動化測試</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>測試加入 CI/CD 後，每次推送程式都會自動驗證，守住專案的最後一道防線。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-git-flow"><span class="bar"></span>先了解 Git Flow</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🌿</span> 分支策略基礎</h3>
+      <ul>
+        <li><strong>main</strong>：主分支，對外的穩定版本</li>
+        <li><strong>develop</strong>：開發分支，日常更新都推送到這裡</li>
+        <li>功能完善後，透過 <strong>Pull Request</strong> 合併到 main</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">為什麼需要分支策略？</div>
+      <p>如果把邏輯錯誤或功能不完善的版本直接推送到主分支，產品就壞掉了。分支策略的目的，是保護對外服務的穩定性。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-github-action"><span class="bar"></span>設定 GitHub Action</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚙</span> ️ 自動化測試指令</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">請 AI 設定 GitHub Action</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">我希望在 GitHub Action 加入自動化測試的流程
+
+每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
+
+測試完畢後，要生成覆蓋率報告讓我下載</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📊</span> 測試報告說明</h3>
+      <ul>
+        <li>成功是綠色勾勾，失敗是紅色叉叉</li>
+        <li>Artifacts 區塊可下載測試覆蓋率報告</li>
+        <li>可了解哪些功能測試完整、哪些還需要補充</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag green">測試覆蓋率高的模組</span>
+      <span class="tag orange">覆蓋率不足，需補充測試</span>
+      <span class="tag purple">不需追求 100%，重要邏輯測到才是重點</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-ruleset"><span class="bar"></span>用 Ruleset 保護主分支</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔒</span> GitHub Ruleset 設定步驟</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Settings → Rules → Ruleset → New branch ruleset</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Target branch 選擇 main（預設主分支）</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">勾選「Require a pull request before merging」</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">勾選「Require status checks to pass」</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">新增 Test 作為必須通過的檢查項目，儲存設定</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">設定完成後，只有測試通過的分支才能合併到主分支</div>
+      <p>這是在多人協作時，保護專案品質不被破壞的基礎設計。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="skills-ai"><span class="num">4</span> Skills 篇</span>
+    <h2>讓 AI 從庸才走向專家</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>Skill 的出現，讓 AI 的價值可以持續累積。只要教會一次，他就永遠記得怎麼做。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-agent-skill"><span class="bar"></span>什麼是 Agent Skill？</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🎒</span> Skill 的結構</h3>
+      <ul>
+        <li><strong>提示詞（Prompt）</strong>：精心設計的指令</li>
+        <li><strong>程式腳本（Scripts）</strong>：可執行的自動化程式</li>
+        <li><strong>參考資源（Reference）</strong>：補充 AI 判斷所需的資料</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔍</span> Skill 的三個執行階段</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Discovery（發現）：AI 讀取技能名稱與描述，判斷是否與任務相關</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Activation（啟動）：匹配成功後，才完整讀取整份 Skill 文件</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Execution（執行）：根據文件描述逐步執行任務</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">Skill 為什麼能節省 Token？</div>
+      <p>Rule 每次都會讀完整文件；Skill 在匹配需求前只讀標題與描述。就像 Google 搜尋時先看標題摘要，確認相關再點進去。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-skill"><span class="bar"></span>安裝別人的 Skill</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> 各工具的 Skill 路徑</h3>
+      <p>| 工具 | Project Skill 路徑 | Global Skill 路徑 |</p>
+      <p>|------|-------------------|------------------|</p>
+      <p>| Cursor | <code>.cursor/skills</code> | <code>~/.cursor/skills</code> |</p>
+      <p>| Claude | <code>.claude/skills</code> | <code>~/.claude/skills</code> |</p>
+      <p>| Codex | <code>.codex/skills</code> | <code>~/.codex/skills</code> |</p>
+      <p>| Antigravity | <code>.agent/skills</code> | <code>~/.gemini/antigravity/global_skills</code> |</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔗</span> Symlink：一份 Skill 多工具共用</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">Mac 建立 Symlink</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">ln -s /path/to/shared/skills ~/.cursor/skills</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">單一來源管理，未來維護更方便，修改一次就能在所有工具中生效。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-skill"><span class="bar"></span>使用 Skill 的安全注意事項</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚠</span> ️ 安裝第三方 Skill 前，確認這三點</h3>
+      <ul>
+        <li><strong>來源可信</strong>：從信任的管道安裝，GitHub 上可參考 Star 數量初步判斷</li>
+        <li><strong>Scripts 安全</strong>：查看 <code>scripts</code> 目錄下有沒有危險操作（呼叫外部 URL、修改檔案、存取敏感資料）</li>
+        <li><strong>SKILL.md 內容</strong>：確認是否有敏感指令，例如把 <code>.env</code> 傳送到特定網址</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag blue">來源可信的官方 Skill</span>
+      <span class="tag orange">社群 Skill，建議先看 scripts</span>
+      <span class="tag purple">先在 Project 測試，確認再移到 Global</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-skill"><span class="bar"></span>建立自己的 Skill</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🛠</span> ️ 從對話萃取 Skill 的技巧</h3>
+      <p>每次與 AI 協作解決問題後，不要急著關閉對話框，用這個指令彙整：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">萃取 Skill 提示詞</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">請將上方對話整理成以下內容，並在最後設計一個可以重現結果的提示詞：
+
+1. 起初怎麼提問
+2. 中間如何引導與調整
+3. 最終是如何得出這個成果的</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">過去解決過的問題，不應該再花時間解決第二次</div>
+      <p>這個技巧用得越久，你的 AI Agent 會越來越強大，成為別人難以跨越的護城河。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-workflow-skill"><span class="bar"></span>Workflow + Skill 組合應用</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔄</span> 以影音後期工作流為例</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">audio-to-srt-cards Workflow</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">按照下面步驟執行
+
+STEP 1: 使用「mp3-to-srt」的 Skill 將音檔轉成逐字稿
+STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">💡</span> 組合設計的好處</h3>
+      <ul>
+        <li>每個 Skill 可以獨立維護與更新</li>
+        <li>Workflow 只負責串接流程</li>
+        <li>整體架構更有彈性，1+1 大於 2</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="sc-icon">🧪</div>
+        <h4>自動化測試</h4>
+        <p>解決穩定性、複雜度、擴充性三大痛點，守住專案的底線</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🔄</div>
+        <h4>Workflow 寫測試</h4>
+        <p>先文件確認範圍，再讓 AI 撰寫程式，避免浪費 Token</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">⚙️</div>
+        <h4>GitHub Action</h4>
+        <p>每次推送自動觸發測試，搭配 Ruleset 保護主分支</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🎒</div>
+        <h4>Agent Skills</h4>
+        <p>特定情境的技能包，教會一次永遠記得，持續累積 AI 的價值</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🔗</div>
+        <h4>Workflow + Skill</h4>
+        <p>組合應用讓複雜流程穩定可重複，成為你的競爭護城河</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+  <section class="quote-page">
+  <div class="reveal">
+    <div class="quote-mark">“</div>
+    <blockquote>學習 AI 並不是搜集一大堆指令複製貼上就好，<br> 更重要的是了解應用情境後，透過實踐調整為適合自己的工作流。<br><br> 讓 AI 成為你的助手，而不是取代自己的思考與判斷。</blockquote>
+    <div class="quote-line"></div>
+  </div>
+</section>
+
+    <footer class="footer">
+    <p style="font-size:.9rem;color:var(--text);margin-bottom:1rem">歡迎追蹤我的社群，獲取更多 AI 開發實戰內容</p>
+  <div class="social-links" style="justify-content:center;margin-bottom:1.5rem">
+    <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm2.94 0c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75c.66 0 1.19 2.58 1.19 5.75z"/></svg> Medium</a>
+    <a href="https://www.facebook.com/deanlinbao" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
+    <a href="https://www.threads.com/@deanlin5288" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 878 1000" fill="currentColor"><path d="M446.7,1000h-0.3c-149.2-1-263.9-50.2-341-146.2C36.9,768.3,1.5,649.4,0.3,500.4v-0.7c1.2-149.1,36.6-267.9,105.2-353.4C182.5,50.2,297.3,1,446.4,0h0.3h0.3c114.4,0.8,210.1,30.2,284.4,87.4c69.9,53.8,119.1,130.4,146.2,227.8l-85,23.7c-46-165-162.4-249.3-346-250.6c-121.2,0.9-212.9,39-272.5,113.2C118.4,271,89.6,371.4,88.5,500c1.1,128.6,29.9,229,85.7,298.5c59.6,74.3,151.3,112.4,272.5,113.2c109.3-0.8,181.6-26.3,241.7-85.2c68.6-67.2,67.4-149.7,45.4-199.9c-12.9-29.6-36.4-54.2-68.1-72.9c-8,56.3-25.9,101.9-53.5,136.3c-36.9,45.9-89.2,71-155.4,74.6c-50.1,2.7-98.4-9.1-135.8-33.4c-44.3-28.7-70.2-72.5-73-123.5c-2.7-49.6,17-95.2,55.4-128.4c36.7-31.7,88.3-50.3,149.3-53.8c44.9-2.5,87-0.5,125.8,5.9c-5.2-30.9-15.6-55.5-31.2-73.2c-21.4-24.4-54.5-36.8-98.3-37.1c-0.4,0-0.8,0-1.2,0c-35.2,0-83,9.7-113.4,55L261.2,327c40.8-60.6,107-94,186.6-94c0.6,0,1.2,0,1.8,0c133.1,0.8,212.4,82.3,220.3,224.5c4.5,1.9,9,3.9,13.4,5.9c62.1,29.2,107.5,73.4,131.4,127.9c33.2,75.9,36.3,199.6-64.5,298.3C673.1,965,579.6,999.1,447,1000L446.7,1000L446.7,1000z M488.5,512.9c-10.1,0-20.3,0.3-30.8,0.9c-76.5,4.3-124.2,39.4-121.5,89.3c2.8,52.3,60.5,76.6,116,73.6c51-2.7,117.4-22.6,128.6-154.6C552.6,516,521.7,512.9,488.5,512.9z"/></svg> Threads</a>
+    <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
+    <a href="https://github.com/dean9703111" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
+  </div>
+    <p>© 林鼎淵 Dean Lin</p>
+  </footer>
+
+    <div class="settings-panel" id="settings-panel">
+    <div class="settings-section">
+      <div class="settings-label">主題色彩</div>
+      <div class="color-swatches" id="color-swatches">
+        <button class="color-swatch" data-theme-id="coral" title="暖陽珊瑚" data-accent="#e8845a"
+          data-accent-light="#c45c28" data-accent2="#e8b878" data-accent2-light="#9a7028" data-accent3="#e08898"
+          data-accent3-light="#b04860"
+          style="background:linear-gradient(135deg,#e8845a 40%,#e8b878 70%,#e08898)"></button>
+        <button class="color-swatch" data-theme-id="ocean" title="深海藍" data-accent="#60a5fa" data-accent-light="#2563eb"
+          data-accent2="#5eead4" data-accent2-light="#0d9488" data-accent3="#a5b4fc" data-accent3-light="#6366f1"
+          style="background:linear-gradient(135deg,#60a5fa 40%,#5eead4 70%,#a5b4fc)"></button>
+        <button class="color-swatch" data-theme-id="forest" title="翡翠森林" data-accent="#50d890"
+          data-accent-light="#15803d" data-accent2="#c8d858" data-accent2-light="#6a7a18" data-accent3="#50c0a8"
+          data-accent3-light="#0d7060"
+          style="background:linear-gradient(135deg,#50d890 40%,#c8d858 70%,#50c0a8)"></button>
+        <button class="color-swatch" data-theme-id="galaxy" title="星河紫" data-accent="#a78bfa"
+          data-accent-light="#7c3aed" data-accent2="#e8a8e0" data-accent2-light="#a21caf" data-accent3="#7db8f8"
+          data-accent3-light="#2563eb"
+          style="background:linear-gradient(135deg,#a78bfa 40%,#e8a8e0 70%,#7db8f8)"></button>
+        <button class="color-swatch" data-theme-id="sakura" title="花見櫻" data-accent="#f472b6"
+          data-accent-light="#db2777" data-accent2="#b0a8f0" data-accent2-light="#6d28d9" data-accent3="#f0a8a0"
+          data-accent3-light="#c05050"
+          style="background:linear-gradient(135deg,#f472b6 40%,#b0a8f0 70%,#f0a8a0)"></button>
+        <button class="color-swatch" data-theme-id="amber" title="琥珀" data-accent="#f0b840" data-accent-light="#a87808"
+          data-accent2="#e09870" data-accent2-light="#a86040" data-accent3="#c8b080" data-accent3-light="#887048"
+          style="background:linear-gradient(135deg,#f0b840 40%,#e09870 70%,#c8b080)"></button>
+      </div>
+    </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <div class="settings-label">匯出</div>
+      <button class="settings-export-btn" id="export-pdf-btn">⬇ 匯出 PDF（投影片版）</button>
+    </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <div class="settings-label">休息</div>
+      <button class="settings-export-btn" id="break-timer-btn">☕ 休息一下</button>
+    </div>
+  </div>
+
+    <div class="break-overlay" id="break-overlay">
+    <div class="break-modal">
+      <button class="break-modal-close" id="break-modal-close">✕</button>
+      <div class="break-modal-icon" id="break-modal-icon">☕</div>
+      <h3>休息一下</h3>
+      <p id="break-intro-text">設定休息時間，時間到會提醒你</p>
+      <div id="break-setup">
+        <div class="break-input-row">
+          <input type="number" id="break-minutes" value="10" min="1" max="120">
+          <span>分鐘</span>
+        </div>
+        <button class="break-start-btn" id="break-start-btn">開始休息</button>
+      </div>
+      <div class="break-countdown" id="break-countdown">
+        <div class="break-countdown-time" id="break-countdown-time">10:00</div>
+        <p class="break-done-message" id="break-done-message"><strong>休息時間到</strong><br>回來繼續下一段內容吧。</p>
+        <button class="break-end-btn" id="break-end-btn">結束休息</button>
+      </div>
+    </div>
+  </div>
+
+    <div class="bonus-overlay" id="bonus-overlay">
+    <div class="bonus-modal">
+      <div class="bonus-modal-header">
+        <h3 id="bonus-modal-title"></h3>
+        <button class="bonus-modal-close" id="bonus-modal-close">✕</button>
+      </div>
+      <div class="bonus-modal-body" id="bonus-modal-body"></div>
+    </div>
+  </div>
+
+    <script>
+    (function () {
+      // OG mode: ?og=1 → hide sidebar/sections, hero-only layout for thumbnails
+      try {
+        var search = window.location.search || '';
+        if (search.indexOf('og=1') !== -1) {
+          document.documentElement.classList.add('og-mode');
+        }
+      } catch (e) { }
+
+      var s = localStorage.getItem('theme');
+      var d = window.matchMedia('(prefers-color-scheme:dark)').matches;
+      var t = s || (d ? 'dark' : 'light');
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      var b = document.getElementById('theme-toggle');
+      if (b) b.textContent = t === 'light' ? '☀️' : '🌙';
+      // Restore accent color
+      var accentData = localStorage.getItem('accentTheme');
+      if (accentData) {
+        try {
+          var ac = JSON.parse(accentData);
+          var isLight = t === 'light';
+          document.documentElement.style.setProperty('--accent', isLight ? ac.light : ac.dark);
+        } catch (e) { }
+      }
+    })();
+  </script>
+
+  <script>
+    // Reveal on scroll
+    var revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible') });
+    }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealObs.observe(el) });
+
+    // Sidebar / Hamburger
+    var sidebar = document.getElementById('sidebar');
+    var hamburger = document.getElementById('hamburger');
+    var overlay = document.getElementById('overlay');
+
+    function toggleSidebar() {
+      var open = sidebar.classList.toggle('open');
+      hamburger.classList.toggle('active', open);
+      overlay.classList.toggle('visible', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      hamburger.classList.remove('active');
+      overlay.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+    sidebar.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (window.innerWidth < 1100) closeSidebar();
+      })
+    });
+
+    // Desktop sidebar collapse
+    var collapseBtn = document.getElementById('sidebar-collapse');
+    if (localStorage.getItem('sidebar-collapsed') === 'true' && window.innerWidth >= 1100) {
+      sidebar.classList.add('collapsed');
+      document.body.classList.add('sidebar-collapsed');
+    }
+    collapseBtn.addEventListener('click', function () {
+      var c = sidebar.classList.toggle('collapsed');
+      document.body.classList.toggle('sidebar-collapsed', c);
+      localStorage.setItem('sidebar-collapsed', c);
+    });
+
+    // Scroll spy — 這兩個陣列需根據實際內容填入
+    var sectionIds = ["instructor","vibe-coding","workflow-ai","github-action","skills-ai"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+    var allAnchorIds = ["instructor","vibe-coding","sub-section-1","sub-section-2","sub-section-3","sub-section-4","sub-section-5","workflow-ai","sub-rule-workflow-skill","sub-gen-test","github-action","sub-git-flow","sub-github-action","sub-ruleset","skills-ai","sub-agent-skill","sub-skill","sub-skill","sub-skill","sub-workflow-skill"];   // e.g. ['instructor','new-project','sub-create-project',...]
+
+    var sectionForAnchor = {};
+    allAnchorIds.forEach(function (id) {
+      if (sectionIds.includes(id)) { sectionForAnchor[id] = id }
+      else {
+        for (var i = sectionIds.length - 1; i >= 0; i--) {
+          var idx = allAnchorIds.indexOf(sectionIds[i]);
+          if (idx <= allAnchorIds.indexOf(id)) { sectionForAnchor[id] = sectionIds[i]; break }
+        }
+      }
+    });
+
+    function updateToc() {
+      var scrollY = window.scrollY + 20;
+      var activeAnchor = allAnchorIds[0];
+      allAnchorIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) activeAnchor = id;
+      });
+      var activeSection = sectionForAnchor[activeAnchor] || sectionIds[0];
+      document.querySelectorAll('.toc-group').forEach(function (g) {
+        var isActive = g.dataset.section === activeSection;
+        g.classList.toggle('expanded', isActive);
+        g.querySelector('.toc-group-title').classList.toggle('active', isActive);
+      });
+      document.querySelectorAll('.toc-sub a').forEach(function (a) {
+        var href = a.getAttribute('href').replace('#', '');
+        a.classList.toggle('active', href === activeAnchor);
+      });
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docH > 0 ? Math.round((window.scrollY / docH) * 100) : 0;
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-pct').textContent = pct + '%';
+      document.getElementById('collapsed-progress-fill').style.width = pct + '%';
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(function () { updateToc(); ticking = false }); ticking = true }
+    });
+    updateToc();
+
+    // Anchor scroll stabilization — images may change layout after initial jump.
+    var hashScrollTimer = null;
+    function scrollToHashTarget(hash, behavior) {
+      if (!hash || hash === '#') return;
+      var id = hash.charAt(0) === '#' ? hash.slice(1) : hash;
+      var el = document.getElementById(id);
+      if (!el) return;
+      var top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 20);
+      window.scrollTo({ top: top, behavior: behavior || 'auto' });
+    }
+    function scheduleHashScrollFix(delay, behavior) {
+      if (!window.location.hash) return;
+      clearTimeout(hashScrollTimer);
+      hashScrollTimer = setTimeout(function () {
+        scrollToHashTarget(window.location.hash, behavior || 'auto');
+        updateToc();
+      }, delay || 0);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var hash = a.getAttribute('href');
+        if (!hash || hash === '#') return;
+        var id = hash.slice(1);
+        if (!document.getElementById(id)) return;
+        e.preventDefault();
+        if (window.location.hash !== hash) history.pushState(null, '', hash);
+        scrollToHashTarget(hash, 'smooth');
+        scheduleHashScrollFix(220, 'auto');
+        scheduleHashScrollFix(900, 'auto');
+      });
+    });
+
+    window.addEventListener('hashchange', function () {
+      scheduleHashScrollFix(0, 'auto');
+      scheduleHashScrollFix(220, 'auto');
+      scheduleHashScrollFix(900, 'auto');
+    });
+
+    Array.from(document.images).forEach(function (img) {
+      if (img.complete) return;
+      img.addEventListener('load', function () { scheduleHashScrollFix(0, 'auto'); }, { passive: true });
+      img.addEventListener('error', function () { scheduleHashScrollFix(0, 'auto'); }, { passive: true });
+    });
+
+    window.addEventListener('load', function () {
+      scheduleHashScrollFix(0, 'auto');
+      scheduleHashScrollFix(300, 'auto');
+    });
+
+    // Theme toggle
+    var themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', function () {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+        themeToggle.textContent = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        themeToggle.textContent = '☀️';
+      }
+    });
+    window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', function (e) {
+      if (localStorage.getItem('theme')) return;
+      if (e.matches) { document.documentElement.removeAttribute('data-theme'); themeToggle.textContent = '🌙' }
+      else { document.documentElement.setAttribute('data-theme', 'light'); themeToggle.textContent = '☀️' }
+    });
+
+    // Shared markdown helpers (used by bonus modal and PDF export)
+    function fmtInline(s) {
+      return s
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
+    function renderMd(text) {
+      var lines = text.split('\n');
+      var html = '';
+      var paraLines = [];
+      var inList = false;
+      var inSteps = false;
+      function flushPara() {
+        if (paraLines.length) { html += '<p>' + paraLines.map(fmtInline).join('<br>') + '</p>'; paraLines = []; }
+      }
+      function flushList() { if (inList) { html += '</ul>'; inList = false; } }
+      function flushSteps() { if (inSteps) { html += '</div>'; inSteps = false; } }
+      for (var i = 0; i < lines.length; i++) {
+        var l = lines[i];
+        var stepMatch = l.match(/^(\d+)\.\s+(.*)/);
+        if (stepMatch) {
+          flushPara(); flushList();
+          if (!inSteps) { html += '<div class="bonus-steps">'; inSteps = true; }
+          html += '<div class="bonus-step"><span class="bonus-step-num">' + stepMatch[1] + '</span><span class="bonus-step-text">' + fmtInline(stepMatch[2]) + '</span></div>';
+        } else if (/^- /.test(l)) {
+          flushPara(); flushSteps();
+          if (!inList) { html += '<ul>'; inList = true; }
+          html += '<li>' + fmtInline(l.replace(/^- /, '')) + '</li>';
+        } else if (l.trim() === '') {
+          flushSteps(); flushList(); flushPara();
+        } else {
+          flushSteps(); flushList(); paraLines.push(l);
+        }
+      }
+      flushSteps(); flushList(); flushPara();
+      return html;
+    }
+
+    // Bonus Modal
+    (function () {
+      var overlay = document.getElementById('bonus-overlay');
+      var closeBtn = document.getElementById('bonus-modal-close');
+      var titleEl = document.getElementById('bonus-modal-title');
+      var bodyEl = document.getElementById('bonus-modal-body');
+
+      function openModal(title, content) {
+        titleEl.textContent = title;
+        bodyEl.innerHTML = renderMd(content);
+        overlay.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        overlay.classList.remove('visible');
+        document.body.style.overflow = '';
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+      document.querySelectorAll('.bonus-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openModal(btn.dataset.bonusTitle || '', btn.dataset.bonusContent || '');
+        });
+      });
+    })();
+
+    // Copy prompt
+    function copyPrompt(btn) {
+      var text = btn.closest('.prompt-block').querySelector('.prompt-body').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.style.opacity = '1';
+        setTimeout(function () {
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+          btn.style.opacity = '';
+        }, 1500);
+      });
+    }
+
+    // Font size toggle (5 levels)
+    var fontSizes = [14, 15, 16, 18, 20];
+    var fontLabels = ['A1', 'A2', 'A3', 'A4', 'A5'];
+    var fontIdx = fontSizes.indexOf(parseInt(localStorage.getItem('fontSize')) || 16);
+    if (fontIdx < 0) fontIdx = 2;
+    var fontBtn = document.getElementById('fontsize-toggle');
+    function applyFontSize() {
+      document.documentElement.style.fontSize = fontSizes[fontIdx] + 'px';
+      fontBtn.textContent = fontLabels[fontIdx];
+      localStorage.setItem('fontSize', fontSizes[fontIdx]);
+    }
+    applyFontSize();
+    fontBtn.addEventListener('click', function () {
+      fontIdx = (fontIdx + 1) % fontSizes.length;
+      applyFontSize();
+    });
+
+    // ===== SETTINGS PANEL =====
+    (function () {
+      var settingsToggle = document.getElementById('settings-toggle');
+      var settingsPanel = document.getElementById('settings-panel');
+
+      function openSettings() {
+        var rect = settingsToggle.getBoundingClientRect();
+        settingsPanel.style.top = (rect.bottom + 8) + 'px';
+        settingsPanel.style.left = Math.min(rect.left, window.innerWidth - 218) + 'px';
+        settingsPanel.classList.add('open');
+        settingsToggle.classList.add('active');
+      }
+      function closeSettings() {
+        settingsPanel.classList.remove('open');
+        settingsToggle.classList.remove('active');
+      }
+
+      settingsToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        settingsPanel.classList.contains('open') ? closeSettings() : openSettings();
+      });
+
+      settingsPanel.addEventListener('click', function (e) { e.stopPropagation(); });
+
+      document.addEventListener('click', closeSettings);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSettings(); });
+
+      // ===== COLOR THEMES =====
+      function hexToRgbStr(hex) {
+        var r = parseInt(hex.slice(1, 3), 16);
+        var g = parseInt(hex.slice(3, 5), 16);
+        var b = parseInt(hex.slice(5, 7), 16);
+        return r + ' ' + g + ' ' + b;
+      }
+
+      function applyPalette(data, isLight) {
+        var root = document.documentElement;
+        var suffix = isLight ? 'Light' : '';
+        var a = isLight ? (data.accentLight || data.accent) : data.accent;
+        var a2 = isLight ? (data.accent2Light || data.accent2) : data.accent2;
+        var a3 = isLight ? (data.accent3Light || data.accent3) : data.accent3;
+        root.style.setProperty('--accent', a);
+        root.style.setProperty('--accent-rgb', hexToRgbStr(a));
+        root.style.setProperty('--accent2', a2);
+        root.style.setProperty('--accent2-rgb', hexToRgbStr(a2));
+        root.style.setProperty('--accent3', a3);
+        root.style.setProperty('--accent3-rgb', hexToRgbStr(a3));
+      }
+
+      function getSwatchData(sw) {
+        return {
+          accent: sw.dataset.accent,
+          accentLight: sw.dataset.accentLight,
+          accent2: sw.dataset.accent2,
+          accent2Light: sw.dataset.accent2Light,
+          accent3: sw.dataset.accent3,
+          accent3Light: sw.dataset.accent3Light
+        };
+      }
+
+      function updateSwatchSelection(activeId) {
+        document.querySelectorAll('.color-swatch').forEach(function (sw) {
+          sw.classList.toggle('selected', sw.dataset.themeId === activeId);
+        });
+      }
+
+      // Restore saved palette on load
+      var savedPalette = localStorage.getItem('colorPalette');
+      if (savedPalette) {
+        try {
+          var sp = JSON.parse(savedPalette);
+          var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          applyPalette(sp, isLight);
+          document.querySelectorAll('.color-swatch').forEach(function (sw) {
+            if (sw.dataset.accent === sp.accent) sw.classList.add('selected');
+          });
+        } catch (e) { }
+      } else {
+        var firstSwatch = document.querySelector('.color-swatch[data-theme-id="coral"]');
+        if (firstSwatch) firstSwatch.classList.add('selected');
+      }
+
+      document.querySelectorAll('.color-swatch').forEach(function (sw) {
+        sw.addEventListener('click', function () {
+          var data = getSwatchData(sw);
+          var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          applyPalette(data, isLight);
+          localStorage.setItem('colorPalette', JSON.stringify(data));
+          updateSwatchSelection(sw.dataset.themeId);
+        });
+      });
+
+      // Re-apply palette when theme (dark/light) is toggled
+      themeToggle.addEventListener('click', function () {
+        var paletteData = localStorage.getItem('colorPalette');
+        if (!paletteData) return;
+        try {
+          var pd = JSON.parse(paletteData);
+          setTimeout(function () {
+            var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            applyPalette(pd, isLight);
+          }, 0);
+        } catch (e) { }
+      });
+
+      // ===== PDF EXPORT =====
+      document.getElementById('export-pdf-btn').addEventListener('click', function () {
+        closeSettings();
+        exportPDF();
+      });
+    })();
+
+    // ===== BREAK TIMER =====
+    (function () {
+      var overlay = document.getElementById('break-overlay');
+      var closeBtn = document.getElementById('break-modal-close');
+      var modal = overlay.querySelector('.break-modal');
+      var modalIcon = document.getElementById('break-modal-icon');
+      var introText = document.getElementById('break-intro-text');
+      var minutesInput = document.getElementById('break-minutes');
+      var startBtn = document.getElementById('break-start-btn');
+      var setupDiv = document.getElementById('break-setup');
+      var countdownDiv = document.getElementById('break-countdown');
+      var countdownTime = document.getElementById('break-countdown-time');
+      var doneMessage = document.getElementById('break-done-message');
+      var endBtn = document.getElementById('break-end-btn');
+      var timer = null;
+
+      function resetBreakState() {
+        setupDiv.style.display = '';
+        countdownDiv.classList.remove('active', 'done');
+        modal.classList.remove('done');
+        introText.classList.remove('hidden');
+        doneMessage.style.display = '';
+        modalIcon.textContent = '☕';
+        endBtn.textContent = '結束休息';
+      }
+
+      document.getElementById('break-timer-btn').addEventListener('click', function () {
+        var settingsPanel = document.getElementById('settings-panel');
+        settingsPanel.classList.remove('open');
+        document.getElementById('settings-toggle').classList.remove('active');
+        resetBreakState();
+        overlay.classList.add('open');
+        minutesInput.focus();
+      });
+
+      function closeBreak() {
+        overlay.classList.remove('open');
+        if (timer) { clearInterval(timer); timer = null; }
+        resetBreakState();
+      }
+
+      closeBtn.addEventListener('click', closeBreak);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeBreak();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeBreak();
+      });
+
+      startBtn.addEventListener('click', function () {
+        var mins = parseInt(minutesInput.value) || 10;
+        if (mins < 1) mins = 1;
+        if (mins > 120) mins = 120;
+        var remaining = mins * 60;
+
+        setupDiv.style.display = 'none';
+        countdownDiv.classList.add('active');
+        introText.classList.add('hidden');
+
+        function update() {
+          var m = Math.floor(remaining / 60);
+          var s = remaining % 60;
+          countdownTime.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        }
+        update();
+
+        timer = setInterval(function () {
+          remaining--;
+          if (remaining <= 0) {
+            clearInterval(timer);
+            timer = null;
+            countdownTime.textContent = '00:00';
+            countdownDiv.classList.add('done');
+            modal.classList.add('done');
+            modalIcon.textContent = '⏰';
+            endBtn.textContent = '回到課程';
+            return;
+          }
+          update();
+        }, 1000);
+      });
+
+      endBtn.addEventListener('click', closeBreak);
+    })();
+
+    function exportPDF() {
+      var sections = document.querySelectorAll('section.section');
+      if (!sections.length) { alert('找不到課程章節，請確認頁面已正常載入。'); return; }
+
+      var printSlides = document.createElement('div');
+      printSlides.id = 'print-slides';
+      // Off-screen for height measurement
+      printSlides.style.cssText = 'position:fixed;left:-9999px;width:1280px;display:block;visibility:hidden;';
+      document.body.appendChild(printSlides);
+
+      // Hero title page
+      var heroEl = document.querySelector('header.hero');
+      if (heroEl) {
+        var heroSlide = document.createElement('div');
+        heroSlide.className = 'slide slide-hero';
+        heroSlide.appendChild(heroEl.cloneNode(true));
+        printSlides.appendChild(heroSlide);
+      }
+
+      // Opening quote (before first section.section)
+      document.querySelectorAll('section.quote-page').forEach(function (qp) {
+        var qSlide = document.createElement('div');
+        qSlide.className = 'slide slide-quote';
+        var clone = qp.cloneNode(true);
+        clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+        qSlide.appendChild(clone);
+        // Insert opening quotes before sections, closing quotes after
+        var isClosing = qp.compareDocumentPosition(sections[0]) & Node.DOCUMENT_POSITION_PRECEDING;
+        if (isClosing) {
+          printSlides._closingQuotes = printSlides._closingQuotes || [];
+          printSlides._closingQuotes.push(qSlide);
+        } else {
+          printSlides.appendChild(qSlide);
+        }
+      });
+
+      sections.forEach(function (section) {
+        var h2El = section.querySelector('h2');
+        var mainTitle = h2El ? h2El.textContent.trim() : '';
+
+        var leadClone = null;
+        var contentChildren = [];
+        section.childNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;
+          if (node.classList.contains('reveal') && node.querySelector('.section-label')) {
+            var lead = node.querySelector('.lead');
+            if (lead) leadClone = lead.cloneNode(true);
+            return;
+          }
+          contentChildren.push(node);
+        });
+
+        // Separate [bonus] blocks from normal content — bonus gets standalone slides
+        var bonusChildren = [];
+        var normalChildren = [];
+        contentChildren.forEach(function (child) {
+          if (child.querySelector && child.querySelector(':scope > .bonus-btn')) {
+            bonusChildren.push(child);
+          } else {
+            normalChildren.push(child);
+          }
+        });
+
+        // Split normal content by ## sub-sections; ### (card) stays within the same page.
+        // YouTube embeds become dedicated print slides so PDFs get one video per page.
+        var entries = [];
+        var currentPage = [];
+        var activeSubTitle = '';
+        function flushCurrentPage() {
+          if (!currentPage.length) return;
+          entries.push({ type: 'page', subTitle: activeSubTitle, children: currentPage });
+          currentPage = [];
+        }
+        normalChildren.forEach(function (child) {
+          var isSub = child.querySelector && child.querySelector(':scope > .sub-title');
+          var isYoutube = child.querySelector && child.querySelector(':scope > .youtube-embed');
+          if (isSub) {
+            var subEl = child.querySelector(':scope > .sub-title');
+            activeSubTitle = subEl ? subEl.textContent.trim() : activeSubTitle;
+          }
+          if (isYoutube) {
+            flushCurrentPage();
+            entries.push({ type: 'youtube', subTitle: activeSubTitle, child: child });
+            return;
+          }
+          if (isSub && currentPage.length > 0) {
+            flushCurrentPage();
+          }
+          currentPage.push(child);
+        });
+        flushCurrentPage();
+
+        var leadAttached = false;
+        entries.forEach(function (entry) {
+          if (entry.type === 'page') {
+            var slide = makeSlide(mainTitle, entry.subTitle, 0);
+            var body = slide.querySelector('.slide-body');
+            if (!leadAttached && leadClone) {
+              body.appendChild(leadClone.cloneNode(true));
+              leadAttached = true;
+            }
+            entry.children.forEach(function (child) {
+              var clone = child.cloneNode(true);
+              // ## sub-title is shown in the header, remove it from body to avoid duplication
+              var subTitleInBody = clone.querySelector(':scope > .sub-title');
+              if (subTitleInBody) subTitleInBody.remove();
+              if (clone.classList.contains('reveal')) clone.classList.add('visible');
+              clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+              body.appendChild(clone);
+            });
+            printSlides.appendChild(slide);
+            return;
+          }
+
+          var embed = entry.child.querySelector(':scope > .youtube-embed');
+          var wrapper = embed ? embed.querySelector('.youtube-wrapper') : null;
+          var captionEl = embed ? embed.querySelector('.youtube-caption') : null;
+          var videoId = wrapper ? wrapper.getAttribute('data-id') : '';
+          var videoUrl = 'https://www.youtube.com/watch?v=' + videoId;
+          var videoTitle = captionEl ? captionEl.textContent.trim() : 'YouTube 影片';
+          var youtubeSlide = makeSlide(videoTitle, '', 0);
+          youtubeSlide.classList.add('slide-youtube');
+          var youtubeBody = youtubeSlide.querySelector('.slide-body');
+          var link = document.createElement('a');
+          link.className = 'youtube-print-link';
+          link.href = videoUrl;
+          link.target = '_blank';
+          link.rel = 'noopener';
+
+          var url = document.createElement('div');
+          url.className = 'youtube-print-link-url';
+          url.textContent = videoUrl;
+          link.appendChild(url);
+
+          var hint = document.createElement('div');
+          hint.className = 'youtube-print-link-hint';
+          hint.textContent = '可點擊此頁面直接開啟影片';
+          link.appendChild(hint);
+
+          youtubeBody.appendChild(link);
+          printSlides.appendChild(youtubeSlide);
+        });
+
+        // Bonus blocks → standalone headerless slides
+        bonusChildren.forEach(function (child) {
+          var slide = document.createElement('div');
+          slide.className = 'slide slide-bonus';
+          var body = document.createElement('div');
+          body.className = 'slide-body';
+          child.querySelectorAll('.bonus-btn').forEach(function (btn) {
+            var card = document.createElement('div');
+            card.className = 'card';
+            var h3 = document.createElement('h3');
+            h3.textContent = btn.dataset.bonusTitle || '';
+            card.appendChild(h3);
+            var inner = document.createElement('div');
+            inner.innerHTML = renderMd(btn.dataset.bonusContent || '');
+            card.appendChild(inner);
+            body.appendChild(card);
+          });
+          slide.appendChild(body);
+          printSlides.appendChild(slide);
+        });
+      });
+
+      // Append closing quote pages after all content sections
+      if (printSlides._closingQuotes) {
+        printSlides._closingQuotes.forEach(function (s) { printSlides.appendChild(s); });
+        delete printSlides._closingQuotes;
+      }
+
+      // Footer → "Thank You" closing slide
+      var footerEl = document.querySelector('footer.footer');
+      if (footerEl) {
+        var footerSlide = document.createElement('div');
+        footerSlide.className = 'slide slide-footer';
+
+        var inner = document.createElement('div');
+        inner.className = 'footer-inner';
+
+        // Thank you title
+        var thanks = document.createElement('div');
+        thanks.className = 'footer-thanks';
+        thanks.textContent = 'Thank You';
+        inner.appendChild(thanks);
+
+        // Accent line
+        var line = document.createElement('div');
+        line.className = 'footer-line';
+        inner.appendChild(line);
+
+        // CTA text (from original footer)
+        var ctaSrc = footerEl.querySelector('p[style*="font-size"]');
+        if (ctaSrc) {
+          var cta = document.createElement('div');
+          cta.className = 'footer-cta';
+          cta.textContent = ctaSrc.textContent.trim();
+          inner.appendChild(cta);
+        }
+
+        // Social links (clone from original footer, re-wrap)
+        var socialsSrc = footerEl.querySelector('.social-links');
+        if (socialsSrc) {
+          var socials = socialsSrc.cloneNode(true);
+          socials.className = 'footer-socials';
+          socials.removeAttribute('style');
+          inner.appendChild(socials);
+        }
+
+        // Copyright
+        var copySrc = footerEl.querySelectorAll('p');
+        var copyText = '';
+        copySrc.forEach(function (p) {
+          if (!p.getAttribute('style')) copyText = p.textContent.trim();
+        });
+        if (copyText) {
+          var copy = document.createElement('div');
+          copy.className = 'footer-copyright';
+          copy.textContent = copyText;
+          inner.appendChild(copy);
+        }
+
+        footerSlide.appendChild(inner);
+        printSlides.appendChild(footerSlide);
+      }
+
+      // Strip loading="lazy" — lazy images have 0 height off-screen,
+      // which makes all slide measurements wrong.
+      Array.from(printSlides.querySelectorAll('img[loading]')).forEach(function (img) {
+        img.removeAttribute('loading');
+      });
+
+      // Wait for ALL images to load before measuring slides.
+      // Most are cached from the live page; uncached ones need a real load.
+      var allImgs = Array.from(printSlides.querySelectorAll('img'));
+      var unloaded = allImgs.filter(function (i) { return !i.complete; });
+
+      function runPackerAndPrint() {
+        // Force layout before measuring
+        // Scale print font-size proportionally from the user's A1–A5 selection (1.5× web size)
+        var PRINT_SCALE = 1.2;
+        var webFontSize = fontSizes[fontIdx] || 16;
+        var printFontSize = webFontSize * PRINT_SCALE;
+        var origFontSize = document.documentElement.style.fontSize;
+        document.documentElement.style.fontSize = printFontSize + 'px';
+        void printSlides.offsetHeight;
+
+        // ── Greedy slide packer ──
+        // Add children one by one; when adding one causes overflow, start a new
+        // slide. If a single child alone overflows (e.g. a big image), shrink it
+        // to fit. Consecutive images naturally get separate slides.
+        var MAX_H = 720;
+
+        function shrinkImagesInSlide(slide) {
+          var imgs = Array.from(slide.querySelectorAll('img'));
+          imgs.forEach(function (img) {
+            var attempts = 0;
+            while (attempts < 14 && slide.scrollHeight > MAX_H) {
+              var curH = img.offsetHeight;
+              if (curH < 50) break;
+              img.style.maxHeight = Math.max(50, curH * 0.78) + 'px';
+              img.style.width = 'auto';
+              void slide.offsetHeight;
+              attempts++;
+            }
+          });
+        }
+
+        function shrinkFontInSlide(slide) {
+          var body = slide.querySelector('.slide-body') || slide;
+          var attempts = 0;
+          while (slide.scrollHeight > MAX_H && attempts < 8) {
+            var cur = parseFloat(getComputedStyle(body).fontSize);
+            var ratio = (MAX_H - 4) / slide.scrollHeight;
+            body.style.fontSize = (cur * ratio) + 'px';
+            void slide.offsetHeight;
+            attempts++;
+          }
+        }
+
+        Array.from(printSlides.children).forEach(function (origSlide) {
+          if (origSlide.classList.contains('slide-hero') || origSlide.classList.contains('slide-quote')
+            || origSlide.classList.contains('slide-footer') || origSlide.classList.contains('slide-bonus')) return;
+
+          var body = origSlide.querySelector('.slide-body');
+          if (!body || body.children.length <= 1) {
+            // Single-child slide that overflows → shrink to fit
+            void origSlide.offsetHeight;
+            if (origSlide.scrollHeight > MAX_H) {
+              shrinkImagesInSlide(origSlide);
+              if (origSlide.scrollHeight > MAX_H) shrinkFontInSlide(origSlide);
+            }
+            return;
+          }
+
+          void origSlide.offsetHeight;
+          if (origSlide.scrollHeight <= MAX_H) return;
+
+          var header = origSlide.querySelector('.slide-header');
+          var mainTitle = header ? (header.querySelector('.slide-title') || {}).textContent || '' : '';
+          var stEl = header ? header.querySelector('.slide-subtitle') : null;
+          var subBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
+
+          var allChildren = Array.from(body.children);
+          while (body.firstChild) body.removeChild(body.firstChild);
+
+          var curSlide = origSlide;
+          var curBody = body;
+          var group = [curSlide];
+
+          allChildren.forEach(function (child) {
+            curBody.appendChild(child);
+            void curSlide.offsetHeight;
+
+            if (curSlide.scrollHeight <= MAX_H) return;
+
+            // This child causes overflow — move it to a new slide
+            curBody.removeChild(child);
+
+            var newSlide = makeSlide(mainTitle, subBase, 0);
+            var newBody = newSlide.querySelector('.slide-body');
+            newBody.appendChild(child);
+            printSlides.insertBefore(newSlide, curSlide.nextSibling);
+
+            curSlide = newSlide;
+            curBody = newBody;
+            group.push(curSlide);
+
+            void curSlide.offsetHeight;
+
+            // Single child alone exceeds MAX_H → shrink to fit
+            if (curSlide.scrollHeight > MAX_H) {
+              shrinkImagesInSlide(curSlide);
+              if (curSlide.scrollHeight > MAX_H) shrinkFontInSlide(curSlide);
+            }
+          });
+
+          if (group.length > 1) {
+            group.forEach(function (s, i) {
+              var st = s.querySelector('.slide-subtitle');
+              if (st) st.textContent = (st.dataset.base || st.textContent) + ' (' + (i + 1) + '/' + group.length + ')';
+            });
+          }
+        });
+
+        // Auto-shrink individual prompt-body blocks that are too wide/tall
+        Array.from(printSlides.querySelectorAll('.prompt-body')).forEach(function (pb) {
+          var slide = pb.closest('.slide');
+          if (!slide) return;
+          var MIN_FONT = 8;
+          var cur = parseFloat(getComputedStyle(pb).fontSize);
+          var attempts = 0;
+          while (attempts < 12 && cur > MIN_FONT) {
+            void slide.offsetHeight;
+            var slideOver = slide.scrollHeight > MAX_H;
+            var pbOver = pb.scrollWidth > pb.clientWidth + 2;
+            if (!slideOver && !pbOver) break;
+            cur = Math.max(MIN_FONT, cur * 0.88);
+            pb.style.fontSize = cur + 'px';
+            pb.style.lineHeight = '1.5';
+            attempts++;
+          }
+        });
+
+        // Remove ghost slides whose body is empty or has negligible content
+        Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+          if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
+          var body = s.querySelector('.slide-body');
+          if (!body || body.children.length === 0 || body.scrollHeight < 50) {
+            s.remove();
+          }
+        });
+
+        // Final clamp: every slide is strictly 720px, no bleeding
+        Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+          s.style.setProperty('max-height', MAX_H + 'px', 'important');
+          s.style.setProperty('overflow', 'hidden', 'important');
+        });
+
+        // Set CSS variable so @media print uses the scaled font-size,
+        // then restore the original web font-size for the live page.
+        document.documentElement.style.setProperty('--print-font-size', printFontSize + 'px');
+        document.documentElement.style.fontSize = origFontSize;
+
+        // Remove measurement styles and print
+        printSlides.removeAttribute('style');
+        document.body.classList.add('printing');
+        window.print();
+        setTimeout(function () {
+          document.body.classList.remove('printing');
+          if (printSlides.parentNode) document.body.removeChild(printSlides);
+        }, 500);
+
+      } // end runPackerAndPrint
+
+      // Kick off: wait for images then run packer
+      if (!unloaded.length) {
+        runPackerAndPrint();
+      } else {
+        var imgLoaded = 0;
+        unloaded.forEach(function (img) {
+          img.onload = img.onerror = function () {
+            if (++imgLoaded >= unloaded.length) runPackerAndPrint();
+          };
+        });
+        setTimeout(function () { if (imgLoaded < unloaded.length) runPackerAndPrint(); }, 3000);
+      }
+    }
+
+    function makeSlide(mainTitle, subTitle, pageNum) {
+      var slide = document.createElement('div');
+      slide.className = 'slide';
+
+      var header = document.createElement('div');
+      header.className = 'slide-header';
+
+      var titleEl = document.createElement('h2');
+      titleEl.className = 'slide-title';
+      titleEl.textContent = mainTitle;
+      header.appendChild(titleEl);
+
+      if (subTitle) {
+        var subEl = document.createElement('h3');
+        subEl.className = 'slide-subtitle';
+        subEl.dataset.base = subTitle;
+        subEl.textContent = pageNum > 0 ? subTitle + ' (' + pageNum + ')' : subTitle;
+        header.appendChild(subEl);
+      }
+
+      var body = document.createElement('div');
+      body.className = 'slide-body';
+      slide.appendChild(header);
+      slide.appendChild(body);
+      return slide;
+    }
+  </script>
+</body>
+
+</html>

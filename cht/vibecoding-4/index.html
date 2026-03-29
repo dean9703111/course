@@ -1,0 +1,4998 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>OpenSpec × Claude Code 全端實戰</title>
+  <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="OpenSpec × Claude Code 全端實戰｜Vibe Coding 教學">
+  <meta property="og:description" content="用 OpenSpec + Claude Code 打造有資料庫的全端系統，再透過 Agent Skills 讓每次迭代都可追蹤、可協作">
+  <meta property="og:image" content="https://deanlin.net/course/cht/vibecoding-4/assets/og-image.jpg">
+  <meta property="og:url" content="https://deanlin.net/course/cht/vibecoding-4/">
+  <meta property="og:site_name" content="林鼎淵 Dean Lin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.documentElement.setAttribute('data-local-preview', 'true');
+    }
+  </script>
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --bg: #0f1117;
+      --bg-card: #181b25;
+      --bg-card-alt: #1e2130;
+      --text: #e4e4e7;
+      --text-dim: #8b8d9a;
+      --accent: #e8845a;
+      --accent-rgb: 232 132 90;
+      --accent2: #e8b878;
+      --accent2-rgb: 232 184 120;
+      --accent3: #e08898;
+      --accent3-rgb: 224 136 152;
+      --border: #2a2d3a;
+      --code-bg: #12141c;
+      --radius: 12px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f5f7;
+      --bg-card: #ffffff;
+      --bg-card-alt: #f0f0f3;
+      --text: #1a1a2e;
+      --text-dim: #5a5b6a;
+      --accent: #c45c28;
+      --accent-rgb: 196 92 40;
+      --accent2: #9a7028;
+      --accent2-rgb: 154 112 40;
+      --accent3: #b04860;
+      --accent3-rgb: 176 72 96;
+      --border: #d4d4d8;
+      --code-bg: #eaeaef;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px
+    }
+
+    [id] {
+      scroll-margin-top: 20px
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--accent2);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    [data-theme="light"] a {
+      color: var(--accent);
+    }
+
+    [data-theme="light"] a:hover {
+      color: var(--accent2);
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 6px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: clip;
+      width: 100%;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgb(var(--accent-rgb) / .12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgb(var(--accent2-rgb) / .08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .4rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: .8rem;
+      color: var(--text-dim);
+      letter-spacing: .05em;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+      max-width: 100%;
+      width: 100%;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
+      background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding: 0 0.2em;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-dim);
+      max-width: 600px;
+      margin-bottom: 1rem;
+      font-weight: 300
+    }
+
+    .hero-author {
+      font-size: .95rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 3rem
+    }
+
+    .hero-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      justify-content: center
+    }
+
+    .hero-nav a {
+      padding: .65rem 1.4rem;
+      border-radius: 100px;
+      font-size: .85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all .3s ease;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .hero-nav a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px)
+    }
+
+    .hero-nav a.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent)
+    }
+
+    .hero-nav a.primary:hover {
+      filter: brightness(1.15);
+    }
+
+    /* ===== SECTION ===== */
+    .section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-label .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgb(var(--accent-rgb) / .15);
+      font-size: 1.2rem;
+      padding-left: 3px;
+      padding-bottom: 1px;
+    }
+
+    .section h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: .75rem;
+    }
+
+    .section .lead {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .divider {
+      max-width: 860px;
+      margin: 0 auto;
+      border: none;
+      border-top: 1px solid var(--border)
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      transition: border-color .3s;
+    }
+
+    .card:hover {
+      border-color: rgb(var(--accent-rgb) / .3)
+    }
+
+    .card h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: .75rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .card h3 .icon {
+      font-size: 1.1rem
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0
+    }
+
+    .card ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .5rem;
+      color: var(--text-dim);
+      font-size: .95rem
+    }
+
+    .card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent2)
+    }
+
+    .card p {
+      color: var(--text-dim);
+      font-size: .95rem
+    }
+
+    /* ===== INLINE CODE ===== */
+    code {
+      background: var(--code-bg);
+      color: var(--accent2);
+      padding: .1em .35em;
+      border-radius: 4px;
+      font-size: .875em;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    /* ===== LOOSE TEXT & LIST ===== */
+    .loose-text {
+      color: var(--text-dim);
+      font-size: .9rem;
+      margin-bottom: .75rem
+    }
+
+    .loose-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0
+    }
+
+    .loose-list li {
+      position: relative;
+      padding-left: 1.4rem;
+      margin-bottom: .6rem;
+      color: var(--text-dim);
+      font-size: .95rem;
+      line-height: 1.8
+    }
+
+    .loose-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2)
+    }
+
+    /* ===== PROMPT BLOCK ===== */
+    .prompt-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .6rem 1rem;
+      background: rgba(255, 255, 255, .03);
+      border-bottom: 1px solid var(--border);
+      font-size: .75rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .prompt-header .dots {
+      display: flex;
+      gap: 5px
+    }
+
+    .prompt-header .dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: block
+    }
+
+    .prompt-header .dots span:nth-child(1) {
+      background: #ff5f57
+    }
+
+    .prompt-header .dots span:nth-child(2) {
+      background: #febc2e
+    }
+
+    .prompt-header .dots span:nth-child(3) {
+      background: #28c840
+    }
+
+    .prompt-header .label {
+      margin-left: auto;
+      color: var(--accent);
+      font-weight: 500
+    }
+
+    .prompt-header .copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      opacity: .5;
+      transition: opacity .2s;
+    }
+
+    .prompt-header .copy-btn:hover {
+      opacity: 1
+    }
+
+    .prompt-header .label~.copy-btn {
+      margin-left: 0
+    }
+
+    .prompt-header .label:empty~.copy-btn {
+      margin-left: auto
+    }
+
+    .prompt-body {
+      padding: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      line-height: 1.7;
+      color: var(--accent2);
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    /* ===== INSIGHT BOX ===== */
+    .insight {
+      background: linear-gradient(135deg, rgb(var(--accent3-rgb) / .06), rgb(var(--accent2-rgb) / .04));
+      border: 1px solid rgb(var(--accent3-rgb) / .2);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .insight::before {
+      content: '💡';
+      position: absolute;
+      top: -14px;
+      left: 20px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid rgb(var(--accent3-rgb) / .25);
+      border-radius: 50%;
+      font-size: .85rem;
+      line-height: 1;
+    }
+
+    .insight .insight-title {
+      font-weight: 700;
+      color: var(--accent3);
+      margin-bottom: .5rem;
+      font-size: .95rem
+    }
+
+    .insight p {
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.9
+    }
+
+    .insight ul {
+      list-style: none;
+      padding: 0;
+      margin: .75rem 0 0
+    }
+
+    .insight ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.9
+    }
+
+    .insight ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent3)
+    }
+
+    /* ===== FLOW STEPS (Timeline) ===== */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin: 1.5rem 0;
+    }
+
+    .flow-step {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      transition: border-color .2s;
+    }
+
+    .flow-step:hover {
+      border-color: rgb(var(--accent-rgb) / .3);
+    }
+
+    /* Connector line between cards */
+    .flow-step+.flow-step::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -0.75rem;
+      width: 2px;
+      height: .75rem;
+      background: rgb(var(--accent-rgb) / .2);
+      transform: translateX(-50%);
+    }
+
+    .flow-step .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .12);
+      border: 2px solid rgb(var(--accent-rgb) / .25);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      font-weight: 700;
+    }
+
+    .flow-step .step-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .flow-step .step-title {
+      font-size: .9rem;
+      font-weight: 700;
+      margin-bottom: .15rem
+    }
+
+    .flow-step .step-desc {
+      font-size: .8rem;
+      color: var(--text-dim);
+      line-height: 1.6
+    }
+
+    /* ===== IMAGES ===== */
+    .content-image {
+      margin: 1.5rem 0;
+      text-align: center
+    }
+
+    .content-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--border)
+    }
+
+    .content-image figcaption {
+      margin-top: .5rem;
+      font-size: .8rem;
+      color: var(--text-dim);
+      font-style: italic
+    }
+
+    .inline-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: .25rem 0;
+      vertical-align: middle
+    }
+
+    /* ===== YOUTUBE EMBED ===== */
+    .youtube-embed {
+      margin: 1.5rem 0;
+    }
+
+    .youtube-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .youtube-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .youtube-local-notice {
+      display: none;
+      position: absolute;
+      inset: 0;
+      padding: 1.5rem;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgb(var(--accent-rgb) / .18), transparent 55%),
+        linear-gradient(135deg, rgb(var(--accent-rgb) / .14), rgb(var(--accent2-rgb) / .08));
+    }
+
+    .youtube-local-notice p {
+      margin: 0;
+    }
+
+    .youtube-local-notice a {
+      color: var(--accent2);
+      font-weight: 700;
+    }
+
+    html[data-local-preview="true"] .youtube-wrapper {
+      height: auto;
+      min-height: 240px;
+      padding-bottom: 0;
+    }
+
+    html[data-local-preview="true"] .youtube-wrapper iframe {
+      display: none;
+    }
+
+    html[data-local-preview="true"] .youtube-local-notice {
+      display: flex;
+    }
+
+    .youtube-caption {
+      text-align: center;
+      font-size: .85rem;
+      color: var(--text-dim);
+      margin-top: .5rem;
+      font-style: italic;
+    }
+
+    /* ===== IMAGE-TEXT LAYOUT ===== */
+    .image-text {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin: 1.5rem 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .image-text--img-right {
+      flex-direction: row-reverse
+    }
+
+    .image-text__img {
+      flex: 0 0 var(--img-width, 40%);
+      max-width: var(--img-width, 40%)
+    }
+
+    .image-text__img img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover
+    }
+
+    .image-text__body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .image-text__body p {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: .75rem
+    }
+
+    .image-text__body p:last-child {
+      margin-bottom: 0
+    }
+
+    .image-text__body ul {
+      list-style: none;
+      padding: 0;
+      margin: .5rem 0
+    }
+
+    .image-text__body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+      color: var(--text);
+      line-height: 1.7
+    }
+
+    .image-text__body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .65em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    @media(max-width:900px) {
+
+      .image-text,
+      .image-text--img-right {
+        flex-direction: column
+      }
+
+      .image-text__img {
+        flex: none;
+        max-width: 100%
+      }
+    }
+
+    /* ===== TAGS ===== */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin: 1rem 0
+    }
+
+    .tag {
+      padding: .3rem .8rem;
+      border-radius: 100px;
+      font-size: .75rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      color: var(--text-dim)
+    }
+
+    .tag.green {
+      border-color: rgb(76 175 80 / .35);
+      color: rgb(76 175 80)
+    }
+
+    .tag.orange {
+      border-color: rgb(235 150 60 / .35);
+      color: rgb(235 150 60)
+    }
+
+    .tag.purple {
+      border-color: rgb(171 104 210 / .35);
+      color: rgb(171 104 210)
+    }
+
+    .tag.blue {
+      border-color: rgb(100 160 240 / .35);
+      color: rgb(100 160 240)
+    }
+
+    /* ===== CHECKLIST ===== */
+    .checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: baseline;
+      gap: .6rem;
+      padding: .5rem 0;
+      font-size: .9rem;
+      color: var(--text-dim);
+      border-bottom: 1px solid rgba(255, 255, 255, .04)
+    }
+
+    .checklist li::before {
+      content: '✓';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: rgb(var(--accent2-rgb) / .1);
+      color: var(--accent2);
+      font-size: .7rem;
+      font-weight: 700;
+      transform: translateY(2px);
+    }
+
+    /* ===== SUMMARY GRID ===== */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: all .3s;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent)
+    }
+
+    .summary-card .sc-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center
+    }
+
+    .summary-card h4 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: .5rem
+    }
+
+    .summary-card p {
+      font-size: .85rem;
+      color: var(--text-dim);
+      line-height: 1.7
+    }
+
+    /* ===== INSTRUCTOR ===== */
+    .instructor {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin: 2rem 0
+    }
+
+    .instructor-avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent);
+      flex-shrink: 0;
+      background: var(--bg-card-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .instructor-avatar-placeholder {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px dashed var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: var(--bg-card-alt);
+      color: var(--text-dim)
+    }
+
+    .instructor-info h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: .25rem
+    }
+
+    .instructor-info .tagline {
+      color: var(--accent);
+      font-size: .85rem;
+      font-weight: 500;
+      margin-bottom: .75rem
+    }
+
+    .instructor-info p {
+      color: var(--text-dim);
+      font-size: .9rem;
+      line-height: 1.8
+    }
+
+    .instructor-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.25rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border)
+    }
+
+    .instructor-stats a {
+      font-size: .8rem;
+      color: var(--text-dim);
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .instructor-stats a:hover {
+      color: var(--accent)
+    }
+
+    .instructor-stats a strong {
+      color: var(--text);
+      font-weight: 700;
+      transition: color .2s
+    }
+
+    .instructor-stats a:hover strong {
+      color: var(--accent)
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-top: 1rem
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      padding: .45rem .9rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 500;
+      transition: all .3s;
+    }
+
+    .social-links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px)
+    }
+
+    .social-links a svg {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px
+    }
+
+    @media(max-width:640px) {
+      .instructor {
+        flex-direction: column;
+        align-items: center;
+        text-align: center
+      }
+
+      .instructor-stats {
+        justify-content: center
+      }
+
+      .social-links {
+        justify-content: center
+      }
+    }
+
+    /* ===== QUOTE PAGE ===== */
+    .quote-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 20% 40%, rgb(var(--accent-rgb) / .06) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 60%, rgb(var(--accent2-rgb) / .05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .quote-page .reveal {
+      max-width: 740px;
+      width: 100%
+    }
+
+    .quote-page .quote-mark {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      line-height: 1;
+      color: var(--accent);
+      opacity: .2;
+      margin-bottom: -1rem;
+      margin-left: -1rem;
+      user-select: none;
+      text-align: left
+    }
+
+    .quote-page blockquote {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.9;
+      color: var(--text);
+      max-width: 740px;
+      position: relative
+    }
+
+    .quote-page .quote-author {
+      margin-top: 2rem;
+      font-size: .85rem;
+      color: var(--text-dim);
+      letter-spacing: .08em
+    }
+
+    .quote-page .quote-line {
+      width: 50%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      margin: 1.5rem auto 0
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: .8rem
+    }
+
+    /* ===== SUB-TITLE ===== */
+    .sub-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 3.5rem 0 1.5rem;
+      padding-bottom: .75rem;
+      border-bottom: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: .75rem
+    }
+
+    .sub-title .bar {
+      display: none
+    }
+
+    .sub-lead {
+      color: var(--text-dim);
+      font-size: .9rem;
+      margin-top: .25rem
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transition: opacity .7s ease
+    }
+
+    .reveal>* {
+      transform: translateY(20px);
+      transition: transform .7s ease
+    }
+
+    .reveal.visible {
+      opacity: 1
+    }
+
+    .reveal.visible>* {
+      transform: translateY(0)
+    }
+
+    /* ===== SIDEBAR (SHELL) ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 260px;
+      height: 100vh;
+      background: rgba(15, 17, 23, .92);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid var(--border);
+      padding: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform .35s cubic-bezier(.4, 0, .2, 1);
+      overflow: hidden;
+    }
+
+    [data-theme="light"] .sidebar {
+      background: rgba(245, 245, 247, .94)
+    }
+
+    .sidebar.open {
+      transform: translateX(0)
+    }
+
+    @media(min-width:1100px) {
+      .sidebar {
+        transform: translateX(0)
+      }
+
+      body {
+        padding-left: 260px;
+        transition: padding-left .35s cubic-bezier(.4, 0, .2, 1)
+      }
+
+      .sidebar.collapsed {
+        transform: translateX(-100%)
+      }
+
+      body.sidebar-collapsed {
+        padding-left: 0
+      }
+    }
+
+    .sidebar-collapse-btn {
+      position: fixed;
+      top: 50%;
+      left: 260px;
+      transform: translateY(-50%);
+      z-index: 101;
+      width: 20px;
+      height: 48px;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: none;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: .6rem;
+      transition: all .35s cubic-bezier(.4, 0, .2, 1);
+      padding: 0;
+    }
+
+    .sidebar-collapse-btn:hover {
+      width: 24px;
+      color: var(--accent);
+      background: var(--bg-card-alt)
+    }
+
+    .sidebar-collapse-btn svg {
+      transition: transform .35s
+    }
+
+    .sidebar.collapsed~.sidebar-collapse-btn {
+      left: 0
+    }
+
+    .sidebar.collapsed~.sidebar-collapse-btn svg {
+      transform: rotate(180deg)
+    }
+
+    @media(min-width:1100px) {
+      .sidebar-collapse-btn {
+        display: flex
+      }
+    }
+
+    @media(max-width:1099px) {
+      .sidebar-collapse-btn {
+        display: none
+      }
+    }
+
+    /* ===== SIDEBAR BRAND (TOP) ===== */
+    .sidebar-brand {
+      padding: .75rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+
+    .sidebar-brand-controls {
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .sidebar-brand-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.4;
+    }
+
+    /* ===== SIDEBAR TOC (MIDDLE) ===== */
+    .toc {
+      list-style: none;
+      padding: .75rem 0;
+      flex: 1;
+      overflow-y: auto;
+      overscroll-behavior: contain
+    }
+
+    .toc-group {
+      margin-bottom: .25rem
+    }
+
+    .toc-group-title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem 1.5rem;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: all .25s;
+      position: relative;
+    }
+
+    .toc-group-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 0 2px 2px 0;
+      opacity: 0;
+      transition: opacity .25s
+    }
+
+    .toc-group-title:hover {
+      color: var(--text)
+    }
+
+    .toc-group-title.active {
+      color: var(--accent)
+    }
+
+    .toc-group-title.active::before {
+      opacity: 1
+    }
+
+    .toc-group-title .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      background: rgb(var(--accent-rgb) / .1);
+      font-size: .65rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .toc-sub {
+      list-style: none;
+      padding: 0;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .35s ease
+    }
+
+    .toc-group.expanded .toc-sub {
+      max-height: 500px
+    }
+
+    .toc-sub a {
+      display: block;
+      padding: .35rem 1.5rem .35rem 3.25rem;
+      font-size: .75rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: all .2s;
+      position: relative
+    }
+
+    .toc-sub a::before {
+      content: '';
+      position: absolute;
+      left: 2.25rem;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--border);
+      transform: translateY(-50%);
+      transition: background .2s
+    }
+
+    .toc-sub a:hover {
+      color: var(--text)
+    }
+
+    .toc-sub a.active {
+      color: var(--accent2)
+    }
+
+    .toc-sub a.active::before {
+      background: var(--accent2)
+    }
+
+    /* ===== SIDEBAR PROGRESS (BOTTOM) ===== */
+    .sidebar-progress {
+      flex-shrink: 0;
+      padding: .75rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--border)
+    }
+
+    .sidebar-progress-label {
+      font-size: .65rem;
+      color: var(--text-dim);
+      margin-bottom: .4rem;
+      display: flex;
+      justify-content: space-between
+    }
+
+    .sidebar-progress-track {
+      width: 100%;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden
+    }
+
+    .sidebar-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      width: 0%;
+      transition: width .3s ease
+    }
+
+    /* ===== COLLAPSED PROGRESS BAR (BOTTOM OF VIEWPORT) ===== */
+    .collapsed-progress {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      z-index: 99;
+      background: var(--border);
+      pointer-events: none;
+      transition: opacity .35s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .collapsed-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .3s ease;
+    }
+
+    @media(min-width:1100px) {
+      .collapsed-progress {
+        opacity: 0
+      }
+
+      body.sidebar-collapsed .collapsed-progress {
+        opacity: 1
+      }
+    }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      top: auto;
+      left: auto;
+      z-index: 200;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .92);
+      backdrop-filter: blur(12px);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all .3s;
+      box-shadow: 0 4px 20px rgb(var(--accent-rgb) / .35);
+    }
+
+    .hamburger:hover {
+      transform: scale(1.08)
+    }
+
+    .hamburger span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+      transition: all .3s
+    }
+
+    .hamburger.active {
+      background: rgba(24, 27, 37, .92);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, .4)
+    }
+
+    [data-theme="light"] .hamburger.active {
+      background: rgba(255, 255, 255, .92)
+    }
+
+    .hamburger.active span {
+      background: var(--text)
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(3.5px, 3.5px)
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(3.5px, -3.5px)
+    }
+
+    @media(min-width:1100px) {
+      .hamburger {
+        display: none
+      }
+    }
+
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s
+    }
+
+    .sidebar-overlay.visible {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    /* ===== THEME TOGGLE ===== */
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.1)
+    }
+
+    /* ===== FONT SIZE TOGGLE ===== */
+    .fontsize-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      font-weight: 700;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+      color: var(--text-dim);
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .fontsize-toggle:hover {
+      border-color: var(--accent);
+      transform: scale(1.1);
+      color: var(--accent)
+    }
+
+    /* ===== SETTINGS TOGGLE ===== */
+    .settings-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      transition: all .3s;
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0;
+      color: var(--text-dim);
+    }
+
+    .settings-toggle:hover,
+    .settings-toggle.active {
+      border-color: var(--accent);
+      transform: scale(1.1);
+      color: var(--accent);
+    }
+
+    /* ===== SETTINGS PANEL ===== */
+    .settings-panel {
+      position: fixed;
+      width: 210px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+      padding: .85rem;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity .2s, transform .2s;
+    }
+
+    .settings-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .settings-section {
+      margin-bottom: .6rem;
+    }
+
+    .settings-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: .5rem;
+    }
+
+    .settings-divider {
+      height: 1px;
+      background: var(--border);
+      margin: .7rem 0;
+    }
+
+    .color-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+
+    .color-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: transform .2s, border-color .2s;
+      outline: none;
+      box-shadow: 0 0 0 2px transparent;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.15);
+    }
+
+    .color-swatch.selected {
+      box-shadow: 0 0 0 2px var(--bg-card), 0 0 0 4px currentColor;
+      border-color: transparent;
+    }
+
+    .settings-export-btn {
+      width: 100%;
+      padding: .45rem .75rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s, transform .15s;
+      font-family: 'Noto Sans TC', sans-serif;
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    .settings-export-btn:hover {
+      opacity: .9;
+      transform: translateY(-1px);
+    }
+
+    /* ===== BREAK TIMER MODAL ===== */
+    .break-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .65);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .break-overlay.open {
+      display: flex;
+    }
+
+    .break-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      min-width: 300px;
+      max-width: 360px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, .4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .break-modal::after {
+      content: '';
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 62%);
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.75);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .break-modal.done::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .break-modal-close {
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-dim);
+      line-height: 1;
+      padding: 4px;
+    }
+
+    .break-modal-close:hover {
+      color: var(--text);
+    }
+
+    .break-modal-icon {
+      font-size: 3rem;
+      margin-bottom: .75rem;
+      transition: transform .35s ease, filter .35s ease;
+    }
+
+    .break-modal.done .break-modal-icon {
+      animation: break-icon-ring .9s ease-in-out 2;
+      filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 40%, transparent));
+    }
+
+    .break-modal h3 {
+      margin: 0 0 .5rem;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+
+    .break-modal p {
+      margin: 0 0 1.25rem;
+      font-size: .85rem;
+      color: var(--text-dim);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .break-modal p.hidden {
+      display: none;
+    }
+
+    .break-input-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .break-input-row input {
+      width: 64px;
+      padding: .4rem .5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-card-alt);
+      color: var(--text);
+      font-size: 1.1rem;
+      text-align: center;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .break-input-row input:focus {
+      border-color: var(--accent);
+    }
+
+    .break-input-row span {
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    .break-start-btn {
+      width: 100%;
+      padding: .6rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .2s;
+    }
+
+    .break-start-btn:hover {
+      opacity: .9;
+    }
+
+    .break-countdown {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .break-countdown.active {
+      display: flex;
+    }
+
+    .break-countdown-time {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: .75rem;
+      transition: transform .25s ease, color .25s ease;
+    }
+
+    .break-countdown.done .break-countdown-time {
+      color: #ff7a59;
+      animation: break-time-pop .75s ease;
+    }
+
+    .break-done-message {
+      display: none;
+      margin: 0 0 1rem;
+      font-size: .95rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .break-countdown.done .break-done-message {
+      display: block;
+      animation: break-done-reveal .8s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .break-done-message strong {
+      display: inline-block;
+      color: #ff7a59;
+      animation: break-done-glow 1.2s ease-in-out infinite alternate;
+    }
+
+    .break-end-btn {
+      padding: .45rem 1.5rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .8rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+
+    .break-end-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @keyframes break-icon-ring {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      20% { transform: rotate(-14deg) scale(1.08); }
+      40% { transform: rotate(14deg) scale(1.08); }
+      60% { transform: rotate(-10deg) scale(1.06); }
+      80% { transform: rotate(10deg) scale(1.06); }
+    }
+
+    @keyframes break-time-pop {
+      0% { transform: scale(.92); }
+      55% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes break-done-reveal {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(.96);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes break-done-glow {
+      0% { text-shadow: 0 0 0 rgba(255, 122, 89, 0); }
+      100% { text-shadow: 0 0 18px rgba(255, 122, 89, .35); }
+    }
+
+    /* ===== PRINT / SLIDE STYLES ===== */
+    @media print {
+      html {
+        font-size: var(--print-font-size, 24px) !important;
+      }
+
+      @page {
+        size: 1280px 720px;
+        margin: 0;
+      }
+
+      /* ── Print color fidelity ──
+         Ensure backgrounds, borders, gradients render in both light & dark mode.
+         Without this, browsers strip backgrounds → dark mode becomes invisible text on white. */
+      *,
+      *::before,
+      *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      /* Hide all direct body children except slides */
+      body>*:not(#print-slides) {
+        display: none !important;
+        visibility: hidden !important;
+      }
+
+      /* Explicitly target fixed-position UI that can bleed through in Chrome/Safari */
+      .sidebar,
+      .hamburger,
+      .sidebar-overlay,
+      .sidebar-collapse-btn,
+      .collapsed-progress,
+      .settings-panel,
+      .bonus-overlay,
+      header.hero,
+      footer.footer {
+        display: none !important;
+        visibility: hidden !important;
+        position: static !important;
+      }
+
+      /* Un-hide hero/footer clones inside print-slides */
+      #print-slides header.hero {
+        display: flex !important;
+        visibility: visible !important;
+        min-height: 0 !important;
+        height: 100% !important;
+      }
+
+      /* slide-footer is now a rebuilt "Thank You" page — no longer clones footer.footer */
+
+      #print-slides {
+        display: block !important;
+        visibility: visible !important;
+        position: static !important;
+        overflow: visible !important;
+      }
+
+      #print-slides * {
+        visibility: visible !important;
+      }
+
+      /* Prevent body overflow-x:hidden from clipping print content */
+      body.printing {
+        overflow: visible !important;
+      }
+
+      /* Force reveal animations off in print */
+      #print-slides .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      #print-slides .reveal>* {
+        transform: none !important;
+      }
+
+      /* ## sub-title: left-bar style to distinguish from # bottom-border */
+      #print-slides .sub-title {
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        margin: .5rem 0 .75rem !important;
+        padding-left: .75rem !important;
+        border-left: 3px solid var(--accent) !important;
+        border-bottom: none !important;
+        color: var(--accent) !important;
+        font-family: 'Noto Sans TC', sans-serif !important;
+      }
+
+      /* Insight: ensure text visible in both themes */
+      #print-slides .insight p,
+      #print-slides .insight ul li,
+      #print-slides .insight .insight-title {
+        color: var(--text) !important;
+      }
+
+      /* Lead paragraph */
+      #print-slides .lead {
+        color: var(--text) !important;
+      }
+
+      /* quote-line is now a closing quotation mark — no background fix needed */
+      #print-slides .quote-line {
+        background: none !important;
+        height: 0 !important;
+        border-top: 2px solid var(--accent) !important;
+      }
+    }
+
+    #print-slides {
+      display: none;
+    }
+
+    .slide {
+      width: 100%;
+      min-height: 720px;
+      height: auto;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      display: flex;
+      flex-direction: column;
+      padding: 2.2rem 3rem 1.8rem;
+      box-sizing: border-box;
+      background: var(--bg);
+      overflow: visible;
+    }
+
+    .slide:last-child {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    .slide-header {
+      flex-shrink: 0;
+      margin-bottom: 1.2rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: .6rem;
+    }
+
+    .slide-label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+    }
+
+    .slide-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      font-family: 'Noto Serif TC', serif;
+      color: var(--text);
+      line-height: 1.3;
+      margin-top: .2rem;
+    }
+
+    .slide-subtitle {
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: var(--accent);
+      margin-top: .3rem;
+      line-height: 1.3;
+    }
+
+    .slide-body {
+      flex: 1;
+      overflow: visible;
+      font-size: .88rem;
+      line-height: 1.65;
+    }
+
+    .slide-body .card {
+      break-inside: avoid;
+    }
+
+    .slide-body .prompt-block {
+      break-inside: avoid;
+    }
+
+    .slide-quote {
+      padding: 0;
+      justify-content: center;
+    }
+
+    .slide-quote .quote-page {
+      min-height: 0;
+      flex: 1;
+      width: 100%;
+    }
+
+    .slide-quote .quote-line {
+      background: none;
+      height: 0;
+      border-top: 2px solid var(--accent);
+    }
+
+    /* ===== PRINT-SLIDES FONT SCALING ===== */
+    /* Base: 16px root becomes 24px universally in print. Slide body font is set to 1rem. */
+    #print-slides .slide-body {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ── Hero slide ──────────────────────────────────────────
+       In print, background-clip:text + text-fill-color:transparent
+       makes h1 completely invisible → force solid color.
+       Keep nav links; they serve as a visual chapter overview.
+    ─────────────────────────────────────────────────────────── */
+    #print-slides .slide-hero {
+      padding: 0;
+    }
+
+    #print-slides .slide-hero .hero {
+      flex: 1;
+      min-height: 0 !important;
+      height: 100% !important;
+      padding: 3rem 4rem;
+      justify-content: center;
+      overflow: visible !important;
+    }
+
+    /* Prevent hero ::before/::after pseudo-elements from triggering clip */
+    #print-slides .slide-hero .hero::before,
+    #print-slides .slide-hero .hero::after {
+      display: none !important;
+    }
+
+    /* Fix invisible title + prevent text clipping */
+    #print-slides .slide-hero .hero h1 {
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: var(--text) !important;
+      color: var(--text) !important;
+      font-size: 3.36rem;
+      margin-bottom: 1rem;
+      padding: 0.1em 0.5em !important;
+      overflow: visible !important;
+    }
+
+    #print-slides .slide-hero .hero-badge {
+      font-size: .96rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent) !important;
+      border-color: var(--accent) !important;
+      backdrop-filter: none !important;
+      display: inline-flex !important;
+      opacity: 1 !important;
+    }
+
+    #print-slides .slide-hero .hero-badge .dot {
+      animation: none !important;
+      opacity: 1 !important;
+      background: var(--accent) !important;
+    }
+
+    #print-slides .slide-hero .hero-sub {
+      font-size: 1.25rem;
+      margin-bottom: .6rem;
+    }
+
+    #print-slides .slide-hero .hero-author {
+      font-size: 1.07rem;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Nav links → chapter overview tags */
+    #print-slides .slide-hero .hero-nav {
+      gap: .5rem;
+    }
+
+    #print-slides .slide-hero .hero-nav a {
+      font-size: .96rem;
+      padding: .4rem 1rem;
+    }
+
+    /* Quote slide: scale quote mark for 720px height */
+    #print-slides .slide-quote .quote-mark {
+      font-size: 5rem;
+    }
+
+    #print-slides .slide-quote blockquote {
+      font-size: 2rem;
+      line-height: 2;
+    }
+
+    /* Slide header */
+    #print-slides .slide-label {
+      font-size: .8rem;
+    }
+
+    #print-slides .slide-title {
+      font-size: 1.4rem;
+    }
+
+    #print-slides .slide-subtitle {
+      font-size: 1.1rem;
+    }
+
+    /* Content elements */
+    #print-slides .card {
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .card h3 {
+      font-size: 1.1rem;
+    }
+
+    #print-slides .card ul li,
+    #print-slides .card p {
+      font-size: .95rem;
+    }
+
+    #print-slides .checklist li {
+      font-size: .95rem;
+      padding: .45rem 0;
+    }
+
+    #print-slides .insight {
+      padding: 1rem 1.25rem;
+    }
+
+    #print-slides .insight-title {
+      font-size: 1rem;
+    }
+
+    #print-slides .insight p {
+      font-size: .9rem;
+    }
+
+    #print-slides .prompt-block {
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .prompt-body {
+      font-size: .9rem;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+      overflow: hidden;
+    }
+
+    #print-slides .content-image,
+    #print-slides .image-text,
+    #print-slides .youtube-embed {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    #print-slides .youtube-wrapper iframe {
+      display: none;
+    }
+
+    #print-slides .youtube-wrapper {
+      padding-bottom: 0;
+      height: auto;
+      padding: 2rem;
+      text-align: center;
+      background: var(--bg-card);
+    }
+
+    #print-slides .youtube-wrapper::after {
+      content: '\25B6  https://youtu.be/' attr(data-id);
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    #print-slides .slide-youtube .slide-body {
+      justify-content: center;
+    }
+
+    #print-slides .youtube-print-link {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at top, rgb(var(--accent-rgb) / .12), transparent 58%),
+        linear-gradient(135deg, rgb(var(--accent-rgb) / .08), rgb(var(--accent2-rgb) / .05));
+      text-decoration: none;
+      text-align: center;
+      color: var(--text);
+    }
+
+    #print-slides .youtube-print-link-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    #print-slides .youtube-print-link-url {
+      font-size: .95rem;
+      color: var(--accent2);
+      word-break: break-all;
+    }
+
+    #print-slides .youtube-print-link-hint {
+      font-size: .82rem;
+      color: var(--text-dim);
+    }
+
+    #print-slides .content-image img {
+      max-height: 320px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    #print-slides .image-text {
+      padding: 1rem;
+      gap: 1.25rem;
+    }
+
+    #print-slides .image-text__img {
+      flex: 0 0 35%;
+      max-width: 35%;
+    }
+
+    #print-slides .image-text__img img {
+      max-height: 280px;
+      object-fit: contain;
+    }
+
+    #print-slides .image-text__body p,
+    #print-slides .image-text__body ul li {
+      font-size: .9rem;
+    }
+
+    #print-slides .sub-lead {
+      font-size: .9rem;
+    }
+
+    /* Footer slide — "Thank You" closing page */
+    #print-slides .slide-footer {
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #print-slides .slide-footer .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      width: 100%;
+      padding: 3rem 4rem;
+    }
+
+    #print-slides .slide-footer .footer-thanks {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+
+    #print-slides .slide-footer .footer-cta {
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: .8rem;
+      line-height: 1.6;
+    }
+
+    #print-slides .slide-footer .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    #print-slides .slide-footer .footer-socials a {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: 1rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: .4rem .9rem;
+      border: 1.5px solid var(--accent);
+      border-radius: 2rem;
+    }
+
+    #print-slides .slide-footer .footer-socials a svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    #print-slides .slide-footer .footer-copyright {
+      font-size: .85rem;
+      color: var(--text-dim);
+      margin-top: .4rem;
+    }
+
+    #print-slides .slide-footer .footer-line {
+      width: 40%;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+      margin: .3rem auto;
+    }
+
+    /* ===== LIGHT MODE OVERRIDES ===== */
+    [data-theme="light"] .prompt-header {
+      background: rgba(0, 0, 0, .03)
+    }
+
+    [data-theme="light"] .checklist li {
+      border-bottom-color: rgba(0, 0, 0, .06)
+    }
+
+    [data-theme="light"] .prompt-body {
+      color: var(--accent2)
+    }
+
+    [data-theme="light"] .insight {
+      background: linear-gradient(135deg, rgb(var(--accent3-rgb) / .06), rgb(var(--accent2-rgb) / .04));
+      border-color: rgb(var(--accent3-rgb) / .2)
+    }
+
+    [data-theme="light"] .hero::before {
+      background: radial-gradient(circle, rgb(var(--accent-rgb) / .08) 0%, transparent 70%)
+    }
+
+    [data-theme="light"] .hero::after {
+      background: radial-gradient(circle, rgb(var(--accent2-rgb) / .06) 0%, transparent 70%)
+    }
+
+    [data-theme="light"] .card:hover {
+      border-color: rgb(var(--accent-rgb) / .35)
+    }
+
+    /* ===== OG MODE (for square OG thumbnails) ===== */
+    html.og-mode body {
+      padding-left: 0 !important;
+    }
+
+    html.og-mode .sidebar,
+    html.og-mode .sidebar-collapse-btn,
+    html.og-mode .hamburger,
+    html.og-mode .sidebar-overlay {
+      display: none !important;
+    }
+
+    html.og-mode .section,
+    html.og-mode .quote-page,
+    html.og-mode .footer {
+      display: none !important;
+    }
+
+    html.og-mode .hero {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* ===== BONUS BUTTON & MODAL ===== */
+    .bonus-btn-wrap {
+      text-align: center;
+      margin: 2.5rem 0 1rem
+    }
+
+    .bonus-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 2rem;
+      border-radius: 100px;
+      background: linear-gradient(135deg, rgb(var(--accent-rgb) / .12), rgb(var(--accent3-rgb) / .12));
+      border: 1px solid rgb(var(--accent-rgb) / .4);
+      color: var(--accent);
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .3s;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    .bonus-btn:hover {
+      background: linear-gradient(135deg, rgb(var(--accent-rgb) / .22), rgb(var(--accent3-rgb) / .22));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgb(var(--accent-rgb) / .2)
+    }
+
+    .bonus-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .65);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .bonus-overlay.visible {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    .bonus-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 640px;
+      width: 100%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(24px);
+      transition: transform .3s;
+      overflow: hidden;
+    }
+
+    .bonus-overlay.visible .bonus-modal {
+      transform: translateY(0)
+    }
+
+    .bonus-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .bonus-modal-header h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent)
+    }
+
+    .bonus-modal-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+      color: var(--text-dim);
+      transition: all .2s;
+    }
+
+    .bonus-modal-close:hover {
+      border-color: var(--accent);
+      color: var(--accent)
+    }
+
+    .bonus-modal-body {
+      padding: 1.5rem 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+      line-height: 2;
+      font-size: .9rem;
+      color: var(--text-dim);
+    }
+
+    .bonus-modal-body p {
+      margin-bottom: .6rem
+    }
+
+    .bonus-modal-body strong {
+      color: var(--text);
+      font-weight: 700
+    }
+
+    .bonus-modal-body em {
+      color: var(--accent2)
+    }
+
+    .bonus-modal-body code {
+      background: var(--code-bg);
+      color: var(--accent2);
+      padding: .1em .35em;
+      border-radius: 4px;
+      font-size: .875em;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .bonus-modal-body ul {
+      list-style: none;
+      padding: 0;
+      margin: .25rem 0 .75rem
+    }
+
+    .bonus-modal-body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .3rem
+    }
+
+    .bonus-modal-body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .75em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    .bonus-steps {
+      margin: .25rem 0 .5rem
+    }
+
+    .bonus-step {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .bonus-steps .bonus-step:last-child {
+      border-bottom: none
+    }
+
+    .bonus-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb) / .12);
+      border: 1px solid rgb(var(--accent-rgb) / .25);
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: .1rem;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .bonus-step-text {
+      font-size: .9rem;
+      color: var(--text-dim);
+      line-height: 1.75
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:640px) {
+      .section {
+        padding: 3rem 1.25rem
+      }
+
+      .card {
+        padding: 1.25rem
+      }
+
+      .prompt-body {
+        font-size: .78rem;
+        padding: 1rem
+      }
+
+      .flow {
+        gap: .75rem
+      }
+
+      .hero-nav {
+        flex-direction: column;
+        align-items: center
+      }
+
+      .bonus-modal {
+        max-height: 90vh
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-title">OpenSpec × Claude Code 全端實戰</div>
+      <div class="sidebar-brand-controls"><button class="fontsize-toggle" id="fontsize-toggle"
+          aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle"
+          aria-label="Toggle theme">🌙</button><button class="settings-toggle" id="settings-toggle"
+          aria-label="設定">⚙</button></div>
+    </div>
+    <ul class="toc">
+      <li class="toc-group" data-section="instructor">
+      <a href="#instructor" class="toc-group-title">
+        <span class="toc-num">👤</span> 講師簡介
+      </a>
+      <ul class="toc-sub"></ul>
+    </li>
+    <li class="toc-group" data-section="section-1">
+      <a href="#section-1" class="toc-group-title">
+        <span class="toc-num">1</span> 環境篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section-1">安裝開發工具</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="openspec-0-1">
+      <a href="#openspec-0-1" class="toc-group-title">
+        <span class="toc-num">2</span> 初版篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-openspec">初始化 OpenSpec 專案</a></li>
+        <li><a href="#sub-section-3">設計第一版需求</a></li>
+        <li><a href="#sub-openspec">OpenSpec 的規格文件結構</a></li>
+        <li><a href="#sub-section-5">驗證初版、完成歸檔</a></li>
+        <li><a href="#sub-section-6">完成初版後的兩個設定</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="git-1-n">
+      <a href="#git-1-n" class="toc-group-title">
+        <span class="toc-num">3</span> 版控篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-git">為什麼初版後要立刻建 Git</a></li>
+        <li><a href="#sub-gitignore">設定 .gitignore</a></li>
+        <li><a href="#sub-commit-github">建立第一個 Commit，推送到 GitHub</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="1-n">
+      <a href="#1-n" class="toc-group-title">
+        <span class="toc-num">4</span> 迭代篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section-10">迭代流程概覽</a></li>
+        <li><a href="#sub-step-1-openspec">STEP 1：提出需求，讓 OpenSpec 規格化</a></li>
+        <li><a href="#sub-step-2">STEP 2：實作與驗證</a></li>
+        <li><a href="#sub-step-3">STEP 3：歸檔，記錄此次迭代</a></li>
+        <li><a href="#sub-step-4agent-skill-branch">STEP 4：Agent Skill 命名 Branch</a></li>
+        <li><a href="#sub-step-5agent-skill-commit">STEP 5：Agent Skill 拆分 Commit</a></li>
+        <li><a href="#sub-step-6agent-skill-pr">STEP 6：Agent Skill 生成 PR</a></li>
+        <li><a href="#sub-section-17">合併後的收尾</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="section-5">
+      <a href="#section-5" class="toc-group-title">
+        <span class="toc-num">5</span> 補充篇
+      </a>
+      <ul class="toc-sub">
+        <li><a href="#sub-section-18">為什麼需要自動化測試？</a></li>
+        <li><a href="#sub-section-19">如何銜接自動化測試</a></li>
+      </ul>
+    </li>
+
+          </ul>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress-label"><span>閱讀進度</span><span id="progress-pct">0%</span></div>
+      <div class="sidebar-progress-track">
+        <div class="sidebar-progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </nav>
+  <button class="sidebar-collapse-btn" id="sidebar-collapse" aria-label="收合側邊欄">
+    <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 1L2 7l6 6" />
+    </svg>
+  </button>
+
+  <div class="collapsed-progress">
+    <div class="collapsed-progress-fill" id="collapsed-progress-fill"></div>
+  </div>
+
+    <header class="hero">
+    <div class="hero-badge"><span class="dot"></span>Vibe Coding 教學</div>
+    <h1>規格驅動開發<br>從 0 到 1，從 1 到 N</h1>
+    <p class="hero-sub">用 OpenSpec + Claude Code 打造有資料庫的全端系統，再透過 Agent Skills 讓每次迭代都可追蹤、可協作</p>
+    <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
+    <nav class="hero-nav">
+      <a href="#section-1">環境篇</a>
+    <a href="#openspec-0-1">初版篇</a>
+    <a href="#git-1-n">版控篇</a>
+    <a href="#1-n">迭代篇</a>
+    <a href="#section-5">補充篇</a>
+          </nav>
+  </header>
+
+  <section class="quote-page">
+  <div class="reveal">
+    <div class="quote-mark">“</div>
+    <blockquote>最難的並不是 0 到 1，而是 1 到 100 的那段路；有了規格驅動開發，這一切會變得容易許多。</blockquote>
+    <div class="quote-line"></div>
+  </div>
+</section>
+  
+  <section class="section">
+  <div class="reveal">
+    <span class="section-label" id="instructor"><span class="num">👤</span> 講師簡介</span>
+    <h2>關於講師</h2>
+  </div>
+  <div class="reveal">
+    <div class="instructor">
+      <img class="instructor-avatar" src="../../config/assets/author.jpg" alt="林鼎淵 Dean Lin">
+      <div class="instructor-info">
+        <h3>林鼎淵 Dean Lin</h3>
+        <div class="tagline">外商工程師 · 企業內訓講師 · 暢銷書作家</div>
+        <p>專注於 AI 開發工作流的實踐與推廣，協助企業導入 AI 輔助開發流程。<br> 擅長將複雜的技術概念轉化為可落地的工作流程，讓團隊真正提升開發效率而非盲目追逐工具。</p>
+        <div class="instructor-stats">
+          <a href="https://www.tenlong.com.tw/products/9786264142083" target="_blank" rel="noopener">📚 出版 <strong>7</strong> 本專業書籍</a>
+          <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener">🎤 超過 <strong>100</strong> 場講座</a>
+          <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener">✍️ 發表超過 <strong>400</strong> 篇文章</a>
+        </div>
+        <div class="social-links">
+          <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm2.94 0c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75c.66 0 1.19 2.58 1.19 5.75z"/></svg> Medium</a>
+          <a href="https://www.facebook.com/deanlinbao" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
+          <a href="https://www.threads.com/@deanlin5288" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 878 1000" fill="currentColor"><path d="M446.7,1000h-0.3c-149.2-1-263.9-50.2-341-146.2C36.9,768.3,1.5,649.4,0.3,500.4v-0.7c1.2-149.1,36.6-267.9,105.2-353.4C182.5,50.2,297.3,1,446.4,0h0.3h0.3c114.4,0.8,210.1,30.2,284.4,87.4c69.9,53.8,119.1,130.4,146.2,227.8l-85,23.7c-46-165-162.4-249.3-346-250.6c-121.2,0.9-212.9,39-272.5,113.2C118.4,271,89.6,371.4,88.5,500c1.1,128.6,29.9,229,85.7,298.5c59.6,74.3,151.3,112.4,272.5,113.2c109.3-0.8,181.6-26.3,241.7-85.2c68.6-67.2,67.4-149.7,45.4-199.9c-12.9-29.6-36.4-54.2-68.1-72.9c-8,56.3-25.9,101.9-53.5,136.3c-36.9,45.9-89.2,71-155.4,74.6c-50.1,2.7-98.4-9.1-135.8-33.4c-44.3-28.7-70.2-72.5-73-123.5c-2.7-49.6,17-95.2,55.4-128.4c36.7-31.7,88.3-50.3,149.3-53.8c44.9-2.5,87-0.5,125.8,5.9c-5.2-30.9-15.6-55.5-31.2-73.2c-21.4-24.4-54.5-36.8-98.3-37.1c-0.4,0-0.8,0-1.2,0c-35.2,0-83,9.7-113.4,55L261.2,327c40.8-60.6,107-94,186.6-94c0.6,0,1.2,0,1.8,0c133.1,0.8,212.4,82.3,220.3,224.5c4.5,1.9,9,3.9,13.4,5.9c62.1,29.2,107.5,73.4,131.4,127.9c33.2,75.9,36.3,199.6-64.5,298.3C673.1,965,579.6,999.1,447,1000L446.7,1000L446.7,1000z M488.5,512.9c-10.1,0-20.3,0.3-30.8,0.9c-76.5,4.3-124.2,39.4-121.5,89.3c2.8,52.3,60.5,76.6,116,73.6c51-2.7,117.4-22.6,128.6-154.6C552.6,516,521.7,512.9,488.5,512.9z"/></svg> Threads</a>
+          <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
+          <a href="https://github.com/dean9703111" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+  
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="section-1"><span class="num">1</span> 環境篇</span>
+    <h2>從零安裝開發工具</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>不管你有沒有程式背景，只要學會與 AI 對話的技巧，就能生成一套涵蓋前後端與資料庫的系統。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-1"><span class="bar"></span>安裝開發工具</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🛠</span> ️ 本課程需要的工具</h3>
+      <ul>
+        <li><strong>Antigravity</strong>（或 Cursor / VSCode）：AI 程式碼編輯器</li>
+        <li><strong>Node.js</strong>：專案運行環境，建議透過 NVM 安裝</li>
+        <li><strong>Claude Code</strong>：驅動 OpenSpec 的 AI Agent</li>
+        <li><strong>OpenSpec</strong>：規格驅動開發的核心工具</li>
+        <li><strong>Docker</strong>：標準化容器，解決資料庫環境問題</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚙</span> ️ 安裝 Node.js（透過 NVM）</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">Mac 安裝 NVM</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">Windows 請至 GitHub 下載 exe</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">https://github.com/coreybutler/nvm-windows/releases</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">安裝最新 LTS 版本的 Node.js</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">nvm install --lts</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🤖</span> 安裝 Claude Code</h3>
+      <p>Claude Code 可以透過終端機指令安裝，也可以在編輯器的 Extensions 搜尋「Claude Code」直接安裝外掛，對新手更為友善。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">macOS / Linux / WSL</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">curl -fsSL https://claude.ai/install.sh | bash</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">Windows PowerShell</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">irm https://claude.ai/install.ps1 | iex</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">目前 Claude Code 僅付費版可使用</div>
+      <p>登入後在對話框輸入 <code>/login</code> 進行授權，確認可以正常回覆後再繼續。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> 安裝 OpenSpec</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">全局安裝 OpenSpec</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">npm install -g @fission-ai/openspec@latest</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">透過 OpenSpec，你只要用白話的方式與 AI 對話，就能建立完善的規格。日後擴增功能時，人類和 AI 都有對應的文件可以參考——這可以避免用 AI 寫程式時，相同功能重複被寫好幾次的痛點。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🐳</span> 安裝 Docker</h3>
+      <p>到 Docker 官網根據作業系統下載安裝後即可使用，不需要特別註冊登入。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">你可以把 Docker 想成一個「標準化的容器」——把專案需要的環境打包在裡面，不管 Mac 還是 Windows，打開就能跑，也方便未來多人維護專案。</p>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="openspec-0-1"><span class="num">2</span> 初版篇</span>
+    <h2>用 OpenSpec 從 0 到 1</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>最難的並不是 0 到 1，但有了 OpenSpec，這段路走得更穩。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-openspec"><span class="bar"></span>初始化 OpenSpec 專案</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🚀</span> openspec init 一鍵設定</h3>
+      <p>建立一個空白的專案資料夾，開啟後在終端機執行：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">初始化 OpenSpec</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">openspec init</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">初始化時會詢問你使用哪些 AI 工具（可多選），選擇後會在專案目錄新增對應的資料夾，例如 <code>.claude</code>，裡面存放的是驅動 OpenSpec 功能的 <strong>Agent Skills 技能包</strong>。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">Agent Skills 的核心價值</div>
+      <p>你不需要背指令——當需求涉及專案的新增、修改、刪除等任務時，AI 會自動調用這些技能。這才更符合 Vibe Coding 的開發流程。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📋</span> OpenSpec 的四個核心指令</h3>
+      <p>| 指令 | 用途 |</p>
+      <p>|------|------|</p>
+      <p>| <code>/opsx:explore</code> | 自由發想、調查問題、釐清需求 |</p>
+      <p>| <code>/opsx:propose</code> | 提案與架構設計 |</p>
+      <p>| <code>/opsx:apply</code> | 依照 tasks 實作程式碼 |</p>
+      <p>| <code>/opsx:archive</code> | 完成後歸檔與整理規範 |</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-3"><span class="bar"></span>設計第一版需求</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">💬</span> 提示詞架構（以出缺勤系統為例）</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">出缺勤系統初始需求</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">請設計一個出缺勤管理系統，員工可以透過此系統打卡上下班
+權限分成管理者與一般使用者，管理者可以修改、新增/刪除使用者
+新增使用者時，會發送 Email 給予登入密碼
+員工可透過系統請假、申請加班，申請假單需要簽核流程，並且有年假、補休申請，代理人制度
+
+前端使用 React，後端使用 Express，資料庫用 Postgres
+希望透過 Docker 啟動，並且要包含 Postgres Admin 網頁
+這是初步需求，我們可以透過討論釐清細節後，參考 openspec 的 skill 執行</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">提示詞分成三塊設計：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">專案目標</div>
+          <div class="step-desc">描述系統功能，初始模糊沒關係，AI 會主動提問釐清細節</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">使用技術</div>
+          <div class="step-desc">指定前後端與資料庫技術，若未來要交給工程師維護，一定要先確認技術棧</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">細節討論</div>
+          <div class="step-desc">提醒 AI 透過討論完善規格，並觸發 OpenSpec 的 Skill</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">使用 Plan Mode 讓規劃更詳盡</div>
+      <p>在對話框切換成 Plan Mode，AI 會先設計一份完整的實作規劃書，你可以瀏覽確認後再點 Yes 繼續執行。若想加速體驗，可在提示詞最後加上「以最小可行性方案來規劃」。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-openspec"><span class="bar"></span>OpenSpec 的規格文件結構</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📁</span> 自動生成的四份核心文件</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">proposal.md</div>
+          <div class="step-desc">確認目標是否正確、範圍是否合理</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">design.md</div>
+          <div class="step-desc">說明技術選型的理由，以及可能遇到的風險與處理方案</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">specs 資料夾</div>
+          <div class="step-desc">根據功能區分資料夾，分別建立詳細的規格文件</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">task.md</div>
+          <div class="step-desc">執行任務的驗收清單，完成後才打勾</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">確認規劃符合預期後，在對話窗說「開始實作」，AI 就會根據規格撰寫程式。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-5"><span class="bar"></span>驗證初版、完成歸檔</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">✅</span> 請 AI 協助啟動專案</h3>
+      <p>AI 完成初版後，建議請他協助啟動：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">請 AI 幫忙啟動專案</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">幫我啟動專案，我想在 Local 開發前後端程式
+只有 Postgres 跟 Postgres Admin 用 Docker 啟動
+如果根目錄 README.md 沒有操作步驟，請協助補充</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">第一版遇到 Bug 很正常</div>
+      <p>AI 有很高的機率在初版遇到零星錯誤，可以先讓他自我修正。確認功能大致符合預期後，再繼續下一步。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🏗</span> ️ 初版專案架構說明</h3>
+      <ul>
+        <li><strong>frontend</strong>：前端網頁畫面與操作邏輯</li>
+        <li><strong>backend</strong>：資料處理、與資料庫溝通</li>
+        <li><strong>.env</strong>：環境變數，存放資料庫帳密等隱私資訊，不可上傳版控</li>
+        <li><strong>README.md</strong>：專案簡介與 Local 開發步驟</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">確認功能符合預期後，告訴 AI 進行歸檔：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">歸檔初版</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">功能符合預期，進行歸檔</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">specs 資料夾下就會出現對應的規格文件，archives 也會記錄此次的歸檔版本。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-6"><span class="bar"></span>完成初版後的兩個設定</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📌</span> 建立 CLAUDE.md 與 OpenSpec Config</h3>
+      <p>初版完成後，在 Claude 對話窗輸入 <code>/init</code>，他會掃描專案結構，在根目錄建立 <code>CLAUDE.md</code>——這份文件每次對話開始時自動載入，幫助 Claude 了解這個專案的架構、技術與開發規則。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">讓 AI 填寫 OpenSpec 設定</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">Please read openspec/config.yaml and help me fill it out
+with details about my project, tech stack, and conventions</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <ul class="loose-list">
+      <li><strong>CLAUDE.md</strong>：告訴 AI 這個專案「怎麼做」</li>
+      <li><strong>openspec/config.yaml</strong>：告訴 OpenSpec「怎麼規劃」</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="git-1-n"><span class="num">3</span> 版控篇</span>
+    <h2>建立 Git，準備走向 1 到 N</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>初版完成後，立刻建立版本控制——這是讓 Vibe Coding 走遠的地基。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-git"><span class="bar"></span>為什麼初版後要立刻建 Git</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">⚠</span> ️ 沒有版控的風險</h3>
+      <ul>
+        <li>每個指令都可能大幅改動專案程式</li>
+        <li>AI 修改的結果未必是你要的，甚至會把正常功能改壞</li>
+        <li>沒有版控，就沒有辦法把改壞的內容救回來</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">這不只是壞習慣，而是實際的風險</div>
+      <p>如果某次 AI 的修改讓系統壞掉，卻沒有版控，你只能從頭開始。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-gitignore"><span class="bar"></span>設定 .gitignore</div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">請 AI 設計 .gitignore</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">請幫我設計專案的「.gitignore」
+但「.claude、openspec」要加入版本控制</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag green">必須加入版控：.claude、openspec、README.md</span>
+      <span class="tag orange">不可上傳：.env（有帳密等隱私資訊）</span>
+      <span class="tag purple">不需上傳：node_modules（套件可重新安裝）、dist（自動生成）</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-commit-github"><span class="bar"></span>建立第一個 Commit，推送到 GitHub</div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">點擊左側 Source Control → Initialize Repository</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">點擊 Generate，讓 AI 根據變更內容產生 commit 訊息</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">確認描述符合預期後點擊 Commit</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">點擊 Sync Changes 上傳到 GitHub（第一次會詢問專案名稱）</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">若不打算公開原始碼，選擇 Private 隱私模式</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="1-n"><span class="num">4</span> 迭代篇</span>
+    <h2>從 1 到 N 的功能開發流程</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>有了 OpenSpec 的規格、Git 的版控，每一次迭代都是有跡可循的進化。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-10"><span class="bar"></span>迭代流程概覽</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔄</span> 每次新增功能的完整循環</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">提出需求 → OpenSpec 透過討論釐清規格</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">確認規格文件符合預期</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">告訴 AI 開始實作</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">驗證功能符合預期</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">告訴 AI 歸檔，記錄此次變更</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">建立 feature branch、拆分 Commit、生成 PR</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">這個循環是「1 到 N」的核心——每次迭代都有規格為依據，每次變更都可以被追蹤。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-step-1-openspec"><span class="bar"></span>STEP 1：提出需求，讓 OpenSpec 規格化</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">💬</span> 以「忘打卡處理」功能為例</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">提出新功能需求</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">幫我設計忘打卡的處理方案，讓規則彈性一點，使用 OpenSpec</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">AI 會主動提問釐清細節，然後建立：</p>
+  </div>
+
+  <div class="reveal">
+    <ul class="loose-list">
+      <li>需求變更的規格文件</li>
+      <li>技術設計說明</li>
+      <li>任務驗收清單（task.md）</li>
+    </ul>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">先看規格，再執行</div>
+      <p>由於有 Git，可以在 Source Control 中看到 AI 撰寫的規格變更。確認符合預期後再說「開始實作」，是保持品質的關鍵步驟。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-step-2"><span class="bar"></span>STEP 2：實作與驗證</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔍</span> 確認功能符合預期</h3>
+      <p>AI 完成調整後，若功能涉及後端與資料庫，建議先重啟服務再測試：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">重啟後端確認功能</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">請協助確認資料庫變更是否執行，並幫我重新啟動後端程式</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">如果測試時找不到新功能的入口，直接告訴 AI：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">找不到功能入口</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">我找不到使用忘打卡的地方</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">有疑問就直接問，遇到錯誤就描述錯誤，AI 會繼續協助修正。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-step-3"><span class="bar"></span>STEP 3：歸檔，記錄此次迭代</div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">確認功能符合預期後，告訴 AI 歸檔：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">歸檔此次迭代</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">幫我歸檔</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">archive 裡面會多一個資料夾，放的就是這次的變更內容；specs 也會對應更新。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">每次迭代都歸檔，是知識不斷層的基礎</div>
+      <p>日後人員異動，下一個接手的人不管是人類還是 AI，都有完整的規格文件可以參考。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-step-4agent-skill-branch"><span class="bar"></span>STEP 4：Agent Skill 命名 Branch</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🌿</span> 為什麼每個功能要有獨立的 Branch？</h3>
+      <p>把不同功能混在同一個 Branch 裡，Code Review 時看不出每個功能對應哪些檔案，審核的人一頭霧水，品質就此滑落。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text"><code>git-worktree-design</code> Skill 會自動完成以下動作：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">確認目前分支狀況，以及是否有未提交的變更</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">根據功能將需求拆成獨立的 feature branch，用表格預覽讓你確認</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">依照命名規範建立 feature branch</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">在 branch 中新增這個功能的 SPEC，確保 AI 開發方向一致</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">觸發 Branch 命名</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">採用 feature branch，新增忘打卡處理功能</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-step-5agent-skill-commit"><span class="bar"></span>STEP 5：Agent Skill 拆分 Commit</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📦</span> 一個 Commit 沒有意義</h3>
+      <p>AI 輔助開發時，很可能一口氣改了很多檔案。如果全部放在一個 Commit，這個 Commit 跟沒寫一樣——未來發生問題時，無法追溯設計邏輯。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text"><code>git-smart-commit</code> Skill 會自動完成以下動作：</p>
+  </div>
+
+  <div class="reveal">
+    <ul class="loose-list">
+      <li>分析所有變更的檔案，判斷哪些屬於同一個邏輯單元</li>
+      <li>建議將變更拆成多個語意清晰的 Commit</li>
+      <li>以一致的語言、格式生成每個 Commit 的訊息</li>
+    </ul>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">觸發拆分 Commit</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">新增 commit</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">Commit 訊息的品質，決定未來維護的難度</div>
+      <p>若今天任務是「新增多語系」，可能動到十幾個檔案；讓 Skill 幫你判斷哪些屬於同一邏輯、哪些應該分段，遠比人工判斷更有效率。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-step-6agent-skill-pr"><span class="bar"></span>STEP 6：Agent Skill 生成 PR</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">📋</span> 好的 PR 讓 Code Review 變輕鬆</h3>
+      <p>PR 是讓團隊成員理解「你到底做了什麼」的關鍵文件。如果隨便寫，審核的人通常也是隨意看看，直接讀程式碼去理解功能設計，實在太消耗腦力了。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text"><code>git-pr-description</code> Skill 會自動完成以下動作：</p>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">預設比對目標分支為 master（可自行調整為 main / develop）</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">讀取差異的檔案與 Commit 訊息，分析變更內容</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">根據 pr-template 範例生成 PR 標題與描述草稿</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">描述中包含：變更摘要、測試案例、截圖建議</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">觸發生成 PR 草稿</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">撰寫 PR</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">建議前端 PR 附上截圖</div>
+      <p>附圖可以大幅減少 Code Review 者的認知負擔，同時也是你自己確認功能符合預期的過程。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-17"><span class="bar"></span>合併後的收尾</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">✅</span> 完整迭代收尾流程</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">複製 AI 生成的 PR 草稿到 GitHub，人工確認後點擊 Merge</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">回到主分支執行 git pull，確認合併後功能正常</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">若出現合併衝突，建議回到本地編輯器解決，確認後再推送</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">合併完成後移除 feature branch，避免分支過多管理困難</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="section-5"><span class="num">5</span> 補充篇</span>
+    <h2>讓系統更穩定的下一步</h2>
+    
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>初版完成、功能持續迭代後，自動化測試是讓品質不崩潰的最後一道防線。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-18"><span class="bar"></span>為什麼需要自動化測試？</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🧪</span> Vibe Coding 的穩定性問題</h3>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="tags">
+      <span class="tag orange">請 AI 修 Bug，舊功能被改壞</span>
+      <span class="tag orange">功能越來越多，人工測試越來越耗時</span>
+      <span class="tag orange">出問題時，不知道從哪個功能開始定位</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">這些問題在加入自動化測試後，都能得到改善。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">加入測試，不代表專案無懈可擊</div>
+      <p>但至少能守住專案的底線——確保每次修改都沒有破壞既有功能。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-19"><span class="bar"></span>如何銜接自動化測試</div>
+  </div>
+
+  <div class="reveal">
+    <div class="card">
+      <h3><span class="icon">🔗</span> 與目前工作流的整合點</h3>
+      <p>在完成功能歸檔、拆好 Commit、建立好 PR 之後，自動化測試是最後一道防線：</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">為每個功能頁面撰寫測試案例（可搭配 gen-test-cases Workflow）</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">加入 GitHub Action，每次推送自動觸發測試</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">在 GitHub Ruleset 設定「測試通過才能合併」</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">每次完成 PR 後，可以下載測試覆蓋率報告</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">Code Review 的速度，已經跟不上 AI 寫程式的速度</div>
+      <p>自動化測試不是選配，而是在 AI 加速開發後，讓品質底線不崩潰的必要投資。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="sc-icon">🛠️</div>
+        <h4>環境安裝</h4>
+        <p>Node.js + Claude Code + OpenSpec + Docker，一次到位</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">📋</div>
+        <h4>0 到 1 建置</h4>
+        <p>白話提示詞 → AI 主動提問 → 規格確認 → 開始實作</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🌿</div>
+        <h4>版控建立</h4>
+        <p>初版完成後立刻建 Git，設定 .gitignore，保護隱私資訊</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🔄</div>
+        <h4>1 到 N 迭代</h4>
+        <p>需求 → OpenSpec 規格化 → 實作 → 驗證 → 歸檔，每次都有跡可循</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🌿</div>
+        <h4>Branch 命名</h4>
+        <p>git-worktree-design Skill 確保功能獨立、Code Review 清晰</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">📦</div>
+        <h4>拆分 Commit</h4>
+        <p>git-smart-commit Skill 讓每個變更語意清晰、可追蹤</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">📋</div>
+        <h4>生成 PR</h4>
+        <p>git-pr-description Skill 讓協作資訊一致，降低 Code Review 負擔</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🧪</div>
+        <h4>自動化測試</h4>
+        <p>守住系統底線，讓 Vibe Coding 的成果從玩具走向產品</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+  <section class="quote-page">
+  <div class="reveal">
+    <div class="quote-mark">“</div>
+    <blockquote>工程師的重點不再是寫了多少行程式，<br> 而是去評估系統架構、審查程式碼合理性。<br><br> 不管 AI 有多強大，出事還是要人類來背鍋。</blockquote>
+    <div class="quote-line"></div>
+  </div>
+</section>
+
+    <footer class="footer">
+    <p style="font-size:.9rem;color:var(--text);margin-bottom:1rem">歡迎追蹤我的社群，獲取更多 AI 開發實戰內容</p>
+  <div class="social-links" style="justify-content:center;margin-bottom:1.5rem">
+    <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm2.94 0c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75c.66 0 1.19 2.58 1.19 5.75z"/></svg> Medium</a>
+    <a href="https://www.facebook.com/deanlinbao" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook</a>
+    <a href="https://www.threads.com/@deanlin5288" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 878 1000" fill="currentColor"><path d="M446.7,1000h-0.3c-149.2-1-263.9-50.2-341-146.2C36.9,768.3,1.5,649.4,0.3,500.4v-0.7c1.2-149.1,36.6-267.9,105.2-353.4C182.5,50.2,297.3,1,446.4,0h0.3h0.3c114.4,0.8,210.1,30.2,284.4,87.4c69.9,53.8,119.1,130.4,146.2,227.8l-85,23.7c-46-165-162.4-249.3-346-250.6c-121.2,0.9-212.9,39-272.5,113.2C118.4,271,89.6,371.4,88.5,500c1.1,128.6,29.9,229,85.7,298.5c59.6,74.3,151.3,112.4,272.5,113.2c109.3-0.8,181.6-26.3,241.7-85.2c68.6-67.2,67.4-149.7,45.4-199.9c-12.9-29.6-36.4-54.2-68.1-72.9c-8,56.3-25.9,101.9-53.5,136.3c-36.9,45.9-89.2,71-155.4,74.6c-50.1,2.7-98.4-9.1-135.8-33.4c-44.3-28.7-70.2-72.5-73-123.5c-2.7-49.6,17-95.2,55.4-128.4c36.7-31.7,88.3-50.3,149.3-53.8c44.9-2.5,87-0.5,125.8,5.9c-5.2-30.9-15.6-55.5-31.2-73.2c-21.4-24.4-54.5-36.8-98.3-37.1c-0.4,0-0.8,0-1.2,0c-35.2,0-83,9.7-113.4,55L261.2,327c40.8-60.6,107-94,186.6-94c0.6,0,1.2,0,1.8,0c133.1,0.8,212.4,82.3,220.3,224.5c4.5,1.9,9,3.9,13.4,5.9c62.1,29.2,107.5,73.4,131.4,127.9c33.2,75.9,36.3,199.6-64.5,298.3C673.1,965,579.6,999.1,447,1000L446.7,1000L446.7,1000z M488.5,512.9c-10.1,0-20.3,0.3-30.8,0.9c-76.5,4.3-124.2,39.4-121.5,89.3c2.8,52.3,60.5,76.6,116,73.6c51-2.7,117.4-22.6,128.6-154.6C552.6,516,521.7,512.9,488.5,512.9z"/></svg> Threads</a>
+    <a href="https://www.youtube.com/@dlcorner" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> YouTube</a>
+    <a href="https://github.com/dean9703111" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg> GitHub</a>
+  </div>
+    <p>© 林鼎淵 Dean Lin</p>
+  </footer>
+
+    <div class="settings-panel" id="settings-panel">
+    <div class="settings-section">
+      <div class="settings-label">主題色彩</div>
+      <div class="color-swatches" id="color-swatches">
+        <button class="color-swatch" data-theme-id="coral" title="暖陽珊瑚" data-accent="#e8845a"
+          data-accent-light="#c45c28" data-accent2="#e8b878" data-accent2-light="#9a7028" data-accent3="#e08898"
+          data-accent3-light="#b04860"
+          style="background:linear-gradient(135deg,#e8845a 40%,#e8b878 70%,#e08898)"></button>
+        <button class="color-swatch" data-theme-id="ocean" title="深海藍" data-accent="#60a5fa" data-accent-light="#2563eb"
+          data-accent2="#5eead4" data-accent2-light="#0d9488" data-accent3="#a5b4fc" data-accent3-light="#6366f1"
+          style="background:linear-gradient(135deg,#60a5fa 40%,#5eead4 70%,#a5b4fc)"></button>
+        <button class="color-swatch" data-theme-id="forest" title="翡翠森林" data-accent="#50d890"
+          data-accent-light="#15803d" data-accent2="#c8d858" data-accent2-light="#6a7a18" data-accent3="#50c0a8"
+          data-accent3-light="#0d7060"
+          style="background:linear-gradient(135deg,#50d890 40%,#c8d858 70%,#50c0a8)"></button>
+        <button class="color-swatch" data-theme-id="galaxy" title="星河紫" data-accent="#a78bfa"
+          data-accent-light="#7c3aed" data-accent2="#e8a8e0" data-accent2-light="#a21caf" data-accent3="#7db8f8"
+          data-accent3-light="#2563eb"
+          style="background:linear-gradient(135deg,#a78bfa 40%,#e8a8e0 70%,#7db8f8)"></button>
+        <button class="color-swatch" data-theme-id="sakura" title="花見櫻" data-accent="#f472b6"
+          data-accent-light="#db2777" data-accent2="#b0a8f0" data-accent2-light="#6d28d9" data-accent3="#f0a8a0"
+          data-accent3-light="#c05050"
+          style="background:linear-gradient(135deg,#f472b6 40%,#b0a8f0 70%,#f0a8a0)"></button>
+        <button class="color-swatch" data-theme-id="amber" title="琥珀" data-accent="#f0b840" data-accent-light="#a87808"
+          data-accent2="#e09870" data-accent2-light="#a86040" data-accent3="#c8b080" data-accent3-light="#887048"
+          style="background:linear-gradient(135deg,#f0b840 40%,#e09870 70%,#c8b080)"></button>
+      </div>
+    </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <div class="settings-label">匯出</div>
+      <button class="settings-export-btn" id="export-pdf-btn">⬇ 匯出 PDF（投影片版）</button>
+    </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <div class="settings-label">休息</div>
+      <button class="settings-export-btn" id="break-timer-btn">☕ 休息一下</button>
+    </div>
+  </div>
+
+    <div class="break-overlay" id="break-overlay">
+    <div class="break-modal">
+      <button class="break-modal-close" id="break-modal-close">✕</button>
+      <div class="break-modal-icon" id="break-modal-icon">☕</div>
+      <h3>休息一下</h3>
+      <p id="break-intro-text">設定休息時間，時間到會提醒你</p>
+      <div id="break-setup">
+        <div class="break-input-row">
+          <input type="number" id="break-minutes" value="10" min="1" max="120">
+          <span>分鐘</span>
+        </div>
+        <button class="break-start-btn" id="break-start-btn">開始休息</button>
+      </div>
+      <div class="break-countdown" id="break-countdown">
+        <div class="break-countdown-time" id="break-countdown-time">10:00</div>
+        <p class="break-done-message" id="break-done-message"><strong>休息時間到</strong><br>回來繼續下一段內容吧。</p>
+        <button class="break-end-btn" id="break-end-btn">結束休息</button>
+      </div>
+    </div>
+  </div>
+
+    <div class="bonus-overlay" id="bonus-overlay">
+    <div class="bonus-modal">
+      <div class="bonus-modal-header">
+        <h3 id="bonus-modal-title"></h3>
+        <button class="bonus-modal-close" id="bonus-modal-close">✕</button>
+      </div>
+      <div class="bonus-modal-body" id="bonus-modal-body"></div>
+    </div>
+  </div>
+
+    <script>
+    (function () {
+      // OG mode: ?og=1 → hide sidebar/sections, hero-only layout for thumbnails
+      try {
+        var search = window.location.search || '';
+        if (search.indexOf('og=1') !== -1) {
+          document.documentElement.classList.add('og-mode');
+        }
+      } catch (e) { }
+
+      var s = localStorage.getItem('theme');
+      var d = window.matchMedia('(prefers-color-scheme:dark)').matches;
+      var t = s || (d ? 'dark' : 'light');
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      var b = document.getElementById('theme-toggle');
+      if (b) b.textContent = t === 'light' ? '☀️' : '🌙';
+      // Restore accent color
+      var accentData = localStorage.getItem('accentTheme');
+      if (accentData) {
+        try {
+          var ac = JSON.parse(accentData);
+          var isLight = t === 'light';
+          document.documentElement.style.setProperty('--accent', isLight ? ac.light : ac.dark);
+        } catch (e) { }
+      }
+    })();
+  </script>
+
+  <script>
+    // Reveal on scroll
+    var revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible') });
+    }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealObs.observe(el) });
+
+    // Sidebar / Hamburger
+    var sidebar = document.getElementById('sidebar');
+    var hamburger = document.getElementById('hamburger');
+    var overlay = document.getElementById('overlay');
+
+    function toggleSidebar() {
+      var open = sidebar.classList.toggle('open');
+      hamburger.classList.toggle('active', open);
+      overlay.classList.toggle('visible', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      hamburger.classList.remove('active');
+      overlay.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+    sidebar.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (window.innerWidth < 1100) closeSidebar();
+      })
+    });
+
+    // Desktop sidebar collapse
+    var collapseBtn = document.getElementById('sidebar-collapse');
+    if (localStorage.getItem('sidebar-collapsed') === 'true' && window.innerWidth >= 1100) {
+      sidebar.classList.add('collapsed');
+      document.body.classList.add('sidebar-collapsed');
+    }
+    collapseBtn.addEventListener('click', function () {
+      var c = sidebar.classList.toggle('collapsed');
+      document.body.classList.toggle('sidebar-collapsed', c);
+      localStorage.setItem('sidebar-collapsed', c);
+    });
+
+    // Scroll spy — 這兩個陣列需根據實際內容填入
+    var sectionIds = ["instructor","section-1","openspec-0-1","git-1-n","1-n","section-5"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+    var allAnchorIds = ["instructor","section-1","sub-section-1","openspec-0-1","sub-openspec","sub-section-3","sub-openspec","sub-section-5","sub-section-6","git-1-n","sub-git","sub-gitignore","sub-commit-github","1-n","sub-section-10","sub-step-1-openspec","sub-step-2","sub-step-3","sub-step-4agent-skill-branch","sub-step-5agent-skill-commit","sub-step-6agent-skill-pr","sub-section-17","section-5","sub-section-18","sub-section-19"];   // e.g. ['instructor','new-project','sub-create-project',...]
+
+    var sectionForAnchor = {};
+    allAnchorIds.forEach(function (id) {
+      if (sectionIds.includes(id)) { sectionForAnchor[id] = id }
+      else {
+        for (var i = sectionIds.length - 1; i >= 0; i--) {
+          var idx = allAnchorIds.indexOf(sectionIds[i]);
+          if (idx <= allAnchorIds.indexOf(id)) { sectionForAnchor[id] = sectionIds[i]; break }
+        }
+      }
+    });
+
+    function updateToc() {
+      var scrollY = window.scrollY + 20;
+      var activeAnchor = allAnchorIds[0];
+      allAnchorIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) activeAnchor = id;
+      });
+      var activeSection = sectionForAnchor[activeAnchor] || sectionIds[0];
+      document.querySelectorAll('.toc-group').forEach(function (g) {
+        var isActive = g.dataset.section === activeSection;
+        g.classList.toggle('expanded', isActive);
+        g.querySelector('.toc-group-title').classList.toggle('active', isActive);
+      });
+      document.querySelectorAll('.toc-sub a').forEach(function (a) {
+        var href = a.getAttribute('href').replace('#', '');
+        a.classList.toggle('active', href === activeAnchor);
+      });
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docH > 0 ? Math.round((window.scrollY / docH) * 100) : 0;
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-pct').textContent = pct + '%';
+      document.getElementById('collapsed-progress-fill').style.width = pct + '%';
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(function () { updateToc(); ticking = false }); ticking = true }
+    });
+    updateToc();
+
+    // Anchor scroll stabilization — images may change layout after initial jump.
+    var hashScrollTimer = null;
+    function scrollToHashTarget(hash, behavior) {
+      if (!hash || hash === '#') return;
+      var id = hash.charAt(0) === '#' ? hash.slice(1) : hash;
+      var el = document.getElementById(id);
+      if (!el) return;
+      var top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 20);
+      window.scrollTo({ top: top, behavior: behavior || 'auto' });
+    }
+    function scheduleHashScrollFix(delay, behavior) {
+      if (!window.location.hash) return;
+      clearTimeout(hashScrollTimer);
+      hashScrollTimer = setTimeout(function () {
+        scrollToHashTarget(window.location.hash, behavior || 'auto');
+        updateToc();
+      }, delay || 0);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var hash = a.getAttribute('href');
+        if (!hash || hash === '#') return;
+        var id = hash.slice(1);
+        if (!document.getElementById(id)) return;
+        e.preventDefault();
+        if (window.location.hash !== hash) history.pushState(null, '', hash);
+        scrollToHashTarget(hash, 'smooth');
+        scheduleHashScrollFix(220, 'auto');
+        scheduleHashScrollFix(900, 'auto');
+      });
+    });
+
+    window.addEventListener('hashchange', function () {
+      scheduleHashScrollFix(0, 'auto');
+      scheduleHashScrollFix(220, 'auto');
+      scheduleHashScrollFix(900, 'auto');
+    });
+
+    Array.from(document.images).forEach(function (img) {
+      if (img.complete) return;
+      img.addEventListener('load', function () { scheduleHashScrollFix(0, 'auto'); }, { passive: true });
+      img.addEventListener('error', function () { scheduleHashScrollFix(0, 'auto'); }, { passive: true });
+    });
+
+    window.addEventListener('load', function () {
+      scheduleHashScrollFix(0, 'auto');
+      scheduleHashScrollFix(300, 'auto');
+    });
+
+    // Theme toggle
+    var themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', function () {
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+        themeToggle.textContent = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        themeToggle.textContent = '☀️';
+      }
+    });
+    window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', function (e) {
+      if (localStorage.getItem('theme')) return;
+      if (e.matches) { document.documentElement.removeAttribute('data-theme'); themeToggle.textContent = '🌙' }
+      else { document.documentElement.setAttribute('data-theme', 'light'); themeToggle.textContent = '☀️' }
+    });
+
+    // Shared markdown helpers (used by bonus modal and PDF export)
+    function fmtInline(s) {
+      return s
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
+    function renderMd(text) {
+      var lines = text.split('\n');
+      var html = '';
+      var paraLines = [];
+      var inList = false;
+      var inSteps = false;
+      function flushPara() {
+        if (paraLines.length) { html += '<p>' + paraLines.map(fmtInline).join('<br>') + '</p>'; paraLines = []; }
+      }
+      function flushList() { if (inList) { html += '</ul>'; inList = false; } }
+      function flushSteps() { if (inSteps) { html += '</div>'; inSteps = false; } }
+      for (var i = 0; i < lines.length; i++) {
+        var l = lines[i];
+        var stepMatch = l.match(/^(\d+)\.\s+(.*)/);
+        if (stepMatch) {
+          flushPara(); flushList();
+          if (!inSteps) { html += '<div class="bonus-steps">'; inSteps = true; }
+          html += '<div class="bonus-step"><span class="bonus-step-num">' + stepMatch[1] + '</span><span class="bonus-step-text">' + fmtInline(stepMatch[2]) + '</span></div>';
+        } else if (/^- /.test(l)) {
+          flushPara(); flushSteps();
+          if (!inList) { html += '<ul>'; inList = true; }
+          html += '<li>' + fmtInline(l.replace(/^- /, '')) + '</li>';
+        } else if (l.trim() === '') {
+          flushSteps(); flushList(); flushPara();
+        } else {
+          flushSteps(); flushList(); paraLines.push(l);
+        }
+      }
+      flushSteps(); flushList(); flushPara();
+      return html;
+    }
+
+    // Bonus Modal
+    (function () {
+      var overlay = document.getElementById('bonus-overlay');
+      var closeBtn = document.getElementById('bonus-modal-close');
+      var titleEl = document.getElementById('bonus-modal-title');
+      var bodyEl = document.getElementById('bonus-modal-body');
+
+      function openModal(title, content) {
+        titleEl.textContent = title;
+        bodyEl.innerHTML = renderMd(content);
+        overlay.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeModal() {
+        overlay.classList.remove('visible');
+        document.body.style.overflow = '';
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+      document.querySelectorAll('.bonus-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          openModal(btn.dataset.bonusTitle || '', btn.dataset.bonusContent || '');
+        });
+      });
+    })();
+
+    // Copy prompt
+    function copyPrompt(btn) {
+      var text = btn.closest('.prompt-block').querySelector('.prompt-body').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        btn.style.opacity = '1';
+        setTimeout(function () {
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+          btn.style.opacity = '';
+        }, 1500);
+      });
+    }
+
+    // Font size toggle (5 levels)
+    var fontSizes = [14, 15, 16, 18, 20];
+    var fontLabels = ['A1', 'A2', 'A3', 'A4', 'A5'];
+    var fontIdx = fontSizes.indexOf(parseInt(localStorage.getItem('fontSize')) || 16);
+    if (fontIdx < 0) fontIdx = 2;
+    var fontBtn = document.getElementById('fontsize-toggle');
+    function applyFontSize() {
+      document.documentElement.style.fontSize = fontSizes[fontIdx] + 'px';
+      fontBtn.textContent = fontLabels[fontIdx];
+      localStorage.setItem('fontSize', fontSizes[fontIdx]);
+    }
+    applyFontSize();
+    fontBtn.addEventListener('click', function () {
+      fontIdx = (fontIdx + 1) % fontSizes.length;
+      applyFontSize();
+    });
+
+    // ===== SETTINGS PANEL =====
+    (function () {
+      var settingsToggle = document.getElementById('settings-toggle');
+      var settingsPanel = document.getElementById('settings-panel');
+
+      function openSettings() {
+        var rect = settingsToggle.getBoundingClientRect();
+        settingsPanel.style.top = (rect.bottom + 8) + 'px';
+        settingsPanel.style.left = Math.min(rect.left, window.innerWidth - 218) + 'px';
+        settingsPanel.classList.add('open');
+        settingsToggle.classList.add('active');
+      }
+      function closeSettings() {
+        settingsPanel.classList.remove('open');
+        settingsToggle.classList.remove('active');
+      }
+
+      settingsToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        settingsPanel.classList.contains('open') ? closeSettings() : openSettings();
+      });
+
+      settingsPanel.addEventListener('click', function (e) { e.stopPropagation(); });
+
+      document.addEventListener('click', closeSettings);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSettings(); });
+
+      // ===== COLOR THEMES =====
+      function hexToRgbStr(hex) {
+        var r = parseInt(hex.slice(1, 3), 16);
+        var g = parseInt(hex.slice(3, 5), 16);
+        var b = parseInt(hex.slice(5, 7), 16);
+        return r + ' ' + g + ' ' + b;
+      }
+
+      function applyPalette(data, isLight) {
+        var root = document.documentElement;
+        var suffix = isLight ? 'Light' : '';
+        var a = isLight ? (data.accentLight || data.accent) : data.accent;
+        var a2 = isLight ? (data.accent2Light || data.accent2) : data.accent2;
+        var a3 = isLight ? (data.accent3Light || data.accent3) : data.accent3;
+        root.style.setProperty('--accent', a);
+        root.style.setProperty('--accent-rgb', hexToRgbStr(a));
+        root.style.setProperty('--accent2', a2);
+        root.style.setProperty('--accent2-rgb', hexToRgbStr(a2));
+        root.style.setProperty('--accent3', a3);
+        root.style.setProperty('--accent3-rgb', hexToRgbStr(a3));
+      }
+
+      function getSwatchData(sw) {
+        return {
+          accent: sw.dataset.accent,
+          accentLight: sw.dataset.accentLight,
+          accent2: sw.dataset.accent2,
+          accent2Light: sw.dataset.accent2Light,
+          accent3: sw.dataset.accent3,
+          accent3Light: sw.dataset.accent3Light
+        };
+      }
+
+      function updateSwatchSelection(activeId) {
+        document.querySelectorAll('.color-swatch').forEach(function (sw) {
+          sw.classList.toggle('selected', sw.dataset.themeId === activeId);
+        });
+      }
+
+      // Restore saved palette on load
+      var savedPalette = localStorage.getItem('colorPalette');
+      if (savedPalette) {
+        try {
+          var sp = JSON.parse(savedPalette);
+          var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          applyPalette(sp, isLight);
+          document.querySelectorAll('.color-swatch').forEach(function (sw) {
+            if (sw.dataset.accent === sp.accent) sw.classList.add('selected');
+          });
+        } catch (e) { }
+      } else {
+        var firstSwatch = document.querySelector('.color-swatch[data-theme-id="coral"]');
+        if (firstSwatch) firstSwatch.classList.add('selected');
+      }
+
+      document.querySelectorAll('.color-swatch').forEach(function (sw) {
+        sw.addEventListener('click', function () {
+          var data = getSwatchData(sw);
+          var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          applyPalette(data, isLight);
+          localStorage.setItem('colorPalette', JSON.stringify(data));
+          updateSwatchSelection(sw.dataset.themeId);
+        });
+      });
+
+      // Re-apply palette when theme (dark/light) is toggled
+      themeToggle.addEventListener('click', function () {
+        var paletteData = localStorage.getItem('colorPalette');
+        if (!paletteData) return;
+        try {
+          var pd = JSON.parse(paletteData);
+          setTimeout(function () {
+            var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            applyPalette(pd, isLight);
+          }, 0);
+        } catch (e) { }
+      });
+
+      // ===== PDF EXPORT =====
+      document.getElementById('export-pdf-btn').addEventListener('click', function () {
+        closeSettings();
+        exportPDF();
+      });
+    })();
+
+    // ===== BREAK TIMER =====
+    (function () {
+      var overlay = document.getElementById('break-overlay');
+      var closeBtn = document.getElementById('break-modal-close');
+      var modal = overlay.querySelector('.break-modal');
+      var modalIcon = document.getElementById('break-modal-icon');
+      var introText = document.getElementById('break-intro-text');
+      var minutesInput = document.getElementById('break-minutes');
+      var startBtn = document.getElementById('break-start-btn');
+      var setupDiv = document.getElementById('break-setup');
+      var countdownDiv = document.getElementById('break-countdown');
+      var countdownTime = document.getElementById('break-countdown-time');
+      var doneMessage = document.getElementById('break-done-message');
+      var endBtn = document.getElementById('break-end-btn');
+      var timer = null;
+
+      function resetBreakState() {
+        setupDiv.style.display = '';
+        countdownDiv.classList.remove('active', 'done');
+        modal.classList.remove('done');
+        introText.classList.remove('hidden');
+        doneMessage.style.display = '';
+        modalIcon.textContent = '☕';
+        endBtn.textContent = '結束休息';
+      }
+
+      document.getElementById('break-timer-btn').addEventListener('click', function () {
+        var settingsPanel = document.getElementById('settings-panel');
+        settingsPanel.classList.remove('open');
+        document.getElementById('settings-toggle').classList.remove('active');
+        resetBreakState();
+        overlay.classList.add('open');
+        minutesInput.focus();
+      });
+
+      function closeBreak() {
+        overlay.classList.remove('open');
+        if (timer) { clearInterval(timer); timer = null; }
+        resetBreakState();
+      }
+
+      closeBtn.addEventListener('click', closeBreak);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeBreak();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeBreak();
+      });
+
+      startBtn.addEventListener('click', function () {
+        var mins = parseInt(minutesInput.value) || 10;
+        if (mins < 1) mins = 1;
+        if (mins > 120) mins = 120;
+        var remaining = mins * 60;
+
+        setupDiv.style.display = 'none';
+        countdownDiv.classList.add('active');
+        introText.classList.add('hidden');
+
+        function update() {
+          var m = Math.floor(remaining / 60);
+          var s = remaining % 60;
+          countdownTime.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        }
+        update();
+
+        timer = setInterval(function () {
+          remaining--;
+          if (remaining <= 0) {
+            clearInterval(timer);
+            timer = null;
+            countdownTime.textContent = '00:00';
+            countdownDiv.classList.add('done');
+            modal.classList.add('done');
+            modalIcon.textContent = '⏰';
+            endBtn.textContent = '回到課程';
+            return;
+          }
+          update();
+        }, 1000);
+      });
+
+      endBtn.addEventListener('click', closeBreak);
+    })();
+
+    function exportPDF() {
+      var sections = document.querySelectorAll('section.section');
+      if (!sections.length) { alert('找不到課程章節，請確認頁面已正常載入。'); return; }
+
+      var printSlides = document.createElement('div');
+      printSlides.id = 'print-slides';
+      // Off-screen for height measurement
+      printSlides.style.cssText = 'position:fixed;left:-9999px;width:1280px;display:block;visibility:hidden;';
+      document.body.appendChild(printSlides);
+
+      // Hero title page
+      var heroEl = document.querySelector('header.hero');
+      if (heroEl) {
+        var heroSlide = document.createElement('div');
+        heroSlide.className = 'slide slide-hero';
+        heroSlide.appendChild(heroEl.cloneNode(true));
+        printSlides.appendChild(heroSlide);
+      }
+
+      // Opening quote (before first section.section)
+      document.querySelectorAll('section.quote-page').forEach(function (qp) {
+        var qSlide = document.createElement('div');
+        qSlide.className = 'slide slide-quote';
+        var clone = qp.cloneNode(true);
+        clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+        qSlide.appendChild(clone);
+        // Insert opening quotes before sections, closing quotes after
+        var isClosing = qp.compareDocumentPosition(sections[0]) & Node.DOCUMENT_POSITION_PRECEDING;
+        if (isClosing) {
+          printSlides._closingQuotes = printSlides._closingQuotes || [];
+          printSlides._closingQuotes.push(qSlide);
+        } else {
+          printSlides.appendChild(qSlide);
+        }
+      });
+
+      sections.forEach(function (section) {
+        var h2El = section.querySelector('h2');
+        var mainTitle = h2El ? h2El.textContent.trim() : '';
+
+        var leadClone = null;
+        var contentChildren = [];
+        section.childNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;
+          if (node.classList.contains('reveal') && node.querySelector('.section-label')) {
+            var lead = node.querySelector('.lead');
+            if (lead) leadClone = lead.cloneNode(true);
+            return;
+          }
+          contentChildren.push(node);
+        });
+
+        // Separate [bonus] blocks from normal content — bonus gets standalone slides
+        var bonusChildren = [];
+        var normalChildren = [];
+        contentChildren.forEach(function (child) {
+          if (child.querySelector && child.querySelector(':scope > .bonus-btn')) {
+            bonusChildren.push(child);
+          } else {
+            normalChildren.push(child);
+          }
+        });
+
+        // Split normal content by ## sub-sections; ### (card) stays within the same page.
+        // YouTube embeds become dedicated print slides so PDFs get one video per page.
+        var entries = [];
+        var currentPage = [];
+        var activeSubTitle = '';
+        function flushCurrentPage() {
+          if (!currentPage.length) return;
+          entries.push({ type: 'page', subTitle: activeSubTitle, children: currentPage });
+          currentPage = [];
+        }
+        normalChildren.forEach(function (child) {
+          var isSub = child.querySelector && child.querySelector(':scope > .sub-title');
+          var isYoutube = child.querySelector && child.querySelector(':scope > .youtube-embed');
+          if (isSub) {
+            var subEl = child.querySelector(':scope > .sub-title');
+            activeSubTitle = subEl ? subEl.textContent.trim() : activeSubTitle;
+          }
+          if (isYoutube) {
+            flushCurrentPage();
+            entries.push({ type: 'youtube', subTitle: activeSubTitle, child: child });
+            return;
+          }
+          if (isSub && currentPage.length > 0) {
+            flushCurrentPage();
+          }
+          currentPage.push(child);
+        });
+        flushCurrentPage();
+
+        var leadAttached = false;
+        entries.forEach(function (entry) {
+          if (entry.type === 'page') {
+            var slide = makeSlide(mainTitle, entry.subTitle, 0);
+            var body = slide.querySelector('.slide-body');
+            if (!leadAttached && leadClone) {
+              body.appendChild(leadClone.cloneNode(true));
+              leadAttached = true;
+            }
+            entry.children.forEach(function (child) {
+              var clone = child.cloneNode(true);
+              // ## sub-title is shown in the header, remove it from body to avoid duplication
+              var subTitleInBody = clone.querySelector(':scope > .sub-title');
+              if (subTitleInBody) subTitleInBody.remove();
+              if (clone.classList.contains('reveal')) clone.classList.add('visible');
+              clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
+              body.appendChild(clone);
+            });
+            printSlides.appendChild(slide);
+            return;
+          }
+
+          var embed = entry.child.querySelector(':scope > .youtube-embed');
+          var wrapper = embed ? embed.querySelector('.youtube-wrapper') : null;
+          var captionEl = embed ? embed.querySelector('.youtube-caption') : null;
+          var videoId = wrapper ? wrapper.getAttribute('data-id') : '';
+          var videoUrl = 'https://www.youtube.com/watch?v=' + videoId;
+          var videoTitle = captionEl ? captionEl.textContent.trim() : 'YouTube 影片';
+          var youtubeSlide = makeSlide(videoTitle, '', 0);
+          youtubeSlide.classList.add('slide-youtube');
+          var youtubeBody = youtubeSlide.querySelector('.slide-body');
+          var link = document.createElement('a');
+          link.className = 'youtube-print-link';
+          link.href = videoUrl;
+          link.target = '_blank';
+          link.rel = 'noopener';
+
+          var url = document.createElement('div');
+          url.className = 'youtube-print-link-url';
+          url.textContent = videoUrl;
+          link.appendChild(url);
+
+          var hint = document.createElement('div');
+          hint.className = 'youtube-print-link-hint';
+          hint.textContent = '可點擊此頁面直接開啟影片';
+          link.appendChild(hint);
+
+          youtubeBody.appendChild(link);
+          printSlides.appendChild(youtubeSlide);
+        });
+
+        // Bonus blocks → standalone headerless slides
+        bonusChildren.forEach(function (child) {
+          var slide = document.createElement('div');
+          slide.className = 'slide slide-bonus';
+          var body = document.createElement('div');
+          body.className = 'slide-body';
+          child.querySelectorAll('.bonus-btn').forEach(function (btn) {
+            var card = document.createElement('div');
+            card.className = 'card';
+            var h3 = document.createElement('h3');
+            h3.textContent = btn.dataset.bonusTitle || '';
+            card.appendChild(h3);
+            var inner = document.createElement('div');
+            inner.innerHTML = renderMd(btn.dataset.bonusContent || '');
+            card.appendChild(inner);
+            body.appendChild(card);
+          });
+          slide.appendChild(body);
+          printSlides.appendChild(slide);
+        });
+      });
+
+      // Append closing quote pages after all content sections
+      if (printSlides._closingQuotes) {
+        printSlides._closingQuotes.forEach(function (s) { printSlides.appendChild(s); });
+        delete printSlides._closingQuotes;
+      }
+
+      // Footer → "Thank You" closing slide
+      var footerEl = document.querySelector('footer.footer');
+      if (footerEl) {
+        var footerSlide = document.createElement('div');
+        footerSlide.className = 'slide slide-footer';
+
+        var inner = document.createElement('div');
+        inner.className = 'footer-inner';
+
+        // Thank you title
+        var thanks = document.createElement('div');
+        thanks.className = 'footer-thanks';
+        thanks.textContent = 'Thank You';
+        inner.appendChild(thanks);
+
+        // Accent line
+        var line = document.createElement('div');
+        line.className = 'footer-line';
+        inner.appendChild(line);
+
+        // CTA text (from original footer)
+        var ctaSrc = footerEl.querySelector('p[style*="font-size"]');
+        if (ctaSrc) {
+          var cta = document.createElement('div');
+          cta.className = 'footer-cta';
+          cta.textContent = ctaSrc.textContent.trim();
+          inner.appendChild(cta);
+        }
+
+        // Social links (clone from original footer, re-wrap)
+        var socialsSrc = footerEl.querySelector('.social-links');
+        if (socialsSrc) {
+          var socials = socialsSrc.cloneNode(true);
+          socials.className = 'footer-socials';
+          socials.removeAttribute('style');
+          inner.appendChild(socials);
+        }
+
+        // Copyright
+        var copySrc = footerEl.querySelectorAll('p');
+        var copyText = '';
+        copySrc.forEach(function (p) {
+          if (!p.getAttribute('style')) copyText = p.textContent.trim();
+        });
+        if (copyText) {
+          var copy = document.createElement('div');
+          copy.className = 'footer-copyright';
+          copy.textContent = copyText;
+          inner.appendChild(copy);
+        }
+
+        footerSlide.appendChild(inner);
+        printSlides.appendChild(footerSlide);
+      }
+
+      // Strip loading="lazy" — lazy images have 0 height off-screen,
+      // which makes all slide measurements wrong.
+      Array.from(printSlides.querySelectorAll('img[loading]')).forEach(function (img) {
+        img.removeAttribute('loading');
+      });
+
+      // Wait for ALL images to load before measuring slides.
+      // Most are cached from the live page; uncached ones need a real load.
+      var allImgs = Array.from(printSlides.querySelectorAll('img'));
+      var unloaded = allImgs.filter(function (i) { return !i.complete; });
+
+      function runPackerAndPrint() {
+        // Force layout before measuring
+        // Scale print font-size proportionally from the user's A1–A5 selection (1.5× web size)
+        var PRINT_SCALE = 1.2;
+        var webFontSize = fontSizes[fontIdx] || 16;
+        var printFontSize = webFontSize * PRINT_SCALE;
+        var origFontSize = document.documentElement.style.fontSize;
+        document.documentElement.style.fontSize = printFontSize + 'px';
+        void printSlides.offsetHeight;
+
+        // ── Greedy slide packer ──
+        // Add children one by one; when adding one causes overflow, start a new
+        // slide. If a single child alone overflows (e.g. a big image), shrink it
+        // to fit. Consecutive images naturally get separate slides.
+        var MAX_H = 720;
+
+        function shrinkImagesInSlide(slide) {
+          var imgs = Array.from(slide.querySelectorAll('img'));
+          imgs.forEach(function (img) {
+            var attempts = 0;
+            while (attempts < 14 && slide.scrollHeight > MAX_H) {
+              var curH = img.offsetHeight;
+              if (curH < 50) break;
+              img.style.maxHeight = Math.max(50, curH * 0.78) + 'px';
+              img.style.width = 'auto';
+              void slide.offsetHeight;
+              attempts++;
+            }
+          });
+        }
+
+        function shrinkFontInSlide(slide) {
+          var body = slide.querySelector('.slide-body') || slide;
+          var attempts = 0;
+          while (slide.scrollHeight > MAX_H && attempts < 8) {
+            var cur = parseFloat(getComputedStyle(body).fontSize);
+            var ratio = (MAX_H - 4) / slide.scrollHeight;
+            body.style.fontSize = (cur * ratio) + 'px';
+            void slide.offsetHeight;
+            attempts++;
+          }
+        }
+
+        Array.from(printSlides.children).forEach(function (origSlide) {
+          if (origSlide.classList.contains('slide-hero') || origSlide.classList.contains('slide-quote')
+            || origSlide.classList.contains('slide-footer') || origSlide.classList.contains('slide-bonus')) return;
+
+          var body = origSlide.querySelector('.slide-body');
+          if (!body || body.children.length <= 1) {
+            // Single-child slide that overflows → shrink to fit
+            void origSlide.offsetHeight;
+            if (origSlide.scrollHeight > MAX_H) {
+              shrinkImagesInSlide(origSlide);
+              if (origSlide.scrollHeight > MAX_H) shrinkFontInSlide(origSlide);
+            }
+            return;
+          }
+
+          void origSlide.offsetHeight;
+          if (origSlide.scrollHeight <= MAX_H) return;
+
+          var header = origSlide.querySelector('.slide-header');
+          var mainTitle = header ? (header.querySelector('.slide-title') || {}).textContent || '' : '';
+          var stEl = header ? header.querySelector('.slide-subtitle') : null;
+          var subBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
+
+          var allChildren = Array.from(body.children);
+          while (body.firstChild) body.removeChild(body.firstChild);
+
+          var curSlide = origSlide;
+          var curBody = body;
+          var group = [curSlide];
+
+          allChildren.forEach(function (child) {
+            curBody.appendChild(child);
+            void curSlide.offsetHeight;
+
+            if (curSlide.scrollHeight <= MAX_H) return;
+
+            // This child causes overflow — move it to a new slide
+            curBody.removeChild(child);
+
+            var newSlide = makeSlide(mainTitle, subBase, 0);
+            var newBody = newSlide.querySelector('.slide-body');
+            newBody.appendChild(child);
+            printSlides.insertBefore(newSlide, curSlide.nextSibling);
+
+            curSlide = newSlide;
+            curBody = newBody;
+            group.push(curSlide);
+
+            void curSlide.offsetHeight;
+
+            // Single child alone exceeds MAX_H → shrink to fit
+            if (curSlide.scrollHeight > MAX_H) {
+              shrinkImagesInSlide(curSlide);
+              if (curSlide.scrollHeight > MAX_H) shrinkFontInSlide(curSlide);
+            }
+          });
+
+          if (group.length > 1) {
+            group.forEach(function (s, i) {
+              var st = s.querySelector('.slide-subtitle');
+              if (st) st.textContent = (st.dataset.base || st.textContent) + ' (' + (i + 1) + '/' + group.length + ')';
+            });
+          }
+        });
+
+        // Auto-shrink individual prompt-body blocks that are too wide/tall
+        Array.from(printSlides.querySelectorAll('.prompt-body')).forEach(function (pb) {
+          var slide = pb.closest('.slide');
+          if (!slide) return;
+          var MIN_FONT = 8;
+          var cur = parseFloat(getComputedStyle(pb).fontSize);
+          var attempts = 0;
+          while (attempts < 12 && cur > MIN_FONT) {
+            void slide.offsetHeight;
+            var slideOver = slide.scrollHeight > MAX_H;
+            var pbOver = pb.scrollWidth > pb.clientWidth + 2;
+            if (!slideOver && !pbOver) break;
+            cur = Math.max(MIN_FONT, cur * 0.88);
+            pb.style.fontSize = cur + 'px';
+            pb.style.lineHeight = '1.5';
+            attempts++;
+          }
+        });
+
+        // Remove ghost slides whose body is empty or has negligible content
+        Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+          if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
+          var body = s.querySelector('.slide-body');
+          if (!body || body.children.length === 0 || body.scrollHeight < 50) {
+            s.remove();
+          }
+        });
+
+        // Final clamp: every slide is strictly 720px, no bleeding
+        Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+          s.style.setProperty('max-height', MAX_H + 'px', 'important');
+          s.style.setProperty('overflow', 'hidden', 'important');
+        });
+
+        // Set CSS variable so @media print uses the scaled font-size,
+        // then restore the original web font-size for the live page.
+        document.documentElement.style.setProperty('--print-font-size', printFontSize + 'px');
+        document.documentElement.style.fontSize = origFontSize;
+
+        // Remove measurement styles and print
+        printSlides.removeAttribute('style');
+        document.body.classList.add('printing');
+        window.print();
+        setTimeout(function () {
+          document.body.classList.remove('printing');
+          if (printSlides.parentNode) document.body.removeChild(printSlides);
+        }, 500);
+
+      } // end runPackerAndPrint
+
+      // Kick off: wait for images then run packer
+      if (!unloaded.length) {
+        runPackerAndPrint();
+      } else {
+        var imgLoaded = 0;
+        unloaded.forEach(function (img) {
+          img.onload = img.onerror = function () {
+            if (++imgLoaded >= unloaded.length) runPackerAndPrint();
+          };
+        });
+        setTimeout(function () { if (imgLoaded < unloaded.length) runPackerAndPrint(); }, 3000);
+      }
+    }
+
+    function makeSlide(mainTitle, subTitle, pageNum) {
+      var slide = document.createElement('div');
+      slide.className = 'slide';
+
+      var header = document.createElement('div');
+      header.className = 'slide-header';
+
+      var titleEl = document.createElement('h2');
+      titleEl.className = 'slide-title';
+      titleEl.textContent = mainTitle;
+      header.appendChild(titleEl);
+
+      if (subTitle) {
+        var subEl = document.createElement('h3');
+        subEl.className = 'slide-subtitle';
+        subEl.dataset.base = subTitle;
+        subEl.textContent = pageNum > 0 ? subTitle + ' (' + pageNum + ')' : subTitle;
+        header.appendChild(subEl);
+      }
+
+      var body = document.createElement('div');
+      body.className = 'slide-body';
+      slide.appendChild(header);
+      slide.appendChild(body);
+      return slide;
+    }
+  </script>
+</body>
+
+</html>

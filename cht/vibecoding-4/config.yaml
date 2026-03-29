@@ -1,0 +1,21 @@
+page:
+  title: "OpenSpec × Claude Code 全端實戰"
+  badge: "Vibe Coding 教學"
+  hero_title: "規格驅動開發<br>從 0 到 1，從 1 到 N"
+  subtitle: "用 OpenSpec + Claude Code 打造有資料庫的全端系統，再透過 Agent Skills 讓每次迭代都可追蹤、可協作"
+
+seo:
+  title: "OpenSpec × Claude Code 全端實戰｜Vibe Coding 教學"
+  description: "用 OpenSpec + Claude Code 打造有資料庫的全端系統，再透過 Agent Skills 讓每次迭代都可追蹤、可協作"
+  image: "https://deanlin.net/course/cht/vibecoding-4/assets/og-image.jpg"
+  url: "https://deanlin.net/course/cht/vibecoding-4/"
+
+quotes:
+  opening:
+    text: >
+      最難的並不是 0 到 1，而是 1 到 100 的那段路；有了規格驅動開發，這一切會變得容易許多。
+  closing:
+    text: >
+      工程師的重點不再是寫了多少行程式，<br>
+      而是去評估系統架構、審查程式碼合理性。<br><br>
+      不管 AI 有多強大，出事還是要人類來背鍋。

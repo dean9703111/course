@@ -1,0 +1,21 @@
+page:
+  title: "Vibe Coding 自動化測試 × Agent Skills"
+  badge: "Vibe Coding 教學"
+  hero_title: "自動化測試 × Agent Skills"
+  subtitle: "學會用 Workflow 建立自動化測試、GitHub Action 守住品質底線，再銜接 Agent Skills 讓 AI 持續累積專業能力"
+
+seo:
+  title: "Vibe Coding 自動化測試 × Agent Skills｜Vibe Coding 教學"
+  description: "學會用 Workflow 建立自動化測試、GitHub Action 守住品質底線，再銜接 Agent Skills 讓 AI 持續累積專業能力"
+  image: "https://deanlin.net/course/cht/vibecoding-3/assets/og-image.jpg"
+  url: "https://deanlin.net/course/cht/vibecoding-3/"
+
+quotes:
+  opening:
+    text: >
+      市場不會為爛產品買單；加入自動化測試，是讓 Vibe Coding 的成果從玩具走向產品的過程。
+  closing:
+    text: >
+      學習 AI 並不是搜集一大堆指令複製貼上就好，<br>
+      更重要的是了解應用情境後，透過實踐調整為適合自己的工作流。<br><br>
+      讓 AI 成為你的助手，而不是取代自己的思考與判斷。
