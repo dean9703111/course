@@ -290,7 +290,7 @@ Commit 訊息可以由 AI 自動生成，或自己手動輸入
 ### 🎒 Skill 的結構
 
 - **提示詞（Prompt）**：精心設計的指令
-- **程式腳本（Scripts）**：可執行的自動化程式
+- **程式腳本（Scripts）**：可執行的程式
 - **參考資源（Reference）**：補充 AI 判斷所需的資料
 
 ### 🔍 Skill 的三個執行階段
@@ -306,22 +306,141 @@ Commit 訊息可以由 AI 自動生成，或自己手動輸入
 
 ## 安裝別人的 Skill
 
+### 👣 下載練習專案
+
+為了方便大家了解 Skill 如何運作，我在 GitHub 上傳了一個[練習用專案](https://github.com/dean9703111/ai-agent-skill-for-video-workflow)
+
+到 GitHub 頁面點擊 `Code`，複製 Repository 連結後，就可以用 `git clone` 下載到本機。
+
+```prompt [label="下載練習專案"]
+git clone git@github.com:dean9703111/ai-agent-skills-practice.git
+```
+
+在 Antigravity Clone 專案
+
+[flow]
+1. 到 GitHub 開啟練習專案，點擊 `Code` 複製網址
+2. 回到 Antigravity，選擇 `Git Clone`
+3. 貼上 Repository 網址，下載到本機
+4. 開啟剛 clone 下來的專案資料夾
+[/flow]
+
 ### 📦 各工具的 Skill 路徑
+
+這次使用 Antigravity 示範，如果你平常習慣的是 Cursor、Copilot、Claude 或 Codex，也完全沒問題。對 Skill 來說，核心概念都一樣，差別通常只是安裝路徑不同。
+
 
 | 工具 | Project Skill 路徑 | Global Skill 路徑 |
 |------|-------------------|------------------|
 | Cursor | `.cursor/skills` | `~/.cursor/skills` |
+| Copilot (VSCode) | `.github/skills` | `-` |
 | Claude | `.claude/skills` | `~/.claude/skills` |
 | Codex | `.codex/skills` | `~/.codex/skills` |
 | Antigravity | `.agent/skills` | `~/.gemini/antigravity/global_skills` |
 
-### 🔗 Symlink：一份 Skill 多工具共用
+因為每個 AI Agent 的路徑不同，可以使用 [dotagents](https://github.com/iannuttall/dotagents) 來協助建立 symlinks。
 
-```prompt [label="Mac 建立 Symlink"]
-ln -s /path/to/shared/skills ~/.cursor/skills
+```prompt [label="將 Agent Skills 同步到指定的 AI Agent"]
+npx @iannuttall/dotagents
 ```
 
-單一來源管理，未來維護更方便，修改一次就能在所有工具中生效。
+單一來源管理，未來維護更方便，修改一次就能在所有工具中生效；此套件會在 `.agents` 底下管理。
+
+### 🎬 用實作理解 Skill 運作邏輯
+
+這邊我用一組影音工作流的 Skills 來示範：
+
+- `audio-to-srt`：把音訊轉成字幕檔
+- `srt-enhancer`：優化字幕內容與斷句
+- `srt-card-annotator`：設計字卡與畫面標註
+- `srt-social-summary`：生成影片介紹與社群貼文
+
+之所以用這組技能舉例，是想提醒大家，AI Agent 並不是只能拿來寫程式。
+像是分析素材、整理內容、協助創作，這類工作其實也非常適合交給 Skill 來處理。
+
+#### Skill - Discovery
+
+把測試用的音訊檔（audio-example.m4a）拖曳進去，然後輸入：
+
+```prompt [label="觸發 Skill"]
+轉 SRT 字幕檔
+```
+
+這時候 AI 不會立刻執行程式，而是先搜尋目前專案裡有沒有跟這個任務相關的 Skill。
+
+#### Skill - Activation
+
+如果它成功匹配到像 `audio-to-srt` 這樣的 Skill，才會開始完整閱讀那份 `SKILL.md`。
+
+在這之前，AI 通常只會先讀技能名稱與描述，這也是 Skill 能節省 Token 的原因。
+
+從 AI 的視角來看，很像我們用 Google 搜尋時，會先看標題和摘要，確認相關之後才點進去閱讀全文。
+
+#### Skill - Execution
+
+真正進入執行階段後，AI 才會依照文件裡的步驟逐步完成任務。
+
+[flow]
+1. 先驗證環境，確認 Python、必要套件與輸入音檔是否齊全
+2. 如果缺少依賴，AI 會提示並協助安裝所需資源
+3. 確認前置條件沒問題後，才開始逐字稿轉換、文字切割與時間軸調整
+4. 最後輸出對應的 `srt` 字幕檔
+[/flow]
+
+> **小提醒**
+> 真正執行任務的步驟，通常會放在 Skill 的 `scripts` 資料夾裡，這個案例就是用 Python 腳本來完成字幕處理。所以當 AI 詢問你是否要執行指令時，實際上就是準備呼叫那些腳本。
+
+### 📚 References：讓 Skill 補充情境知識
+
+Skill 不只有 `scripts` 這個執行腳本的資料夾，通常還會搭配一個 `references` 資料夾，專門放補充資料。
+
+這邊我用 `srt-social-summary` 這個 Skill 當例子。假設我想把同一支影片發布到 Facebook、Threads、YouTube 等不同平台，那每個平台的寫法其實都不太一樣。
+
+像是：
+
+- Hashtag 要怎麼下
+- 開頭怎麼寫比較吸引人
+- 不同平台的語氣與篇幅怎麼調整
+
+> **漸進式揭露（Progressive Disclosure）**
+> 這些細節其實不需要全部塞進 `SKILL.md`。比較好的做法，是把它們整理到 `references` 裡，等 AI 判斷有需要時再去讀取。這就是一種的技巧。
+
+## 使用第三方 Skill
+
+### 🔎 尋找第三方 Skill
+
+接下來我們要為專案新增一個 Skill。這邊推薦大家可以到 [SkillAgent Skills Marketplace](https://skillsmp.com/) 搜尋現成的 Skill。
+
+很多人會把自己整理好的 Skill 分享出來讓其他人直接安裝使用，你可以在這裡透過英文關鍵字搜尋自己想找的能力。
+
+例如你想設計形象網站，就可以輸入 `frontend-design`。找到想安裝的 Skill 後，直接複製頁面上提供的安裝指令即可。
+
+> **執行安裝指令前，先確認 Node.js 已安裝**
+> 如果沒有安裝 Node.js，這類指令通常會無法執行。我之前有整理過 Python、Node.js、Git 的安裝教學，可以從[這支影片](https://youtu.be/5DEV_K0JauQ)查看。
+
+### 📥 安裝第三方 Skill
+
+接下來把畫面切回 Antigravity，點擊上方的 `Toggle Panel` 打開下方終端機，然後把剛剛複製的安裝指令貼上去。
+
+[flow]
+1. 開啟 Antigravity 的終端機，貼上頁面提供的安裝指令
+2. 在清單中找到想安裝的 Skill，這裡以 `frontend-design` 為例
+3. 按下 `Enter` 後，選擇要安裝到哪個工具
+4. 原則不需要特別選，因為大部分都是通用的
+5. 安裝範圍先選 `Project`，在單一專案中測試
+6. 最後選 `Yes` 開始安裝
+[/flow]
+
+
+### 💬 安裝後如何使用 Skill
+
+理解安裝原理之後，就可以回到右側的 AI 對話視窗，直接輸入和需求對應的提示詞。
+
+```prompt [label="使用已安裝的 Skill"]
+彙整「Agent Skills」的重要資訊後，設計一個有專業質感的中文教學網頁
+```
+
+送出提示詞後，AI 會先找到對應的 `SKILL.md`，確認有沒有和這個需求匹配的 Skill，接著才開始讀取內容並執行。
 
 ## 使用 Skill 的安全注意事項
 
@@ -337,7 +456,128 @@ ln -s /path/to/shared/skills ~/.cursor/skills
 - [purple] 先在 Project 測試，確認再移到 Global
 [/tags]
 
+### ✅ Skill 使用經驗
+
+- Skill 不是裝越多，AI 就越強
+- 如果同一類型的 Skill 裝了兩個以上，當需求命中時，常常會一起觸發
+- 這不只會增加 Token 消耗，也容易讓 AI 在執行過程中卡住或走偏
+- 在提示詞的世界裡，1 + 1 不一定大於 2，甚至可能小於 1
+
+> **同類型的 Skill，建議擇優安裝一個**
+> 像前端網頁生成這類需求，如果同時安裝多個相近 Skill，AI 反而要花更多成本判斷該遵循哪一套規則，結果未必更好。
+
+網路上的 Skill 雖然很多，但不是每一個都真的能讓 AI 變強
+- 有些 Skill 描述看起來很厲害，實際使用時效果卻不穩定
+- 有些會增加上下文負擔，卻沒有提供足夠的專業價值
+- 有些甚至會讓 AI 的行為變得更難預測
+
+> **先在 Project 測試，再決定要不要放到 Global**
+> 建議先用獨立專案驗證 Skill 的運作是否符合預期。真的有用、而且具備通用性，再放進 Global Skill，避免把整體工作流越裝越亂。
+
 ## 建立自己的 Skill
+
+儘管網路上有很多 Skill，但未必能符合自己實際的工作流。
+
+如果找不到合適的，那我們就自己建立。
+
+### 🧩 安裝 Skill Development
+
+不知道怎麼下手可以先請 AI 幫忙生成一個初版。
+
+```prompt [label="安裝 Skill Development"]
+npx skills add anthropics/claude-code
+```
+
+接著在清單中選擇 `Skill Development`，先安裝在目前這個 Project 就好。
+
+### 🛠️ 建立第一個 Skill：音訊轉 SRT
+
+安裝完畢後，開一個新的對話窗，直接描述自己想建立的 Skill。
+
+這邊我是請 AI 幫我建立一個用 Python 將音訊檔轉成 `srt` 字幕檔的 Skill，並把規則一次講清楚：
+
+```prompt [label="建立 audio-to-srt Skill"]
+我想要建立一個透過 Python 將音訊檔轉成 srt 逐字稿的 Skill
+使用 openai-whisper 套件
+我可以設定每行最多幾個字，若沒填寫預設最多 22 字，最少 4 個字
+時間軸若不連續，當間隔小於 0.3s 時，後面需要往前補
+執行時會先檢查環境與套件是否安裝，並確認有提供音訊檔
+將最後輸出的 srt 檔命名為「origin.srt」
+```
+
+你會看到 AI 在執行過程中，確實有參考剛剛安裝的 `Skill Development`。
+
+稍等一段時間後，AI Agent 就會依照這個 Skill，幫我們建立一個新的 Skill。
+
+### 🧱 拆解 SKILL.md 的結構
+
+打開建立好的 `SKILL.md`，可以看到它大致分成三個部分：
+
+- 最上面是 Meta Data，也就是 AI Agent 一開始會先讀取的資訊
+- 其中最重要的是 `description`，寫得越具體，AI 越容易在正確的情境下找到它
+- 下面則是 Skill 的描述與執行步驟，告訴 AI 應該如何完成這個任務
+
+描述執行的流程如下：
+
+[flow]
+1. 先檢查環境，確認 Python、對應套件與輸入音訊檔是否存在
+2. 前置條件通過後，才開始執行 Python 腳本
+3. 根據規則切分字幕文字與調整時間軸
+4. 最後輸出 `origin.srt`
+[/flow]
+
+而 `scripts` 資料夾，就是 AI 幫我們寫好的 Python 腳本存放位置。
+
+### 🧪 測試 Skill
+
+得到 Skill 初版後，接下來最重要的不是立刻安裝更多 Skill，而是驗證它的運作是否符合預期。
+
+這邊先開一個新的對話窗，提供一個音訊檔，然後輸入：
+
+```prompt [label="測試 audio-to-srt"]
+轉成字幕檔
+```
+
+如果一切正常，你會看到 AI 順利找到剛剛設計的 Skill，並根據規則開始執行。
+
+稍等一段時間後，`srt` 字幕檔就會產生。我們可以從幾個重點來驗證：
+
+- 檔名是否為 `origin.srt`
+- 每行是否符合最長 22 字、最少 4 個字的規則
+- 前後段時間軸是否有依照規則黏合
+
+如果你跟著教學做到這一步，代表你已經完成了第一個真正能運作的 Skill。
+
+### 🪄 建立第二個 Skill：替字幕補上參考字卡
+
+接著我再示範建立一個有關聯性的 Skill。
+
+這個 Skill 的目標，是請 AI 在 `srt` 字幕檔內判斷適合增加字卡的位置，提升後期剪輯效率。
+
+```prompt [label="建立 reference-cards Skill"]
+我想要建立一個在 srt 逐字稿文字下方補上「參考字卡」的 Skill
+只能在每段字幕的「文字區塊」下方新增字卡行，不可更改原本的時間碼與原字幕文字。
+我希望的結構是 `[字卡](word:xxx / type:yyy)`
+- word：必須是從該段內容萃取出的「重點詞/短句」（10~16 字內，避免太長）
+- type：必須從 references/*.yaml 定義的 type 之一選擇(金色重點、白色提醒、紅色警告、藍色列點)
+每 10 段字幕內，至少要新增 2 個字卡，字卡必須「貼合情境」選型：
+  - 有風險、錯誤、踩雷 → 紅色警告
+  - 建議、提醒、注意事項 → 白色提醒
+  - 條列、步驟、清單感 → 藍色列點
+  - 核心結論、最關鍵一句 → 金色重點
+將最後輸出的 srt 檔命名為「reference-cards.srt」
+請勿使用 Python 之類的腳本，必須要用 AI 來判斷
+```
+
+Skill 完成後，我們開一個新的視窗，把上一步生成的 `origin.srt` 放進去，然後輸入：
+
+```prompt [label="測試 reference-cards"]
+給我字卡重點
+```
+
+稍等一段時間後，可以看到 `reference-cards.srt` 出現。
+
+點進去後，你會發現 AI 有根據字幕內容，設計出適合插入字卡的位置與類型。
 
 ### 🛠️ 從對話萃取 Skill 的技巧
 
@@ -356,7 +596,17 @@ ln -s /path/to/shared/skills ~/.cursor/skills
 
 ## Workflow + Skill 組合應用
 
-### 🔄 以影音後期工作流為例
+### 🔄 以影音工作流為例
+
+我們可以設計 Worflow 讓 Skills 穩定觸發
+
+[flow]
+1. 在「Workflows」分頁下，選擇「Workspace」在工作區建立
+2. 名稱打 `audio-to-srt-cards`
+3. 描述寫 `將音檔轉成逐字稿後，再生成字卡的工作流`
+[/flow]
+
+內容描述每一步要參考的 Skill 就可以了
 
 ```prompt [label="audio-to-srt-cards Workflow"]
 按照下面步驟執行
@@ -365,11 +615,17 @@ STEP 1: 使用「mp3-to-srt」的 Skill 將音檔轉成逐字稿
 STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡
 ```
 
+完成後輸入`/`，選擇剛剛建立的 Workflow，將音訊檔放進去。
+
+稍等一段時間，就可以看到工作流有根據我們的指引，參考對應的 Skill 完成任務了！
+
 ### 💡 組合設計的好處
 
 - 每個 Skill 可以獨立維護與更新
 - Workflow 只負責串接流程
 - 整體架構更有彈性，1+1 大於 2
+
+# 總結
 
 [summary]
 - 🧪 **自動化測試** | 解決穩定性、複雜度、擴充性三大痛點，守住專案的底線
@@ -378,3 +634,6 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡
 - 🎒 **Agent Skills** | 特定情境的技能包，教會一次永遠記得，持續累積 AI 的價值
 - 🔗 **Workflow + Skill** | 組合應用讓複雜流程穩定可重複，成為你的競爭護城河
 [/summary]
+
+[youtube id="Rb0_LutRIaw" title="Workflow 複習影片"]
+[youtube id="xe00zJEtuMo" title="AI Agents 複習影片"]

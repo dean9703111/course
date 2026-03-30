@@ -365,6 +365,104 @@
       font-size: .95rem
     }
 
+    .minor-title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin: 1rem 0 .85rem;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.5;
+      letter-spacing: .01em;
+      color: var(--accent2);
+    }
+
+    .minor-title::before {
+      content: '▋';
+      color: var(--accent);
+      font-size: 1.05em;
+      line-height: 1;
+      transform: translateY(-.02em);
+    }
+
+    /* ===== GROUP BLOCK (### container) ===== */
+    .group-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      transition: border-color .3s;
+    }
+
+    .group-block:hover {
+      border-color: rgb(var(--accent-rgb) / .3);
+    }
+
+    .group-header {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: .9rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      color: var(--text);
+    }
+
+    .group-header .icon {
+      font-size: 1.1rem;
+    }
+
+    .group-body {
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .group-body > * {
+      margin-bottom: 0;
+    }
+
+    .group-body .prompt-block,
+    .group-body .flow,
+    .group-body .insight,
+    .group-body .youtube-embed,
+    .group-body .image-text {
+      margin-bottom: 0;
+    }
+
+    .group-body ul,
+    .group-body p {
+      color: var(--text-dim);
+      font-size: .95rem;
+      margin: 0;
+    }
+
+    .group-body ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .group-body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+    }
+
+    .group-body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent2);
+    }
+
     /* ===== INLINE CODE ===== */
     code {
       background: var(--code-bg);
@@ -495,29 +593,48 @@
 
     /* ===== INSIGHT BOX ===== */
     .insight {
+      --insight-badge-size: 28px;
+      --insight-badge-icon-size: 14px;
+      --insight-badge-top: -14px;
+      --insight-badge-left: 20px;
       background: linear-gradient(135deg, rgb(var(--accent3-rgb) / .06), rgb(var(--accent2-rgb) / .04));
       border: 1px solid rgb(var(--accent3-rgb) / .2);
       border-radius: var(--radius);
       padding: 1.75rem;
-      margin: 2rem 0;
+      margin: 1.25rem 0 2rem;
       position: relative;
     }
 
     .insight::before {
-      content: '💡';
+      content: '';
       position: absolute;
-      top: -14px;
-      left: 20px;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      top: var(--insight-badge-top);
+      left: var(--insight-badge-left);
+      width: var(--insight-badge-size);
+      height: var(--insight-badge-size);
       background: var(--bg-card);
       border: 1px solid rgb(var(--accent3-rgb) / .25);
       border-radius: 50%;
-      font-size: .85rem;
-      line-height: 1;
+      z-index: 0;
+    }
+
+    .insight::after {
+      content: '';
+      position: absolute;
+      top: calc(var(--insight-badge-top) + ((var(--insight-badge-size) - var(--insight-badge-icon-size)) / 2));
+      left: calc(var(--insight-badge-left) + ((var(--insight-badge-size) - var(--insight-badge-icon-size)) / 2));
+      width: var(--insight-badge-icon-size);
+      height: var(--insight-badge-icon-size);
+      background: var(--accent3);
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3Cpath d='M12 2a7 7 0 0 0-4 12.75c.57.39 1 1 1 1.68V17h6v-.57c0-.68.43-1.29 1-1.68A7 7 0 0 0 12 2Z'/%3E%3C/svg%3E");
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6'/%3E%3Cpath d='M10 22h4'/%3E%3Cpath d='M12 2a7 7 0 0 0-4 12.75c.57.39 1 1 1 1.68V17h6v-.57c0-.68.43-1.29 1-1.68A7 7 0 0 0 12 2Z'/%3E%3C/svg%3E");
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      z-index: 1;
     }
 
     .insight .insight-title {
@@ -912,6 +1029,58 @@
       font-size: .85rem;
       color: var(--text-dim);
       line-height: 1.7
+    }
+
+    /* ===== TABLE ===== */
+    .table-wrap {
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+    }
+
+    .content-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 420px;
+    }
+
+    .content-table th,
+    .content-table td {
+      padding: .85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: .9rem;
+      line-height: 1.7;
+    }
+
+    .content-table th {
+      background: rgb(var(--accent-rgb) / .08);
+      color: var(--text);
+      font-weight: 700;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .content-table td {
+      color: var(--text-dim);
+    }
+
+    .content-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .content-table .align-left {
+      text-align: left;
+    }
+
+    .content-table .align-center {
+      text-align: center;
+    }
+
+    .content-table .align-right {
+      text-align: right;
     }
 
     /* ===== INSTRUCTOR ===== */
@@ -2266,7 +2435,19 @@
     }
 
     #print-slides .insight {
-      padding: 1rem 1.25rem;
+      --insight-badge-top: calc(var(--insight-badge-size) / -2);
+      --insight-badge-left: 1rem;
+      --insight-badge-icon-size: 13px;
+      padding: 1rem 1.25rem 1rem 2.5rem;
+      margin: .9rem 0 .6rem;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* In print, keep the badge straddling the border like the web version. */
+    #print-slides .insight::before {
+      top: var(--insight-badge-top);
+      left: var(--insight-badge-left);
     }
 
     #print-slides .insight-title {
@@ -2293,6 +2474,119 @@
     #print-slides .youtube-embed {
       break-inside: avoid;
       page-break-inside: avoid;
+    }
+
+    #print-slides .table-wrap {
+      margin: .6rem 0;
+      border-radius: 10px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      overflow: hidden;
+    }
+
+    #print-slides .content-table {
+      min-width: 0;
+      table-layout: fixed;
+    }
+
+    #print-slides .content-table th,
+    #print-slides .content-table td {
+      padding: .45rem .55rem;
+      font-size: .74rem;
+      line-height: 1.45;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Flow: compact for print */
+    #print-slides .flow {
+      gap: .35rem;
+      margin: .6rem 0;
+    }
+
+    #print-slides .flow-step {
+      padding: .45rem .75rem;
+      gap: .6rem;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    #print-slides .flow-step+.flow-step::before {
+      top: -.35rem;
+      height: .35rem;
+    }
+
+    #print-slides .flow-step .step-num {
+      width: 26px;
+      height: 26px;
+      font-size: .72rem;
+    }
+
+    #print-slides .flow-step .step-title {
+      font-size: .82rem;
+      margin-bottom: .1rem;
+    }
+
+    #print-slides .flow-step .step-desc {
+      font-size: .74rem;
+      line-height: 1.5;
+    }
+
+    /* Group block: compact for print */
+    #print-slides .group-block {
+      margin-bottom: .75rem;
+      break-inside: auto;
+    }
+
+    #print-slides .group-header {
+      padding: .55rem 1.25rem;
+      font-size: .95rem;
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    #print-slides .group-body {
+      padding: .75rem 1.25rem;
+      gap: .6rem;
+    }
+
+    #print-slides .group-body > * {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    #print-slides .summary-grid {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+      margin: .55rem 0;
+    }
+
+    #print-slides .summary-card {
+      display: grid;
+      grid-template-columns: auto auto minmax(0, 1fr);
+      align-items: start;
+      column-gap: .5rem;
+      padding: .75rem .9rem;
+      border-radius: 10px;
+    }
+
+    #print-slides .summary-card .sc-icon {
+      font-size: 1rem;
+      margin-bottom: 0;
+      text-align: left;
+    }
+
+    #print-slides .summary-card h4 {
+      font-size: .85rem;
+      margin-bottom: 0;
+      line-height: 1.35;
+    }
+
+    #print-slides .summary-card p {
+      font-size: .74rem;
+      line-height: 1.45;
+      margin: 0;
     }
 
     #print-slides .youtube-wrapper iframe {
@@ -2795,9 +3089,17 @@
       <ul class="toc-sub">
         <li><a href="#sub-agent-skill">什麼是 Agent Skill？</a></li>
         <li><a href="#sub-skill">安裝別人的 Skill</a></li>
-        <li><a href="#sub-skill">使用 Skill 的安全注意事項</a></li>
-        <li><a href="#sub-skill">建立自己的 Skill</a></li>
+        <li><a href="#sub-skill-2">使用第三方 Skill</a></li>
+        <li><a href="#sub-skill-3">使用 Skill 的安全注意事項</a></li>
+        <li><a href="#sub-skill-4">建立自己的 Skill</a></li>
         <li><a href="#sub-workflow-skill">Workflow + Skill 組合應用</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="summary">
+      <a href="#summary" class="toc-group-title">
+        <span class="toc-num">★</span> 總結
+      </a>
+      <ul class="toc-sub">
       </ul>
     </li>
 
@@ -2830,6 +3132,7 @@
     <a href="#workflow-ai">Workflow 篇</a>
     <a href="#github-action">CI/CD 篇</a>
     <a href="#skills-ai">Skills 篇</a>
+    <a href="#summary">總結</a>
           </nav>
   </header>
 
@@ -2884,20 +3187,19 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">😓</span> 三大痛點</h3>
-      <ul>
-        <li><strong>穩定性</strong>：請 AI 解決目前的問題，改完後發現過去正常的功能被改壞了</li>
-        <li><strong>複雜度</strong>：功能持續增加，靠人工逐一確認流程，耗時又容易有遺漏</li>
-        <li><strong>擴充性</strong>：架構逐漸複雜後，任何修改都可能引發連鎖影響，出狀況時連問題都不知道如何定位</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">😓</span> 三大痛點</div>
+      <div class="group-body">
+        <ul>
+  <li><strong>穩定性</strong>：請 AI 解決目前的問題，改完後發現過去正常的功能被改壞了</li>
+  <li><strong>複雜度</strong>：功能持續增加，靠人工逐一確認流程，耗時又容易有遺漏</li>
+  <li><strong>擴充性</strong>：架構逐漸複雜後，任何修改都可能引發連鎖影響，出狀況時連問題都不知道如何定位</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">如果這幾個問題能引起你的共鳴，恭喜你</div>
       <p>這代表你已經進入了下一個階段，開始思考如何讓 Vibe Coding 的成果真正可靠。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -2953,14 +3255,11 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3>‍💻 下載與啟動專案</h3>
-      <p>我用 Vibe Coding 寫了一個有「登入頁、儀表板、管理後台、Mock API」的<a href="https://github.com/deancourse/vibe-coding-testing-practice" target="_blank" rel="noopener">前端專案</a> 讓大家一起練習</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
+    <div class="group-block">
+      <div class="group-header">‍💻 下載與啟動專案</div>
+      <div class="group-body">
+        <p>我用 Vibe Coding 寫了一個有「登入頁、儀表板、管理後台、Mock API」的<a href="https://github.com/deancourse/vibe-coding-testing-practice" target="_blank" rel="noopener">前端專案</a> 讓大家一起練習</p>
+        <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -3004,12 +3303,11 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+        <div class="insight">
       <div class="insight-title">多了解專案的架構，Vibe Coding 可以走得更遠</div>
       <p>你也可以直接在 AI 對話視窗說「幫我安裝套件並啟動專案」來搞定一切，但理解專案結構會讓你受益更多。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -3018,56 +3316,53 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🔐</span> 格式驗證（前端）</h3>
-      <ul>
-        <li>電子郵件格式錯誤時，有錯誤提示</li>
-        <li>密碼格式錯誤時，有對應的錯誤提示</li>
-        <li>格式正確時，才會呼叫後端 API</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🔐</span> 格式驗證（前端）</div>
+      <div class="group-body">
+        <ul>
+  <li>電子郵件格式錯誤時，有錯誤提示</li>
+  <li>密碼格式錯誤時，有對應的錯誤提示</li>
+  <li>格式正確時，才會呼叫後端 API</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">判斷是否有傳送到後端</div>
       <p>打開 F12（點擊滑鼠右鍵），選擇檢查，來開啟「開發人員工具」，可在「網路」的分頁瀏覽（Fetch/XHR）</p>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🔌</span> API 回傳模擬（Mock API）</h3>
-      <ul>
-        <li>密碼錯誤時，有錯誤提示</li>
-        <li>帳號不存在時，有錯誤提示</li>
-        <li>登入成功後，有拿到 Token</li>
-      </ul>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🔌</span> API 回傳模擬（Mock API）</div>
+      <div class="group-body">
+        <ul>
+  <li>密碼錯誤時，有錯誤提示</li>
+  <li>帳號不存在時，有錯誤提示</li>
+  <li>登入成功後，有拿到 Token</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">前後端任務未必是並行</div>
       <p>這邊用 Mock Service Worker 來模擬後端，方便釐清錯誤方向</p>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🛡</span> ️ 角色與權限</h3>
-      <ul>
-        <li>把資訊儲存在「應用程式 ⭢ 本機儲存空間 ⭢ localhost」下面的 msw_user_role</li>
-        <li>有 Token，才能呼叫後續 API；沒有 Token，直接導向登入頁</li>
-        <li>管理者才能看到「管理後台」；一般用戶看不到，也無法誤闖</li>
-      </ul>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🛡</span> ️ 角色與權限</div>
+      <div class="group-body">
+        <ul>
+  <li>把資訊儲存在「應用程式 ⭢ 本機儲存空間 ⭢ localhost」下面的 msw_user_role</li>
+  <li>有 Token，才能呼叫後續 API；沒有 Token，直接導向登入頁</li>
+  <li>管理者才能看到「管理後台」；一般用戶看不到，也無法誤闖</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">寫測試不是浪費時間，是在加速開發</div>
       <p>有了測試，你才能更放心地新增與修改功能；遇到問題時也能快速定位，而不是一個個慢慢嘗試。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -3076,14 +3371,11 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📋</span> 應涵蓋的測試情境</h3>
-      <p>根據十幾年的開發經驗，寫測試其實是在加速開發；讓你更放心地新增與修改功能，遇到問題時也能快速定位。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📋</span> 應涵蓋的測試情境</div>
+      <div class="group-body">
+        <p>根據十幾年的開發經驗，寫測試其實是在加速開發；讓你更放心地新增與修改功能，遇到問題時也能快速定位。</p>
+        <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -3120,25 +3412,26 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🔄</span> 為什麼 Vibe Coding 更需要測試</h3>
-      <ul>
-        <li>Vibe Coding 經常修改流程、調整權限、變動 API</li>
-        <li>缺少測試案例，無法判斷這次修改是否影響其他功能</li>
-        <li>測試案例會隨規格變更與實際操作持續調整，不太可能一次到位</li>
-        <li>有了測試，需求規格的內容才能真正被驗證</li>
-      </ul>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🔄</span> 為什麼 Vibe Coding 更需要測試</div>
+      <div class="group-body">
+        <ul>
+  <li>Vibe Coding 經常修改流程、調整權限、變動 API</li>
+  <li>缺少測試案例，無法判斷這次修改是否影響其他功能</li>
+  <li>測試案例會隨規格變更與實際操作持續調整，不太可能一次到位</li>
+  <li>有了測試，需求規格的內容才能真正被驗證</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">前端驗證不等於安全</div>
       <p>前端做的格式驗證（如帳號格式、密碼格式），後端也不能少。</p>
       <p style="margin-top:.5rem">知道 API 路徑的人可以直接用 Terminal（curl）繞過前端呼叫 API，這是設計上必須注意的細節。</p>
+    </div>
+      </div>
     </div>
   </div>
 </section>
@@ -3162,14 +3455,11 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📋</span> 三者使用場景</h3>
-      <p>在合適的時機點使用，才會得到最大的效果，並節省 Token 的消耗</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📋</span> 三者使用場景</div>
+      <div class="group-body">
+        <p>在合適的時機點使用，才會得到最大的效果，並節省 Token 的消耗</p>
+        <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -3192,12 +3482,11 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+        <div class="insight">
       <div class="insight-title">不建議把 Rule 寫太多</div>
       <p>每次開啟新對話，AI 都會讀取完整的 Rule 文件。過多的 Rule 不僅佔用上下文空間、浪費 Token，還可能因資訊過載導致 AI 忽略規則。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -3206,14 +3495,11 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📝</span> 設計工作流執行步驟</h3>
-      <p>讓他扮演一位經驗豐富的軟體測試專家</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📝</span> 設計工作流執行步驟</div>
+      <div class="group-body">
+        <p>讓他扮演一位經驗豐富的軟體測試專家</p>
+        <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -3250,30 +3536,28 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+        <div class="insight">
       <div class="insight-title">小技巧</div>
       <p>以「狀態」的概念來管理，有測試通過才會標記；並給他幾個測試類型的範例參考</p>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">💡</span> 先文件、後程式的設計邏輯</h3>
-      <ul>
-        <li>先確認 AI 發想的測試情境是否有遺漏</li>
-        <li>確認後才讓 AI 開始撰寫程式</li>
-        <li>一口氣生成的話，如果結果不對，不但浪費時間還浪費 Token</li>
-      </ul>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">💡</span> 先文件、後程式的設計邏輯</div>
+      <div class="group-body">
+        <ul>
+  <li>先確認 AI 發想的測試情境是否有遺漏</li>
+  <li>確認後才讓 AI 開始撰寫程式</li>
+  <li>一口氣生成的話，如果結果不對，不但浪費時間還浪費 Token</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">建議每個頁面都有獨立的測試程式</div>
       <p>這樣日後修改遇到問題時，可以快速定位是哪個頁面的功能出了問題。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -3289,15 +3573,12 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">⚠</span> ️ 先用一個檔案來測試</h3>
-      <p>建議大家請 AI 撰寫測試程式時，不要讓他一口氣生成，而是先放一個檔案。</p>
-      <p>確認執行結果與期待相符在擴大範圍，否則一口氣生成，如果結果不是你要的，那不但浪費時間還浪費 Token。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">⚠</span> ️ 先用一個檔案來測試</div>
+      <div class="group-body">
+        <p>建議大家請 AI 撰寫測試程式時，不要讓他一口氣生成，而是先放一個檔案。</p>
+<p>確認執行結果與期待相符在擴大範圍，否則一口氣生成，如果結果不是你要的，那不但浪費時間還浪費 Token。</p>
+        <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -3341,30 +3622,28 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+        <div class="insight">
       <div class="insight-title"> 安全提醒：不要無腦點擊 Accept</div>
       <p>如果看不懂 AI 執行的指令，建議先把指令複製起來詢問確認，曾有網友遇過 <a href="https://www.reddit.com/r/google_antigravity/comments/1p82or6/google_antigravity_just_deleted_the_contents_of/" target="_blank" rel="noopener">AI 直接刪除整顆硬碟的案例</a></p>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🤔</span> 為什麼這樣做</h3>
-      <ul>
-        <li>光是 3 個功能不多的頁面，就涵蓋相當多的測試情境。</li>
-        <li>若用人工測試，即便是小專案，也要花好幾分鐘手動跑完流程，且容易有遺漏。</li>
-        <li>加入自動化測試後，你只要放給他跑就好。</li>
-      </ul>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🤔</span> 為什麼這樣做</div>
+      <div class="group-body">
+        <ul>
+  <li>光是 3 個功能不多的頁面，就涵蓋相當多的測試情境。</li>
+  <li>若用人工測試，即便是小專案，也要花好幾分鐘手動跑完流程，且容易有遺漏。</li>
+  <li>加入自動化測試後，你只要放給他跑就好。</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">隨著專案擴增，效益會更加明顯</div>
       <p>功能動輒成千上萬的大型專案，沒有自動化測試，任何不起眼的改動都可能在意想不到的地方引發問題。</p>
+    </div>
+      </div>
     </div>
   </div>
 </section>
@@ -3388,33 +3667,29 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🌿</span> 分支策略基礎</h3>
-      <ul>
-        <li><strong>main</strong>：主分支，對外的穩定版本，只接受來自 develop 的 Pull Request</li>
-        <li><strong>develop</strong>：開發分支，日常更新都推送到這裡</li>
-        <li><strong>feature/xxx</strong>：功能分支，開發單一功能時從 develop 切出，完成後合併回 develop</li>
-        <li><strong>hotfix/xxx</strong>：緊急修復分支，直接從 main 切出，修完後同時合併回 main 與 develop</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🌿</span> 分支策略基礎</div>
+      <div class="group-body">
+        <ul>
+  <li><strong>main</strong>：主分支，對外的穩定版本，只接受來自 develop 的 Pull Request</li>
+  <li><strong>develop</strong>：開發分支，日常更新都推送到這裡</li>
+  <li><strong>feature/xxx</strong>：功能分支，開發單一功能時從 develop 切出，完成後合併回 develop</li>
+  <li><strong>hotfix/xxx</strong>：緊急修復分支，直接從 main 切出，修完後同時合併回 main 與 develop</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">為什麼需要分支策略？</div>
       <p>如果把邏輯錯誤或功能不完善的版本直接推送到主分支，產品就壞掉了。分支策略的目的，是保護對外服務的穩定性。</p>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🚀</span> 建立第一個分支</h3>
-      <p>如果你是第一次接觸，可以先從 main 分支出 develop，來了解為什麼需要用不同分支開發。</p>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="prompt-block">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🚀</span> 建立第一個分支</div>
+      <div class="group-body">
+        <p>如果你是第一次接觸，可以先從 main 分支出 develop，來了解為什麼需要用不同分支開發。</p>
+        <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Terminal
@@ -3425,6 +3700,8 @@
       </div>
       <div class="prompt-body">git checkout -b develop</div>
     </div>
+      </div>
+    </div>
   </div>
 
   <div class="reveal">
@@ -3432,14 +3709,11 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">⚙</span> ️ 自動化測試指令</h3>
-      <p>到與 AI 的對話窗中輸入以下內</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">⚙</span> ️ 自動化測試指令</div>
+      <div class="group-body">
+        <p>到與 AI 的對話窗中輸入以下內</p>
+        <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
@@ -3452,18 +3726,17 @@
 每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
 測試完畢後，要生成覆蓋率報告讓我下載</div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📤</span> 推送到 GitHub</h3>
-      <p>等 AI 將 GitHub Action 內容更新完畢後，將變更推送到 GitHub</p>
-      <p>Commit 訊息可以由 AI 自動生成，或自己手動輸入</p>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="prompt-block">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📤</span> 推送到 GitHub</div>
+      <div class="group-body">
+        <p>等 AI 將 GitHub Action 內容更新完畢後，將變更推送到 GitHub</p>
+<p>Commit 訊息可以由 AI 自動生成，或自己手動輸入</p>
+        <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Terminal
@@ -3475,24 +3748,25 @@
       <div class="prompt-body">1. 撰寫 pages 頁面下的測試案例
 2. 在 GitHub Action 增加自動測試的流程</div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📊</span> 測試報告說明</h3>
-      <p>到 <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> 查看執行結果：</p>
-      <ul>
-        <li>成功是綠色勾勾，失敗是紅色叉叉</li>
-        <li>Artifacts 區塊可下載測試覆蓋率報告</li>
-        <li>可了解哪些功能測試完整、哪些還需要補充</li>
-      </ul>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📊</span> 測試報告說明</div>
+      <div class="group-body">
+        <p>到 <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a> 查看執行結果：</p>
+<ul>
+  <li>成功是綠色勾勾，失敗是紅色叉叉</li>
+  <li>Artifacts 區塊可下載測試覆蓋率報告</li>
+  <li>可了解哪些功能測試完整、哪些還需要補充</li>
+</ul>
+        <div class="insight">
       <div class="insight-title">經驗分享</div>
       <p>在測試覆蓋率這塊，我們沒必要追求 100%；而是重要的邏輯都要測試到，這才是最重要的。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -3501,14 +3775,11 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🔒</span> GitHub Ruleset 設定步驟</h3>
-      <p>如果你希望只有「通過測試」的分支才能合併到主分支，就需要多做一設定。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🔒</span> GitHub Ruleset 設定步驟</div>
+      <div class="group-body">
+        <p>如果你希望只有「通過測試」的分支才能合併到主分支，就需要多做一設定。</p>
+        <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -3559,12 +3830,11 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+        <div class="insight">
       <div class="insight-title">設定完成後，只有測試通過的分支才能合併到主分支</div>
       <p>這是在多人協作時，保護專案品質不被破壞的基礎設計。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -3573,14 +3843,11 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🧪</span> 實際驗證：故意製造錯誤</h3>
-      <p>故意讓一個測試失敗，驗證 Pull Request 是否真的會被擋下。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🧪</span> 實際驗證：故意製造錯誤</div>
+      <div class="group-body">
+        <p>故意讓一個測試失敗，驗證 Pull Request 是否真的會被擋下。</p>
+        <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -3617,14 +3884,8 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">填寫 PR 的 description（幫助其他人與未來的自己了解更新內容）：</p>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
+        <p class="loose-text">填寫 PR 的 description（幫助其他人與未來的自己了解更新內容）：</p>
+        <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
@@ -3636,23 +3897,21 @@
       <div class="prompt-body">1. 撰寫 pages 頁面下的測試案例
 2. 在 GitHub Action 增加自動測試的流程</div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">開出 PR 後會自動觸發一次測試，因為測試有錯誤，合併按鈕會是<strong>灰色</strong>，符合預期。</p>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">✅</span> 修正後驗證通過</h3>
-      <p>接著回到專案，把問題修正回來，commit 填寫 <code>test PR success condition</code>。</p>
-      <p>推上去後回到 GitHub，稍等一段時間，合併按鈕會變成<strong>綠色</strong>，可以順利合併。</p>
+        <p class="loose-text">開出 PR 後會自動觸發一次測試，因為測試有錯誤，合併按鈕會是<strong>灰色</strong>，符合預期。</p>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">✅</span> 修正後驗證通過</div>
+      <div class="group-body">
+        <p>接著回到專案，把問題修正回來，commit 填寫 <code>test PR success condition</code>。</p>
+<p>推上去後回到 GitHub，稍等一段時間，合併按鈕會變成<strong>綠色</strong>，可以順利合併。</p>
+        <div class="insight">
       <p>有了 Ruleset 保護主分支後，至少能保證合併進來的功能都是經過基礎驗證的。</p>
+    </div>
+      </div>
     </div>
   </div>
 </section>
@@ -3676,24 +3935,23 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🎒</span> Skill 的結構</h3>
-      <ul>
-        <li><strong>提示詞（Prompt）</strong>：精心設計的指令</li>
-        <li><strong>程式腳本（Scripts）</strong>：可執行的自動化程式</li>
-        <li><strong>參考資源（Reference）</strong>：補充 AI 判斷所需的資料</li>
-      </ul>
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🎒</span> Skill 的結構</div>
+      <div class="group-body">
+        <ul>
+  <li><strong>提示詞（Prompt）</strong>：精心設計的指令</li>
+  <li><strong>程式腳本（Scripts）</strong>：可執行的程式</li>
+  <li><strong>參考資源（Reference）</strong>：補充 AI 判斷所需的資料</li>
+</ul>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🔍</span> Skill 的三個執行階段</h3>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="flow">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🔍</span> Skill 的三個執行階段</div>
+      <div class="group-body">
+        <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
@@ -3716,12 +3974,11 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+        <div class="insight">
       <div class="insight-title">Skill 為什麼能節省 Token？</div>
       <p>Rule 每次都會讀完整文件；Skill 在匹配需求前只讀標題與描述。就像 Google 搜尋時先看標題摘要，確認相關再點進去。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -3730,77 +3987,539 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">📦</span> 各工具的 Skill 路徑</h3>
-      <p>| 工具 | Project Skill 路徑 | Global Skill 路徑 |</p>
-      <p>|------|-------------------|------------------|</p>
-      <p>| Cursor | <code>.cursor/skills</code> | <code>~/.cursor/skills</code> |</p>
-      <p>| Claude | <code>.claude/skills</code> | <code>~/.claude/skills</code> |</p>
-      <p>| Codex | <code>.codex/skills</code> | <code>~/.codex/skills</code> |</p>
-      <p>| Antigravity | <code>.agent/skills</code> | <code>~/.gemini/antigravity/global_skills</code> |</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🔗</span> Symlink：一份 Skill 多工具共用</h3>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">👣</span> 下載練習專案</div>
+      <div class="group-body">
+        <p>為了方便大家了解 Skill 如何運作，我在 GitHub 上傳了一個<a href="https://github.com/dean9703111/ai-agent-skill-for-video-workflow" target="_blank" rel="noopener">練習用專案</a></p>
+        <p class="loose-text">到 GitHub 頁面點擊 <code>Code</code>，複製 Repository 連結後，就可以用 <code>git clone</code> 下載到本機。</p>
+        <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">Mac 建立 Symlink</span>
+        Terminal
+        <span class="label">下載練習專案</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">ln -s /path/to/shared/skills ~/.cursor/skills</div>
+      <div class="prompt-body">git clone git@github.com:dean9703111/ai-agent-skills-practice.git</div>
+    </div>
+        <p class="loose-text">在 Antigravity Clone 專案</p>
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">到 GitHub 開啟練習專案，點擊 <code>Code</code> 複製網址</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">回到 Antigravity，選擇 <code>Git Clone</code></div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">貼上 Repository 網址，下載到本機</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">開啟剛 clone 下來的專案資料夾</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <p class="loose-text">單一來源管理，未來維護更方便，修改一次就能在所有工具中生效。</p>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-skill"><span class="bar"></span>使用 Skill 的安全注意事項</div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">⚠</span> ️ 安裝第三方 Skill 前，確認這三點</h3>
-      <ul>
-        <li><strong>來源可信</strong>：從信任的管道安裝，GitHub 上可參考 Star 數量初步判斷</li>
-        <li><strong>Scripts 安全</strong>：查看 <code>scripts</code> 目錄下有沒有危險操作（呼叫外部 URL、修改檔案、存取敏感資料）</li>
-        <li><strong>SKILL.md 內容</strong>：確認是否有敏感指令，例如把 <code>.env</code> 傳送到特定網址</li>
-      </ul>
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📦</span> 各工具的 Skill 路徑</div>
+      <div class="group-body">
+        <p>這次使用 Antigravity 示範，如果你平常習慣的是 Cursor、Copilot、Claude 或 Codex，也完全沒問題。對 Skill 來說，核心概念都一樣，差別通常只是安裝路徑不同。</p>
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left">工具</th>
+            <th class="align-left">Project Skill 路徑</th>
+            <th class="align-left">Global Skill 路徑</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left">Cursor</td>
+            <td class="align-left"><code>.cursor/skills</code></td>
+            <td class="align-left"><code>~/.cursor/skills</code></td>
+          </tr>
+          <tr>
+            <td class="align-left">Copilot (VSCode)</td>
+            <td class="align-left"><code>.github/skills</code></td>
+            <td class="align-left"><code>-</code></td>
+          </tr>
+          <tr>
+            <td class="align-left">Claude</td>
+            <td class="align-left"><code>.claude/skills</code></td>
+            <td class="align-left"><code>~/.claude/skills</code></td>
+          </tr>
+          <tr>
+            <td class="align-left">Codex</td>
+            <td class="align-left"><code>.codex/skills</code></td>
+            <td class="align-left"><code>~/.codex/skills</code></td>
+          </tr>
+          <tr>
+            <td class="align-left">Antigravity</td>
+            <td class="align-left"><code>.agent/skills</code></td>
+            <td class="align-left"><code>~/.gemini/antigravity/global_skills</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <p class="loose-text">因為每個 AI Agent 的路徑不同，可以使用 <a href="https://github.com/iannuttall/dotagents" target="_blank" rel="noopener">dotagents</a> 來協助建立 symlinks。</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">將 Agent Skills 同步到指定的 AI Agent</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">npx @iannuttall/dotagents</div>
+    </div>
+        <p class="loose-text">單一來源管理，未來維護更方便，修改一次就能在所有工具中生效；此套件會在 <code>.agents</code> 底下管理。</p>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="tags">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🎬</span> 用實作理解 Skill 運作邏輯</div>
+      <div class="group-body">
+        <p>這邊我用一組影音工作流的 Skills 來示範：</p>
+        <ul class="loose-list">
+      <li><code>audio-to-srt</code>：把音訊轉成字幕檔</li>
+      <li><code>srt-enhancer</code>：優化字幕內容與斷句</li>
+      <li><code>srt-card-annotator</code>：設計字卡與畫面標註</li>
+      <li><code>srt-social-summary</code>：生成影片介紹與社群貼文</li>
+    </ul>
+        <p class="loose-text">之所以用這組技能舉例，是想提醒大家，AI Agent 並不是只能拿來寫程式。</p>
+        <p class="loose-text">像是分析素材、整理內容、協助創作，這類工作其實也非常適合交給 Skill 來處理。</p>
+        <h4 class="minor-title">Skill - Discovery</h4>
+        <p class="loose-text">把測試用的音訊檔（audio-example.m4a）拖曳進去，然後輸入：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">觸發 Skill</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">轉 SRT 字幕檔</div>
+    </div>
+        <p class="loose-text">這時候 AI 不會立刻執行程式，而是先搜尋目前專案裡有沒有跟這個任務相關的 Skill。</p>
+        <h4 class="minor-title">Skill - Activation</h4>
+        <p class="loose-text">如果它成功匹配到像 <code>audio-to-srt</code> 這樣的 Skill，才會開始完整閱讀那份 <code>SKILL.md</code>。</p>
+        <p class="loose-text">在這之前，AI 通常只會先讀技能名稱與描述，這也是 Skill 能節省 Token 的原因。</p>
+        <p class="loose-text">從 AI 的視角來看，很像我們用 Google 搜尋時，會先看標題和摘要，確認相關之後才點進去閱讀全文。</p>
+        <h4 class="minor-title">Skill - Execution</h4>
+        <p class="loose-text">真正進入執行階段後，AI 才會依照文件裡的步驟逐步完成任務。</p>
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">先驗證環境，確認 Python、必要套件與輸入音檔是否齊全</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">如果缺少依賴，AI 會提示並協助安裝所需資源</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">確認前置條件沒問題後，才開始逐字稿轉換、文字切割與時間軸調整</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">最後輸出對應的 <code>srt</code> 字幕檔</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">小提醒</div>
+      <p>真正執行任務的步驟，通常會放在 Skill 的 <code>scripts</code> 資料夾裡，這個案例就是用 Python 腳本來完成字幕處理。所以當 AI 詢問你是否要執行指令時，實際上就是準備呼叫那些腳本。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📚</span> References：讓 Skill 補充情境知識</div>
+      <div class="group-body">
+        <p>Skill 不只有 <code>scripts</code> 這個執行腳本的資料夾，通常還會搭配一個 <code>references</code> 資料夾，專門放補充資料。</p>
+        <p class="loose-text">這邊我用 <code>srt-social-summary</code> 這個 Skill 當例子。假設我想把同一支影片發布到 Facebook、Threads、YouTube 等不同平台，那每個平台的寫法其實都不太一樣。</p>
+        <p class="loose-text">像是：</p>
+        <ul class="loose-list">
+      <li>Hashtag 要怎麼下</li>
+      <li>開頭怎麼寫比較吸引人</li>
+      <li>不同平台的語氣與篇幅怎麼調整</li>
+    </ul>
+        <div class="insight">
+      <div class="insight-title">漸進式揭露（Progressive Disclosure）</div>
+      <p>這些細節其實不需要全部塞進 <code>SKILL.md</code>。比較好的做法，是把它們整理到 <code>references</code> 裡，等 AI 判斷有需要時再去讀取。這就是一種的技巧。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-skill-2"><span class="bar"></span>使用第三方 Skill</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🔎</span> 尋找第三方 Skill</div>
+      <div class="group-body">
+        <p>接下來我們要為專案新增一個 Skill。這邊推薦大家可以到 <a href="https://skillsmp.com/" target="_blank" rel="noopener">SkillAgent Skills Marketplace</a> 搜尋現成的 Skill。</p>
+        <p class="loose-text">很多人會把自己整理好的 Skill 分享出來讓其他人直接安裝使用，你可以在這裡透過英文關鍵字搜尋自己想找的能力。</p>
+        <p class="loose-text">例如你想設計形象網站，就可以輸入 <code>frontend-design</code>。找到想安裝的 Skill 後，直接複製頁面上提供的安裝指令即可。</p>
+        <div class="insight">
+      <div class="insight-title">執行安裝指令前，先確認 Node.js 已安裝</div>
+      <p>如果沒有安裝 Node.js，這類指令通常會無法執行。我之前有整理過 Python、Node.js、Git 的安裝教學，可以從<a href="https://youtu.be/5DEV_K0JauQ" target="_blank" rel="noopener">這支影片</a>查看。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📥</span> 安裝第三方 Skill</div>
+      <div class="group-body">
+        <p>接下來把畫面切回 Antigravity，點擊上方的 <code>Toggle Panel</code> 打開下方終端機，然後把剛剛複製的安裝指令貼上去。</p>
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">開啟 Antigravity 的終端機，貼上頁面提供的安裝指令</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">在清單中找到想安裝的 Skill，這裡以 <code>frontend-design</code> 為例</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">按下 <code>Enter</code> 後，選擇要安裝到哪個工具</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">原則不需要特別選，因為大部分都是通用的</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">安裝範圍先選 <code>Project</code>，在單一專案中測試</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">最後選 <code>Yes</code> 開始安裝</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">💬</span> 安裝後如何使用 Skill</div>
+      <div class="group-body">
+        <p>理解安裝原理之後，就可以回到右側的 AI 對話視窗，直接輸入和需求對應的提示詞。</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">使用已安裝的 Skill</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">彙整「Agent Skills」的重要資訊後，設計一個有專業質感的中文教學網頁</div>
+    </div>
+        <p class="loose-text">送出提示詞後，AI 會先找到對應的 <code>SKILL.md</code>，確認有沒有和這個需求匹配的 Skill，接著才開始讀取內容並執行。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-skill-3"><span class="bar"></span>使用 Skill 的安全注意事項</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">⚠</span> ️ 安裝第三方 Skill 前，確認這三點</div>
+      <div class="group-body">
+        <ul>
+  <li><strong>來源可信</strong>：從信任的管道安裝，GitHub 上可參考 Star 數量初步判斷</li>
+  <li><strong>Scripts 安全</strong>：查看 <code>scripts</code> 目錄下有沒有危險操作（呼叫外部 URL、修改檔案、存取敏感資料）</li>
+  <li><strong>SKILL.md 內容</strong>：確認是否有敏感指令，例如把 <code>.env</code> 傳送到特定網址</li>
+</ul>
+        <div class="tags">
       <span class="tag blue">來源可信的官方 Skill</span>
       <span class="tag orange">社群 Skill，建議先看 scripts</span>
       <span class="tag purple">先在 Project 測試，確認再移到 Global</span>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-skill"><span class="bar"></span>建立自己的 Skill</div>
-  </div>
-
-  <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🛠</span> ️ 從對話萃取 Skill 的技巧</h3>
-      <p>每次與 AI 協作解決問題後，不要急著關閉對話框，用這個指令彙整：</p>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="prompt-block">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">✅</span> Skill 使用經驗</div>
+      <div class="group-body">
+        <ul>
+  <li>Skill 不是裝越多，AI 就越強</li>
+  <li>如果同一類型的 Skill 裝了兩個以上，當需求命中時，常常會一起觸發</li>
+  <li>這不只會增加 Token 消耗，也容易讓 AI 在執行過程中卡住或走偏</li>
+  <li>在提示詞的世界裡，1 + 1 不一定大於 2，甚至可能小於 1</li>
+</ul>
+        <div class="insight">
+      <div class="insight-title">同類型的 Skill，建議擇優安裝一個</div>
+      <p>像前端網頁生成這類需求，如果同時安裝多個相近 Skill，AI 反而要花更多成本判斷該遵循哪一套規則，結果未必更好。</p>
+    </div>
+        <p class="loose-text">網路上的 Skill 雖然很多，但不是每一個都真的能讓 AI 變強</p>
+        <ul class="loose-list">
+      <li>有些 Skill 描述看起來很厲害，實際使用時效果卻不穩定</li>
+      <li>有些會增加上下文負擔，卻沒有提供足夠的專業價值</li>
+      <li>有些甚至會讓 AI 的行為變得更難預測</li>
+    </ul>
+        <div class="insight">
+      <div class="insight-title">先在 Project 測試，再決定要不要放到 Global</div>
+      <p>建議先用獨立專案驗證 Skill 的運作是否符合預期。真的有用、而且具備通用性，再放進 Global Skill，避免把整體工作流越裝越亂。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-skill-4"><span class="bar"></span>建立自己的 Skill</div>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">儘管網路上有很多 Skill，但未必能符合自己實際的工作流。</p>
+  </div>
+
+  <div class="reveal">
+    <p class="loose-text">如果找不到合適的，那我們就自己建立。</p>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🧩</span> 安裝 Skill Development</div>
+      <div class="group-body">
+        <p>不知道怎麼下手可以先請 AI 幫忙生成一個初版。</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Terminal
+        <span class="label">安裝 Skill Development</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">npx skills add anthropics/claude-code</div>
+    </div>
+        <p class="loose-text">接著在清單中選擇 <code>Skill Development</code>，先安裝在目前這個 Project 就好。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🛠</span> ️ 建立第一個 Skill：音訊轉 SRT</div>
+      <div class="group-body">
+        <p>安裝完畢後，開一個新的對話窗，直接描述自己想建立的 Skill。</p>
+        <p class="loose-text">這邊我是請 AI 幫我建立一個用 Python 將音訊檔轉成 <code>srt</code> 字幕檔的 Skill，並把規則一次講清楚：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">建立 audio-to-srt Skill</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">我想要建立一個透過 Python 將音訊檔轉成 srt 逐字稿的 Skill
+使用 openai-whisper 套件
+我可以設定每行最多幾個字，若沒填寫預設最多 22 字，最少 4 個字
+時間軸若不連續，當間隔小於 0.3s 時，後面需要往前補
+執行時會先檢查環境與套件是否安裝，並確認有提供音訊檔
+將最後輸出的 srt 檔命名為「origin.srt」</div>
+    </div>
+        <p class="loose-text">你會看到 AI 在執行過程中，確實有參考剛剛安裝的 <code>Skill Development</code>。</p>
+        <p class="loose-text">稍等一段時間後，AI Agent 就會依照這個 Skill，幫我們建立一個新的 Skill。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🧱</span> 拆解 SKILL.md 的結構</div>
+      <div class="group-body">
+        <p>打開建立好的 <code>SKILL.md</code>，可以看到它大致分成三個部分：</p>
+        <ul class="loose-list">
+      <li>最上面是 Meta Data，也就是 AI Agent 一開始會先讀取的資訊</li>
+      <li>其中最重要的是 <code>description</code>，寫得越具體，AI 越容易在正確的情境下找到它</li>
+      <li>下面則是 Skill 的描述與執行步驟，告訴 AI 應該如何完成這個任務</li>
+    </ul>
+        <p class="loose-text">描述執行的流程如下：</p>
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">先檢查環境，確認 Python、對應套件與輸入音訊檔是否存在</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">前置條件通過後，才開始執行 Python 腳本</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">根據規則切分字幕文字與調整時間軸</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">最後輸出 <code>origin.srt</code></div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+    </div>
+        <p class="loose-text">而 <code>scripts</code> 資料夾，就是 AI 幫我們寫好的 Python 腳本存放位置。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🧪</span> 測試 Skill</div>
+      <div class="group-body">
+        <p>得到 Skill 初版後，接下來最重要的不是立刻安裝更多 Skill，而是驗證它的運作是否符合預期。</p>
+        <p class="loose-text">這邊先開一個新的對話窗，提供一個音訊檔，然後輸入：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">測試 audio-to-srt</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">轉成字幕檔</div>
+    </div>
+        <p class="loose-text">如果一切正常，你會看到 AI 順利找到剛剛設計的 Skill，並根據規則開始執行。</p>
+        <p class="loose-text">稍等一段時間後，<code>srt</code> 字幕檔就會產生。我們可以從幾個重點來驗證：</p>
+        <ul class="loose-list">
+      <li>檔名是否為 <code>origin.srt</code></li>
+      <li>每行是否符合最長 22 字、最少 4 個字的規則</li>
+      <li>前後段時間軸是否有依照規則黏合</li>
+    </ul>
+        <p class="loose-text">如果你跟著教學做到這一步，代表你已經完成了第一個真正能運作的 Skill。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🪄</span> 建立第二個 Skill：替字幕補上參考字卡</div>
+      <div class="group-body">
+        <p>接著我再示範建立一個有關聯性的 Skill。</p>
+        <p class="loose-text">這個 Skill 的目標，是請 AI 在 <code>srt</code> 字幕檔內判斷適合增加字卡的位置，提升後期剪輯效率。</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">建立 reference-cards Skill</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">我想要建立一個在 srt 逐字稿文字下方補上「參考字卡」的 Skill
+只能在每段字幕的「文字區塊」下方新增字卡行，不可更改原本的時間碼與原字幕文字。
+我希望的結構是 `[字卡](word:xxx / type:yyy)`
+- word：必須是從該段內容萃取出的「重點詞/短句」（10~16 字內，避免太長）
+- type：必須從 references/*.yaml 定義的 type 之一選擇(金色重點、白色提醒、紅色警告、藍色列點)
+每 10 段字幕內，至少要新增 2 個字卡，字卡必須「貼合情境」選型：
+  - 有風險、錯誤、踩雷 → 紅色警告
+  - 建議、提醒、注意事項 → 白色提醒
+  - 條列、步驟、清單感 → 藍色列點
+  - 核心結論、最關鍵一句 → 金色重點
+將最後輸出的 srt 檔命名為「reference-cards.srt」
+請勿使用 Python 之類的腳本，必須要用 AI 來判斷</div>
+    </div>
+        <p class="loose-text">Skill 完成後，我們開一個新的視窗，把上一步生成的 <code>origin.srt</code> 放進去，然後輸入：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">測試 reference-cards</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">給我字卡重點</div>
+    </div>
+        <p class="loose-text">稍等一段時間後，可以看到 <code>reference-cards.srt</code> 出現。</p>
+        <p class="loose-text">點進去後，你會發現 AI 有根據字幕內容，設計出適合插入字卡的位置與類型。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🛠</span> ️ 從對話萃取 Skill 的技巧</div>
+      <div class="group-body">
+        <p>每次與 AI 協作解決問題後，不要急著關閉對話框，用這個指令彙整：</p>
+        <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
@@ -3815,12 +4534,11 @@
 2. 中間如何引導與調整
 3. 最終是如何得出這個成果的</div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
+        <div class="insight">
       <div class="insight-title">過去解決過的問題，不應該再花時間解決第二次</div>
       <p>這個技巧用得越久，你的 AI Agent 會越來越強大，成為別人難以跨越的護城河。</p>
+    </div>
+      </div>
     </div>
   </div>
 
@@ -3829,13 +4547,35 @@
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">🔄</span> 以影音後期工作流為例</h3>
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🔄</span> 以影音工作流為例</div>
+      <div class="group-body">
+        <p>我們可以設計 Worflow 讓 Skills 穩定觸發</p>
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">在「Workflows」分頁下，選擇「Workspace」在工作區建立</div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">名稱打 <code>audio-to-srt-cards</code></div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">描述寫 <code>將音檔轉成逐字稿後，再生成字卡的工作流</code></div>
+          <div class="step-desc"></div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="prompt-block">
+        <p class="loose-text">內容描述每一步要參考的 Skill 就可以了</p>
+        <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
@@ -3849,17 +4589,32 @@
 STEP 1: 使用「mp3-to-srt」的 Skill 將音檔轉成逐字稿
 STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div>
     </div>
+        <p class="loose-text">完成後輸入<code>/</code>，選擇剛剛建立的 Workflow，將音訊檔放進去。</p>
+        <p class="loose-text">稍等一段時間，就可以看到工作流有根據我們的指引，參考對應的 Skill 完成任務了！</p>
+      </div>
+    </div>
   </div>
 
   <div class="reveal">
-    <div class="card">
-      <h3><span class="icon">💡</span> 組合設計的好處</h3>
-      <ul>
-        <li>每個 Skill 可以獨立維護與更新</li>
-        <li>Workflow 只負責串接流程</li>
-        <li>整體架構更有彈性，1+1 大於 2</li>
-      </ul>
+    <div class="group-block">
+      <div class="group-header"><span class="icon">💡</span> 組合設計的好處</div>
+      <div class="group-body">
+        <ul>
+  <li>每個 Skill 可以獨立維護與更新</li>
+  <li>Workflow 只負責串接流程</li>
+  <li>整體架構更有彈性，1+1 大於 2</li>
+</ul>
+      </div>
     </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="section-label" id="summary"><span class="num">★</span> 總結</span>
+    <h2>總結</h2>
+    
   </div>
 
   <div class="reveal">
@@ -3889,6 +4644,30 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
         <h4>Workflow + Skill</h4>
         <p>組合應用讓複雜流程穩定可重複，成為你的競爭護城河</p>
       </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="youtube-embed">
+      <div class="youtube-wrapper" data-id="Rb0_LutRIaw">
+        <iframe src="https://www.youtube.com/embed/Rb0_LutRIaw" title="Workflow 複習影片" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="youtube-local-notice">
+          <p>本機直接開啟 HTML 時，YouTube 可能因缺少 HTTP referrer 而拒絕播放。請改用本機伺服器預覽，或直接前往 <a href="https://www.youtube.com/watch?v=Rb0_LutRIaw" target="_blank" rel="noopener">YouTube 觀看影片</a>。</p>
+        </div>
+      </div>
+      <p class="youtube-caption">Workflow 複習影片</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="youtube-embed">
+      <div class="youtube-wrapper" data-id="xe00zJEtuMo">
+        <iframe src="https://www.youtube.com/embed/xe00zJEtuMo" title="AI Agents 複習影片" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="youtube-local-notice">
+          <p>本機直接開啟 HTML 時，YouTube 可能因缺少 HTTP referrer 而拒絕播放。請改用本機伺服器預覽，或直接前往 <a href="https://www.youtube.com/watch?v=xe00zJEtuMo" target="_blank" rel="noopener">YouTube 觀看影片</a>。</p>
+        </div>
+      </div>
+      <p class="youtube-caption">AI Agents 複習影片</p>
     </div>
   </div>
 </section>
@@ -4058,8 +4837,8 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
     });
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
-    var sectionIds = ["instructor","vibe-coding","workflow-ai","github-action","skills-ai"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","vibe-coding","sub-section-1","sub-section-2","sub-section-3","sub-section-4","sub-section-5","workflow-ai","sub-rule-workflow-skill","sub-gen-test","sub-demo","github-action","sub-git-flow","sub-github-action","sub-ruleset","sub-section-12","skills-ai","sub-agent-skill","sub-skill","sub-skill","sub-skill","sub-workflow-skill"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var sectionIds = ["instructor","vibe-coding","workflow-ai","github-action","skills-ai","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+    var allAnchorIds = ["instructor","vibe-coding","sub-section-1","sub-section-2","sub-section-3","sub-section-4","sub-section-5","workflow-ai","sub-rule-workflow-skill","sub-gen-test","sub-demo","github-action","sub-git-flow","sub-github-action","sub-ruleset","sub-section-12","skills-ai","sub-agent-skill","sub-skill","sub-skill-2","sub-skill-3","sub-skill-4","sub-workflow-skill","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
 
     var sectionForAnchor = {};
     allAnchorIds.forEach(function (id) {
@@ -4544,6 +5323,11 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
         normalChildren.forEach(function (child) {
           var isSub = child.querySelector && child.querySelector(':scope > .sub-title');
           var isYoutube = child.querySelector && child.querySelector(':scope > .youtube-embed');
+          if (isSub && currentPage.length > 0) {
+            // Flush the previous ## block before switching subtitle context,
+            // otherwise intro paragraphs get mislabeled as the next subsection.
+            flushCurrentPage();
+          }
           if (isSub) {
             var subEl = child.querySelector(':scope > .sub-title');
             activeSubTitle = subEl ? subEl.textContent.trim() : activeSubTitle;
@@ -4552,9 +5336,6 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
             flushCurrentPage();
             entries.push({ type: 'youtube', subTitle: activeSubTitle, child: child });
             return;
-          }
-          if (isSub && currentPage.length > 0) {
-            flushCurrentPage();
           }
           currentPage.push(child);
         });
@@ -4573,7 +5354,11 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
               var clone = child.cloneNode(true);
               // ## sub-title is shown in the header, remove it from body to avoid duplication
               var subTitleInBody = clone.querySelector(':scope > .sub-title');
-              if (subTitleInBody) subTitleInBody.remove();
+              if (subTitleInBody) {
+                subTitleInBody.remove();
+                // Skip empty clones (sub-title was the only content in this reveal)
+                if (!clone.hasChildNodes() || clone.textContent.trim() === '') return;
+              }
               if (clone.classList.contains('reveal')) clone.classList.add('visible');
               clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
               body.appendChild(clone);
@@ -4784,6 +5569,13 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
 
             if (curSlide.scrollHeight <= MAX_H) return;
 
+            // First child on this slide must stay (avoid empty slides)
+            if (curBody.children.length <= 1) {
+              shrinkImagesInSlide(curSlide);
+              if (curSlide.scrollHeight > MAX_H) shrinkFontInSlide(curSlide);
+              return;
+            }
+
             // This child causes overflow — move it to a new slide
             curBody.removeChild(child);
 
@@ -4813,6 +5605,90 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
           }
         });
 
+        // Split overflowing group-blocks across slides
+        Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
+          if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
+          var body = s.querySelector('.slide-body');
+          if (!body) return;
+          void s.offsetHeight;
+          if (s.scrollHeight <= MAX_H) return;
+
+          // Find the overflowing group-block (may be the only child, or any child)
+          var children = Array.from(body.children);
+          for (var ci = 0; ci < children.length; ci++) {
+            var reveal = children[ci];
+            var groupBlock = reveal.querySelector(':scope > .group-block');
+            if (!groupBlock) continue;
+
+            var groupHeader = groupBlock.querySelector('.group-header');
+            var groupBody = groupBlock.querySelector('.group-body');
+            if (!groupBody || !groupHeader) continue;
+
+            var groupChildren = Array.from(groupBody.children);
+            if (groupChildren.length <= 1) continue;
+
+            // Drain and re-pack group-body children
+            while (groupBody.firstChild) groupBody.removeChild(groupBody.firstChild);
+
+            var header = s.querySelector('.slide-header');
+            var mainTitle = header ? (header.querySelector('.slide-title') || {}).textContent || '' : '';
+            var stEl = header ? header.querySelector('.slide-subtitle') : null;
+            var subBase = stEl ? (stEl.dataset.base || stEl.textContent) : '';
+
+            var curSlide = s;
+            var curGroupBody = groupBody;
+            var splitGroup = [curSlide];
+
+            groupChildren.forEach(function (gc) {
+              curGroupBody.appendChild(gc);
+              void curSlide.offsetHeight;
+              if (curSlide.scrollHeight <= MAX_H) return;
+
+              // First child on this group-body must stay (avoid empty groups)
+              if (curGroupBody.children.length <= 1) {
+                shrinkImagesInSlide(curSlide);
+                if (curSlide.scrollHeight > MAX_H) shrinkFontInSlide(curSlide);
+                return;
+              }
+
+              curGroupBody.removeChild(gc);
+
+              var newSlide = makeSlide(mainTitle, subBase, 0);
+              var newBody = newSlide.querySelector('.slide-body');
+              var newReveal = document.createElement('div');
+              newReveal.className = 'reveal';
+              var newGB = document.createElement('div');
+              newGB.className = 'group-block';
+              newGB.appendChild(groupHeader.cloneNode(true));
+              var newGBody = document.createElement('div');
+              newGBody.className = 'group-body';
+              newGB.appendChild(newGBody);
+              newReveal.appendChild(newGB);
+              newBody.appendChild(newReveal);
+              printSlides.insertBefore(newSlide, curSlide.nextSibling);
+
+              curSlide = newSlide;
+              curGroupBody = newGBody;
+              splitGroup.push(curSlide);
+
+              curGroupBody.appendChild(gc);
+              void curSlide.offsetHeight;
+              if (curSlide.scrollHeight > MAX_H) {
+                shrinkImagesInSlide(curSlide);
+                if (curSlide.scrollHeight > MAX_H) shrinkFontInSlide(curSlide);
+              }
+            });
+
+            if (splitGroup.length > 1) {
+              splitGroup.forEach(function (sl, i) {
+                var st = sl.querySelector('.slide-subtitle');
+                if (st) st.textContent = (st.dataset.base || st.textContent) + ' (' + (i + 1) + '/' + splitGroup.length + ')';
+              });
+            }
+            break; // one group-block per slide
+          }
+        });
+
         // Auto-shrink individual prompt-body blocks that are too wide/tall
         Array.from(printSlides.querySelectorAll('.prompt-body')).forEach(function (pb) {
           var slide = pb.closest('.slide');
@@ -4832,11 +5708,65 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡</div
           }
         });
 
+        // Merge thin slides (orphaned sub-titles, empty groups) into next slide
+        var thinSlides = Array.from(printSlides.querySelectorAll('.slide'));
+        for (var ti = 0; ti < thinSlides.length - 1; ti++) {
+          var ts = thinSlides[ti];
+          if (ts.classList.contains('slide-hero') || ts.classList.contains('slide-quote')
+            || ts.classList.contains('slide-footer') || ts.classList.contains('slide-bonus')) continue;
+          var tBody = ts.querySelector('.slide-body');
+          if (!tBody || tBody.children.length === 0) continue;
+          void ts.offsetHeight;
+          if (tBody.scrollHeight > 80) continue;
+
+          var nextTs = thinSlides[ti + 1];
+          if (nextTs.classList.contains('slide-hero') || nextTs.classList.contains('slide-quote')
+            || nextTs.classList.contains('slide-footer') || nextTs.classList.contains('slide-bonus')) continue;
+          var nextTBody = nextTs.querySelector('.slide-body');
+          if (!nextTBody) continue;
+
+          var movers = Array.from(tBody.children);
+          for (var mj = movers.length - 1; mj >= 0; mj--) {
+            nextTBody.insertBefore(movers[mj], nextTBody.firstChild);
+          }
+          void nextTs.offsetHeight;
+          if (nextTs.scrollHeight > MAX_H) shrinkFontInSlide(nextTs);
+
+          ts.remove();
+          thinSlides.splice(ti, 1);
+          ti--;
+        }
+
+        // Re-number split slides after merge (group by subtitle base)
+        var byBase = {};
+        Array.from(printSlides.querySelectorAll('.slide-subtitle')).forEach(function (st) {
+          var base = st.dataset.base || '';
+          if (!base) return;
+          if (!byBase[base]) byBase[base] = [];
+          byBase[base].push(st);
+        });
+        Object.keys(byBase).forEach(function (base) {
+          var sts = byBase[base];
+          if (sts.length <= 1) {
+            sts[0].textContent = base;
+          } else {
+            sts.forEach(function (st, i) {
+              st.textContent = base + ' (' + (i + 1) + '/' + sts.length + ')';
+            });
+          }
+        });
+
         // Remove ghost slides whose body is empty or has negligible content
         Array.from(printSlides.querySelectorAll('.slide')).forEach(function (s) {
           if (s.classList.contains('slide-hero') || s.classList.contains('slide-quote') || s.classList.contains('slide-footer')) return;
           var body = s.querySelector('.slide-body');
           if (!body || body.children.length === 0 || body.scrollHeight < 50) {
+            s.remove();
+            return;
+          }
+          // Safety net: remove slides where the only content is a group-block with empty body
+          var gb = body.querySelector('.group-body');
+          if (gb && gb.children.length === 0 && body.querySelectorAll('.group-block').length === body.children.length) {
             s.remove();
           }
         });
