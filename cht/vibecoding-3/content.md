@@ -36,9 +36,8 @@
 1. 點擊 Fork，將專案複製到自己的帳號下
 2. 點擊 Code，複製專案網址
 3. 打開程式碼編輯器，點擊 `Clone Repository`，貼上網址並選擇下載路徑
-4. 打開 `package.json`，確認 `dependencies` 與 `devDependencies` 中的套件
-5. 打開終端機，輸入 `npm install` 安裝套件（安裝後會存放到 `node_modules` 資料夾）
-6. 輸入 `npm run dev` 啟動專案，點擊網址即可瀏覽網頁
+4. 打開終端機，輸入 `npm install` 安裝套件（安裝後會存放到 `node_modules` 資料夾）
+5. 輸入 `npm run dev` 啟動專案，點擊網址即可瀏覽網頁
 [/flow]
 
 > **多了解專案的架構，Vibe Coding 可以走得更遠**
@@ -62,12 +61,12 @@
 - 登入成功後，有拿到 Token
 
 > **前後端任務未必是並行**
-> 這邊用 Mock Service Worker 來模擬後端，方便釐清錯誤方向
+> 這邊用 Mock Service Worker 來模擬後端（右下角按鈕可模擬不同 API 情境），方便釐清錯誤方向
 
 ### 🛡️ 角色與權限
 
 - 把資訊儲存在「應用程式 ⭢ 本機儲存空間 ⭢ localhost」下面的 msw_user_role
-- 有 Token，才能呼叫後續 API；沒有 Token，直接導向登入頁
+- 有 Token（auth_token），才能呼叫後續 API；沒有 Token，直接導向登入頁
 - 管理者才能看到「管理後台」；一般用戶看不到，也無法誤闖
 
 > **寫測試不是浪費時間，是在加速開發**
@@ -96,7 +95,7 @@
 > **前端驗證不等於安全**
 > 前端做的格式驗證（如帳號格式、密碼格式），後端也不能少。
 > 
-> 知道 API 路徑的人可以直接用 Terminal（curl）繞過前端呼叫 API，這是設計上必須注意的細節。
+> 知道 API 路徑的人可以繞過前端呼叫 API（ex: Postman、Curl），這是設計上必須注意的細節。
 
 ---
 
@@ -119,6 +118,31 @@
 
 > **不建議把 Rule 寫太多**
 > 每次開啟新對話，AI 都會讀取完整的 Rule 文件。過多的 Rule 不僅佔用上下文空間、浪費 Token，還可能因資訊過載導致 AI 忽略規則。
+
+下面的為 Cursor 內部員工分享的 Rules 範例
+```terminal [label="參考 Rules"]
+DO NOT GIVE ME HIGH LEVEL SHIT, IF I ASK FOR FIX OR EXPLANATION, I WANT ACTUAL CODE OR EXPLANATION!!! I DON'T WANT "Here's how you can blablabla"
+
+- Be casual unless otherwise specified
+- Be terse
+- Suggest solutions that I didn't think about—anticipate my needs
+- Treat me as an expert
+- Be accurate and thorough
+- Give the answer immediately. Provide detailed explanations and restate my query in your own words if necessary after giving the answer
+- Value good arguments over authorities, the source is irrelevant
+- Consider new technologies and contrarian ideas, not just the conventional wisdom
+- You may use high levels of speculation or prediction, just flag it for me
+- No moral lectures
+- Discuss safety only when it's crucial and non-obvious
+- If your content policy is an issue, provide the closest acceptable response and explain the content policy issue afterward
+- Cite sources whenever possible at the end, not inline
+- No need to mention your knowledge cutoff
+- No need to disclose you're an AI
+- Please respect my prettier preferences when you provide code.
+- Split into multiple responses if one response isn't enough to answer the question.
+
+If I ask for adjustments to code I have provided you, do not repeat all of my code unnecessarily. Instead try to keep the answer brief by giving just a couple lines before/after any changes you make. Multiple code blocks are ok.
+```
 
 ## gen-test-cases 工作流設計
 
@@ -151,7 +175,7 @@
 > 比如你想設計 Code Review 的 Workflow，也可以輸入 `code-review`，這樣就會新增一個同名的工作流檔案，可以自行撰寫，也可以透過與 AI 互動來生成工作流細節。
 
 ### ⚠️ 先用一個檔案來測試
-建議大家請 AI 撰寫測試程式時，不要讓他一口氣生成，而是先放一個檔案。
+建議大家請 AI 撰寫測試程式時，不要讓他一口氣生成，而是先放一個檔案（src/pages/LoginPage.tsx）。
 確認執行結果與期待相符在擴大範圍，否則一口氣生成，如果結果不是你要的，那不但浪費時間還浪費 Token。
 
 [flow]
@@ -161,6 +185,7 @@
 4. 如有缺漏可直接討論；確認沒問題後請他「**繼續**」
 5. AI 寫好測試程式後詢問是否執行 → 點擊 Accept 執行
 6. 測試通過後，AI 回頭更新測試清單，標注通過狀態 ✅
+7. 如果想人工手動觸發測試，可以在終端機輸入 `npm run test`
 [/flow]
 
 > ** 安全提醒：不要無腦點擊 Accept**
@@ -187,9 +212,10 @@
 
 ### 🌿 分支策略基礎
 
-- **main**：主分支，對外的穩定版本，只接受來自 develop 的 Pull Request
+- **main(master)**：主分支，對外的穩定版本，只接受來自 develop 的 Pull Request
 - **develop**：開發分支，日常更新都推送到這裡
 - **feature/xxx**：功能分支，開發單一功能時從 develop 切出，完成後合併回 develop
+- **release/xxx**：發布準備分支，從 develop 切出，只做版本號調整與小修復，完成後合併回 main 與 develop
 - **hotfix/xxx**：緊急修復分支，直接從 main 切出，修完後同時合併回 main 與 develop
 
 > **為什麼需要分支策略？**
@@ -226,7 +252,7 @@ Commit 訊息可以由 AI 自動生成，或自己手動輸入
 ### 📊 測試報告說明
 到 [GitHub](https://github.com/) 查看執行結果：
 - 成功是綠色勾勾，失敗是紅色叉叉
-- Artifacts 區塊可下載測試覆蓋率報告
+- Artifacts 區塊可下載測試覆蓋率報告（打開資料夾下的 index.html 便可確認）
 - 可了解哪些功能測試完整、哪些還需要補充
 
 > **經驗分享**
@@ -239,12 +265,13 @@ Commit 訊息可以由 AI 自動生成，或自己手動輸入
 
 [flow]
 1. Settings → Rules → Ruleset → New branch ruleset
-2. 將「Enforcement status」切換到 Active
-3. Target branch 選擇 main（預設主分支）
-4. 勾選「Require a pull request before merging」用 PR 才能合併的選項
-5. 勾選「Require status checks to pass」限制測試必須通過才能合併
-6. 勾選「Require branches to be up to date before merging」確保合併前分支有更新到最新版
-7. 點擊「Add Checks」，新增 Test 作為必須通過的檢查項目，儲存設定
+2. Ruleset Name: protect main branch
+3. 將「Enforcement status」切換到 Active
+4. Target branch 選擇「Include default branch」（預設主分支 main）
+5. 勾選「Require a pull request before merging」用 PR 才能合併的選項
+6. 勾選「Require status checks to pass」限制測試必須通過才能合併
+7. 勾選「Require branches to be up to date before merging」確保合併前分支有更新到最新版
+8. 點擊「Add Checks」，新增 Test 作為必須通過的檢查項目，儲存設定
 [/flow]
 
 > **設定完成後，只有測試通過的分支才能合併到主分支**
@@ -308,7 +335,7 @@ Commit 訊息可以由 AI 自動生成，或自己手動輸入
 
 ### 👣 下載練習專案
 
-為了方便大家了解 Skill 如何運作，我在 GitHub 上傳了一個[練習用專案](https://github.com/dean9703111/ai-agent-skill-for-video-workflow)
+為了方便大家了解 Skill 如何運作，我在 GitHub 上傳了一個[練習用專案](https://github.com/dean9703111/ai-agent-skills-practice)
 
 到 GitHub 頁面點擊 `Code`，複製 Repository 連結後，就可以用 `git clone` 下載到本機。
 
@@ -402,8 +429,14 @@ Skill 不只有 `scripts` 這個執行腳本的資料夾，通常還會搭配一
 - 開頭怎麼寫比較吸引人
 - 不同平台的語氣與篇幅怎麼調整
 
+```prompt [label="測試有參考 references"]
+產生社群宣傳文案
+```
+
 > **漸進式揭露（Progressive Disclosure）**
 > 這些細節其實不需要全部塞進 `SKILL.md`。比較好的做法，是把它們整理到 `references` 裡，等 AI 判斷有需要時再去讀取。這就是一種的技巧。
+
+
 
 ## 使用第三方 Skill
 
@@ -425,10 +458,9 @@ Skill 不只有 `scripts` 這個執行腳本的資料夾，通常還會搭配一
 [flow]
 1. 開啟 Antigravity 的終端機，貼上頁面提供的安裝指令
 2. 在清單中找到想安裝的 Skill，這裡以 `frontend-design` 為例
-3. 按下 `Enter` 後，選擇要安裝到哪個工具
-4. 原則不需要特別選，因為大部分都是通用的
-5. 安裝範圍先選 `Project`，在單一專案中測試
-6. 最後選 `Yes` 開始安裝
+3. 按下 `Enter` 後，選擇要安裝到哪個工具（原則不需要特別選，因為大部分都是通用的）
+4. 安裝範圍先選 `Project`，在單一專案中測試
+5. 最後選 `Yes` 開始安裝
 [/flow]
 
 
@@ -478,7 +510,7 @@ Skill 不只有 `scripts` 這個執行腳本的資料夾，通常還會搭配一
 
 儘管網路上有很多 Skill，但未必能符合自己實際的工作流。
 
-如果找不到合適的，那我們就自己建立。
+如果找不到合適的，那我們就自己建立，會需要開啟一個空的資料夾來操作。
 
 ### 🧩 安裝 Skill Development
 
@@ -606,7 +638,7 @@ Skill 完成後，我們開一個新的視窗，把上一步生成的 `origin.sr
 3. 描述寫 `將音檔轉成逐字稿後，再生成字卡的工作流`
 [/flow]
 
-內容描述每一步要參考的 Skill 就可以了
+內容描述每一步要參考的 Skill 就可以了(根據實際的名稱替換)
 
 ```prompt [label="audio-to-srt-cards Workflow"]
 按照下面步驟執行
@@ -637,3 +669,6 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡
 
 [youtube id="Rb0_LutRIaw" title="Workflow 複習影片"]
 [youtube id="xe00zJEtuMo" title="AI Agents 複習影片"]
+
+## [掌握用 AI 開發全端專案的技巧](https://tibame.tw/Zmnts)
+[![掌握用 AI 開發全端專案的技巧](/assets/ad.jpg)](https://tibame.tw/Zmnts)
