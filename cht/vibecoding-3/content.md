@@ -671,4 +671,4 @@ STEP 2: 使用「reference-cards」的 Skill 用逐字稿生成參考字卡
 [youtube id="xe00zJEtuMo" title="AI Agents 複習影片"]
 
 ## [掌握用 AI 開發全端專案的技巧](https://tibame.tw/Zmnts)
-[![掌握用 AI 開發全端專案的技巧](/assets/ad.jpg)](https://tibame.tw/Zmnts)
+![掌握用 AI 開發全端專案的技巧](/assets/ad.jpg)
