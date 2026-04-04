@@ -12,22 +12,13 @@ instructor:
   bio: >
     專注於 AI 開發工作流的實踐與推廣，協助企業導入 AI 輔助開發流程。<br>
     擅長將複雜的技術概念轉化為可落地的工作流程，讓團隊真正提升開發效率而非盲目追逐工具。
-  avatar: "config/assets/author.jpg"
+  avatar: "config/assets/author"
   stats:
-    - icon: "📚"
-      text: "出版"
-      value: "7"
-      unit: "本專業書籍"
-      url: "https://www.tenlong.com.tw/products/9786264142083"
-    - icon: "🎤"
-      text: "超過"
-      value: "100"
-      unit: "場講座"
-      url: "https://www.youtube.com/@dlcorner"
-    - icon: "✍️"
-      text: "發表超過"
-      value: "400"
-      unit: "篇文章"
+    - text: "📚 出版 **7** 本專業書籍"
+      url: "https://www.tenlong.com.tw/search?keyword=%E6%9E%97%E9%BC%8E%E6%B7%B5"
+    - text: "🎤 超過 **100** 場講座"
+      url: "https://www.youtube.com/@dean-lin"
+    - text: "✍️ 發表超過 **400** 篇文章"
       url: "https://medium.com/@dean-lin"
   socials:
     - platform: "Medium"
