@@ -48,6 +48,7 @@ footer:
 # ---------------------------------------------------
 page:
   lang: zh-TW
+  favicon: "https://deanlin.net/images/favicon.png"
 
 # ---------------------------------------------------
 # 預設 SEO / Open Graph（課程可覆蓋）

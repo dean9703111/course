@@ -422,7 +422,7 @@
       gap: 1rem;
     }
 
-    .group-body > * {
+    .group-body>* {
       margin-bottom: 0;
     }
 
@@ -2113,17 +2113,41 @@
     }
 
     @keyframes break-icon-ring {
-      0%, 100% { transform: rotate(0deg) scale(1); }
-      20% { transform: rotate(-14deg) scale(1.08); }
-      40% { transform: rotate(14deg) scale(1.08); }
-      60% { transform: rotate(-10deg) scale(1.06); }
-      80% { transform: rotate(10deg) scale(1.06); }
+
+      0%,
+      100% {
+        transform: rotate(0deg) scale(1);
+      }
+
+      20% {
+        transform: rotate(-14deg) scale(1.08);
+      }
+
+      40% {
+        transform: rotate(14deg) scale(1.08);
+      }
+
+      60% {
+        transform: rotate(-10deg) scale(1.06);
+      }
+
+      80% {
+        transform: rotate(10deg) scale(1.06);
+      }
     }
 
     @keyframes break-time-pop {
-      0% { transform: scale(.92); }
-      55% { transform: scale(1.08); }
-      100% { transform: scale(1); }
+      0% {
+        transform: scale(.92);
+      }
+
+      55% {
+        transform: scale(1.08);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
 
     @keyframes break-done-reveal {
@@ -2131,6 +2155,7 @@
         opacity: 0;
         transform: translateY(10px) scale(.96);
       }
+
       100% {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -2138,8 +2163,13 @@
     }
 
     @keyframes break-done-glow {
-      0% { text-shadow: 0 0 0 rgba(255, 122, 89, 0); }
-      100% { text-shadow: 0 0 18px rgba(255, 122, 89, .35); }
+      0% {
+        text-shadow: 0 0 0 rgba(255, 122, 89, 0);
+      }
+
+      100% {
+        text-shadow: 0 0 18px rgba(255, 122, 89, .35);
+      }
     }
 
     /* ===== PRINT / SLIDE STYLES ===== */
@@ -2580,7 +2610,7 @@
       gap: .6rem;
     }
 
-    #print-slides .group-body > * {
+    #print-slides .group-body>* {
       break-inside: avoid;
       page-break-inside: avoid;
     }
@@ -2840,6 +2870,32 @@
     html.og-mode .hero {
       max-width: 960px;
       margin: 0 auto;
+    }
+
+    html.og-mode .hero-badge {
+      font-size: .6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    html.og-mode .hero h1 {
+      font-size: clamp(1.65rem, 3.75vw, 3rem);
+      margin-bottom: 1.1rem;
+    }
+
+    html.og-mode .hero-sub {
+      font-size: clamp(.75rem, 1.5vw, .9rem);
+      max-width: 450px;
+      margin-bottom: .75rem;
+    }
+
+    html.og-mode .hero-author {
+      font-size: .71rem;
+      margin-bottom: 2.2rem;
+    }
+
+    html.og-mode .hero-nav a {
+      padding: .48rem 1rem;
+      font-size: .64rem;
     }
 
     /* ===== BONUS BUTTON & MODAL ===== */
@@ -3307,7 +3363,7 @@
       width: 100%;
     }
 
-    .pres-slide--title > .pres-title-inner > .reveal {
+    .pres-slide--title>.pres-title-inner>.reveal {
       margin: 1.2rem 0 0;
       width: 100%;
       max-width: 720px;
@@ -5237,6 +5293,7 @@ node -v</div>
         var hero = document.querySelector('header.hero');
         if (hero) {
           var hs = mkSlide('pres-slide--hero');
+          hs.dataset.sourceId = 'hero';
           var hc = hero.cloneNode(true);
           hc.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
           hs.appendChild(hc);
@@ -5246,7 +5303,9 @@ node -v</div>
         // Opening quotes
         document.querySelectorAll('section.quote-page').forEach(function (qp) {
           if (allSections[0] && (qp.compareDocumentPosition(allSections[0]) & Node.DOCUMENT_POSITION_PRECEDING)) return;
-          slides.push(cloneQuoteSlide(qp));
+          var qs = cloneQuoteSlide(qp);
+          qs.dataset.sourceId = qp.id || 'opening-quote';
+          slides.push(qs);
         });
 
         // Content sections
@@ -5288,8 +5347,12 @@ node -v</div>
             allReveals.push(child);
           });
 
+          var srcLabel = section.querySelector('.section-label');
+          var srcId = (srcLabel && srcLabel.id) || section.id || '';
+
           // Title slide — merge pre-blocks into it
           var ts = mkSlide('pres-slide--title');
+          ts.dataset.sourceId = srcId;
           var titleInner = document.createElement('div');
           titleInner.className = 'pres-title-inner';
           titleInner.innerHTML = '<div class="pres-section-num">' + presEsc(sectionNum) + '</div>'
@@ -5304,6 +5367,7 @@ node -v</div>
           slides.push(ts);
 
           var currentSub = '';
+          var currentSubId = '';
           var currentSlide = null;
 
           allReveals.forEach(function (child, idx) {
@@ -5312,20 +5376,30 @@ node -v</div>
             var subEl = child.querySelector(':scope > .sub-title');
             if (subEl) {
               currentSub = subEl.textContent.trim();
+              currentSubId = subEl.id || '';
               currentSlide = null;
               return;
             }
 
+            var anchorId = currentSubId || srcId;
+            var idEl = child.querySelector('[id]');
+            if (idEl) anchorId = idEl.id;
+
             var groupEl = child.querySelector(':scope > .group-block');
             if (groupEl) {
               currentSlide = mkContentSlide(sectionName, currentSub, groupEl.cloneNode(true));
+              currentSlide.dataset.sourceId = srcId;
+              currentSlide.dataset.anchorId = anchorId;
               slides.push(currentSlide);
               return;
             }
 
             var ytEl = child.querySelector(':scope > .youtube-embed');
             if (ytEl) {
-              slides.push(mkContentSlide(sectionName, currentSub, ytEl.cloneNode(true)));
+              var ys = mkContentSlide(sectionName, currentSub, ytEl.cloneNode(true));
+              ys.dataset.sourceId = srcId;
+              ys.dataset.anchorId = anchorId;
+              slides.push(ys);
               currentSlide = null;
               return;
             }
@@ -5336,6 +5410,8 @@ node -v</div>
               currentSlide.querySelector('.pres-content').appendChild(clone);
             } else {
               currentSlide = mkContentSlide(sectionName, currentSub, clone);
+              currentSlide.dataset.sourceId = srcId;
+              currentSlide.dataset.anchorId = anchorId;
               slides.push(currentSlide);
             }
           });
@@ -5344,11 +5420,52 @@ node -v</div>
         // Closing quotes
         document.querySelectorAll('section.quote-page').forEach(function (qp) {
           if (!allSections[0] || !(qp.compareDocumentPosition(allSections[0]) & Node.DOCUMENT_POSITION_PRECEDING)) return;
-          slides.push(cloneQuoteSlide(qp));
+          var cqs = cloneQuoteSlide(qp);
+          cqs.dataset.sourceId = qp.id || 'closing-quote';
+          slides.push(cqs);
         });
 
+        // Find the slide matching the currently visible content (fine-grained)
+        var startIdx = 0;
+        var viewMid = window.scrollY + window.innerHeight / 3;
+
+        // Collect all anchors: hero, quote-pages, section-labels, sub-titles, and any [id] inside sections
+        var anchors = [];
+        var heroEl = document.querySelector('header.hero');
+        if (heroEl) anchors.push({ el: heroEl, id: 'hero' });
+        document.querySelectorAll('section.quote-page, .section-label[id], .sub-title[id], .group-block').forEach(function (el) {
+          var aid = el.id;
+          if (!aid && el.classList.contains('group-block')) {
+            var prev = el.closest('.reveal');
+            if (prev) {
+              var sub = prev.previousElementSibling;
+              while (sub && !sub.querySelector('.sub-title')) sub = sub.previousElementSibling;
+              if (sub) { var st = sub.querySelector('.sub-title'); if (st) aid = st.id; }
+            }
+          }
+          if (aid) anchors.push({ el: el, id: aid });
+        });
+
+        var matchId = '';
+        for (var ai = anchors.length - 1; ai >= 0; ai--) {
+          if (anchors[ai].el.getBoundingClientRect().top + window.scrollY <= viewMid) {
+            matchId = anchors[ai].id;
+            break;
+          }
+        }
+
+        if (matchId) {
+          // Try anchorId first (fine-grained), fall back to sourceId (section-level)
+          for (var fi = 0; fi < slides.length; fi++) {
+            if (slides[fi].dataset.anchorId === matchId || slides[fi].dataset.sourceId === matchId) {
+              startIdx = fi; break;
+            }
+          }
+        }
+
+        slideIdx = startIdx;
         slides.forEach(function (s, i) {
-          if (i === 0) s.classList.add('active');
+          if (i === startIdx) s.classList.add('active');
           deck.appendChild(s);
         });
 
@@ -5372,6 +5489,8 @@ node -v</div>
       }
 
       function exitPresentation() {
+        var curSlide = slides[slideIdx];
+        var targetId = curSlide ? (curSlide.dataset.anchorId || curSlide.dataset.sourceId) : '';
         document.body.classList.remove('pres-active');
         var deck = document.getElementById('pres-deck');
         if (deck) deck.remove();
@@ -5379,6 +5498,14 @@ node -v</div>
         if (document.fullscreenElement) document.exitFullscreen();
         slides = [];
         slideIdx = 0;
+        if (targetId) {
+          var el = targetId === 'hero'
+            ? document.querySelector('header.hero')
+            : document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'instant', block: 'start' });
+          }
+        }
       }
 
       function presKeyHandler(e) {
