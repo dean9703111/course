@@ -36,9 +36,117 @@
 
 在團隊合作時，如果想把自己的修改合併回主線，會先開一個 Pull Request（簡稱 PR，你可以想成是一份「我改了這些東西，請幫我看一下」的申請單），讓其他人幫你檢查程式碼、討論是否需要修改，確認沒問題後再合併。
 
+[html]
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>版本控制解決協作衝突</title>
+<style>
+*{box-sizing:border-box;margin:0}
+:root{
+  --bg-primary:#ffffff;--bg-secondary:#f7f7f5;--bg-tertiary:#f0efe8;
+  --text-primary:#1a1a1a;--text-secondary:#5f5e5a;--text-tertiary:#888780;
+  --border:#d3d1c7;
+  --danger-bg:#FCEBEB;--danger-text:#A32D2D;--danger-border:#F09595;
+  --success-bg:#EAF3DE;--success-text:#3B6D11;--success-border:#97C459;
+  --purple-bg:rgba(83,74,183,0.1);--purple-text:#534AB7;
+  --coral-bg:rgba(216,90,48,0.1);--coral-text:#D85A30;
+  --font-sans:-apple-system,"Segoe UI","Noto Sans TC",sans-serif;
+  --font-mono:"SF Mono","Fira Code","Noto Sans Mono",monospace;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg-primary:#1a1a1a;--bg-secondary:#2c2c2a;--bg-tertiary:#3d3d3a;
+    --text-primary:#e8e6df;--text-secondary:#b4b2a9;--text-tertiary:#888780;
+    --border:#5f5e5a;
+    --danger-bg:#501313;--danger-text:#F09595;--danger-border:#791F1F;
+    --success-bg:#173404;--success-text:#C0DD97;--success-border:#27500A;
+    --purple-bg:rgba(175,169,236,0.15);--purple-text:#AFA9EC;
+    --coral-bg:rgba(240,153,123,0.15);--coral-text:#F0997B;
+  }
+}
+body{font-family:var(--font-sans);background:var(--bg-primary);color:var(--text-primary);padding:24px;max-width:720px;margin:0 auto}
+.section-title{font-size:13px;font-weight:500;color:var(--text-tertiary);letter-spacing:0.5px;margin:0 0 16px;text-align:center}
+.scene{display:flex;gap:12px;align-items:stretch}
+.panel{flex:1;border:1px solid var(--border);border-radius:12px;padding:16px;position:relative;background:var(--bg-secondary)}
+.panel-bad{border-color:var(--danger-border)}
+.panel-good{border-color:var(--success-border)}
+.label{font-size:11px;font-weight:500;letter-spacing:0.5px;padding:3px 10px;border-radius:99px;position:absolute;top:-10px;left:16px}
+.label-bad{background:var(--danger-bg);color:var(--danger-text)}
+.label-good{background:var(--success-bg);color:var(--success-text)}
+.step-title{font-size:14px;font-weight:500;color:var(--text-primary);margin:8px 0 8px}
+.step-desc{font-size:12px;color:var(--text-secondary);line-height:1.6;margin-top:8px}
+.vs{display:flex;align-items:center;justify-content:center;width:36px;flex-shrink:0;font-size:13px;font-weight:500;color:var(--text-tertiary)}
+.sheet{border-radius:6px;overflow:hidden;margin:10px 0;font-family:var(--font-mono);font-size:11px;border:1px solid var(--border)}
+.sheet-row{display:flex}
+.sheet-cell{flex:1;padding:4px 8px;border-right:1px solid var(--border);text-align:center}
+.sheet-cell:last-child{border-right:none}
+.sheet-header{background:var(--bg-tertiary);font-weight:500;color:var(--text-secondary)}
+.cell-a{background:var(--purple-bg);color:var(--purple-text)}
+.cell-b{background:var(--coral-bg);color:var(--coral-text)}
+.cell-conflict{background:var(--danger-bg);color:var(--danger-text)}
+.cell-ok{background:var(--success-bg);color:var(--success-text)}
+.arrow-down{text-align:center;font-size:18px;color:var(--text-tertiary);margin:6px 0}
+@media(max-width:500px){
+  .scene{flex-direction:column}
+  .vs{width:auto;height:28px}
+}
+</style>
+</head>
+<body>
+
+<div class="section-title">共用試算表的協作問題</div>
+
+<div class="scene">
+  <div class="panel panel-bad" style="flex:1.2">
+    <span class="label label-bad">沒有版本控制</span>
+    <div class="step-title">你改了 A 欄，同事改了 B 欄</div>
+    <div class="sheet">
+      <div class="sheet-row sheet-header"><div class="sheet-cell">A 欄</div><div class="sheet-cell">B 欄</div></div>
+      <div class="sheet-row"><div class="sheet-cell cell-a">你的修改</div><div class="sheet-cell">原始</div></div>
+    </div>
+    <div class="sheet">
+      <div class="sheet-row sheet-header"><div class="sheet-cell">A 欄</div><div class="sheet-cell">B 欄</div></div>
+      <div class="sheet-row"><div class="sheet-cell">原始</div><div class="sheet-cell cell-b">同事的修改</div></div>
+    </div>
+    <div class="arrow-down">↓ 同時存檔</div>
+    <div class="sheet">
+      <div class="sheet-row sheet-header"><div class="sheet-cell">A 欄</div><div class="sheet-cell">B 欄</div></div>
+      <div class="sheet-row"><div class="sheet-cell cell-conflict">被覆蓋!</div><div class="sheet-cell cell-b">同事的修改</div></div>
+    </div>
+    <div class="step-desc">後存檔的人覆蓋了先存檔的人，你的修改就這樣消失了。</div>
+  </div>
+
+  <div class="vs">vs</div>
+
+  <div class="panel panel-good" style="flex:1.2">
+    <span class="label label-good">有版本控制</span>
+    <div class="step-title">每個人的修改都有紀錄</div>
+    <div class="sheet">
+      <div class="sheet-row sheet-header"><div class="sheet-cell">修改者</div><div class="sheet-cell">變更</div></div>
+      <div class="sheet-row"><div class="sheet-cell cell-a">你</div><div class="sheet-cell cell-a">A 欄</div></div>
+      <div class="sheet-row"><div class="sheet-cell cell-b">同事</div><div class="sheet-cell cell-b">B 欄</div></div>
+    </div>
+    <div class="arrow-down">↓ 自動合併</div>
+    <div class="sheet">
+      <div class="sheet-row sheet-header"><div class="sheet-cell">A 欄</div><div class="sheet-cell">B 欄</div></div>
+      <div class="sheet-row"><div class="sheet-cell cell-ok">你的修改</div><div class="sheet-cell cell-ok">同事的修改</div></div>
+    </div>
+    <div class="step-desc">系統知道誰改了什麼，合併時兩人的修改都保留。</div>
+  </div>
+</div>
+
+</body>
+</html>
+[/html]
+
 - **一個分支塞多個功能**：標題寫著「新增 i18n 多語系、淺色深色主題設計、常見 QA 問答區」等多個功能；從專案管理的角度，每個功能都應該對應到不同的 feature branch（功能分支，就像在 Word 裡另存一個副本來改，改好再合回去）
 - **Files changed 難以追蹤**：涵蓋了 18 個檔案，有近千多行的程式變更；從 Code Review（讓同事幫你檢查程式碼有沒有問題的流程）的角度，你根本無法了解變更的功能要對應到哪些檔案
 - **只有一個 Commit**：改了這麼多功能，竟然只有一個 commit（存檔紀錄，每次 commit 就是替專案拍一張快照），而且訊息也非常簡單；未來發生問題時，無法追溯當時的設計邏輯
+
+![https://github.com/deancourse/git-worktree-demo/pull/1](./assets/pr.png)
 
 > **這些問題在使用 AI 加速開發後，被成倍放大**
 > AI 產生的程式碼很多，但這不是你不檢查的原因。我們應該去想怎麼利用 AI 去優化檢查流程。
@@ -47,11 +155,159 @@
 
 ### 📋 好的版本控制應該做到
 
-[flow]
-1. 不同功能使用不同的 feature branch — 以減少 Code Review 的認知負擔
-2. 根據調整檔案分階段 commit — 讓邏輯在未來可以被追蹤
-3. 撰寫 Pull Request 草稿 — 讓團隊協作的資訊有一致性
-[/flow]
+[html]
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git 最佳實踐三步驟</title>
+<style>
+*{box-sizing:border-box;margin:0}
+:root{
+  --bg-primary:#ffffff;--bg-secondary:#f7f7f5;--bg-tertiary:#f0efe8;
+  --text-primary:#1a1a1a;--text-secondary:#5f5e5a;--text-tertiary:#888780;
+  --border:#d3d1c7;--border-light:rgba(0,0,0,0.08);
+  --purple:#534AB7;--teal:#0F6E56;--coral:#D85A30;--blue:#185FA5;
+  --purple-bg:#EEEDFE;--purple-text:#534AB7;
+  --teal-bg:#E1F5EE;--teal-text:#0F6E56;
+  --blue-bg:#E6F1FB;--blue-text:#185FA5;
+  --draft-bg:#FAEEDA;--draft-text:#854F0B;
+  --font-sans:-apple-system,"Segoe UI","Noto Sans TC",sans-serif;
+  --font-mono:"SF Mono","Fira Code","Noto Sans Mono",monospace;
+  --radius:12px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg-primary:#1a1a1a;--bg-secondary:#2c2c2a;--bg-tertiary:#3d3d3a;
+    --text-primary:#e8e6df;--text-secondary:#b4b2a9;--text-tertiary:#888780;
+    --border:#5f5e5a;--border-light:rgba(255,255,255,0.08);
+    --purple:#AFA9EC;--teal:#9FE1CB;--coral:#F0997B;--blue:#B5D4F4;
+    --purple-bg:#3C3489;--purple-text:#CECBF6;
+    --teal-bg:#085041;--teal-text:#9FE1CB;
+    --blue-bg:#0C447C;--blue-text:#B5D4F4;
+    --draft-bg:#633806;--draft-text:#FAC775;
+  }
+}
+body{font-family:var(--font-sans);background:var(--bg-primary);color:var(--text-primary);padding:24px;max-width:640px;margin:0 auto}
+.card{border:1px solid var(--border-light);border-radius:var(--radius);padding:20px;margin-bottom:16px;background:var(--bg-secondary);position:relative}
+.card-num{position:absolute;top:16px;right:20px;font-size:32px;font-weight:500;opacity:0.08;line-height:1}
+.card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.dot1{background:var(--purple-bg);color:var(--purple-text)}
+.dot2{background:var(--teal-bg);color:var(--teal-text)}
+.dot3{background:var(--blue-bg);color:var(--blue-text)}
+.card-title{font-size:15px;font-weight:500;color:var(--text-primary)}
+.card-sub{font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:14px}
+.mock{background:var(--bg-tertiary);border-radius:8px;padding:12px 14px;font-family:var(--font-mono);font-size:11px;line-height:1.8;color:var(--text-secondary)}
+.mock b{font-weight:500;color:var(--text-primary)}
+.hl-purple{color:var(--purple)}
+.hl-teal{color:var(--teal)}
+.hl-coral{color:var(--coral)}
+.hl-blue{color:var(--blue)}
+.branch-row{display:flex;align-items:center;gap:8px;margin:10px 0 4px}
+.branch-line{height:2px;flex:1;border-radius:1px}
+.bl-main{background:var(--purple)}
+.bl-feat1{background:var(--teal)}
+.bl-feat2{background:var(--coral)}
+.branch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.bd-main{background:var(--purple)}
+.bd-feat1{background:var(--teal)}
+.bd-feat2{background:var(--coral)}
+.branch-label{font-family:var(--font-mono);font-size:11px;flex-shrink:0;min-width:90px}
+.connector{display:flex;justify-content:center;margin:0 0 16px}
+.conn-line{width:1.5px;height:20px;background:var(--border)}
+.pr-mock{border:1px solid var(--border-light);border-radius:8px;overflow:hidden}
+.pr-header{background:var(--bg-tertiary);padding:10px 14px;display:flex;align-items:center;gap:8px}
+.pr-badge{font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:var(--draft-bg);color:var(--draft-text)}
+.pr-title-text{font-size:13px;font-weight:500;color:var(--text-primary)}
+.pr-body{padding:12px 14px;font-size:11px;color:var(--text-secondary);line-height:1.7}
+.pr-section{font-weight:500;color:var(--text-primary);margin-top:6px}
+.pr-section:first-child{margin-top:0}
+.check{display:inline-block;width:14px;height:14px;border:1.5px solid var(--border);border-radius:3px;vertical-align:middle;margin-right:4px}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-head">
+    <div class="dot dot1">1</div>
+    <div class="card-title">不同功能用不同的 feature branch</div>
+  </div>
+  <div class="card-sub">減少 code review 的認知負擔——每條分支只做一件事，reviewer 不用在一個 PR 裡面同時理解登入、付款、通知三種邏輯。</div>
+  <div class="branch-row">
+    <span class="branch-label hl-purple">main</span>
+    <div class="branch-dot bd-main"></div>
+    <div class="branch-line bl-main"></div>
+    <div class="branch-dot bd-main"></div>
+    <div class="branch-line bl-main"></div>
+    <div class="branch-dot bd-main"></div>
+    <div class="branch-line bl-main"></div>
+    <div class="branch-dot bd-main"></div>
+  </div>
+  <div class="branch-row" style="margin-left:110px">
+    <span class="branch-label hl-teal">feature/login</span>
+    <div class="branch-dot bd-feat1"></div>
+    <div class="branch-line bl-feat1" style="max-width:80px"></div>
+    <div class="branch-dot bd-feat1"></div>
+  </div>
+  <div class="branch-row" style="margin-left:230px">
+    <span class="branch-label hl-coral">feature/payment</span>
+    <div class="branch-dot bd-feat2"></div>
+    <div class="branch-line bl-feat2" style="max-width:80px"></div>
+    <div class="branch-dot bd-feat2"></div>
+  </div>
+</div>
+
+<div class="connector"><div class="conn-line"></div></div>
+
+<div class="card">
+  <div class="card-head">
+    <div class="dot dot2">2</div>
+    <div class="card-title">根據調整的檔案分階段 commit</div>
+  </div>
+  <div class="card-sub">讓邏輯在未來可以被追蹤——半年後回頭看 git log，每個 commit 都能告訴你「這次改了什麼、為什麼改」。</div>
+  <div class="mock">
+    <b class="hl-teal">commit a1b2c3</b> feat: add login form UI<br>
+    <span style="opacity:0.5">&nbsp;&nbsp;auth/LoginForm.tsx, auth/login.css</span><br><br>
+    <b class="hl-teal">commit d4e5f6</b> feat: add login API integration<br>
+    <span style="opacity:0.5">&nbsp;&nbsp;auth/api.ts, auth/hooks.ts</span><br><br>
+    <b class="hl-teal">commit g7h8i9</b> test: add login unit tests<br>
+    <span style="opacity:0.5">&nbsp;&nbsp;auth/__tests__/login.test.ts</span>
+  </div>
+</div>
+
+<div class="connector"><div class="conn-line"></div></div>
+
+<div class="card">
+  <div class="card-head">
+    <div class="dot dot3">3</div>
+    <div class="card-title">撰寫 Pull Request 草稿</div>
+  </div>
+  <div class="card-sub">讓團隊協作的資訊有一致性——reviewer 打開 PR 就知道這次改了什麼、怎麼測試、有沒有風險。</div>
+  <div class="pr-mock">
+    <div class="pr-header">
+      <span class="pr-badge">Draft</span>
+      <span class="pr-title-text">feat: add user login flow</span>
+    </div>
+    <div class="pr-body">
+      <div class="pr-section">What</div>
+      新增使用者登入功能，包含表單驗證與 API 串接<br><br>
+      <div class="pr-section">Why</div>
+      Sprint 3 需求：讓使用者可以透過 email 登入系統<br><br>
+      <div class="pr-section">How to test</div>
+      <span class="check"></span> 輸入正確帳密 → 跳轉到 dashboard<br>
+      <span class="check"></span> 輸入錯誤密碼 → 顯示錯誤訊息<br>
+      <span class="check"></span> 空白送出 → 表單驗證攔截<br><br>
+      <div class="pr-section">Risk</div>
+      無破壞性變更，僅新增 auth 模組
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+[/html]
 
 ---
 
@@ -122,7 +378,7 @@ npm install -g @fission-ai/openspec@latest
 
 ### 📥 Fork 與 Clone 練習專案
 
-為了方便大家可以跟著操作，我在 GitHub 有上傳一個[練習用的專案](https://github.com/deancourse/git-worktree-demo)，裡面已經有設計好的 Agent Skills 可以練習。
+為了方便大家可以跟著操作，我在 GitHub 有上傳一個[練習用的專案](https://github.com/deancourse/openspec-agent-skills-practice)，裡面已經有設計好的 Agent Skills 可以練習。
 
 [flow]
 1. 點擊 Fork，將專案複製到自己的帳號下
@@ -263,6 +519,11 @@ openspec config profile
 - 根據實際需求回答即可
 - 在 Plan 模式下，會先設計出一份實作規劃書
 - 確認內容符合預期後，便可執行後續的實作
+
+如果沒有想法，也可以跟 AI 說：
+```prompt [label="讓 AI 判斷"]
+以熟悉系統的專業人士來設計，先完成系統 MVP
+```
 
 ## OpenSpec 撰寫專案文件
 
