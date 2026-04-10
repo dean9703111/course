@@ -324,7 +324,6 @@ body{font-family:var(--font-sans);background:var(--bg-primary);color:var(--text-
 今天這個教學，你可以使用自己熟悉的程式碼編輯器，不管是 VSCode、Cursor、Antigravity 都可以。如果不知道使用哪一款，可以跟我一樣，使用 Google 最新推出的 AI 程式碼編輯器 [Antigravity](https://antigravity.google)。
 
 - 登入 Google 帳號就能免費使用
-- 這次，我們沒有要使用到編輯器內建的 AI 功能，使用他只是為了方便檢視程式碼與規格文件的變更
 
 ## 確認 Node.js 版本
 
