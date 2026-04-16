@@ -452,3 +452,10 @@ with details about my project, tech stack, and conventions
 
 # 直播優惠：輸入折扣碼
 
+## 感謝參與今日直播
+
+#### 結帳輸入「20260423」，享優惠價再折 1,000 元 ( 優惠只到 2026/4/23 23:59 )
+
+| [填寫回饋問卷可取得直播回放](https://tibame.tw/OkOdq) | [報名 Claude AI 全端開發工作流](https://tibame.tw/Zmnts) |
+| :---: | :---: |
+| ![回饋問卷 QR Code](assets/問卷.jpg) | ![課程報名 QR Code](assets/報名.png) |
