@@ -1,0 +1,21 @@
+# Tibame AI 分享 — 課程頁專屬設定
+
+page:
+  title: "工程師的下一步升級路線"
+  badge: "Claude AI 課程說明會 - 從 AI 寫程式到驅動開發流程"
+  hero_title: "市場不會為爛產品買單！"
+  subtitle: "Vibe Coding 讓你快速啟動，但「品質、維護、擴充」才決定產品能走多遠"
+
+seo:
+  title: "Tibame Claude AI 課程說明會"
+  description: "了解哪些環節可以導入 AI，增加專案的穩定性、擴充性，並透過需求規格與版本控制，為產品帶來更好的品質。為公司、專案、自己建立 Agent Skills，讓 AI 從庸才變專家。"
+  image: "https://deanlin.net/course/tibame/ai-sharing/assets/og-image.jpg"
+  url: "https://deanlin.net/course/tibame/ai-sharing/"
+
+quotes:
+  opening:
+    text: "工具會過時，框架會淘汰，<br>但解決問題的思維，永遠有價值。"
+  closing:
+    text: >
+      學習 AI 不是搜集指令複製貼上；<br>
+      了解應用情境後，透過實踐調整為適合自己的工作流。
