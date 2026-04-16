@@ -19,6 +19,10 @@
 ## 從網頁版 AI 轉為程式碼編輯器
 > 網頁版的 AI 只能告訴你該怎麼做，AI Agent 能直接幫你完成工作
 
+- 能閱讀更完整的上下文
+- 可以執行指令（Python、Node、Command Line）
+- 很棒的 RAG 工具（用白話文查詢）
+
 > AI Agent 的能力：
 > 不只是「問一句答一句」的聊天機器人，而是能理解你的任務脈絡、操作你的檔案、串接多個步驟，幫你從頭到尾把事情做完的 AI 助手。
 
@@ -91,6 +95,8 @@
 ```prompt [label="將 Agent Skills 同步到指定的 AI Agent"]
 npx @dean9703111/dotagents
 ```
+
+https://github.com/forrestchang/andrej-karpathy-skills/tree/main
 
 ## 透過 MCP 連結其他工具
 
