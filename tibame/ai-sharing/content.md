@@ -119,68 +119,26 @@ https://github.com/forrestchang/andrej-karpathy-skills/tree/main
 - **Atlassian MCP** — 讀取 Jira Tickets 實作，透過 Confluence 驗證
 - 讓 AI 能直接存取任務描述、驗收條件，不需要人工轉述
 
-**安裝 Atlassian MCP**
-
-```prompt [label="請 AI 幫你安裝 Atlassian MCP"]
-幫我安裝 Atlassian MCP，並設定好 Jira 和 Confluence 的連線
-```
-
-安裝完成後，在 `.mcp.json` 會看到類似這樣的設定：
-
-```json [label=".mcp.json"]
-{
-  "mcpServers": {
-    "mcp-atlassian": {
-      "command": "uvx",
-      "args": ["mcp-atlassian"],
-      "env": {
-        "JIRA_URL": "https://your-domain.atlassian.net",
-        "JIRA_USERNAME": "your@email.com",
-        "JIRA_API_TOKEN": "your_api_token",
-        "CONFLUENCE_URL": "https://your-domain.atlassian.net",
-        "CONFLUENCE_USERNAME": "your@email.com",
-        "CONFLUENCE_API_TOKEN": "your_api_token"
-      }
-    }
-  }
-}
-```
-
-> API Token 在 [Atlassian 帳號設定](https://id.atlassian.com/manage-profile/security/api-tokens) 產生，記得加入 `.gitignore` 避免 token 外洩。
-
 ### 📐 設計專案的 Lint
 
 **為什麼 AI 時代更需要 Lint？**
 
 - 即使有 Rules 規範，但 AI 生成的格式（ex: 縮排、引號）可能每次都不一樣
 - 沒有 Lint，可能重構時會產生很多無效的 Diff 分散 Review 的注意
-- 有 Lint，AI 就算格式寫錯，commit 前就會被擋下來
 
-**設定 Claude Code 的 Pre-commit Hook**
+**做法：Pre-commit Hook + Auto-fix**
 
-透過 Claude Code 的 `PreToolUse` hook，當 AI 嘗試執行 `git commit` 時，自動先跑 Lint 檢查。格式沒過就不讓 commit：
+- 透過 `husky` + `lint-staged`，在 commit 前自動執行 Lint
+- 能自動修的（縮排、引號等格式問題）直接修掉，開發者無感
+- 修不了的（邏輯錯誤、型別錯誤）才擋下來，讓開發者處理
+- 減少摩擦，才不會讓人想用 `--no-verify` 繞過
 
-```json [label=".claude/settings.json"]
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "if": "Bash(git commit*)",
-            "command": "npx eslint . --ext .js,.ts 2>&1 | tee /dev/stderr; exit ${PIPESTATUS[0]}",
-            "statusMessage": "Running lint before commit..."
-          }
-        ]
-      }
-    ]
-  }
-}
-```
+**專案需要維護一份 Lint 規格**
 
-這樣不管 AI 寫了什麼，commit 之前都會先過一關。
+- `.eslintrc` / `eslint.config.js` — 邏輯規則（變數命名、禁用語法等）
+- `.prettierrc` — 純格式（縮排、引號、分號）
+
+這份規格在 AI 時代價值更高：**規格定一次 → auto-fix 自動對齊 → 只有真正的邏輯錯誤才需要人介入**。
 
 ## 規格驅動開發（SDD）
 

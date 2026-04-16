@@ -3922,40 +3922,6 @@
       <li><strong>Atlassian MCP</strong> — 讀取 Jira Tickets 實作，透過 Confluence 驗證</li>
       <li>讓 AI 能直接存取任務描述、驗收條件，不需要人工轉述</li>
     </ul>
-        <p class="loose-text"><strong>安裝 Atlassian MCP</strong></p>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">請 AI 幫你安裝 Atlassian MCP</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">幫我安裝 Atlassian MCP，並設定好 Jira 和 Confluence 的連線</div>
-    </div>
-        <p class="loose-text">安裝完成後，在 <code>.mcp.json</code> 會看到類似這樣的設定：</p>
-        <p class="loose-text">```json [label=".mcp.json"]</p>
-        <p class="loose-text">{</p>
-        <p class="loose-text">"mcpServers": {</p>
-        <p class="loose-text">"mcp-atlassian": {</p>
-        <p class="loose-text">"command": "uvx",</p>
-        <p class="loose-text">"args": ["mcp-atlassian"],</p>
-        <p class="loose-text">"env": {</p>
-        <p class="loose-text">"JIRA_URL": "https://your-domain.atlassian.net",</p>
-        <p class="loose-text">"JIRA_USERNAME": "your@email.com",</p>
-        <p class="loose-text">"JIRA_API_TOKEN": "your_api_token",</p>
-        <p class="loose-text">"CONFLUENCE_URL": "https://your-domain.atlassian.net",</p>
-        <p class="loose-text">"CONFLUENCE_USERNAME": "your@email.com",</p>
-        <p class="loose-text">"CONFLUENCE_API_TOKEN": "your_api_token"</p>
-        <p class="loose-text">}</p>
-        <p class="loose-text">}</p>
-        <p class="loose-text">}</p>
-        <p class="loose-text">}</p>
-        <p class="loose-text">```</p>
-        <div class="insight">
-      <p>API Token 在 <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank" rel="noopener">Atlassian 帳號設定</a> 產生，記得加入 <code>.gitignore</code> 避免 token 外洩。</p>
-    </div>
       </div>
     </div>
   </div>
@@ -3968,30 +3934,20 @@
         <ul class="loose-list">
       <li>即使有 Rules 規範，但 AI 生成的格式（ex: 縮排、引號）可能每次都不一樣</li>
       <li>沒有 Lint，可能重構時會產生很多無效的 Diff 分散 Review 的注意</li>
-      <li>有 Lint，AI 就算格式寫錯，commit 前就會被擋下來</li>
     </ul>
-        <p class="loose-text"><strong>設定 Claude Code 的 Pre-commit Hook</strong></p>
-        <p class="loose-text">透過 Claude Code 的 <code>PreToolUse</code> hook，當 AI 嘗試執行 <code>git commit</code> 時，自動先跑 Lint 檢查。格式沒過就不讓 commit：</p>
-        <p class="loose-text">```json [label=".claude/settings.json"]</p>
-        <p class="loose-text">{</p>
-        <p class="loose-text">"hooks": {</p>
-        <p class="loose-text">"PreToolUse": [</p>
-        <p class="loose-text">{</p>
-        <p class="loose-text">"matcher": "Bash",</p>
-        <p class="loose-text">"hooks": [</p>
-        <p class="loose-text">{</p>
-        <p class="loose-text">"type": "command",</p>
-        <p class="loose-text">"if": "Bash(git commit*)",</p>
-        <p class="loose-text">"command": "npx eslint . --ext .js,.ts 2>&1 | tee /dev/stderr; exit ${PIPESTATUS[0]}",</p>
-        <p class="loose-text">"statusMessage": "Running lint before commit..."</p>
-        <p class="loose-text">}</p>
-        <p class="loose-text">]</p>
-        <p class="loose-text">}</p>
-        <p class="loose-text">]</p>
-        <p class="loose-text">}</p>
-        <p class="loose-text">}</p>
-        <p class="loose-text">```</p>
-        <p class="loose-text">這樣不管 AI 寫了什麼，commit 之前都會先過一關。</p>
+        <p class="loose-text"><strong>做法：Pre-commit Hook + Auto-fix</strong></p>
+        <ul class="loose-list">
+      <li>透過 <code>husky</code> + <code>lint-staged</code>，在 commit 前自動執行 Lint</li>
+      <li>能自動修的（縮排、引號等格式問題）直接修掉，開發者無感</li>
+      <li>修不了的（邏輯錯誤、型別錯誤）才擋下來，讓開發者處理</li>
+      <li>減少摩擦，才不會讓人想用 <code>--no-verify</code> 繞過</li>
+    </ul>
+        <p class="loose-text"><strong>專案需要維護一份 Lint 規格</strong></p>
+        <ul class="loose-list">
+      <li><code>.eslintrc</code> / <code>eslint.config.js</code> — 邏輯規則（變數命名、禁用語法等）</li>
+      <li><code>.prettierrc</code> — 純格式（縮排、引號、分號）</li>
+    </ul>
+        <p class="loose-text">這份規格在 AI 時代價值更高：<strong>規格定一次 → auto-fix 自動對齊 → 只有真正的邏輯錯誤才需要人介入</strong>。</p>
       </div>
     </div>
   </div>
