@@ -140,6 +140,8 @@ https://github.com/forrestchang/andrej-karpathy-skills/tree/main
 
 這份規格在 AI 時代價值更高：**規格定一次 → auto-fix 自動對齊 → 只有真正的邏輯錯誤才需要人介入**。
 
+> 有些東西其實不是 AI 時代才有的，我們也不需要浪費 Token 去檢查格式，因為現有工具就能夠解決
+
 ## 規格驅動開發（SDD）
 
 ### 🔧 為什麼需要 OpenSpec？
