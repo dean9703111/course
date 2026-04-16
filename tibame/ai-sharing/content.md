@@ -1,43 +1,27 @@
 # 痛點：穩定性不足、難以維護、無法驗證
 
-> 現在一句話 AI 就能生成一個有前端、後端、資料庫的網頁，但...還有然後嗎？
+> 一句話 AI 就能生成有前端、後端、資料庫的系統，但...你敢用嗎？
 
-## 加入版控設定規則
+## 不要讓 AI 的「快」，變成未來的「債」
 
-- **Git Flow**：AI 寫程式的速度快，少了版本控制，改壞就回不去
-- **Rules**：專案架構、使用技術、協作偏好
-- **Lint**：設定格式，保證程式碼風格
+### 😓 三大痛點
 
-## 根據需求規格進行開發
+- 穩定性：請 AI 解決目前的問題，改完後發現過去正常的功能被改壞了
+- 複雜度：功能持續增加，靠人工逐一確認流程，耗時又容易有遺漏
+- 擴充性：架構逐漸複雜後，任何修改都可能引發連鎖影響，出狀況時連問題都不知道如何定位
 
-- **SDD**：讓 AI 了解任務細節、驗證方式
-- **OpenSpec**
-- **Atlassian MCP**：讀取 Jira Tickets 實作，透過 Confluence 驗證
-
-沒有規格文件，AI 每次都在「猜」你要什麼
-- 改 A 功能壞 B 功能，因為 AI 不知道原本的設計邏輯
-- 關鍵人物離職後，沒有文件可參考，系統知識直接斷層
-
-## 導入測試保證底線
-
-- AI 修好了眼前的 bug，卻悄悄改壞了其他功能
-- 功能越多，人工測試越不可能覆蓋所有情境
-- 沒有自動化測試，每次部署都像在賭運氣
+> **如果這幾個問題能引起你的共鳴，恭喜你**
+> 這代表你已經進入了下一個階段，開始思考如何讓 Vibe Coding 的成果真正可靠。
 
 > 其實在沒有 AI 的時代，這些問題就已經存在；但 AI 寫程式速度太快，所以這些問題被加倍放大。
 
-## 如何用 AI 輔助開發？
+## 為什麼使用 IDE：我厭倦在 AI 工具間複製貼上
+> 網頁版的 AI 只能告訴你該怎麼做，AI Agent 能直接幫你完成工作
 
-- **ChatGPT、Gemini、Claude 網頁版**：把需求貼上去，等它回覆，再把結果複製回編輯器
-- **Antigravity、Cursor、Kiro 程式碼編輯器**：讓 AI Agent 直接幫你改程式
-- **導入 MCP、Rules、Commands、Skills**：執行時有更完整的上下文、規則
+> AI Agent 的能力：
+> 不只是「問一句答一句」的聊天機器人，而是能理解你的任務脈絡、操作你的檔案、串接多個步驟，幫你從頭到尾把事情做完的 AI 助手。
 
-## 直接問 AI 就好，幹嘛學？
-
-- 不知道有程式碼編輯器（IDE）
-- 寫程式從未版本控制（Git）
-- 沒用過自動化工作流（CI/CD）
-- 不了解哪些環節可以導入 AI
+---
 
 # AI 時代下的迷思：不是「學習工具」，而是「解決痛點」
 
@@ -45,12 +29,6 @@
 > 我以為只要一直學新東西、解更難的題，就會被認可。但考試世界給我們一個假象：分數高，就代表你「做對了選擇」。  
 > **在 AI 時代，很多問題並不需要你先學會一整門新技術；需要的是你願意把問題拆清楚、願意往深處想，而不是急著從別人手上抄一個通用答案。**  
 > 因為在實務裡，答案往往無法通用：每間公司有自己的文化與限制，每個人也有自己的背景。你覺得理所當然的 Markdown，對另一群人可能是第一次接觸——**當知識的圍籬出現，我們要做的不是嘲笑，而是搭一座橋，讓彼此能一起把事情做完。**
-
-如果訂閱我頻道的觀眾，應該會發現我介紹了絕大多數用 AI 寫程式碼的工具
-
-從一開始的 Cursor、Antigravity，到最近的 Claude 與 Codex
-
-> 這邊我直接切換到專案的畫面
 
 ## 工具間的差異沒有你想像的大
 
@@ -69,7 +47,7 @@
 
 我不迷信那種「終端機開一排、很多 Agent 平行跑」的炫技畫面——**能照順序做完、根本不需要解衝突的流程，硬拆成多 Agent，通常只是在浪費 Token 與管理成本。**（現實世界還有額度問題。）
 
-我更認同 **Loop**：一個角色完成，另一個角色審核；需要換模型或換視角時再切換，而不是讓一堆 Agent 同時做同一件事。
+你可以讓 Claude 呼叫 Codex 來解決問題。
 
 **好的結果，不該靠暴力嘗試拼運氣；而是靠清楚的方向、可重複的工作流、以及人類在關鍵節點的決策。**
 
@@ -89,26 +67,23 @@
 當你把流程改善之後，團隊通常會更快暴露出新的不足——可能是誤解、可能是規範缺口、可能是 Review 節奏跟不上。  
 **這些不足不是失敗，而是下一輪優化的入口。** 我會用實務案例把整條鏈路講清楚：**哪些一定要人來決定，哪些可以放心交給 AI 去處理。**
 
-# 如何把 AI 融入開發工作流
+---
 
-## 如果你對 AI 還很抗拒：先把鞋穿上
+# 前置作業：課程會用到的工具、技術
 
-把 AI 導入工作流，我會把它比喻成運動：**一開始一定不舒服**；但一旦你真的跑起來，身體會用「好處」回報你。
-
-你不需要把「變得很會 AI」當成第一天的大目標。就像運動：  
-**先穿上跑鞋、走到場邊，就已經是很大的一步。**  
-對 AI 來說，這一步可能是：**先把 ChatGPT 這類工具註冊好、打開聊天視窗，丟一個你工作上真的卡住的問題進去。** 剩下的，我們再用流程把它變成習慣。
-
-## 前置作業
-
+### 🛠️ 環境準備
 - **[Git](https://git-scm.com/install/windows)** — 版本控制工具，用來追蹤每次改動
 - **[GitHub 帳號](https://github.com)** — 雲端 Git 儲存庫，用來管理專案
 - **[nvm](https://github.com/nvm-sh/nvm)** — Node.js 版本管理工具，方便切換
-- **[Python](https://www.python.org/downloads/)** — Agent Skills 的 scripts 大部分使用 Python 撰寫 
+- **[Python](https://www.python.org/downloads/)** — Agent Skills 的 scripts 大部分使用 Python 撰寫
 - **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** — 安裝任一款程式碼編輯器（IDE）
-- [Docker](https://www.docker.com/) — 獲得一致的環境
+- **[Docker](https://www.docker.com/)** — 獲得一致的環境
 
-## 設定 Agent Skills
+### ⚙️ 認識 Rules / Commands / Skills
+
+- **Rules** — 專案的規範，通常不會寫太多，因為會佔用到上下文的空間
+- **Commands** — 像遊戲中的「主動技能」，通常會設計成一個工作流，涵蓋多個 Skills，需要主動觸發
+- **Skills** — 把日常工作中執行任務的細節、技巧、判斷模式放進去，AI 遇到相關任務時會主動觸發
 
 因為每個 AI Agent 的路徑不同，可以使用 [dotagents](https://github.com/dean9703111/dotagents) 來協助建立 symlinks。
 
@@ -116,26 +91,97 @@
 npx @dean9703111/dotagents
 ```
 
-## 設定 MCP
+## 透過 MCP 連結其他工具
 
-許多公司都是使用 Jira 來管理任務執行狀況，並透過 Confluence 存放規格
-
-> **Work Smart 比 Work Hard 更值錢（尤其在 AI 之後）。**  
-> 寫了多少行程式、多修幾個 bug，未必會自動轉成「對團隊的價值」；但如果你能把某個協作環節變順——讓大家少踩坑、少重工、少在無聊的事情上耗神——那通常會同時帶來 **Credit** 與 **可累積的職涯資本**。  
-> 下面從新專案、舊專案迭代、到測試與 CI/CD，我會用同一條主線串起來：**不是教你變快，而是教你把流程變可靠。**
+讓 AI 使用其他工具的 API 來做事，確保工具操作上的穩定性
 
 ---
 
-# 新專案：用 SDD 讓 AI 根據規格建立專案
-> 規格驅動開發（Spec-Driven Development）— 讓 AI 不只寫程式，[還幫你建立完善的規格文件](https://youtu.be/FeQv7mngg6Q)
+# 開發：如何導入工作流
+> 了解 AI 可以在哪些環節加入，人類要在哪裡把關。
 
-## OpenSpec 初始化
+> **Work Smart 比 Work Hard 更值錢（尤其在 AI 之後）。**  
+> 寫了多少行程式、多修幾個 bug，未必會自動轉成「對團隊的價值」；但如果你能把某個協作環節變順——讓大家少踩坑、少重工、少在無聊的事情上耗神——那通常會同時帶來 **Credit** 與 **可累積的職涯資本**。
 
-> **為什麼需要 OpenSpec？**
-> 
-> - AI 寫程式越來越快，但專案越改越亂，甚至越改越壞
-> - 關鍵人物離職，沒有文件，系統知識直接斷層
-> - 解法：白話文對話 → AI 自動建立規格文件 → 根據規格驅動開發
+## 上下文的重要性（Jira MCP）
+
+### 📋 設定 MCP
+
+許多公司都是使用 Jira 來管理任務執行狀況，並透過 Confluence 存放規格
+
+- **Atlassian MCP** — 讀取 Jira Tickets 實作，透過 Confluence 驗證
+- 讓 AI 能直接存取任務描述、驗收條件，不需要人工轉述
+
+**安裝 Atlassian MCP**
+
+```prompt [label="請 AI 幫你安裝 Atlassian MCP"]
+幫我安裝 Atlassian MCP，並設定好 Jira 和 Confluence 的連線
+```
+
+安裝完成後，在 `.mcp.json` 會看到類似這樣的設定：
+
+```json [label=".mcp.json"]
+{
+  "mcpServers": {
+    "mcp-atlassian": {
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "JIRA_URL": "https://your-domain.atlassian.net",
+        "JIRA_USERNAME": "your@email.com",
+        "JIRA_API_TOKEN": "your_api_token",
+        "CONFLUENCE_URL": "https://your-domain.atlassian.net",
+        "CONFLUENCE_USERNAME": "your@email.com",
+        "CONFLUENCE_API_TOKEN": "your_api_token"
+      }
+    }
+  }
+}
+```
+
+> API Token 在 [Atlassian 帳號設定](https://id.atlassian.com/manage-profile/security/api-tokens) 產生，記得加入 `.gitignore` 避免 token 外洩。
+
+### 📐 設計專案的 Lint
+
+**為什麼 AI 時代更需要 Lint？**
+
+- 即使有 Rules 規範，但 AI 生成的格式（ex: 縮排、引號）可能每次都不一樣
+- 沒有 Lint，可能重構時會產生很多無效的 Diff 分散 Review 的注意
+- 有 Lint，AI 就算格式寫錯，commit 前就會被擋下來
+
+**設定 Claude Code 的 Pre-commit Hook**
+
+透過 Claude Code 的 `PreToolUse` hook，當 AI 嘗試執行 `git commit` 時，自動先跑 Lint 檢查。格式沒過就不讓 commit：
+
+```json [label=".claude/settings.json"]
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit*)",
+            "command": "npx eslint . --ext .js,.ts 2>&1 | tee /dev/stderr; exit ${PIPESTATUS[0]}",
+            "statusMessage": "Running lint before commit..."
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+這樣不管 AI 寫了什麼，commit 之前都會先過一關。
+
+## 規格驅動開發（SDD）
+
+### 🔧 為什麼需要 OpenSpec？
+
+- AI 寫程式越來越快，但專案越改越亂，甚至越改越壞
+- 關鍵人物離職，沒有文件，系統知識直接斷層
+- 解法：白話文對話 → AI 自動建立規格文件 → 根據規格驅動開發
 
 ### 📦 安裝與初始化
 - 選擇使用的 AI 工具（ex: Claude Code）
@@ -150,19 +196,25 @@ openspec init
 > 課程裡會帶到，但我不希望你把它當成唯一重點——**工具迭代太快**。我更在意你能不能 **分析問題**、能不能設計 **可遷移到下一個工具** 的協作方式與工作流。  
 > 否則你上再多「工具課」，也很難長出真正可帶走的本質能力。
 
-### ⚡ Skills 與 Commands
-- **Skills** — AI 在對話過程中自動觸發的技能包，不需要背指令
-- **Commands** — 用 `/opsx` 前綴強制驅動：apply / archive / explore / propose
-- 可透過 `openspec config profile` 擴充更多 workflows
+我們沒有背指令的必要性
 
 ```prompt [label="查看 Skill"]
 我想知道 openspec 目前安裝的 skill 用途
 請使用表格呈現，用白話簡短描述
 ```
 
-## 從零建立專案
+### 📋 OpenSpec 如何建立文件規格
 
-### 🎯 Prompt 設計三要素
+[flow]
+1. proposal.md — 確認目標與範圍
+2. design.md — 技術選型與風險評估
+3. specs/ — 按功能分類的詳細規格
+4. task.md — 任務清單，完成自動打勾
+[/flow]
+
+### 🎯 從零建立專案
+
+Prompt 設計三要素：
 
 [flow]
 1. 專案目標 — 大方向描述需求，AI 會釐清細節
@@ -183,15 +235,6 @@ openspec init
 參考 openspec 的 skill 執行，以最小可行性方案來規劃
 ```
 
-### 📋 OpenSpec 自動建立規格文件
-
-[flow]
-1. proposal.md — 確認目標與範圍
-2. design.md — 技術選型與風險評估
-3. specs/ — 按功能分類的詳細規格
-4. task.md — 任務清單，完成自動打勾
-[/flow]
-
 ```prompt [label="開始實作"]
 開始實作
 ```
@@ -206,7 +249,7 @@ openspec init
 
 如果覺得外觀太過慘烈，可以讓 AI 參考 [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) 修正一下
 
-```prompt [label="讓 AI 協助啟動"]
+```prompt [label="美化頁面"]
 參考 UI/UX SKill 美化頁面
 ```
 
@@ -223,9 +266,7 @@ openspec init
 >
 > 用 OpenSpec 建立規格文件 — 就是讓這個交接過程有據可循，而不是一團無文件的程式碼丟過去。
 
-## 建立專案規則
-
-### 📐 生成 CLAUDE、OpenSpec 專案參考規則
+### 📐 建立專案規則
 
 **CLAUDE.md** 是給「做事」用的，**openspec/config.yaml** 是給「規劃」用的
 
@@ -248,6 +289,138 @@ with details about my project, tech stack, and conventions
 ```
 
 > 先使用內建的 AI 來 Generate Commit，Commit 後將變更 Sync Changes 更新上去
+
+### ✨ 用 OpenSpec 迭代新功能
+
+> **為什麼 1 到 100 比 0 到 1 更難？**
+> 如果沒有規格文件，下次改功能時 AI 不知道之前的設計邏輯，可能把同一個功能重複寫好幾次，或改 A 壞 B。
+>
+> 用 OpenSpec 每次迭代都會在 Source Control 留下規格變更，AI 跟人類都有文件可以參考。關鍵人物離職最痛的不是少了一個人，而是系統知識直接斷層。
+
+```prompt [label="新增功能"]
+增加使用者紀錄頁面，供管理者查看
+使用 OpenSpec
+```
+
+```prompt [label="確認後實作"]
+開始實作
+```
+
+```prompt [label="歸檔變更"]
+幫我歸檔
+```
+
+**Tips**: 不是所有事情都需要觸發 OpenSpec，像 branch 命名直接讓 AI 想就好
+
+```prompt [label="新增分支"]
+分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch
+```
+
+## 導入測試：讓維護與擴充更有底氣
+> 市場不會為爛產品買單；加入自動化測試，是 Vibe Coding 從玩具走向產品的關鍵
+
+### 🛡️ 為什麼 Vibe Coding 一定要測試？
+
+[flow]
+1. 穩定性 — 請 AI 修 bug，結果舊功能壞掉
+2. 複雜度 — 功能越多，人工測試越不可能覆蓋全部
+3. 擴充性 — 功能間有相依性，修改可能引發連鎖影響
+[/flow]
+
+> 不寫測試才浪費時間 — 測試讓你敢大膽修改，遇錯快速定位
+
+### 🔄 建立適合專案的測試工作流
+
+[flow]
+1. 建立資料夾 — 存放測試清單
+2. AI 撰寫清單 — 類型、說明、輸入、期待輸出
+3. 人類 Review — 確認情境有無遺漏
+4. AI 撰寫測試 — 描述與文件一致
+5. 自主驗證 — 最多嘗試 5 次
+[/flow]
+
+下面以 command 指令形式強制觸發任務
+
+```prompt [label="生成測試案例"]
+/Gen Test Cases 
+（拖入要測試的檔案，ex: src/pages/LoginPage.tsx）
+```
+
+> **從玩具到產品，差的就是測試**
+> 很多時候 AI 只是修好了眼前的錯誤，但過程中改壞了過去的邏輯。千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。
+>
+> 現在儘管有 AI 輔助撰寫測試程式，我們還是要仔細檢查 AI 給的測試情境是否合理、有遺漏。
+
+### 💡 實務建議
+- 不要一口氣生成所有測試，先放一個檔案確認結果符合預期
+- 每個頁面/模組有獨立的測試程式，方便定位問題
+- 測試案例會隨規格變更而調整，不可能一次到位
+
+## 建立自動化測試（CI/CD）
+
+### 🔁 自動化測試流程
+- 每次推送到 GitHub 都觸發測試
+- 測試完畢生成覆蓋率報告
+- 設定 Branch Protection Rule（ex: protected-by-tests）：測試通過才能合併到主分支（將 Require status checks to pass 打勾，然後輸入「test」）
+
+測試覆蓋率不需追求 100%，重要的邏輯都要測試到。有了測試，規格書上的功能才能被真正驗證。
+
+```prompt [label="自動化測試"]
+我希望在 GitHub Action 加入自動化測試的流程
+每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
+```
+
+## 拆分 Commit 讓變更可以被追蹤
+
+> 根據需求建立 Agent Skills，能實際給予幫助的，才是好的 Skill
+
+### 📝 為什麼需要 Commit Skill？
+- 分析變更的檔案 → 判斷應拆成幾個 commit → 分段提交
+- 不同功能的修改分開 commit，讓邏輯可被追蹤
+- 保持好習慣：每做完一件事就 commit，不要多功能混一起
+
+[tags]
+- [orange] 人工手打：耗時且風格不一致
+- [purple] AI 自動生成：長短隨機、中英混雜
+- [green] 解法：git-smart-commit Skill
+[/tags]
+
+```prompt [label="拆分 Commit"]
+新增 commit
+```
+
+## 設計 PR 讓 Code Review 更輕鬆
+
+### 🔀 git-pr-description Skill
+
+- 比對當前分支與目標分支的差異
+- 讀取 commit 訊息與變更檔案
+- 參考 `pr-template` 生成 Title 與 Description
+
+```prompt [label="生成 PR"]
+撰寫 PR，與 main branch 比對
+```
+
+> **人，才是 AI 的瓶頸**
+> Code Review 的速度已經跟不上 AI 寫程式的速度。當人成為 AI 的瓶頸時，要去想的是如何降低門檻，而不是放棄審核。
+>
+> 設計 Commit、PR 的 Skill 就是透過優化流程讓開發更順暢。雖然每一步都是 AI 在執行，但如果沒有實務經驗，其實不知道怎麼串起這些工具。**真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。**
+
+## 透過 Git Worktree 提升協作效率
+
+### 🌳 多 Agent 並行開發
+- 不同功能使用不同 feature branch，搭配 Git Worktree 建立獨立工作區
+- 每個 Worktree 可同時跑不同 dev server，讓多個 AI Agent 並行開發
+- 設計 `git-worktree-design` Skill：一個指令拆分任務、建立 Worktree、安裝套件、新增 SPEC
+
+```prompt [label="Worktree 並行開發"]
+採用 Worktree，新增通知中心彈窗、資料匯出 CSV 功能、常見 QA 問答區
+```
+
+### ⚠️ Worktree 注意事項
+- 合併時可能有衝突：各分支獨立開發，不知彼此變更
+- 建議共用功能優先開發、主分支變更時其他 Worktree 先同步
+- 設計好流程才能提升效率
 
 ---
 
@@ -279,132 +452,6 @@ with details about my project, tech stack, and conventions
 
 ---
 
-# 舊專案：根據情境設計 Skills，讓 AI 有執行依據
-> 最難的不是 0 到 1，而是 1 到 100；透過 Skills 設計，讓 AI 在迭代功能、版本控制、Code Review 都有規範可循
-
-## OpenSpec 迭代
-
-### ✨ 用 OpenSpec 新增新功能
-
-```prompt [label="新增功能"]
-增加使用者紀錄頁面，供管理者查看
-使用 OpenSpec
-```
-
-```prompt [label="確認後實作"]
-開始實作
-```
-
-> **為什麼 1 到 100 比 0 到 1 更難？**
-> 如果沒有規格文件，下次改功能時 AI 不知道之前的設計邏輯，可能把同一個功能重複寫好幾次，或改 A 壞 B。
->
-> 用 OpenSpec 每次迭代都會在 Source Control 留下規格變更，AI 跟人類都有文件可以參考。關鍵人物離職最痛的不是少了一個人，而是系統知識直接斷層。
-
-```prompt [label="歸檔變更"]
-幫我歸檔
-```
-
-**Tips**: 不是所有事情都需要觸發 OpenSpec，像 branch 命名直接讓 AI 想就好
-
-```prompt [label="新增分支"]
-分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch
-```
-
-## 設定 Commit Skill
-> 根據需求建立 Agent Skills，能實際給予幫助的，才是好的 Skill
-
-### 📝 為什麼需要 Commit Skill？
-- 分析變更的檔案 → 判斷應拆成幾個 commit → 分段提交
-- 不同功能的修改分開 commit，讓邏輯可被追蹤
-- 保持好習慣：每做完一件事就 commit，不要多功能混一起
-
-[tags]
-- [orange] 人工手打：耗時且風格不一致
-- [purple] AI 自動生成：長短隨機、中英混雜
-- [green] 解法：git-smart-commit Skill
-[/tags]
-
-```prompt [label="拆分 Commit"]
-新增 commit
-```
-
-## 設定 PR Skill
-
-### 🔀 git-pr-description Skill
-
-- 比對當前分支與目標分支的差異
-- 讀取 commit 訊息與變更檔案
-- 參考 `pr-template` 生成 Title 與 Description
-
-```prompt [label="生成 PR"]
-撰寫 PR，與 main branch 比對
-```
-
-> **人，才是 AI 的瓶頸**
-> Code Review 的速度已經跟不上 AI 寫程式的速度。當人成為 AI 的瓶頸時，要去想的是如何降低門檻，而不是放棄審核。
->
-> 設計 Commit、PR 的 Skill 就是透過優化流程讓開發更順暢。雖然每一步都是 AI 在執行，但如果沒有實務經驗，其實不知道怎麼串起這些工具。**真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。**
-
----
-
-# 導入測試：讓維護與擴充更有底氣
-> 市場不會為爛產品買單；加入自動化測試，是 Vibe Coding 從玩具走向產品的關鍵
-
-### 🛡️ 為什麼 Vibe Coding 一定要測試？
-
-[flow]
-1. 穩定性 — 請 AI 修 bug，結果舊功能壞掉
-2. 複雜度 — 功能越多，人工測試越不可能覆蓋全部
-3. 擴充性 — 功能間有相依性，修改可能引發連鎖影響
-[/flow]
-
-> 不寫測試才浪費時間 — 測試讓你敢大膽修改，遇錯快速定位
-
-## 建立適合專案的測試工作流
-
-### 🔄 測試撰寫流程
-
-[flow]
-1. 建立資料夾 — 存放測試清單
-2. AI 撰寫清單 — 類型、說明、輸入、期待輸出
-3. 人類 Review — 確認情境有無遺漏
-4. AI 撰寫測試 — 描述與文件一致
-5. 自主驗證 — 最多嘗試 5 次
-[/flow]
-
-下面以 command 指令形式強制觸發任務
-
-```prompt [label="生成測試案例"]
-/Gen Test Cases 
-（拖入要測試的檔案，ex: src/pages/LoginPage.tsx）
-```
-
-> **從玩具到產品，差的就是測試**
-> 很多時候 AI 只是修好了眼前的錯誤，但過程中改壞了過去的邏輯。千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。
->
-> 現在儘管有 AI 輔助撰寫測試程式，我們還是要仔細檢查 AI 給的測試情境是否合理、有遺漏。
-
-### 💡 實務建議
-- 不要一口氣生成所有測試，先放一個檔案確認結果符合預期
-- 每個頁面/模組有獨立的測試程式，方便定位問題
-- 測試案例會隨規格變更而調整，不可能一次到位
-
-## GitHub Action 自動化
-
-### 🔁 自動化測試流程
-- 每次推送到 GitHub 都觸發測試
-- 測試完畢生成覆蓋率報告
-- 設定 Branch Protection Rule（ex: protected-by-tests）：測試通過才能合併到主分支（將 Require status checks to pass 打勾，然後輸入「test」）
-
-測試覆蓋率不需追求 100%，重要的邏輯都要測試到。有了測試，規格書上的功能才能被真正驗證。
-
-```prompt [label="自動化測試"]
-我希望在 GitHub Action 加入自動化測試的流程
-每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
-```
-
----
-
 ## 被看見的方式：圍繞痛點，而不是圍繞你心裡的分數
 
 很多人會委屈：「我很努力、最難的我也扛了，為什麼主管不提拔我？」  
@@ -424,12 +471,12 @@ with details about my project, tech stack, and conventions
 
 ---
 
-# 總結：今天的三大主軸
+# 總結：
 
 [summary]
-- 🏗️ **新專案 — SDD** | OpenSpec: 讓 AI 產生完善文件後，用規格驅動開發，完成從零到一的步驟
-- ⚙️ **舊專案 — Skills** | 用 OpenSpec 迭代，並設計 Commit / PR Skills，讓 AI 在大型專案中有規範可循
-- 🧪 **導入測試 — CI/CD** | 設計讓 AI 撰寫測試的工作流，搭配 GitHub Action 守住品質底線
+- 🏗️ **痛點** | AI 寫程式很快，但穩定性不足、難以維護、無法驗證，這些問題在 AI 時代被加倍放大
+- 🛠️ **前置作業** | 選對工具、理解 MCP / Rules / Commands / Skills 四大核心概念，打好協作基礎
+- ⚙️ **開發工作流** | 用 SDD 規格驅動開發、設計 Commit / PR / Worktree Skills、導入測試與 CI/CD，讓流程可靠可追蹤
 [/summary]
 
 > **不可能掌握某個技能就變大師**
