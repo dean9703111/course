@@ -3550,7 +3550,6 @@
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-ai">不要讓 AI 的「快」，變成未來的「債」</a></li>
-        <li><a href="#sub-ai-2">從網頁版 AI 轉為程式碼編輯器</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="ai">
@@ -3558,10 +3557,10 @@
         <span class="toc-num">2</span> AI 時代下的迷思
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-3">工具間的差異沒有你想像的大</a></li>
+        <li><a href="#sub-section-2">挑選合適的工具</a></li>
         <li><a href="#sub-ai-agent">導入 AI 的真義：釐清責任，而不是堆疊 Agent</a></li>
-        <li><a href="#sub-section-5">出現新名詞很焦慮</a></li>
-        <li><a href="#sub-section-6">這堂課真正想講的核心：流程、誤解、與人機分工</a></li>
+        <li><a href="#sub-section-4">出現新名詞很焦慮</a></li>
+        <li><a href="#sub-section-5">這堂課真正想講的核心：流程、誤解、與人機分工</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-3">
@@ -3585,7 +3584,7 @@
         <li><a href="#sub-pr-code-review">設計 PR 讓 Code Review 更輕鬆</a></li>
         <li><a href="#sub-worktree">透過 Git Worktree 提升協作效率</a></li>
         <li><a href="#sub-workshop">我在公司怎麼推：用 Workshop 把「個人習慣」變成「團隊資產」</a></li>
-        <li><a href="#sub-section-16">被看見的方式：圍繞痛點，而不是圍繞你心裡的分數</a></li>
+        <li><a href="#sub-section-15">被看見的方式：圍繞痛點，而不是圍繞你心裡的分數</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="summary">
@@ -3600,7 +3599,7 @@
         <span class="toc-num">6</span> 直播優惠
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-17">感謝參與今日直播</a></li>
+        <li><a href="#sub-section-16">感謝參與今日直播</a></li>
       </ul>
     </li>
 
@@ -3707,34 +3706,59 @@
       <div class="insight-title">如果這些個問題能引起你的共鳴，恭喜你！</div>
       <p>這代表你已經進入了下一個階段，開始思考如何讓 Vibe Coding 的成果真正可靠。<br>其實在沒有 AI 的時代，這些問題就已經存在；<strong>但 AI 寫程式速度太快，所以這些問題被加倍放大。</strong></p>
     </div>
-        <div class="insight">
-      <p>不管是今天的分享，還是未來的課程；我要做的不是破壞你原有的工作流，而是告訴你 AI 在原有的工作流上能帶來哪些幫助</p>
-    </div>
       </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-ai-2"><span class="bar"></span>從網頁版 AI 轉為程式碼編輯器</div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <p>網頁版的 AI 只能告訴你該怎麼做，AI Agent 能直接幫你完成工作</p>
+    <div class="group-block">
+      <div class="group-header"><span class="icon">💪</span> 將 AI 導入工作流</div>
+      <div class="group-body">
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Lint</div>
+          <div class="step-desc">檢查程式碼風格，避免 AI 生成<code>風格不一致</code>，留下<code>多餘程式</code>，增加 Code Review 負擔。</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">OpenSpec</div>
+          <div class="step-desc"><code>讓 AI 根據規格文件做事</code>，完成從 0 到 1 的建立，更處理從 1 到 100 的迭代</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">客製化 Agent Skills</div>
+          <div class="step-desc">拆分 Commit 讓<code>邏輯可被追朔</code>、定義 Branch <code>命名規則</code>、設計 PR 方便 <code>Code Review</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">導入測試</div>
+          <div class="step-desc">確保<code>新功能</code>符合預期，<code>舊功能</code>執行穩定，並透過<code>測試覆蓋率報告</code>了解實際狀況</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Git Flow</div>
+          <div class="step-desc">加入<code>版本控制</code>與<code>分支策略</code>，確保出包時有回頭路，以及不影響到正式版本</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">CI/CD</div>
+          <div class="step-desc">透過自動化工作流<code>檢查格式、測試功能</code>，並設定要<code>保護的 Branch</code></div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="reveal">
-    <ul class="loose-list">
-      <li>能閱讀更完整的上下文</li>
-      <li>可以執行指令（Python、Node、Command Line）</li>
-      <li>很棒的 RAG 工具（用白話文查詢）</li>
-    </ul>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <p>AI Agent 的能力：<br>不只是「問一句答一句」的聊天機器人，而是能理解你的任務脈絡、操作你的檔案、串接多個步驟，幫你從頭到尾把事情做完的 AI 助手。</p>
+      </div>
     </div>
   </div>
 </section>
@@ -3743,36 +3767,99 @@
 <section class="section">
   <div class="reveal">
     <span class="section-label" id="ai"><span class="num">2</span> AI 時代下的迷思</span>
-    <h2>不是「學習工具」，而是「解決痛點」</h2>
+    <h2>從解決痛點的過程，學習工具</h2>
     
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-2"><span class="bar"></span>挑選合適的工具</div>
+  </div>
+
+  <div class="reveal">
     <div class="insight">
-      <div class="insight-title">我以前也走過一段彎路。</div>
-      <p>我以為只要一直學新東西、解更難的題，就會被認可。但考試世界給我們一個假象：分數高，就代表你「做對了選擇」。<br><strong>在 AI 時代，很多問題並不需要你先學會一整門新技術；需要的是你願意把問題拆清楚、願意往深處想，而不是急著從別人手上抄一個通用答案。</strong><br>因為在實務裡，答案往往無法通用：每間公司有自己的文化與限制，每個人也有自己的背景。你覺得理所當然的 Markdown，對另一群人可能是第一次接觸——<strong>當知識的圍籬出現，我們要做的不是嘲笑，而是搭一座橋，讓彼此能一起把事情做完。</strong></p>
+      <p>網頁版的 AI 只能告訴你該怎麼做，AI Agent 能直接幫你完成工作。</p>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-3"><span class="bar"></span>工具間的差異沒有你想像的大</div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text">老實講，AI Agent 的差異，並沒有社群媒體上說的那麼誇張，對絕大多數的使用者而言，我們會使用到的就是下面 4 個：</p>
-  </div>
-
-  <div class="reveal">
-    <ul class="loose-list">
-      <li>MCP: 首先 MCP 可以讓我們去使用其他工具的 API 來做事，這可以確保工具操作上的穩定性</li>
-      <li>Rules: 這是給專案的規範，通常不會寫太多，因為會佔用到上下文的空間</li>
-      <li>Commands: 接下來說到的 Commands 就像是遊戲中的「主動技能」，通常會設計成一個工作流，裡面涵蓋了多個 Skills，需要主動觸發</li>
-      <li>Skills: AI 雖然有記憶功能，但他不一定會完整記住你的習慣、規範，所以 Skills 就派上用場了，你可以把自己日常工作中執行的任務的細節、技巧、判斷模式放進去，這樣 AI 遇到相關任務時，就會主動觸發</li>
+    <div class="group-block">
+      <div class="group-header">網頁版 AI 的痛點</div>
+      <div class="group-body">
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">需要打開瀏覽器操作</div>
+          <div class="step-desc">開啟<code>新對話</code>後，又得重講專案背景</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">難以給予完整上下文</div>
+          <div class="step-desc">手動複製<code>程式碼</code>、<code>錯誤訊息</code>，AI 無法了解專案全貌（功能相依性、資料夾結構），容易誤判</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">要自己手動修改程式</div>
+          <div class="step-desc">AI 給予答案後，你要<code>自行編輯程式</code>，但容易發生貼錯、少貼的狀況</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">驗證與測試要自己做</div>
+          <div class="step-desc">不管提示詞再好，AI 還是可能犯錯，<code>來回溝通成本高</code></div>
+        </div>
+      </div>
+    </div>
+        <p class="loose-text">要嘛<code>沿用長對話</code>（上下文已混亂），要嘛<code>開新對話</code>（又得重講專案背景）</p>
+        <p class="loose-text">2. 手動餵上下文 — 複製<code>錯誤訊息</code>、<code>stack trace</code>、片段程式碼；大檔或整個 repo 無法直接「打開」，常要刪減或分多則訊息貼上</p>
+        <p class="loose-text">3. 下指令取得建議 — 模型回<code>步驟說明</code>或<code>程式碼區塊</code>，但不知道你本機路徑、分支、依賴版本是否一致</p>
+        <p class="loose-text">4. 回到本機手動套用 — 在 IDE 貼上、改檔、存檔；無法由 AI <code>直接改你的檔案</code>或<code>接續上一個指令的退出碼</code></p>
+        <p class="loose-text">5. 跑指令或跑服務驗證 — 失敗再回網頁貼新錯誤；多輪往返時，對話越來越長，<code>容易遺漏前提</code>或<code>重複已試過的方向</code></p>
+        <p class="loose-text">6. 需要證據時再補貼 — 例如要它幫忙看測試輸出，你得自己跑 <code>npm test</code> 再把 log 貼回去；<code>無法自動觸發測試 / Lint / CI</code></p>
+        <p class="loose-text">7. 收尾靠人 — 合併分支、開 PR、對照規格是否做完，網頁 AI通常<code>不參與你的 Git 狀態</code>，也不會幫你記「這個 repo 的慣例」</p>
+        <p class="loose-text">[/flow]</p>
+        <h4 class="minor-title">因此會有如下痛點</h4>
+        <ul class="loose-list">
+      <li><strong>往返成本高</strong>：每一輪都要人當「搬運工」，錯誤訊息與程式狀態很難一次貼完整</li>
+      <li><strong>上下文失真</strong>：對話一長就容易忘前提，或新開對話要重講，和「整個專案的真實狀態」有落差</li>
+      <li><strong>無法閉環驗證</strong>：測試、Lint、建置、CI 都要自己跑；AI 給的程式碼是否真能過關，取決於你手動驗證到多細</li>
+      <li><strong>與協作流程脫節</strong>：分支、PR、Code Review、部署通常不在網頁對話裡，容易變成「聊天室裡很順、進 repo 才發現對不起來」</li>
     </ul>
+      </div>
+    </div>
   </div>
 
   <div class="reveal">
-    <p class="loose-text">而上面提到的 MCP、Rules、Commands、Skills，其實每個工具都有</p>
+    <div class="group-block">
+      <div class="group-header">程式碼編輯器的優勢</div>
+      <div class="group-body">
+        <ul>
+  <li>能閱讀更完整的上下文</li>
+  <li>可以執行指令（Python、Node、Command Line）</li>
+  <li>很棒的 RAG 工具（用白話文查詢）</li>
+</ul>
+        <div class="insight">
+      <p>AI Agent 的能力：<br>不只是「問一句答一句」的聊天機器人，而是能理解你的任務脈絡、操作你的檔案、串接多個步驟，幫你從頭到尾把事情做完的 AI 助手。</p>
+    </div>
+        <div class="insight">
+      <p>工具間的差異沒有你想像的大，MCP、Rules、Commands、Skills，其實主流工具都有支援</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"></div>
+      <div class="group-body">
+
+      </div>
+    </div>
   </div>
 
   <div class="reveal">
@@ -3799,7 +3886,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-5"><span class="bar"></span>出現新名詞很焦慮</div>
+    <div class="sub-title" id="sub-section-4"><span class="bar"></span>出現新名詞很焦慮</div>
   </div>
 
   <div class="reveal">
@@ -3819,7 +3906,14 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-6"><span class="bar"></span>這堂課真正想講的核心：流程、誤解、與人機分工</div>
+    <div class="insight">
+      <div class="insight-title">我以前也走過一段彎路。</div>
+      <p>我以為只要一直學新東西、解更難的題，就會被認可。但考試世界給我們一個假象：分數高，就代表你「做對了選擇」。<br><strong>在 AI 時代，很多問題並不需要你先學會一整門新技術；需要的是你願意把問題拆清楚、願意往深處想，而不是急著從別人手上抄一個通用答案。</strong><br>因為在實務裡，答案往往無法通用：每間公司有自己的文化與限制，每個人也有自己的背景。你覺得理所當然的 Markdown，對另一群人可能是第一次接觸——<strong>當知識的圍籬出現，我們要做的不是嘲笑，而是搭一座橋，讓彼此能一起把事情做完。</strong></p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-5"><span class="bar"></span>這堂課真正想講的核心：流程、誤解、與人機分工</div>
   </div>
 
   <div class="reveal">
@@ -3863,11 +3957,19 @@
     <div class="group-block">
       <div class="group-header"><span class="icon">⚙</span> ️ 認識 Rules / Commands / Skills</div>
       <div class="group-body">
-        <ul>
-  <li><strong>Rules</strong> — 專案的規範，通常不會寫太多，因為會佔用到上下文的空間</li>
-  <li><strong>Commands</strong> — 像遊戲中的「主動技能」，通常會設計成一個工作流，涵蓋多個 Skills，需要主動觸發</li>
-  <li><strong>Skills</strong> — 把日常工作中執行任務的細節、技巧、判斷模式放進去，AI 遇到相關任務時會主動觸發</li>
+        <p>老實講，AI Agent 的差異，並沒有社群媒體上說的那麼誇張，對絕大多數的使用者而言，我們會使用到的就是下面 4 個：</p>
+<ul>
+  <li>MCP: 首先 MCP 可以讓我們去使用其他工具的 API 來做事，這可以確保工具操作上的穩定性</li>
+  <li>Rules: 這是給專案的規範，通常不會寫太多，因為會佔用到上下文的空間</li>
+  <li>Commands: 接下來說到的 Commands 就像是遊戲中的「主動技能」，通常會設計成一個工作流，裡面涵蓋了多個 Skills，需要主動觸發</li>
+  <li>Skills: AI 雖然有記憶功能，但他不一定會完整記住你的習慣、規範，所以 Skills 就派上用場了，你可以把自己日常工作中執行的任務的細節、技巧、判斷模式放進去，這樣 AI 遇到相關任務時，就會主動觸發</li>
 </ul>
+        <p class="loose-text">而上面提到的 MCP、Rules、Commands、Skills，其實每個工具都有</p>
+        <ul class="loose-list">
+      <li><strong>Rules</strong> — 專案的規範，通常不會寫太多，因為會佔用到上下文的空間</li>
+      <li><strong>Commands</strong> — 像遊戲中的「主動技能」，通常會設計成一個工作流，涵蓋多個 Skills，需要主動觸發</li>
+      <li><strong>Skills</strong> — 把日常工作中執行任務的細節、技巧、判斷模式放進去，AI 遇到相關任務時會主動觸發</li>
+    </ul>
         <p class="loose-text">因為每個 AI Agent 的路徑不同，可以使用 <a href="https://github.com/dean9703111/dotagents" target="_blank" rel="noopener">dotagents</a> 來協助建立 symlinks。</p>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -4595,7 +4697,7 @@ with details about my project, tech stack, and conventions</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-16"><span class="bar"></span>被看見的方式：圍繞痛點，而不是圍繞你心裡的分數</div>
+    <div class="sub-title" id="sub-section-15"><span class="bar"></span>被看見的方式：圍繞痛點，而不是圍繞你心裡的分數</div>
   </div>
 
   <div class="reveal">
@@ -4694,7 +4796,7 @@ with details about my project, tech stack, and conventions</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-17"><span class="bar"></span>感謝參與今日直播</div>
+    <div class="sub-title" id="sub-section-16"><span class="bar"></span>感謝參與今日直播</div>
   </div>
 
   <div class="reveal">
@@ -4887,7 +4989,7 @@ with details about my project, tech stack, and conventions</div>
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
     var sectionIds = ["instructor","section-1","ai","section-3","section-4","summary","section-6"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","section-1","sub-ai","sub-ai-2","ai","sub-section-3","sub-ai-agent","sub-section-5","sub-section-6","section-3","sub-mcp","section-4","sub-jira-mcp","sub-sdd","sub-testing","sub-cicd","sub-commit","sub-pr-code-review","sub-worktree","sub-workshop","sub-section-16","summary","section-6","sub-section-17"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var allAnchorIds = ["instructor","section-1","sub-ai","ai","sub-section-2","sub-ai-agent","sub-section-4","sub-section-5","section-3","sub-mcp","section-4","sub-jira-mcp","sub-sdd","sub-testing","sub-cicd","sub-commit","sub-pr-code-review","sub-worktree","sub-workshop","sub-section-15","summary","section-6","sub-section-16"];   // e.g. ['instructor','new-project','sub-create-project',...]
 
     var sectionForAnchor = {};
     allAnchorIds.forEach(function (id) {
