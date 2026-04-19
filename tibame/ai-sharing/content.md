@@ -67,12 +67,9 @@
 
 ![問題不一定能解決，但 Token 消耗很快](./assets/terminal.png)
 
-#### 讓 AI Agent 執行一整天，不一定最強
-
-![對專案掌控度接近0，真的是好事嗎？](./assets/longtime.png)
-
 > **導入 AI，不代表全交給 AI**  
 > 把「AI 能做到的事」跟「人必須負責的判斷」分清楚。
+> 讓 AI Agent 執行很久，不一定最強；我不認為對專案毫無掌控度是件好事。
 > **好的結果，不該靠消耗 Token 拼運氣；而是靠清楚的方向、可重複的工作流、以及人類在關鍵節點的決策。**
 
 ### 😰 出現新名詞很焦慮
@@ -148,7 +145,7 @@ npx @dean9703111/dotagents
 
 ![培養多個 AI 工具切換的能力](./assets/dotagents.png)
 
-## 規格驅動開發（SDD）
+## 新專案:規格驅動開發（SDD）
 
 ### 🔧 為什麼需要 OpenSpec？
 
@@ -167,55 +164,28 @@ npx @dean9703111/dotagents
 
 ![有明確的文件，AI 才有執行方向](./assets/openspec.png)
 
-### 📐 建立專案規則
+## 舊專案:如何完成從 1 到 100 迭代
 
-**CLAUDE.md** 是給「做事」用的，**openspec/config.yaml** 是給「規劃」用的
+### 📄 AI 如何協助專案迭代？
 
-```prompt [label="初始化規則"]
-/init
-```
+**1. CLAUDE.md：**知道要怎麼「做事」
+**2. openspec/config.yaml：**了解如何「規劃」
 
-```prompt [label="OpenSpec 設定"]
-Please read openspec/config.yaml and help me fill it out
-with details about my project, tech stack, and conventions
-```
+#### 用 OpenSpec 迭代新功能
 
-### 🗂️ 設計 README.md、.gitignore 並加入版控
+[flow]
+1. 閱讀專案既有架構、功能 — 確認要新增還是修改
+2. 開始設計規格文件 - 一樣跑「proposal ⭢ design ⭢ specs ⭢ task」
+3. 完成任務後，彙整河道原有規格 - 對快速迭代、多人合作專案幫助極大。
+[/flow]
 
-初版完成後，要加入版控；未來更新時，才會清楚 AI 到底改了哪些細節
-
-```prompt [label="設計 .gitignore、README.md"]
-請幫我設計專案的「.gitignore」但「.claude、openspec」要加入版本控制
-並且將「專案簡介與啟動方式」寫入 README.md
-```
-
-> 先使用內建的 AI 來 Generate Commit，Commit 後將變更 Sync Changes 更新上去
-
-### ✨ 用 OpenSpec 迭代新功能
+![OpenSpec會自動整合規格文件](./assets/openspec-integration.png)
 
 > **為什麼 1 到 100 比 0 到 1 更難？**
 > 如果沒有規格文件，下次改功能時 AI 不知道之前的設計邏輯，可能把同一個功能重複寫好幾次，或改 A 壞 B。
 >
 > 用 OpenSpec 每次迭代都會在 Source Control 留下規格變更，AI 跟人類都有文件可以參考。關鍵人物離職最痛的不是少了一個人，而是系統知識直接斷層。
 
-```prompt [label="新增功能"]
-增加使用者紀錄頁面，供管理者查看
-使用 OpenSpec
-```
-
-```prompt [label="確認後實作"]
-開始實作
-```
-
-```prompt [label="歸檔變更"]
-幫我歸檔
-```
-
-**Tips**: 不是所有事情都需要觸發 OpenSpec，像 branch 命名直接讓 AI 想就好
-
-```prompt [label="新增分支"]
-分析目前的變更內容，依照 camelCase 命名規則生成 feature branch 名稱，並建立與 checkout 該 branch
-```
 
 ## 導入測試：讓維護與擴充更有底氣
 > 市場不會為爛產品買單；加入自動化測試，是 Vibe Coding 從玩具走向產品的關鍵
@@ -240,12 +210,7 @@ with details about my project, tech stack, and conventions
 5. 自主驗證 — 最多嘗試 5 次
 [/flow]
 
-下面以 command 指令形式強制觸發任務
-
-```prompt [label="生成測試案例"]
-/Gen Test Cases 
-（拖入要測試的檔案，ex: src/pages/LoginPage.tsx）
-```
+![加入單元測試](./assets/unit-test.png)
 
 > **從玩具到產品，差的就是測試**
 > 很多時候 AI 只是修好了眼前的錯誤，但過程中改壞了過去的邏輯。千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。
@@ -266,10 +231,12 @@ with details about my project, tech stack, and conventions
 
 測試覆蓋率不需追求 100%，重要的邏輯都要測試到。有了測試，規格書上的功能才能被真正驗證。
 
-```prompt [label="自動化測試"]
-我希望在 GitHub Action 加入自動化測試的流程
-每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
-```
+![GitHub 上的 CI/CD](./assets/github-cicd.png)
+
+# 專案協作:建立適合的 Agent Skills
+
+> **建立客製化 Skill 的重要性**
+> 每間公司都有自己的工作流，不同專案也有各自的情境；而 Agent Skills 讓每次達成的目標，成為下次的起點。
 
 ## 拆分 Commit 讓變更可以被追蹤
 
@@ -286,9 +253,10 @@ with details about my project, tech stack, and conventions
 - [green] 解法：git-smart-commit Skill
 [/tags]
 
-```prompt [label="拆分 Commit"]
-新增 commit
-```
+![有明確的 commit 可以追蹤](./assets/commit.png)
+
+> **為什麼 Agent Skills 可以節省 Token?**
+> 因為只讀取 Meta data（name、description），description 的重點不是描述 Skill 要做什麼，而是在哪些情境會被觸發。
 
 ## 設計 PR 讓 Code Review 更輕鬆
 
@@ -296,11 +264,9 @@ with details about my project, tech stack, and conventions
 
 - 比對當前分支與目標分支的差異
 - 讀取 commit 訊息與變更檔案
-- 參考 `pr-template` 生成 Title 與 Description
+- 參考 `pr-template` 生成 Title 與 Description（漸進式揭露）
 
-```prompt [label="生成 PR"]
-撰寫 PR，與 main branch 比對
-```
+![建立 PR 的初稿](./assets/pr.png)
 
 > **人，才是 AI 的瓶頸**
 > Code Review 的速度已經跟不上 AI 寫程式的速度。當人成為 AI 的瓶頸時，要去想的是如何降低門檻，而不是放棄審核。
@@ -309,66 +275,17 @@ with details about my project, tech stack, and conventions
 
 ## 透過 Git Worktree 提升協作效率
 
-### 🌳 多 Agent 並行開發
-- 不同功能使用不同 feature branch，搭配 Git Worktree 建立獨立工作區
-- 每個 Worktree 可同時跑不同 dev server，讓多個 AI Agent 並行開發
-- 設計 `git-worktree-design` Skill：一個指令拆分任務、建立 Worktree、安裝套件、新增 SPEC
+### 🌳 讓每個 AI Agent 有獨立的工作區
 
-```prompt [label="Worktree 並行開發"]
-採用 Worktree，新增通知中心彈窗、資料匯出 CSV 功能、常見 QA 問答區
-```
+- 多人協作一個專案時，你可以要撰寫新功能、Code Review、修 Bug
+- 用 Git Stash 時常會混亂
+- 使用 Worktree 可以區隔工作區，AI 可以獨立運作
 
-### ⚠️ Worktree 注意事項
-- 合併時可能有衝突：各分支獨立開發，不知彼此變更
-- 建議共用功能優先開發、主分支變更時其他 Worktree 先同步
-- 設計好流程才能提升效率
+![可以搭配 Git Worktree Manager 管理](./assets/git-worktree.png)
 
----
-
-## 我在公司怎麼推：用 Workshop 把「個人習慣」變成「團隊資產」
-
-我在公司推動 **Cursor** 導入時，開過一場線上 Workshop：讓同事理解編輯器能帶來哪些幫助（**Rules、限制文件範圍、Code Review、生成 Test Cases** 等）。  
-後來 **Agent Skills** 推出後，我又開了一場 Workshop，讓大家理解如何從公司 / 部門 / 專案層級設計 Skills；現在也維護一個共用的 **Agent Skills Repository**，依情境與層級取用。
-
-我強調的一直不是「AI 讓我寫得多快」，而是：**哪些重複、無聊、但又會影響協作品質的事，值得交給 AI**——例如：
-
-- 需求規格草稿、測試案例整理  
-- Pull Request 描述、Commit 前 Code Review 的檢查清單  
-- 分段 Commit 訊息、Branch 命名規範  
-
-這些事很多人不擅長、也不想做，但它們會直接影響 **Review 效率** 與 **專案可維護性**。**既然人不想做，那就設計成 AI 能做、而且做得一致。**
-
-> **在請 AI 幫忙生 PR 草稿之前，我早就先在 GitLab 用 Template 把「團隊要寫什麼」講清楚。**  
-> AI 不是魔法；它更像加速器：**你先有協作意識與模板，AI 才有辦法把品質放大。**
-
-還有一個很務實的例子：教育訓練影片整理。以前 3 小時的內容要整理成可用文件很痛苦；現在我會用 AI **自動轉 SRT**、再 **標註段落重點**。這種痛點常常「做起來不難，但一直沒人做」——**只要你做了，貢獻通常會被記得很久。**
-
-### 「槍打出頭鳥怎麼辦？」
-
-首先，我在課程裡分享的，多半是我已在職場驗證過的路線。  
-其次，**方向如果真的走偏，組織通常會比你更急著修正**；而在很多團隊裡，願意站出來把流程推動起來的人反而稀缺——你反而更可能換到資源與關注，而不是被「默默消失」。
-
-如果你公司有 **one-on-one**，那其實就是把課堂所學「每週拿去公司試錯與對齊」的最佳場景。  
-多數公司都想導入 AI，但真的知道怎麼落地的人很少；**當你成為那個能把方法講清楚、把流程跑起來的人，話語權通常會跟著來。** 推動時也更有「名份」：你可以用主管／老闆在乎的語言，去換到時間、人力與制度上的支持。
-
----
-
-## 被看見的方式：圍繞痛點，而不是圍繞你心裡的分數
-
-很多人會委屈：「我很努力、最難的我也扛了，為什麼主管不提拔我？」  
-很多時候不是你不夠強，而是 **你沒有把成果，翻成團隊聽得懂、也覺得重要的語言**。
-
-**世界沒有義務認識你；世界只會記得你能帶來什麼改變。**  
-所以除了 AI 技術本身，我也會談一件同樣現實的事：**怎麼用市場／組織能接受的敘事，把你的工作變成「可感知的價值」。**
-
-> 我後來能接到不少企業內訓、也能開線上課、大家願意來聽分享——本質上靠的是 **口碑**。我自媒體經營超過 6 年、寫了超過 500 篇文章，也拍了很多 Vibe Coding 教學；**那些長期累積的「可被驗證的輸出」，最後才會變成別人願意給你的機會。**  
-> 不管最後報名人數多少，我都會在能力範圍內把交付做到最好——**因為口碑這種東西，只會被作品與結果記住。**
-
-如果你對更完整的實作路徑有興趣，歡迎報名線上課程。我是鼎淵，我們，下班有約。
-
-> **賣課不丟人，賣沒價值的課才丟人。** 我也會用同一套標準要求自己的內容品質。
-
-這堂課想帶你從不同視角去用 AI：**做出不同選擇、累積不同槓桿，最後就會拿到不同的成果。**
+> **使用心得**
+> Git Worktree 主要的目的不是「平行開發」，而是方便處理不同性質的「任務」。
+> AI 執行的效率已經非常高了，與其平行開發後解衝突，還不如把精力放在 Code Review 上面確保專案穩定性。
 
 ---
 
@@ -404,6 +321,6 @@ with details about my project, tech stack, and conventions
 
 #### 結帳輸入「20260423」，享優惠價再折 1,000 元 ( 優惠只到 2026/4/23 23:59 )
 
-| [填寫回饋問卷可取得直播回放](https://tibame.tw/OkOdq) | [報名 Claude AI 全端開發工作流](https://tibame.tw/Zmnts) |
-| :---: | :---: |
-| ![回饋問卷 QR Code](assets/問卷.jpg) | ![課程報名 QR Code](assets/報名.png) |
+| [報名 Claude AI 全端開發工作流](https://tibame.tw/Zmnts) |
+| :---: | 
+ | ![課程報名 QR Code](assets/報名.png){max-width=300px} |
