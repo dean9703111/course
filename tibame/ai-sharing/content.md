@@ -312,7 +312,6 @@ npx @dean9703111/dotagents
 5. **模板生成器思維** — AI 負責生成結構化內容，程式再把內容轉成最終網頁
 [/bonus]
 
-
 ---
 
 # 直播優惠：輸入折扣碼
@@ -324,3 +323,6 @@ npx @dean9703111/dotagents
 | [報名 Claude AI 全端開發工作流](https://tibame.tw/Zmnts) |
 | :---: | 
  | ![課程報名 QR Code](assets/報名.png){max-width=300px} |
+
+[qa-session title="Q&A 時間"]
+[/qa-session]
