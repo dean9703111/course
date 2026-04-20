@@ -1,0 +1,24 @@
+# 淡江大學 AI 分享
+
+page:
+  title: "工程師的下一步升級路線"
+  badge: "淡江大學 Claude AI 分享"
+  hero_title: "從 AI 寫程式到驅動開發流程"
+  subtitle: "AI 寫程式讓產能暴增，但「品質、維護、擴充」才決定產品能走多遠"
+
+seo:
+  title: "淡江大學 Claude AI 課程 - 林鼎淵"
+  description: "了解哪些環節可以導入 AI，增加專案的穩定性、擴充性，並透過需求規格與版本控制，為產品帶來更好的品質。建立 Agent Skills，讓 AI 從庸才變專家。"
+  image: "https://deanlin.net/course/tku/assets/og-image.jpg"
+  url: "https://deanlin.net/course/tku"
+
+quotes:
+  opening:
+    text: "工具會過時，框架會淘汰，<br>但解決問題的思維，永遠有價值。"
+  closing:
+    text: >
+      能判斷哪些流程需要自動化的，<br>
+      只有每天在現場操作的你。<br><br>
+      不管 AI 多強大，<br>
+      按下同意時，責任就歸屬於你。
+
