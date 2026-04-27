@@ -497,8 +497,6 @@ const userTree = {
           desc: '全域使用者設定：你的個人預設偏好，包括慣用模型（如 claude-opus-4-5）、主題、清理週期等。優先級低於專案設定。' },
         { name: 'settings.local.json', nameClass: 'json-name', icon: '🔒',
           desc: '使用者本機設定：個人機器專屬設定，不同步到其他裝置。' },
-        { name: 'credentials.json', nameClass: 'json-name', icon: '🔑',
-          desc: '認證資訊：儲存 API Key 和登入 token。由 Claude Code 自動管理，請勿手動修改。' },
         { name: 'skills/', nameClass: 'folder-name', icon: '📂', folder: true,
           desc: '個人全域技能：放在這裡的技能跨所有專案可用，不需要每個專案重複設定。',
           children: [
@@ -520,16 +518,9 @@ const userTree = {
         { name: 'projects/', nameClass: 'folder-name', icon: '📂', folder: true,
           desc: '專案記憶快取：Claude Code 為每個專案自動建立的記憶目錄，儲存 auto-memory 資料。',
           children: [
-            { name: '<project-hash>/', nameClass: 'folder-name', icon: '📂', folder: true,
-              children: [
-                { name: 'memory/', nameClass: 'folder-name', icon: '📂', folder: true,
-                  desc: '自動記憶目錄：Claude 在對話中學到的事情會自動存在這裡，下次啟動時會自動讀取。' }
-              ]
-            }
+            { name: '<project-hash>/', nameClass: 'folder-name', icon: '📂', folder: true,desc: '自動記憶目錄：Claude 在對話中學到的事情會自動存在這裡，下次啟動時會自動讀取。' }
           ]
         },
-        { name: 'todos/', nameClass: 'folder-name', icon: '📂', folder: true,
-          desc: 'Claude 的待辦清單：Claude Code 用來追蹤未完成任務的目錄。' },
       ]
     }
   ]
