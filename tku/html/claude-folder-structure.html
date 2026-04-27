@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>解析 .claude/ 資料夾結構</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #5c5c5c;
+    --border: #e8e4df;
+    --accent-project: #d35400;
+    --accent-user: #2c7a7b;
+    --folder: #e67e22;
+    --file-json: #3498db;
+    --file-md: #8e44ad;
+    --file-skill: #27ae60;
+    --file-agent: #e74c3c;
+    --highlight: #fff8e1;
+    --tag-bg: #f0ebe3;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --radius: 10px;
+    --line-color: #d5cfc7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 24px 16px 16px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  h1 span.icon { font-size: 1.5rem; margin-right: 6px; }
+
+  .subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    margin-bottom: 28px;
+  }
+
+  /* Tab switcher */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .tab-btn {
+    padding: 10px 22px;
+    border: 2px solid var(--border);
+    border-radius: 99px;
+    background: var(--card);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab-btn:hover { border-color: #bbb; }
+  .tab-btn.active-project {
+    border-color: var(--accent-project);
+    color: var(--accent-project);
+    background: #fef5ed;
+  }
+  .tab-btn.active-user {
+    border-color: var(--accent-user);
+    color: var(--accent-user);
+    background: #edf7f7;
+  }
+  .tab-btn .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .tab-btn .dot.project-dot { background: var(--accent-project); }
+  .tab-btn .dot.user-dot { background: var(--accent-user); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Tree */
+  .tree {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .tree ul {
+    list-style: none;
+    padding-left: 22px;
+    position: relative;
+  }
+  .tree > ul { padding-left: 0; }
+
+  .tree ul::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 14px;
+    width: 1.5px;
+    background: var(--line-color);
+  }
+  .tree > ul::before { display: none; }
+
+  .tree li {
+    position: relative;
+    padding: 3px 0;
+  }
+
+  .tree ul > li::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 16px;
+    width: 14px;
+    height: 1.5px;
+    background: var(--line-color);
+  }
+
+  .node {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: background 0.15s;
+    font-size: 0.9rem;
+    user-select: none;
+  }
+  .node:hover { background: var(--highlight); }
+
+  .node .icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+  }
+
+  .node .name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+  .node .name.folder-name { color: var(--folder); }
+  .node .name.json-name { color: var(--file-json); }
+  .node .name.md-name { color: var(--file-md); }
+  .node .name.skill-name { color: var(--file-skill); }
+  .node .name.agent-name { color: var(--file-agent); }
+
+  .node .toggle {
+    font-size: 0.7rem;
+    color: #999;
+    transition: transform 0.2s;
+    margin-left: 2px;
+  }
+  .node .toggle.open { transform: rotate(90deg); }
+
+  .node .tag {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 1px 8px;
+    border-radius: 99px;
+    background: var(--tag-bg);
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .tag.git { background: #e8f5e9; color: #2e7d32; }
+  .tag.gitignore { background: #fff3e0; color: #e65100; }
+  .tag.personal { background: #fce4ec; color: #c62828; }
+
+  .children { overflow: hidden; transition: max-height 0.3s ease; }
+  .children.collapsed { max-height: 0 !important; }
+
+  /* Description tooltip */
+  .desc-panel {
+    margin: 6px 0 8px 34px;
+    padding: 10px 14px;
+    background: #fdfcfa;
+    border-left: 3px solid var(--border);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    display: none;
+  }
+  .desc-panel.show { display: block; animation: fadeIn 0.2s ease; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 24px;
+    padding: 16px;
+    background: var(--highlight);
+    border-radius: var(--radius);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+  .footer-note strong { color: var(--text); }
+
+  .scope-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .scope-badge.shared { background: #e8f5e9; color: #2e7d32; }
+  .scope-badge.local { background: #fff3e0; color: #e65100; }
+
+  /* ===== DARK MODE ===== */
+  body.dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --text: #e4e4e7;
+    --text-secondary: #8b8d9a;
+    --border: #2d3148;
+    --highlight: #252a3d;
+    --tag-bg: #252a3d;
+    --line-color: #3a3e57;
+    --shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+  body.dark .desc-panel { background: #1a1d2e; border-left-color: #3a3e57; }
+  body.dark .tab-btn.active-project { background: #3d1a06; }
+  body.dark .tab-btn.active-user { background: #062828; }
+  body.dark .tag.git { background: #1a3a1e; color: #6dbf7a; }
+  body.dark .tag.gitignore { background: #3d2a06; color: #e09050; }
+  body.dark .scope-badge.shared { background: #1a3a1e; color: #6dbf7a; }
+  body.dark .scope-badge.local { background: #3d2a06; color: #e09050; }
+  body.dark .node:hover { background: #2a2f45; }
+</style>
+</head>
+<body>
+<div class="tabs">
+  <button class="tab-btn active-project" data-tab="project" onclick="switchTab('project')">
+    <span class="dot project-dot"></span>專案層級 .claude/
+  </button>
+  <button class="tab-btn" data-tab="user" onclick="switchTab('user')">
+    <span class="dot user-dot"></span>使用者層級 ~/.claude/
+  </button>
+</div>
+
+<!-- ========== PROJECT TAB ========== -->
+<div class="tab-content active" id="tab-project">
+<div class="tree" id="tree-project"></div>
+</div>
+
+<!-- ========== USER TAB ========== -->
+<div class="tab-content" id="tab-user">
+<div class="tree" id="tree-user"></div>
+</div>
+
+<div class="legend">
+  <span>📂 資料夾</span>
+  <span style="color:var(--file-json)">⚙ JSON 設定</span>
+  <span style="color:var(--file-md)">📝 Markdown</span>
+  <span style="color:var(--file-skill)">◇ Skill</span>
+  <span style="color:var(--file-agent)">🤖 Agent</span>
+</div>
+
+<script>
+// ===== DATA =====
+const projectTree = {
+  name: 'your-project/', nameClass: 'folder-name', icon: '📂', folder: true, open: true,
+  children: [
+    { name: 'CLAUDE.md', nameClass: 'md-name', icon: '📝', tags: ['commit to git'],
+      desc: '主要文件（Claude read first）：這是你的專案設說明書，Claude 優先閱讀，包含核心專案資訊。' },
+    { name: 'CLAUDE.local.md', nameClass: 'md-name', icon: '🔒', tags: ['.gitignore'],
+      desc: '個人設定（僅你可見）：這裡的設定只對你自己的 Claude 實例生效，用來覆蓋 CLAUDE.md 的內容。' },
+    { name: '.claude/', nameClass: 'folder-name', icon: '📂', folder: true, open: true,
+      desc: '這是 Claude 的專用設定與知識庫資料夾。',
+      children: [
+        { name: 'settings.json', nameClass: 'json-name', icon: '⚙️', tags: ['commit to git'],
+          desc: '專案規範與設定：定義 Claude 的預設權限（如檔案存取）和全域專案設定。預設提交到 Git，團隊共用。' },
+        { name: 'settings.local.json', nameClass: 'json-name', icon: '🔒', tags: ['.gitignore'],
+          desc: '個人權限覆蓋：覆蓋全域權限設定，僅你可見。（務必 Git 忽略！）' },
+        { name: 'commands/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: '自定義指令（斜線）：這些檔案定義了你的專案專用指令，你可以用 / 按鍵觸發。已與 skills 合併，舊檔案仍可使用。',
+          children: [
+            { name: 'review.md', nameClass: 'md-name', icon: '📝',
+              desc: '觸發指令：/project:review — 自定義的程式碼審查指令。' },
+            { name: 'fix-issue.md', nameClass: 'md-name', icon: '📝',
+              desc: '觸發指令：/project:fix-issue — 自動修復 issue 的工作流。' },
+            { name: 'deploy.md', nameClass: 'md-name', icon: '📝',
+              desc: '觸發指令：/project:deploy — 部署流程自動化指令。' }
+          ]
+        },
+        { name: 'rules/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: '專案規則與規範：這裡是 Claude 理解你的專案準個模組，讓 Claude 更好理解和最佳實踐的地方。',
+          children: [
+            { name: 'code-style.md', nameClass: 'md-name', icon: '📝',
+              desc: '程式碼風格規範：定義你的 coding style、命名規則、格式偏好。' },
+            { name: 'testing.md', nameClass: 'md-name', icon: '📝',
+              desc: '測試規範：定義如何寫測試、測試框架選擇、覆蓋率要求。' },
+            { name: 'api-conventions.md', nameClass: 'md-name', icon: '📝',
+              desc: 'API 慣例：定義 API 設計規範、端點命名、錯誤處理模式。' }
+          ]
+        },
+        { name: 'skills/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: '自動化工作流：此資料夾中的 SKILL.md 文件，定義了在特定事件發生時，Claude 自動執行的工作流。',
+          children: [
+            { name: 'security-review/', nameClass: 'skill-name', icon: '◇', folder: true,
+              desc: '安全審查技能：提交代碼前自動進行安全審查。',
+              children: [
+                { name: 'SKILL.md', nameClass: 'skill-name', icon: '📄',
+                  desc: '技能定義檔：包含 YAML frontmatter（name, description）和具體指令，Claude 會根據描述自動觸發。' }
+              ]
+            },
+            { name: 'deploy/', nameClass: 'skill-name', icon: '◇', folder: true,
+              desc: '部署技能：自動觸發的部署工作流。',
+              children: [
+                { name: 'SKILL.md', nameClass: 'skill-name', icon: '📄',
+                  desc: '技能定義檔：定義部署時 Claude 要自動執行的步驟與檢查項目。' }
+              ]
+            }
+          ]
+        },
+        { name: 'agents/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: '子代理定義：這裡是你可以定義具有特定角色、知識、權限的子代理的地方。每個代理在獨立的 context window 中運作。',
+          children: [
+            { name: 'code-reviewer.md', nameClass: 'agent-name', icon: '🤖',
+              desc: '代碼審查代理：具有唯讀存取權限，專門做程式碼審查。可指定 model（如 haiku）和限定 tools（Read, Grep, Glob）。' },
+            { name: 'security-auditor.md', nameClass: 'agent-name', icon: '🤖',
+              desc: '安全稽核代理：專用安全工具存取，高隔離度。只能讀取檔案，不能寫入，確保安全審計的獨立性。' }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+const userTree = {
+  name: '~/', nameClass: 'folder-name', icon: '🏠', folder: true, open: true,
+  children: [
+    { name: 'CLAUDE.md', nameClass: 'md-name', icon: '📝',
+      desc: '全域使用者記憶：跨所有專案生效的個人偏好與指令。優先級低於專案的 CLAUDE.md。' },
+    { name: '.claude/', nameClass: 'folder-name', icon: '📂', folder: true, open: true,
+      desc: '使用者層級的 Claude 設定根目錄，跨所有專案生效。',
+      children: [
+        { name: 'settings.json', nameClass: 'json-name', icon: '⚙️',
+          desc: '全域使用者設定：你的個人預設偏好，包括慣用模型（如 claude-opus-4-5）、主題、清理週期等。優先級低於專案設定。' },
+        { name: 'settings.local.json', nameClass: 'json-name', icon: '🔒',
+          desc: '使用者本機設定：個人機器專屬設定，不同步到其他裝置。' },
+        { name: 'skills/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: '個人全域技能：放在這裡的技能跨所有專案可用，不需要每個專案重複設定。',
+          children: [
+            { name: 'my-skill/', nameClass: 'skill-name', icon: '◇', folder: true,
+              children: [
+                { name: 'SKILL.md', nameClass: 'skill-name', icon: '📄',
+                  desc: '個人技能定義檔：定義你自己的可重用工作流，在任何專案中都能自動觸發或用 /skill-name 呼叫。' }
+              ]
+            }
+          ]
+        },
+        { name: 'agents/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: '個人全域代理：定義在這裡的代理跨所有專案可用。',
+          children: [
+            { name: 'my-agent.md', nameClass: 'agent-name', icon: '🤖',
+              desc: '個人代理定義：你的常用子代理，可指定 model、tools、自訂 system prompt。在任何專案中都可被 Claude 呼叫。' }
+          ]
+        },
+        { name: 'projects/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: '專案記憶快取：Claude Code 為每個專案自動建立的記憶目錄，儲存 auto-memory 資料。',
+          children: [
+            { name: '<project-hash>/', nameClass: 'folder-name', icon: '📂', folder: true,desc: '自動記憶目錄：Claude 在對話中學到的事情會自動存在這裡，下次啟動時會自動讀取。' }
+          ]
+        },
+      ]
+    }
+  ]
+};
+
+// ===== RENDER =====
+let activeDescId = null;
+
+function renderNode(node, depth = 0) {
+  const li = document.createElement('li');
+  const nodeEl = document.createElement('div');
+  nodeEl.className = 'node';
+
+  // Icon
+  const iconSpan = document.createElement('span');
+  iconSpan.className = 'icon';
+  iconSpan.textContent = node.icon || '📄';
+  nodeEl.appendChild(iconSpan);
+
+  // Toggle arrow for folders
+  if (node.folder) {
+    const toggle = document.createElement('span');
+    toggle.className = 'toggle' + (node.open ? ' open' : '');
+    toggle.textContent = '▶';
+    nodeEl.appendChild(toggle);
+  }
+
+  // Name
+  const nameSpan = document.createElement('span');
+  nameSpan.className = 'name ' + (node.nameClass || '');
+  nameSpan.textContent = node.name;
+  nodeEl.appendChild(nameSpan);
+
+  // Tags
+  if (node.tags) {
+    node.tags.forEach(t => {
+      const tag = document.createElement('span');
+      tag.className = 'tag' + (t === 'commit to git' ? ' git' : t === '.gitignore' ? ' gitignore' : '');
+      tag.textContent = t;
+      nodeEl.appendChild(tag);
+    });
+  }
+
+  li.appendChild(nodeEl);
+
+  // Description panel
+  const descId = 'desc-' + Math.random().toString(36).slice(2, 9);
+  if (node.desc) {
+    const descPanel = document.createElement('div');
+    descPanel.className = 'desc-panel';
+    descPanel.id = descId;
+    descPanel.textContent = node.desc;
+    li.appendChild(descPanel);
+  }
+
+  // Children
+  let childrenContainer = null;
+  if (node.children) {
+    childrenContainer = document.createElement('div');
+    childrenContainer.className = 'children' + (node.open ? '' : ' collapsed');
+    const ul = document.createElement('ul');
+    node.children.forEach(child => ul.appendChild(renderNode(child, depth + 1)));
+    childrenContainer.appendChild(ul);
+    li.appendChild(childrenContainer);
+  }
+
+  // Click behavior
+  nodeEl.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    // Toggle folder
+    if (node.folder && childrenContainer) {
+      const toggle = nodeEl.querySelector('.toggle');
+      childrenContainer.classList.toggle('collapsed');
+      toggle.classList.toggle('open');
+    }
+
+    // Toggle description
+    if (node.desc) {
+      const panel = document.getElementById(descId);
+      if (activeDescId && activeDescId !== descId) {
+        const prev = document.getElementById(activeDescId);
+        if (prev) prev.classList.remove('show');
+      }
+      panel.classList.toggle('show');
+      activeDescId = panel.classList.contains('show') ? descId : null;
+    }
+  });
+
+  return li;
+}
+
+function renderTree(containerId, data) {
+  const container = document.getElementById(containerId);
+  const ul = document.createElement('ul');
+  ul.appendChild(renderNode(data));
+  container.appendChild(ul);
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => {
+    el.classList.remove('active-project', 'active-user');
+  });
+  document.getElementById('tab-' + tab).classList.add('active');
+  const btn = document.querySelector(`[data-tab="${tab}"]`);
+  btn.classList.add(tab === 'project' ? 'active-project' : 'active-user');
+  activeDescId = null;
+}
+
+renderTree('tree-project', projectTree);
+renderTree('tree-user', userTree);
+
+// ===== THEME SYNC =====
+function applyTheme() {
+  try {
+    var parentTheme = window.parent.document.documentElement.getAttribute('data-theme');
+    // outer page: no attribute = dark, 'light' = light
+    document.body.classList.toggle('dark', parentTheme !== 'light');
+  } catch(e) {
+    document.body.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+}
+applyTheme();
+try {
+  new MutationObserver(applyTheme).observe(
+    window.parent.document.documentElement,
+    { attributes: true, attributeFilter: ['data-theme'] }
+  );
+} catch(e) {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+}
+</script>
+</body>
+</html>
