@@ -86,7 +86,7 @@
 
 ---
 
-# 前置作業：課程會用到的工具、技術
+# 前置作業：建議安裝的工具 & 使用技術
 
 ## AI 是大腦，工具是雙手
 
@@ -136,12 +136,12 @@ claude
 
 > **Tips**
 > .claude/ 就像給 Claude 一本專屬手冊：告訴它你是誰（設定）、你可以做什麼（權限）、你想怎麼做（規則）、你希望它自動完成什麼（技能），以及特別的角色（代理）。
-> 專案層級放在 your-project/.claude/，使用者層級放在 ~/.claude/，兩者會合併生效，專案設定優先。
+> 專案層級放在 your-project/.claude/，使用者層級放在 ~/.claude/，**兩者會合併生效，專案設定優先。**
 
 ### ⚙️ 初探 MCP / Rules / Commands / Skills
 
 **1. MCP：**透過標準介面`呼叫其他工具的 API`，操作方式較穩定、可預期
-**2. Rules：**`專案的規範`，通常不會寫太多，因為會佔用到上下文的空間
+**2. Rules：**`每次對話都會參考`，通常不會寫太多，因為會佔用到上下文的空間
 **3. Skills：**把日常工作中執行任務的細節、技巧、判斷模式放進去，AI 遇到`相關任務時會主動觸發`
 **4. Commands：**可以設計完整工作流（ex: 執行多個 Skills），要`手動觸發`
 
@@ -455,6 +455,7 @@ with details about my project, tech stack, and conventions
 
 > **為什麼 Agent Skills 可以節省 Token?**
 > 因為只讀取 Meta data（name、description），description 的重點不是描述 Skill 要做什麼，而是**在哪些情境會被觸發**。
+> 如果想測試 git-smart-commit Skill，可以切換到 `feature/add-activity-log-page` branch，輸入 `git reset --soft a401f90f168a37bf2d1d3239863221d219362b41` 
 
 ## 設計 PR 讓 Code Review 更輕鬆
 
