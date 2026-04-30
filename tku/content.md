@@ -128,7 +128,8 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
 ```terminal [label="啟動 Claude"]
 claude
 ```
-[第一次啟動，會需要登入 Claude 帳號](./assets/login-claude.png)
+
+![第一次啟動，會需要登入 Claude 帳號](./assets/login-claude.png)
 
 ### 📂 了解 Claude Code 工作目錄
 
