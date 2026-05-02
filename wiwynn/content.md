@@ -356,6 +356,40 @@ cd cake-2026-build-with-ai
 >
 > **設計 Commit、PR 的 Skill 就是透過優化流程讓開發更順暢。**雖然每一步都是 AI 在執行，但如果沒有實務經驗，其實不知道怎麼串起這些工具。**真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。**
 
+[bonus title="🤖 用 /codex:review 讓 AI 幫你 Code Review"]
+**安裝步驟（只需執行一次）**
+
+```
+/plugin marketplace add openai/codex-plugin-cc
+/plugin install codex@openai-codex
+/codex:setup
+```
+
+**使用方式**
+
+```
+/codex:review
+```
+
+Codex 會自動偵測 git 變更量，詢問執行模式：
+- 變更小（1–2 個檔案）→ 建議前景等待
+- 變更大 → 建議背景執行，完成後用 `/codex:status` 查結果
+
+背景執行時不會打斷你，可以繼續開發其他功能。
+
+**審查結果包含**
+- 結論：`approve` 或 `needs-attention`
+- 每個問題的檔案位置、嚴重程度（critical / high / medium / low）、修改建議
+
+Codex **只審查，不自動修改**；你確認後再決定要改哪些。
+
+**好處**
+1. **第二雙眼睛** — Codex 與 Claude 訓練背景不同，容易發現彼此的盲點
+2. **不打斷工作流** — 背景執行，審查與開發並行
+3. **比人工快** — 幾十秒內拿到按嚴重程度排列的問題清單
+4. **強制分離「找問題」與「改問題」** — 避免 AI 悄悄改到不該動的地方
+[/bonus]
+
 ---
 
 # 導入測試：讓維護與擴充更有底氣
