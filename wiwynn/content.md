@@ -747,13 +747,22 @@ PR 是決定專案品質的重要環節，因為他是讓團隊成員 Code Revie
 >
 > **設計 Commit、PR 的 Skill 就是透過優化流程讓開發更順暢。**雖然每一步都是 AI 在執行，但如果沒有實務經驗，其實不知道怎麼串起這些工具。**真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。**
 
+[lab-session title="🛠️  實作時間" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+- 嘗試用 `/find-skills` 來搜尋符合自己需求的 Skills
+- 觸發 Branch Name Skill
+- 觸發 Commit Skill
+- 觸發 PR Skill
+[/lab-session]
+
 ---
 
 # 導入測試：讓維護與擴充更有底氣
 
 > 市場不會為爛產品買單；加入自動化測試，是 Vibe Coding **從玩具走向產品的關鍵**
 
-## 🔄 建立適合專案的測試工作流
+## 建立適合專案的測試工作流
+
+### 🔀 驗證生成測試的 Skill
 
 [flow]
 1. 建立資料夾 — 存放測試清單
@@ -768,6 +777,14 @@ PR 是決定專案品質的重要環節，因為他是讓團隊成員 Code Revie
 生成測試
 ```
 
+#### 人類要確認測試清單符合預期
+
+![會建立 doc 資料夾來存放測試清單](./assets/test-doc.png)
+
+#### 確認生成的測試運作正常
+
+![可輸入 npm run test 來手動驗證](./assets/npm-run-test.png)
+
 ### 💡 實務建議
 - 不要一口氣生成所有測試，`先放一個檔案`確認結果符合預期
 - 每個頁面/模組有`獨立的測試程式`，方便定位問題
@@ -776,36 +793,80 @@ PR 是決定專案品質的重要環節，因為他是讓團隊成員 Code Revie
 > **千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。**
 > 現在儘管有 AI 輔助撰寫測試程式，我們還是要仔細檢查 AI 給的測試情境是否合理、有遺漏。
 
-## 🔁 加入 GitHub Action 自動化
+[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+- 觸發生成測試的 Skill
+- 確認測試清單符合預期
+- 驗證測試程式運行如預期
+[/lab-session]
+
+## 加入 CI/CD 自動化
+
+### 🔁 加入 GitHub Action 自動化
 
 - 每次推送到 GitHub 都觸發測試
 - 測試完畢生成覆蓋率報告
-- 設定 Branch Protection Rule，測試通過才能合併到主分支
-
-> **測試覆蓋率不需追求 100%**
-> 重要邏輯都包含在測試程式內，才是最重要的；有了測試，規格書上的功能才能被真正驗證。
 
 ```prompt [label="自動化測試"]
 我希望在 GitHub Action 加入自動化測試的流程
 每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
+測試完畢後，要生成覆蓋率報告讓我下載
 ```
 
-![GitHub 上的 CI/CD](./assets/github-cicd.png)
+![GitHub Action 的 CI/CD](./assets/github-cicd.png)
 
-## 🛡️ 設計保護 Branch 的規則
+> **測試覆蓋率不需追求 100%**
+> 重要邏輯都包含在測試程式內，才是最重要的；有了測試，規格書上的功能才能被真正驗證。
 
-- 設定 `main` / `develop` 為保護分支，禁止直接 push
-- 需要通過 CI 測試才能 merge
-- 限制 force push 與刪除保護分支
+[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+- 加入 GitHub Action 自動化
+- 切換 branch
+- 生成 commit
+- Push 到 GitHub
+- 建立 Pull Request 到 develop
+[/lab-session]
 
-```prompt [label="設定 Branch Protection"]
-幫我在 GitHub 設定 Branch Protection Rules
-main 分支需要通過 CI 測試、至少一位 reviewer approve 才能 merge
-```
+### 🛡️ 設計保護 Branch 的規則
 
-## 🌳 認識 Git Worktree，了解多人專案協作技巧
+**免費版必須為「Public」的 Repo 才能進行設定**
 
-### 讓每個 AI Agent 有獨立的工作區
+- 設定 `main` / `develop` 為保護分支
+- 只有「通過測試」的分支才能合併
+
+![選擇 Settings ⭢ 選擇 Branches 下面的「Add branch ruleset」](./assets/branch-rule.png)
+
+- name 的部分你可以輸入「Protect main branch」
+-「Enforcement status」切換到 Active 才會生效
+- Target branch 需要**分兩次**加入：先輸入 `main` 按 Add，再輸入 `develop` 按 Add（不能用逗號寫在同一筆，否則 Applies to 0 targets）
+
+![Target branch 輸入要保護的 branches](./assets/protect-branches.png)
+
+- 把`Require a pull request before merging`這個必須「用 PR 才能合併的選項」打勾。
+- 將`Require status checks to pass`打勾，以及下面的`Require branches to be up to date before merging`」`也打勾，這是在設定「測試必須通過才能合併」。
+- 點擊`Add Checks`，搜尋 test，然後把他打勾，這就是要檢查的項目。
+
+![自動生成的 Test 名稱可能略有不同](./assets/test-check.png)
+
+### 🎯 模擬失敗情境，確認會擋住
+
+1. 故意把測試案例弄失敗
+2. 建立「Pull request」，確認合併目標為「main/develop」時是否會無法合併
+
+![測試不過時，Merge pull request 無法點擊](./assets/merge-disable.png)
+
+> **小提醒**
+> 你注意到 `pre-commit` 沒有觸發嗎？如果觸發的話，根本不會等到 CI/CD 時才發現問題。
+> 你可以請 AI 改寫 pre-commit 讓他涵蓋到這塊的測試：`我希望 pre-commit hook 能攔截 vehicle-management 的測試失敗`
+
+[lab-session title="🛠️  實作時間" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+- 確認目前為 Public Repo
+- 設計保護 Branch 的規則
+- 故意把測試案例弄失敗後更新到雲端
+- 確認合併目標為「develop」時會無法合併
+[/lab-session]
+
+## 認識 Git Worktree，了解多人專案協作技巧
+
+### 🌳 讓每個 AI Agent 有獨立的工作區
 
 - 多人協作專案時，你可能要同時撰寫**新功能、Code Review、修 Bug**
 - 用 Git Stash 時常會混亂
@@ -813,7 +874,7 @@ main 分支需要通過 CI 測試、至少一位 reviewer approve 才能 merge
 
 ![可以搭配 Git Worktree Manager 管理](./assets/git-worktree.png)
 
-### 開發、測試、修 Bug 三線並行
+### 🌳 開發、測試、修 Bug 三線並行
 
 | 工作情境 | Worktree 用途 |
 | --- | --- |
@@ -831,24 +892,24 @@ main 分支需要通過 CI 測試、至少一位 reviewer approve 才能 merge
 
 [summary]
 - 🧠 **累積 AI 經驗** | 用 CLAUDE.md、Agent Skills 讓 AI 的知識可以複用，**不要每次都從零開始**
-- 🏢 **多層次 Skills 管理** | 依照`公司 → 團隊 → 專案 → 個人`分層設計 Skills，避免重複，讓規範向下繼承
+- 🏢 **多層次 Skills 管理** | 依照`公司 → 團隊 → 專案 → 個人`分層設計 Skills
 - 🔧 **從痛點出發學工具** | 遇到問題再導入工具，工具只是過程中學會的，真正重要的是**辨識問題與設計解法的能力**
 [/summary]
 
 ## 讓 AI 的經驗可以累積，不要每次都從零開始
 
-- **CLAUDE.md** — 記錄專案背景、技術棧、開發規範，讓每次對話都有上下文
-- **Agent Skills** — 封裝最佳實踐，每次達成的目標成為下次的起點
-- **openspec/** — 規格文件版本化，新成員、AI 都有文件可以參考
+- **CLAUDE.md** — 記錄專案背景、使用技術、開發規範，讓 AI 有執行的方向
+- **Agent Skills** — 將過去解決過的問題設計成 SOP，並持續優化細節
+- **OpenSpec** — 將規格文件版本化，新成員、AI 都有文件可以參考，不怕知識斷層
 
 ## 建立公司、團隊、專案、個人的 Agent Skills
 
 | 層級 | 說明 | 範例 |
 | --- | --- | --- |
-| **公司** | 全公司通用規範 | Code Style、安全規則、Commit 格式 |
-| **團隊** | 特定團隊工作流 | PR Review 流程、Sprint 命名規則 |
-| **專案** | 單一專案情境 | 該專案的測試策略、部署流程 |
-| **個人** | 個人偏好設定 | 習慣的語言偏好、常用 Prompt 模板 |
+| **公司** | 全公司通用規範 | 工作日誌、Branch 命名、Git Flow |
+| **團隊** | 特定團隊工作流 | Coding Style、PR Review 模板、Commit 格式 |
+| **專案** | 單一專案情境 | 測試策略、部署流程 |
+| **個人** | 個人偏好設定 | AI 不是只會寫程式、文件 |
 
 > 透過 [dotagents](https://github.com/dean9703111/dotagents) 可以讓 Skills 同步到不同 AI Agent，不受工具限制。
 
