@@ -932,3 +932,7 @@ PR 是決定專案品質的重要環節，因為他是讓團隊成員 Code Revie
 
 [qa-session title="Q&A 時間"]
 [/qa-session]
+
+[survey title="課程滿意度問卷" url="https://www.surveycake.com/s/Xm3vN" hint="您的意見是我們進步的動力" btn="填寫問卷"]
+[/survey]
+
