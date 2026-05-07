@@ -253,8 +253,8 @@ npx @kamranahmedse/claude-statusline
 
 [下載 Repository](https://github.com/deancourse/wiwynn-ai-workshop) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（放在 `.agents` 資料夾下）
 
-```terminal [label="Clone 課程 Repo"]
-git clone git@github.com:deancourse/wiwynn-ai-workshop.git
+```terminal [label="僅 Clone 課程 main branch Repo"]
+git clone --branch main --single-branch git@github.com:deancourse/wiwynn-ai-workshop.git
 cd wiwynn-ai-workshop
 ```
 
