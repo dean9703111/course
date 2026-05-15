@@ -1,0 +1,21 @@
+# Tibame AI 行前說明會 — 課程頁專屬設定
+
+page:
+  title: "AI 時代，工程師的下一個十年"
+  badge: "Claude AI 課程行前說明會"
+  hero_title: "用充滿不確定的模型<br>建構穩定可靠的系統"
+  subtitle: "AI 幫你拓展能力，但判斷、設計、整合，才是下一個十年最值錢的事"
+
+seo:
+  title: "AI 時代，工程師的下一個十年｜Claude AI 課程行前說明會"
+  description: "LLM 的本質是隨機，系統要的卻是可重複、可預測、可維護。這場行前說明會帶你看懂 AI 時代真正在衡量什麼，並把需求拆解、流程設計、品質判斷，變成跨工具、不會過時的底層能力。"
+  image: "https://deanlin.net/course/tibame/ai-experience/assets/og-image.jpg"
+  url: "https://deanlin.net/course/tibame/ai-experience/"
+
+quotes:
+  opening:
+    text: "AI 幫我拓展能力，<br>但人與人的對話，幫我校正方向。"
+  closing:
+    text: >
+      把執行交給 AI，把判斷留給自己；<br>
+      這堂課不是要你跑得更快，而是要你跑得更遠。
