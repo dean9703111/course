@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>AI 時代，工程師的下一個十年</title>
+  <title>AI 時代，工程師的核心價值</title>
   <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AI 時代，工程師的下一個十年｜Claude AI 課程行前說明會">
-  <meta property="og:description" content="LLM 的本質是隨機，系統要的卻是可重複、可預測、可維護。這場行前說明會帶你看懂 AI 時代真正在衡量什麼，並把需求拆解、流程設計、品質判斷，變成跨工具、不會過時的底層能力。">
+  <meta property="og:title" content="AI 時代，工程師的核心價值｜Claude AI 課程說明會">
+  <meta property="og:description" content="LLM 的本質是隨機，系統要的卻是可重複、可預測、可維護。這場說明會帶你看懂 AI 時代最重要的核心價值，並把需求拆解、流程設計、品質判斷，變成跨工具、不會過時的底層能力。">
   <meta property="og:image" content="https://deanlin.net/course/tibame/ai-experience/assets/og-image.jpg">
   <meta property="og:url" content="https://deanlin.net/course/tibame/ai-experience/">
   <meta property="og:site_name" content="林鼎淵 Dean Lin">
@@ -4556,7 +4556,7 @@
 
     <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-      <div class="sidebar-brand-title">AI 時代，工程師的下一個十年</div>
+      <div class="sidebar-brand-title">AI 時代，工程師的核心價值</div>
       <div class="sidebar-brand-controls"><button class="fontsize-toggle" id="fontsize-toggle"
           aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle"
           aria-label="Toggle theme">🌙</button><button class="settings-toggle" id="settings-toggle"
@@ -4569,74 +4569,62 @@
       </a>
       <ul class="toc-sub"></ul>
     </li>
-    <li class="toc-group" data-section="section-1">
-      <a href="#section-1" class="toc-group-title">
-        <span class="toc-num">1</span> 開場
-      </a>
-      <ul class="toc-sub">
-      </ul>
-    </li>
     <li class="toc-group" data-section="ai">
       <a href="#ai" class="toc-group-title">
-        <span class="toc-num">2</span> 趨勢
+        <span class="toc-num">1</span> 趨勢
       </a>
       <ul class="toc-sub">
+        <li><a href="#sub-ai">同一間公司，三套對 AI 完全不同的劇本</a></li>
+        <li><a href="#sub-section-2">核心價值正在遷移</a></li>
+        <li><a href="#sub-section-3">新衡量標準：良率、恢復力、累積資產</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="kpi-ai">
-      <a href="#kpi-ai" class="toc-group-title">
-        <span class="toc-num">3</span> KPI 失靈
+    <li class="toc-group" data-section="section-2">
+      <a href="#section-2" class="toc-group-title">
+        <span class="toc-num">2</span> 迷思拆解
       </a>
       <ul class="toc-sub">
-      </ul>
-    </li>
-    <li class="toc-group" data-section="section-4">
-      <a href="#section-4" class="toc-group-title">
-        <span class="toc-num">4</span> 迷思
-      </a>
-      <ul class="toc-sub">
-      </ul>
-    </li>
-    <li class="toc-group" data-section="section-5">
-      <a href="#section-5" class="toc-group-title">
-        <span class="toc-num">5</span> 能力轉移
-      </a>
-      <ul class="toc-sub">
+        <li><a href="#sub-section-4">真正讓人卡住的，是「思考方式」</a></li>
+        <li><a href="#sub-section-5">示範：同一個需求，拆成四步差天差地</a></li>
+        <li><a href="#sub-debug-ai">Debug 卡關，差的不是 AI，是認知</a></li>
+        <li><a href="#sub-ai-5">清單一：AI 答案不對時，先問自己這 5 個問題</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="ai-2">
       <a href="#ai-2" class="toc-group-title">
-        <span class="toc-num">6</span> 五大翻車現場
+        <span class="toc-num">3</span> 能力轉移
       </a>
       <ul class="toc-sub">
+        <li><a href="#sub-section-8">稀缺能力一：需求拆解能力</a></li>
+        <li><a href="#sub-section-9">稀缺能力二：流程設計能力</a></li>
+        <li><a href="#sub-section-10">稀缺能力三：品質判斷能力</a></li>
+        <li><a href="#sub-section-11">清單二：驗收時，用三層問題逼問自己</a></li>
+        <li><a href="#sub-ai-2">五大翻車現場：AI 不會主動幫你補的事</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="section-7">
-      <a href="#section-7" class="toc-group-title">
-        <span class="toc-num">7</span> 案例拆解
+    <li class="toc-group" data-section="section-4">
+      <a href="#section-4" class="toc-group-title">
+        <span class="toc-num">4</span> 案例拆解
       </a>
       <ul class="toc-sub">
+        <li><a href="#sub-section-13">案例一：兩個工程師 × 同一個出缺勤系統</a></li>
+        <li><a href="#sub-hr-skill">案例二：工程師 × HR × 同一個 Skill</a></li>
+        <li><a href="#sub-vibe-coding-ppt">案例三：用 Vibe Coding 取代 PPT</a></li>
+        <li><a href="#sub-section-16">給資深工程師：你沒有歸零，只是換了一個賽道</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="section-8">
-      <a href="#section-8" class="toc-group-title">
-        <span class="toc-num">8</span> 實戰課開箱
+    <li class="toc-group" data-section="ai-3">
+      <a href="#ai-3" class="toc-group-title">
+        <span class="toc-num">5</span> 實戰開箱
       </a>
       <ul class="toc-sub">
-      </ul>
-    </li>
-    <li class="toc-group" data-section="section-9">
-      <a href="#section-9" class="toc-group-title">
-        <span class="toc-num">9</span> 給資深工程師的一段話
-      </a>
-      <ul class="toc-sub">
-      </ul>
-    </li>
-    <li class="toc-group" data-section="section-10">
-      <a href="#section-10" class="toc-group-title">
-        <span class="toc-num">10</span> 結語
-      </a>
-      <ul class="toc-sub">
+        <li><a href="#sub-section-17">你是為了哪件事點進來？這堂課又不教什麼？</a></li>
+        <li><a href="#sub-section-18">主軸一：從「會用工具」到「會設計工具」</a></li>
+        <li><a href="#sub-section-19">主軸二：從「能跑」到「能上線」</a></li>
+        <li><a href="#sub-section-20">主軸三：從「個人加速」到「團隊協作」</a></li>
+        <li><a href="#sub-section-21">主軸四：從「玩具」到「產品」</a></li>
+        <li><a href="#sub-ai-3">為什麼這堂課不會隨 AI 更新而過時</a></li>
+        <li><a href="#sub-section-23">帶走這兩個問題</a></li>
       </ul>
     </li>
 
@@ -4660,28 +4648,23 @@
   </div>
 
     <header class="hero">
-    <div class="hero-badge"><span class="dot"></span>Claude AI 課程行前說明會</div>
-    <h1>用充滿不確定的模型<br>建構穩定可靠的系統</h1>
-    <p class="hero-sub">AI 幫你拓展能力，但判斷、設計、整合，才是下一個十年最值錢的事</p>
+    <div class="hero-badge"><span class="dot"></span>Claude AI 課程說明會</div>
+    <h1>用充滿不確定的模型<br>設計穩定可靠的系統</h1>
+    <p class="hero-sub">AI 幫你拓展能力，但判斷、設計、整合，才是人的核心價值</p>
     <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
     <nav class="hero-nav">
-      <a href="#section-1">開場</a>
-    <a href="#ai">趨勢</a>
-    <a href="#kpi-ai">KPI 失靈</a>
-    <a href="#section-4">迷思</a>
-    <a href="#section-5">能力轉移</a>
-    <a href="#ai-2">五大翻車現場</a>
-    <a href="#section-7">案例拆解</a>
-    <a href="#section-8">實戰課開箱</a>
-    <a href="#section-9">給資深工程師的一段話</a>
-    <a href="#section-10">結語</a>
+      <a href="#ai">趨勢</a>
+    <a href="#section-2">迷思拆解</a>
+    <a href="#ai-2">能力轉移</a>
+    <a href="#section-4">案例拆解</a>
+    <a href="#ai-3">實戰開箱</a>
           </nav>
   </header>
 
   <section class="quote-page">
   <div class="reveal">
     <div class="quote-mark">“</div>
-    <blockquote>AI 幫我拓展能力，<br>但人與人的對話，幫我校正方向。</blockquote>
+    <blockquote>當 AI 寫的程式更快、更好<br>工程師的價值在哪？</blockquote>
     <div class="quote-line"></div>
   </div>
 </section>
@@ -4719,25 +4702,29 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="section-1"><span class="num">1</span> 開場</span>
-    <h2>用不確定的模型，建出可靠的系統</h2>
+    <span class="section-label" id="ai"><span class="num">1</span> 趨勢</span>
+    <h2>當 AI 接手開發，工程師的核心價值在哪？</h2>
     
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <p>30 分鐘的行前說明會，我想先把核心命題交到你手上 —— 再給你三張今晚就能帶回去用的清單。</p>
+      <p>老闆、主管、員工心中的 AI，是 3 個完全不同的東西。</p>
     </div>
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-ai"><span class="bar"></span>同一間公司，三套對 AI 完全不同的劇本</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">👥</span> 你是為了哪件事點進來？</div>
+      <div class="group-header"><span class="icon">🏢</span> 三個角色，三種 AI</div>
       <div class="group-body">
         <ul>
-  <li>公司開始要求「一天交三個功能」，但你連 Code Review 都來不及看</li>
-  <li>買過 Cursor、Claude、ChatGPT 的訂閱，但每個 Demo 都停在「上線」前一步</li>
-  <li>你不是工程師，但身邊的人都在 Vibe Coding，怕被時代甩在後面</li>
+  <li><strong>老闆的 AI 是「砍預算」</strong> —— 導入 AI 節省人力資源</li>
+  <li><strong>主管的 AI 是「衝 KPI」</strong> —— 以前交付 1 個功能，現在請你交 3 個</li>
+  <li><strong>員工的 AI 是「保飯碗」</strong> —— 只要產出的比同事快，我就是倖存者</li>
 </ul>
       </div>
     </div>
@@ -4745,54 +4732,7 @@
 
   <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🚫</span> 今天不會教的「爛大街」內容</div>
-      <div class="group-body">
-        <ul>
-  <li>萬用 Prompt 模板 —— 網路一抓一大把，過兩個月就過期</li>
-  <li>「同時開十個 AI Agent 幫你寫程式」這種人月神話 2.0</li>
-  <li>「一條指令搞定整套系統」的爆款短片話術</li>
-  <li>「跟著我做就能月入百萬」的人設變現公式</li>
-</ul>
-        <div class="insight">
-      <div class="insight-title">這堂課的核心命題</div>
-      <p>怎麼用一個本質上充滿不確定的模型，建構出穩定、可靠、能放心交付的系統。</p>
-      <p style="margin-top:.5rem">LLM 的本質是隨機，每次答案都不一樣；但「系統」要的卻是可重複、可預測、可維護。這兩件事看似矛盾，正是這堂課要一起拆解的事。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
-  <div class="reveal">
-    <span class="section-label" id="ai"><span class="num">2</span> 趨勢</span>
-    <h2>AI 接手開發後，工程師的價值往哪移動</h2>
-    
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <p>在同一間公司裡，老闆、主管、員工心中的 AI，是三個完全不同的東西。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">🏢</span> 同一間公司，三種 AI</div>
-      <div class="group-body">
-        <ul>
-  <li><strong>老闆的 AI 是「砍預算」</strong> —— 把 AI 導進來，省下三個工程師</li>
-  <li><strong>主管的 AI 是「衝 KPI」</strong> —— 以前一天交一個功能，現在請你交三個</li>
-  <li><strong>員工的 AI 是「保飯碗」</strong> —— 只要產出夠快，就先不會被裁</li>
-</ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">⚠</span> ️ 三組期待砸在同一段工作流，會引發連鎖反應</div>
+      <div class="group-header"><span class="icon">⚠</span> ️ 3 種期待同時發生，業力引爆！</div>
       <div class="group-body">
         <div class="flow">
       <div class="flow-step">
@@ -4832,17 +4772,29 @@
       </div>
     </div>
         <div class="insight">
-      <div class="insight-title">不管 AI 多強大，總要有個人按下同意按鈕</div>
-      <p>當你按下去的那刻，責任就歸屬於你。</p>
-      <p style="margin-top:.5rem">「按下同意按鈕」過去是工程師的尾聲；現在，它變成工程師的主戰場。</p>
+      <div class="insight-title">不管 AI 多強大，總要有人按下「同意」</div>
+      <p>當按下去的那刻，責任就歸屬於你。</p>
+      <p style="margin-top:.5rem">過去工程師的同意按鈕主要在同事間的「Merge pull request」，但現在 AI 的每次改動，其實都等同於一次「Merge pull request」</p>
     </div>
       </div>
     </div>
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-2"><span class="bar"></span>核心價值正在遷移</div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <p>老闆、主管可能會問你：「AI 到底有沒有用？」</p>
+      <p style="margin-top:.5rem">想回答這題，靠的<code>不是工具熟練度</code>，而是你是否真的<code>將 AI 導入工作流</code>。</p>
+      <p style="margin-top:.5rem"><strong>而這件事本身，就是 AI 時代最稀缺的軟實力。</strong></p>
+    </div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🧭</span> 核心價值正往三個地方移動</div>
+      <div class="group-header"><span class="icon">🧭</span> 從「會寫」轉向「會判斷、會設計、會整合」</div>
       <div class="group-body">
         <ul>
   <li><strong>能判斷</strong> —— AI 給的方案，哪一個會在三個月後變成技術債？</li>
@@ -4850,25 +4802,10 @@
   <li><strong>能整合</strong> —— 怎麼讓個人、團隊、跨部門的工作流串起來？</li>
 </ul>
         <div class="insight">
-      <div class="insight-title">寫程式會被攤平，但這三件事會變貴</div>
-      <p>判斷、設計、整合 —— 這三件事，會變成下一個十年最值錢的能力。</p>
+      <div class="insight-title">當人人都能寫程式</div>
+      <p>過去程式碼很昂貴，是因為只有經過專業訓練的人才能完成；但現在 AI 生成的程式已經媲美專業工程師，而且<strong>效率與產出是人類的 10 倍以上</strong>。</p>
     </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
-  <div class="reveal">
-    <span class="section-label" id="kpi-ai"><span class="num">3</span> KPI 失靈</span>
-    <h2>AI 時代該怎麼衡量工程師</h2>
-    
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <p>「AI 時代到底要怎麼衡量一個工程師的價值？」這個問題，我這半年至少被問了 20 次。</p>
     </div>
   </div>
 
@@ -4877,63 +4814,68 @@
       <div class="group-header"><span class="icon">💥</span> 過去能用的 KPI，現在通通失靈</div>
       <div class="group-body">
         <ul>
-  <li><strong>寫了幾行程式？</strong> AI 五分鐘可以噴出 500 行</li>
-  <li><strong>完成幾個 issue？</strong> AI 可以把一個 issue 拆成五個然後掛在你身上</li>
-  <li><strong>消耗多少 Token？</strong> Token 與品質無關，消耗越多反而可能代表你越搞不定</li>
-  <li><strong>commit / PR 幾次？</strong> 拆成幾個都可以，看你想做給誰看</li>
-  <li><strong>修了幾個 Bug？</strong> 那些 Bug 有 70% 是 AI 自己上週製造出來的</li>
+  <li><strong>寫了幾行程式？</strong> AI 五分鐘可以噴出 5000 行</li>
+  <li><strong>完成幾個 issue？</strong> AI 可以根據 Spec 產出你期望的 issue 數量</li>
+  <li><strong>消耗多少 Token？</strong> Token 其實與產出品質、產能沒有正相關</li>
+  <li><strong>commit / PR 幾次？</strong> 寫好 Skill，拆成幾個都可以，看你想做給誰看</li>
+  <li><strong>修了幾個 Bug？</strong> AI 很擅長製造 Bug，自產自銷小意思</li>
 </ul>
         <div class="insight">
       <div class="insight-title">AI 時代，KPI 造假的成本趨近於零</div>
-      <p>過去主管還能從「程式碼長度」「文件字數」感受到努力；現在這些 AI 五秒就生。</p>
-      <p style="margin-top:.5rem">拿這些當 KPI，等於主管被自己制定的指標反向綁架 —— 帳面上人人超標，產品卻沒有變得更好。</p>
+      <p>過去主管可以從以上標準，來衡量一個員工有多努力，但現在 AI 造假數據簡直不要太輕鬆。</p>
+      <p style="margin-top:.5rem">如果繼續拿這些當 KPI，主管會被自己制定的指標反向綁架 —— 帳面上人人超標，實際上產品卻沒有變得更好。</p>
     </div>
       </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">✅</span> 第一組：良率指標</div>
-      <div class="group-body">
-        <ul>
-  <li>上線後 N 天內的回歸 Bug 數</li>
-  <li>同一個 PR 被駁回後反覆修改的次數</li>
-  <li>規格寫好後，實作與規格的落差</li>
-  <li>衡量的是「AI 寫得多 ≠ AI 寫得對」</li>
-</ul>
-      </div>
-    </div>
+    <div class="sub-title" id="sub-section-3"><span class="bar"></span>新衡量標準：良率、恢復力、累積資產</div>
   </div>
 
   <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🛟</span> 第二組：恢復指標</div>
+      <div class="group-header"><span class="icon">✅</span> 交付成果良率</div>
       <div class="group-body">
         <ul>
-  <li>線上錯誤從發生到修復的平均時間（MTTR）</li>
-  <li>從拿到報錯訊息，到定位出問題的時間</li>
-  <li>客訴從進來到解決的速度</li>
-  <li>衡量的是「東西爆炸時，你和你的 AI 工作流撐不撐得住」</li>
-</ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">📈</span> 第三組：累積指標</div>
-      <div class="group-body">
-        <ul>
-  <li>同類型的問題，第二次解決花了多少時間？</li>
-  <li>團隊的 Skill / Workflow / Spec 文件有沒有持續長大？</li>
-  <li>三個月前寫的程式，今天讀回去還看得懂嗎？</li>
-  <li>衡量的是「你的 AI 工作流有沒有複利效應」—— 最難造假，也最值錢</li>
+  <li>交付給 QA 後，回報的 <code>Bug 數</code></li>
+  <li>系統上線後，出現 Bug 的<code>影響範圍</code></li>
+  <li>修好的 Bug，是否<code>導致其他問題</code></li>
 </ul>
         <div class="insight">
-      <div class="insight-title">過去看「產出量」，未來看「良率、恢復力、累積資產」</div>
-      <p>你回到公司，遲早會在某個會議上被問「AI 到底有沒有用？」能不能答得出來，靠的不是工具熟練度，而是你有沒有看懂這個時代真正在衡量什麼。</p>
-      <p style="margin-top:.5rem">能設計出這套新標準、說服主管、帶動團隊 —— 這件事本身，就是 AI 時代最稀缺的軟實力。</p>
+      <p>就算「過程」都交給 AI 執行，人還是要為「結果」負責</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🛟</span> 意外恢復速度</div>
+      <div class="group-body">
+        <ul>
+  <li>線上錯誤從發生到<code>修復的平均時間</code></li>
+  <li>從拿到報錯訊息，到<code>定位出問題的時間</code></li>
+  <li>客訴從進來到<code>解決的速度</code></li>
+</ul>
+        <div class="insight">
+      <p>如果系統設計時沒考量到<code>工作日誌</code>，程式沒有設計<code>log、try-catch</code>；當意外發生時，<strong>人與 AI 都沒有足夠的判斷依據</strong>。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📈</span> 可累積的資產</div>
+      <div class="group-body">
+        <ul>
+  <li>類似的任務，是否有設計為團隊、專案的 Skill / Workflow</li>
+  <li>當系統持續迭代時，Spec 規格文件有在維護嗎？</li>
+  <li>三個月前寫的功能，人與 AI 還能找得到並理解嗎？</li>
+</ul>
+        <div class="insight">
+      <p>可以從以上細節判斷 AI 是否<code>有導入工作流</code>，以及專案是否具備<code>可維護性</code>。<br>這些是能產生「複利效應」的設計，當<code>專案週期拉長，就能看出價值</code>。</p>
     </div>
       </div>
     </div>
@@ -4943,20 +4885,24 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="section-4"><span class="num">4</span> 迷思</span>
-    <h2>表面變快，底層沒變</h2>
+    <span class="section-label" id="section-2"><span class="num">2</span> 迷思拆解</span>
+    <h2>表面變快，底層沒變的真正原因</h2>
     
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <p>訂閱了三個 AI 工具、看了五十支教學，交付出來的東西還是慢、還是亂、還是要重做。</p>
+      <p>訂閱了三個 AI 工具、看了五十支教學，交付出來的東西還是慢、還是亂、還是要重做 —— 卡點不在工具。</p>
     </div>
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-4"><span class="bar"></span>真正讓人卡住的，是「思考方式」</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🧠</span> 真正讓人卡住的，是「思考方式」</div>
+      <div class="group-header"><span class="icon">🧠</span> 同樣的指令，不同腦中結構，差別會放大</div>
       <div class="group-body">
         <ul>
   <li>同一份指令、同一台電腦、同一個 Demo，有人 10 分鐘做完，有人兩小時還在卡</li>
@@ -4973,8 +4919,12 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-5"><span class="bar"></span>示範：同一個需求，拆成四步差天差地</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🎨</span> 示範：同一個需求，拆成四步差天差地</div>
+      <div class="group-header"><span class="icon">🎨</span> 「個人形象網頁」的兩種版本</div>
       <div class="group-body">
         <ul>
   <li>原本「幫我做一個個人形象網頁」→ AI 給了藍紫配色、滿滿 AI 感的網頁</li>
@@ -5016,8 +4966,12 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-debug-ai"><span class="bar"></span>Debug 卡關，差的不是 AI，是認知</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🐞</span> Debug 卡關，差的不是 AI，是認知</div>
+      <div class="group-header"><span class="icon">🐞</span> 把不夠的資訊反覆丟給 AI，沒有用</div>
       <div class="group-body">
         <ul>
   <li>同事把錯誤 log 丟給 AI，怎麼樣都找不到 root cause</li>
@@ -5035,8 +4989,12 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-ai-5"><span class="bar"></span>清單一：AI 答案不對時，先問自己這 5 個問題</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">📋</span> 清單一：AI 答案不對時，先問自己這 5 個問題</div>
+      <div class="group-header"><span class="icon">📋</span> 救命檢查清單</div>
       <div class="group-body">
         <ul>
   <li>我給的指令裡，有沒有明確的「目標、格式、限制、脈絡」？</li>
@@ -5053,27 +5011,24 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="section-5"><span class="num">5</span> 能力轉移</span>
-    <h2>哪三種能力會變稀缺</h2>
+    <span class="section-label" id="ai-2"><span class="num">3</span> 能力轉移</span>
+    <h2>AI 帶不走的三件事，與五個翻車現場</h2>
     
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <p>104、LinkedIn 的職缺開始出現「能與 AI 共事」「能評估 AI 產出」「能設計 Prompt 流程」。</p>
+      <p>104、LinkedIn 的職缺開始出現「能與 AI 共事」「能評估 AI 產出」「能設計 Prompt 流程」—— 寫 Code 正在被攤平，判斷力正在被放大。</p>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">「寫 Code」正在被攤平，「判斷力」正在被放大</div>
-      <p>每項稀缺能力，都搭配一件「今天就能動手做的事」，不只是大道理。</p>
-    </div>
+    <div class="sub-title" id="sub-section-8"><span class="bar"></span>稀缺能力一：需求拆解能力</div>
   </div>
 
   <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🧩</span> 稀缺能力一：需求拆解能力</div>
+      <div class="group-header"><span class="icon">🧩</span> 一句話 vs. 一份規格，差距是兩週</div>
       <div class="group-body">
         <ul>
   <li>把「幫我做一個請假系統」丟給 AI，兩週後 HR 才發現少了權限切換、代理人、Email 通知</li>
@@ -5086,8 +5041,12 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-9"><span class="bar"></span>稀缺能力二：流程設計能力</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🔄</span> 稀缺能力二：流程設計能力</div>
+      <div class="group-header"><span class="icon">🔄</span> 把「一次性的解法」變成「可重複的流程」</div>
       <div class="group-body">
         <ul>
   <li>AI 很會做「一次性的任務」，但不會替你設計「可重複跑、可擴充、可維護」的流程</li>
@@ -5104,22 +5063,30 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-10"><span class="bar"></span>稀缺能力三：品質判斷能力</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🔍</span> 稀缺能力三：品質判斷能力</div>
+      <div class="group-header"><span class="icon">🔍</span> 「看起來能動」是新的高風險訊號</div>
       <div class="group-body">
         <ul>
   <li>過去 AI 寫錯程式會跑不動，你立刻發現他錯了</li>
   <li>現在他有能力寫出「看起來能動」的工具：畫面正常、流程跑得起來，但背後藏著地雷</li>
   <li>例如：資料只暫存在 localStorage 刷新就消失、登入驗證寫在前端按 F12 就看到密碼</li>
-  <li>驗收時用「清單二」的三層問題逼問自己，AI 就會現原形</li>
+  <li>驗收時用下方「清單二」的三層問題逼問自己，AI 就會現原形</li>
 </ul>
       </div>
     </div>
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-11"><span class="bar"></span>清單二：驗收時，用三層問題逼問自己</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🛡</span> ️ 清單二：驗收時，用三層問題逼問自己</div>
+      <div class="group-header"><span class="icon">🛡</span> ️ 三層逼問法</div>
       <div class="group-body">
         <ul>
   <li><strong>會動嗎？</strong> —— 功能跑得起來嗎</li>
@@ -5133,20 +5100,9 @@
       </div>
     </div>
   </div>
-</section>
-
-<hr class="divider">
-<section class="section">
-  <div class="reveal">
-    <span class="section-label" id="ai-2"><span class="num">6</span> 五大翻車現場</span>
-    <h2>AI 最常出包的地方</h2>
-    
-  </div>
 
   <div class="reveal">
-    <div class="insight">
-      <p>這是我帶企業內訓會用的「清單三」—— 這 5 件事 AI 不會主動幫你做，但只要漏一個，就是上線後的災難。</p>
-    </div>
+    <div class="sub-title" id="sub-ai-2"><span class="bar"></span>五大翻車現場：AI 不會主動幫你補的事</div>
   </div>
 
   <div class="reveal">
@@ -5223,20 +5179,24 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="section-7"><span class="num">7</span> 案例拆解</span>
-    <h2>加速、放大、累積資產</h2>
+    <span class="section-label" id="section-4"><span class="num">4</span> 案例拆解</span>
+    <h2>加速、放大、累積資產的真實差距</h2>
     
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <p>三個真實案例 —— 同樣都在用 AI，結果卻完全不同。</p>
+      <p>三個真實案例 —— 同樣都在用 AI，結果卻完全不同；而報名表上，超過 80% 的學員，是工作 7 年以上的資深工程師。</p>
     </div>
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-13"><span class="bar"></span>案例一：兩個工程師 × 同一個出缺勤系統</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">👨</span> ‍💻 案例一：兩個工程師 × 同一個出缺勤系統</div>
+      <div class="group-header"><span class="icon">👨</span> ‍💻 把 AI 當「打字員」vs. 當「協作夥伴」</div>
       <div class="group-body">
         <ul>
   <li><strong>A 工程師：</strong> 貼「幫我做一個出缺勤系統」→ 當天交付 → 兩週後 HR 列出 12 個問題 → 與 AI 來回 30 多次，每修一個 Bug 又長 2 個 → 專案 Pause</li>
@@ -5252,8 +5212,12 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-hr-skill"><span class="bar"></span>案例二：工程師 × HR × 同一個 Skill</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🎨</span> 案例二：一個工程師 × 一個 HR × 同一個 Skill</div>
+      <div class="group-header"><span class="icon">🎨</span> 同一份工具，差別在思考方式</div>
       <div class="group-body">
         <ul>
   <li>裝了同一個 frontend-design Skill，兩位觀眾都做出爛網頁來問我</li>
@@ -5270,8 +5234,12 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-vibe-coding-ppt"><span class="bar"></span>案例三：用 Vibe Coding 取代 PPT</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">📑</span> 案例三：用 Vibe Coding 取代 PPT</div>
+      <div class="group-header"><span class="icon">📑</span> 從「使用別人的工具」到「累積自己的資產」</div>
       <div class="group-body">
         <ul>
   <li>跟 Cake 合作去台大分享，備課時想：講 AI 寫程式的課，為什麼還在用傳統 PPT？</li>
@@ -5286,116 +5254,9 @@
       </div>
     </div>
   </div>
-</section>
-
-<hr class="divider">
-<section class="section">
-  <div class="reveal">
-    <span class="section-label" id="section-8"><span class="num">8</span> 實戰課開箱</span>
-    <h2>四大主軸</h2>
-    
-  </div>
 
   <div class="reveal">
-    <div class="insight">
-      <p>這堂課要解決的問題只有一個：怎麼用一個充滿不確定的模型，建構出穩定可靠的系統。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">🚫</span> 這堂課不會教的三件事</div>
-      <div class="group-body">
-        <ul>
-  <li>不教萬用 Prompt 模板 —— 網路一抓一大把，過兩個月就過期</li>
-  <li>不教「同時開十個 AI Agent」的人月神話 2.0 —— 那是 Twitter 表演，不是工程</li>
-  <li>不教「一條指令生出整套系統」的爆款話術 —— 那是賣課，不是上課</li>
-</ul>
-        <div class="insight">
-      <div class="insight-title">把你從「AI 使用者」升級成「AI 流程設計者」</div>
-      <p>讓你學完之後，能把一個本質不穩定的工具，馴化成你日常可以依賴的生產力。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">🛠</span> ️ 主軸一：從「會用工具」到「會設計工具」</div>
-      <div class="group-body">
-        <p>完整鏈：Rule → Workflow → Skill → Spec → MCP</p>
-        <ul class="loose-list">
-      <li>寫第一個 Rule，把你的 Coding Style / 寫作風格固化下來</li>
-      <li>把工作流（企劃 → 排版 → 校稿 → 上稿）變成 Workflow</li>
-      <li>把某個重複任務（履歷轉個人網頁）變成 Skill</li>
-      <li>用 OpenSpec 寫一份能驅動 AI 開發的 Spec</li>
-      <li>透過 MCP 接上 Figma、n8n、Notion，讓 AI 真的能「動手」</li>
-    </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">🚀</span> 主軸二：從「能跑」到「能上線」</div>
-      <div class="group-body">
-        <p>走完：需求 → 規格 → 實作 → 版控 → 測試 → 部署</p>
-        <ul class="loose-list">
-      <li>安裝 Git、註冊 GitHub、用 GitHub Pages 把純前端專案直接上線</li>
-      <li>學 Git Worktree，讓不同功能同時開發、互不打架</li>
-      <li>用 AI 寫 Unit / Integration Test，搭配 GitHub Action 自動跑</li>
-      <li>設定分支規則，未通過測試的 PR 不能合併到主分支</li>
-    </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">🤝</span> 主軸三：從「個人加速」到「團隊協作」</div>
-      <div class="group-body">
-        <ul>
-  <li>用 feature branch 降低 Code Review 的認知負擔</li>
-  <li>讓 AI 分階段 commit，邏輯未來可以被追蹤</li>
-  <li>讓 AI 根據模板生成 PR 草稿，加快團隊審核</li>
-  <li>用 OpenSpec 留下每次需求變更的紀錄，解決「關鍵人物離職、知識斷層」</li>
-  <li>設計「開發系統的人」與「使用系統的人」的協作流程</li>
-</ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block">
-      <div class="group-header"><span class="icon">📦</span> 主軸四：從「玩具」到「產品」</div>
-      <div class="group-body">
-        <ul>
-  <li>什麼樣的需求適合產品化？什麼樣的不該做？</li>
-  <li>什麼樣的程式碼會在三個月後變成技術債？</li>
-  <li>什麼時候該停下來重構？什麼時候該砍掉重練？</li>
-  <li>怎麼把自己的工作流，做成可以被別人購買、訂閱的產品？</li>
-</ul>
-        <div class="insight">
-      <div class="insight-title">不要讓 Vibe Coding 的「快」，成為你未來的「債」</div>
-      <p>基礎知識在 AI 時代依舊重要。把執行交給 AI，把判斷留給自己 —— 這堂課不是要你跑得更快，是要你跑得更遠。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
-  <div class="reveal">
-    <span class="section-label" id="section-9"><span class="num">9</span> 給資深工程師的一段話</span>
-    <h2>給資深工程師的一段話</h2>
-    
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <p>報名表上，超過 80% 的學員，是工作 7 年以上的資深工程師。</p>
-    </div>
+    <div class="sub-title" id="sub-section-16"><span class="bar"></span>給資深工程師：你沒有歸零，只是換了一個賽道</div>
   </div>
 
   <div class="reveal">
@@ -5418,7 +5279,7 @@
 
   <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">🛤</span> ️ 你沒有「歸零」，只是換了一個賽道</div>
+      <div class="group-header"><span class="icon">🛤</span> ️ 你沒有歸零，是賽道換了</div>
       <div class="group-body">
         <ul>
   <li>對底層邏輯、軟體工程、設計模式的掌握，已經被訓練出來了</li>
@@ -5468,20 +5329,137 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="section-10"><span class="num">10</span> 結語</span>
-    <h2>一張不會過時的能力卷</h2>
+    <span class="section-label" id="ai-3"><span class="num">5</span> 實戰開箱</span>
+    <h2>把 AI 協作能力系統化的四大主軸</h2>
     
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <p>我放進課堂的每一段內容，都通過一個篩選 ——「五年後重看，這段內容會不會過期？」</p>
+      <p>這堂課要解決的問題只有一個：怎麼用一個本質上充滿不確定的模型，建構出穩定、可靠、能放心交付的系統。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-17"><span class="bar"></span>你是為了哪件事點進來？這堂課又不教什麼？</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">👥</span> 你是為了哪件事點進來？</div>
+      <div class="group-body">
+        <ul>
+  <li>公司開始要求「一天交三個功能」，但你連 Code Review 都來不及看</li>
+  <li>買過 Cursor、Claude、ChatGPT 的訂閱，但每個 Demo 都停在「上線」前一步</li>
+  <li>你不是工程師，但身邊的人都在 Vibe Coding，怕被時代甩在後面</li>
+</ul>
+      </div>
     </div>
   </div>
 
   <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">⏳</span> 為什麼這堂課不會隨 AI 更新而過時</div>
+      <div class="group-header"><span class="icon">🚫</span> 今天不會教的「爛大街」內容</div>
+      <div class="group-body">
+        <ul>
+  <li>萬用 Prompt 模板 —— 網路一抓一大把，過兩個月就過期</li>
+  <li>「同時開十個 AI Agent 幫你寫程式」這種人月神話 2.0</li>
+  <li>「一條指令搞定整套系統」的爆款短片話術</li>
+  <li>「跟著我做就能月入百萬」的人設變現公式</li>
+</ul>
+        <div class="insight">
+      <div class="insight-title">把你從「AI 使用者」升級成「AI 流程設計者」</div>
+      <p>LLM 的本質是隨機，每次答案都不一樣；但「系統」要的卻是可重複、可預測、可維護。這兩件事看似矛盾，正是這堂課要一起拆解的事。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-18"><span class="bar"></span>主軸一：從「會用工具」到「會設計工具」</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🛠</span> ️ 完整鏈：Rule → Workflow → Skill → Spec → MCP</div>
+      <div class="group-body">
+        <ul>
+  <li>寫第一個 Rule，把你的 Coding Style / 寫作風格固化下來</li>
+  <li>把工作流（企劃 → 排版 → 校稿 → 上稿）變成 Workflow</li>
+  <li>把某個重複任務（履歷轉個人網頁）變成 Skill</li>
+  <li>用 OpenSpec 寫一份能驅動 AI 開發的 Spec</li>
+  <li>透過 MCP 接上 Figma、n8n、Notion，讓 AI 真的能「動手」</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-19"><span class="bar"></span>主軸二：從「能跑」到「能上線」</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🚀</span> 走完：需求 → 規格 → 實作 → 版控 → 測試 → 部署</div>
+      <div class="group-body">
+        <ul>
+  <li>安裝 Git、註冊 GitHub、用 GitHub Pages 把純前端專案直接上線</li>
+  <li>學 Git Worktree，讓不同功能同時開發、互不打架</li>
+  <li>用 AI 寫 Unit / Integration Test，搭配 GitHub Action 自動跑</li>
+  <li>設定分支規則，未通過測試的 PR 不能合併到主分支</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-20"><span class="bar"></span>主軸三：從「個人加速」到「團隊協作」</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">🤝</span> 把 AI 工作流變成團隊共識</div>
+      <div class="group-body">
+        <ul>
+  <li>用 feature branch 降低 Code Review 的認知負擔</li>
+  <li>讓 AI 分階段 commit，邏輯未來可以被追蹤</li>
+  <li>讓 AI 根據模板生成 PR 草稿，加快團隊審核</li>
+  <li>用 OpenSpec 留下每次需求變更的紀錄，解決「關鍵人物離職、知識斷層」</li>
+  <li>設計「開發系統的人」與「使用系統的人」的協作流程</li>
+</ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-21"><span class="bar"></span>主軸四：從「玩具」到「產品」</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">📦</span> 把 Vibe Coding 推向能交付的標準</div>
+      <div class="group-body">
+        <ul>
+  <li>什麼樣的需求適合產品化？什麼樣的不該做？</li>
+  <li>什麼樣的程式碼會在三個月後變成技術債？</li>
+  <li>什麼時候該停下來重構？什麼時候該砍掉重練？</li>
+  <li>怎麼把自己的工作流，做成可以被別人購買、訂閱的產品？</li>
+</ul>
+        <div class="insight">
+      <div class="insight-title">不要讓 Vibe Coding 的「快」，成為你未來的「債」</div>
+      <p>基礎知識在 AI 時代依舊重要。把執行交給 AI，把判斷留給自己 —— 這堂課不是要你跑得更快，是要你跑得更遠。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-ai-3"><span class="bar"></span>為什麼這堂課不會隨 AI 更新而過時</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block">
+      <div class="group-header"><span class="icon">⏳</span> 一張不會過期的能力卷</div>
       <div class="group-body">
         <ul>
   <li>它教的不是某個工具、某個 Prompt、某個 Agent 框架</li>
@@ -5498,8 +5476,12 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-23"><span class="bar"></span>帶走這兩個問題</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block">
-      <div class="group-header"><span class="icon">💬</span> 帶走這兩個問題</div>
+      <div class="group-header"><span class="icon">💬</span> 課後給自己的兩道題</div>
       <div class="group-body">
         <ul>
   <li><strong>Q1.</strong> 在你目前的工作中，AI 最幫到你的是哪一件事？</li>
@@ -5548,7 +5530,7 @@
 </section>
 
 <hr class="divider">
-<section class="qa-page" id="section-10-qa">
+<section class="qa-page" id="ai-3-qa">
   <div class="qa-session">
     <div class="qa-session__deco" aria-hidden="true">?</div>
     <div class="qa-session__inner">
@@ -5790,8 +5772,8 @@
     });
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
-    var sectionIds = ["instructor","section-1","ai","kpi-ai","section-4","section-5","ai-2","section-7","section-8","section-9","section-10"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","section-1","ai","kpi-ai","section-4","section-5","ai-2","section-7","section-8","section-9","section-10"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var sectionIds = ["instructor","ai","section-2","ai-2","section-4","ai-3"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+    var allAnchorIds = ["instructor","ai","sub-ai","sub-section-2","sub-section-3","section-2","sub-section-4","sub-section-5","sub-debug-ai","sub-ai-5","ai-2","sub-section-8","sub-section-9","sub-section-10","sub-section-11","sub-ai-2","section-4","sub-section-13","sub-hr-skill","sub-vibe-coding-ppt","sub-section-16","ai-3","sub-section-17","sub-section-18","sub-section-19","sub-section-20","sub-section-21","sub-ai-3","sub-section-23"];   // e.g. ['instructor','new-project','sub-create-project',...]
 
     var sectionForAnchor = {};
     allAnchorIds.forEach(function (id) {
