@@ -1,0 +1,22 @@
+# Claude AI 驅動全端開發工作流
+
+page:
+  title: "打造懂你的 AI 助手"
+  badge: "Claude AI 驅動全端開發工作流"
+  hero_title: "建立專屬 Agent Skills 護城河"
+  subtitle: "把解決問題的經驗，變成可重複使用的資產"
+
+seo:
+  title: "打造懂你的 AI 助手"
+  description: "建立 Agent Skills，讓 AI 從庸才變專家。"
+  image: "https://deanlin.net/course/tibame/lesson1/assets/og-image.jpg"
+  url: "https://deanlin.net/course/tibame/lesson1"
+
+quotes:
+  opening:
+    text: "Agent Skills 的出現<br>讓 AI 的價值可以持續累積。"
+  closing:
+    text: >
+      只要教會一次，<br>
+      AI 就永遠記得怎麼做！
+
