@@ -900,6 +900,132 @@
       margin-top: .35rem;
     }
 
+    /* ===== Class Timeline – Status states ===== */
+    .class-timeline__marker svg {
+      width: 60%;
+      height: 60%;
+    }
+
+    .class-timeline__status-tag {
+      padding: .1rem .5rem;
+      border-radius: 999px;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      line-height: 1.4;
+      border: 1px solid transparent;
+    }
+
+    .class-timeline__status-tag.is-past {
+      background: rgb(120 130 145 / .15);
+      color: var(--text-dim);
+      border-color: rgb(120 130 145 / .3);
+    }
+
+    .class-timeline__status-tag.is-current {
+      background: rgb(var(--accent-rgb) / .9);
+      color: var(--bg);
+      border-color: rgb(var(--accent-rgb));
+    }
+
+    .class-timeline__status-tag.is-upcoming {
+      background: transparent;
+      color: var(--accent2);
+      border-color: rgb(var(--accent2-rgb) / .55);
+    }
+
+    .class-timeline__pin {
+      position: absolute;
+      top: -.7rem;
+      right: .9rem;
+      padding: .15rem .55rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 14px rgb(var(--accent-rgb) / .4);
+    }
+
+    .class-timeline__item.is-past .class-timeline__marker {
+      background: rgb(120 130 145 / .12);
+      border-color: rgb(120 130 145 / .35);
+      color: var(--text-dim);
+      box-shadow: none;
+    }
+    .class-timeline__item.is-past .class-timeline__card {
+      background: var(--bg-card-alt);
+      border-color: rgb(120 130 145 / .25);
+      opacity: .72;
+    }
+    .class-timeline__item.is-past .class-timeline__date,
+    .class-timeline__item.is-past .class-timeline__time {
+      color: var(--text-dim);
+    }
+    .class-timeline__item.is-past .class-timeline__label {
+      background: rgb(120 130 145 / .15);
+      color: var(--text-dim);
+    }
+
+    .class-timeline__item.is-current .class-timeline__card {
+      position: relative;
+      border-color: rgb(var(--accent-rgb) / .65);
+      background:
+        linear-gradient(135deg, rgb(var(--accent-rgb) / .22), transparent 55%),
+        var(--bg-card);
+      box-shadow:
+        0 0 0 2px rgb(var(--accent-rgb) / .15),
+        0 18px 40px -22px rgb(var(--accent-rgb) / .55);
+      transform: translateY(-1px);
+    }
+    .class-timeline__item.is-current .class-timeline__marker {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 0 6px rgb(var(--accent-rgb) / .25);
+      animation: class-timeline-pulse 2.4s ease-in-out infinite;
+    }
+
+    .class-timeline__item.is-upcoming .class-timeline__marker {
+      background: var(--bg);
+      border-color: rgb(var(--accent2-rgb) / .45);
+      color: var(--accent2);
+      box-shadow: 0 0 0 6px rgb(var(--accent2-rgb) / .06);
+    }
+    .class-timeline__item.is-upcoming .class-timeline__card {
+      border-color: rgb(var(--accent2-rgb) / .28);
+      background:
+        linear-gradient(135deg, rgb(var(--accent2-rgb) / .06), transparent 45%),
+        var(--bg-card-alt);
+    }
+
+    @keyframes class-timeline-pulse {
+      0%, 100% { box-shadow: 0 0 0 6px rgb(var(--accent-rgb) / .25); }
+      50% { box-shadow: 0 0 0 10px rgb(var(--accent-rgb) / .12); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .class-timeline__item.is-current .class-timeline__marker { animation: none; }
+    }
+
+    /* Light theme: deepen accent fills so light text reaches AA contrast */
+    [data-theme="light"] .class-timeline__item.is-current .class-timeline__marker,
+    [data-theme="light"] .class-timeline__pin,
+    [data-theme="light"] .class-timeline__status-tag.is-current {
+      background: color-mix(in srgb, var(--accent) 78%, #000);
+      border-color: color-mix(in srgb, var(--accent) 78%, #000);
+      color: #ffffff;
+    }
+    [data-theme="light"] .class-timeline__item.is-upcoming .class-timeline__marker,
+    [data-theme="light"] .class-timeline__status-tag.is-upcoming {
+      color: color-mix(in srgb, var(--accent2) 65%, #000);
+    }
+    [data-theme="light"] .class-timeline__status-tag.is-upcoming {
+      border-color: color-mix(in srgb, var(--accent2) 65%, #000);
+    }
+
     /* ===== IMAGES ===== */
     .content-image {
       margin: 1.5rem 0;
@@ -3101,6 +3227,33 @@
       font-size: .78rem;
     }
 
+    #print-slides .class-timeline__pin {
+      display: inline-block !important;
+      visibility: visible !important;
+      position: absolute;
+      top: -.45rem;
+      right: .5rem;
+      padding: .08rem .4rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: .55rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      width: auto;
+      height: auto;
+      box-shadow: none;
+    }
+
+    #print-slides .class-timeline__status-tag {
+      padding: .04rem .35rem;
+      font-size: .56rem;
+    }
+
+    #print-slides .class-timeline__item.is-current .class-timeline__marker {
+      animation: none;
+    }
+
     /* Group block: compact for print */
     #print-slides .group-block {
       margin-bottom: .75rem;
@@ -4688,6 +4841,55 @@
 </section>
   
   
+<section class="section section--header">
+  <div class="reveal">
+    <div class="class-timeline class-timeline--has-status">
+      <div class="class-timeline__item is-current" data-status="current">
+        <div class="class-timeline__marker">1</div>
+        <div class="class-timeline__card">
+          <span class="class-timeline__pin" aria-label="目前進度">You are here</span>
+          <div class="class-timeline__meta">
+            <span class="class-timeline__label">第 1 堂</span>
+            <span class="class-timeline__date">5/30</span>
+            <span class="class-timeline__weekday">週六</span>
+            <span class="class-timeline__status-tag is-current">進行中</span>
+          </div>
+          <div class="class-timeline__time">13:30~16:30</div>
+          <div class="class-timeline__des"><strong>打造懂你的 AI 助手</strong>：設定開發環境，掌握 AI Agent 進階技巧，建議專屬 Agent Skills 護城河</div>
+        </div>
+      </div>
+      <div class="class-timeline__item is-upcoming" data-status="upcoming">
+        <div class="class-timeline__marker">2</div>
+        <div class="class-timeline__card">
+          
+          <div class="class-timeline__meta">
+            <span class="class-timeline__label">第 2 堂</span>
+            <span class="class-timeline__date">6/6</span>
+            <span class="class-timeline__weekday">週六</span>
+            <span class="class-timeline__status-tag is-upcoming">即將開始</span>
+          </div>
+          <div class="class-timeline__time">13:30~16:30</div>
+          <div class="class-timeline__des"><strong>規格驅動開發 (SDD)</strong>：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程，同時用 MCP 操作外部工具</div>
+        </div>
+      </div>
+      <div class="class-timeline__item is-upcoming" data-status="upcoming">
+        <div class="class-timeline__marker">3</div>
+        <div class="class-timeline__card">
+          
+          <div class="class-timeline__meta">
+            <span class="class-timeline__label">第 3 堂</span>
+            <span class="class-timeline__date">6/13</span>
+            <span class="class-timeline__weekday">週六</span>
+            <span class="class-timeline__status-tag is-upcoming">即將開始</span>
+          </div>
+          <div class="class-timeline__time">13:30~16:30</div>
+          <div class="class-timeline__des"><strong>團隊協作與專案部署</strong>：建立自動化測試，了解 Worktree 應用時機，並將專案部署上線</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <hr class="divider">
 <section class="section">
   <div class="reveal">
@@ -7982,7 +8184,7 @@ cd tibame-lesson1</div>
     })();
 
     function exportPDF() {
-      var sections = document.querySelectorAll('section.section');
+      var sections = document.querySelectorAll('section.section:not(.section--header)');
       if (!sections.length) { alert('找不到課程章節，請確認頁面已正常載入。'); return; }
 
       var printSlides = document.createElement('div');
@@ -8024,7 +8226,7 @@ cd tibame-lesson1</div>
 
       // Walk all top-level slide-bearing nodes in document order so lab/qa/survey
       // pages are emitted at their actual position (mid-document, not all at end).
-      var orderedNodes = document.querySelectorAll('section.section, section.quote-page, section.qa-page, section.lab-page, section.survey-page');
+      var orderedNodes = document.querySelectorAll('section.section:not(.section--header), section.quote-page, section.qa-page, section.lab-page, section.survey-page');
 
       // Track the previous chapter's title so continuation sections (those split
       // off by an inline lab/qa/survey) inherit the right header instead of going blank.
@@ -8881,7 +9083,7 @@ cd tibame-lesson1</div>
         slides = [];
         slideIdx = 0;
 
-        var allSections = document.querySelectorAll('section.section');
+        var allSections = document.querySelectorAll('section.section:not(.section--header)');
 
         // Hero
         var hero = document.querySelector('header.hero');
@@ -8903,7 +9105,7 @@ cd tibame-lesson1</div>
         var prevChapterCtx = null;
         var prevSubTitle = '';
         var prevSubId = '';
-        var presOrdered = document.querySelectorAll('section.section, section.quote-page, section.qa-page, section.lab-page, section.survey-page');
+        var presOrdered = document.querySelectorAll('section.section:not(.section--header), section.quote-page, section.qa-page, section.lab-page, section.survey-page');
         presOrdered.forEach(function (section) {
           if (!section.classList.contains('section')) {
             var qs = cloneQuoteSlide(section);

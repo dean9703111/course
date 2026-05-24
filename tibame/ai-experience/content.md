@@ -585,15 +585,15 @@ npx @dean9703111/dotagents
 - label: 第 1 堂
   date: 5/30（六）
   time: 13:30~16:30
-  des: **打造懂你的 AI 助手**：建立專屬 Agent Skills 護城河
+  des: **打造懂你的 AI 助手**：設定開發環境，掌握 AI Agent 進階技巧，建議專屬 Agent Skills 護城河
 - label: 第 2 堂
   date: 6/6（六）
   time: 13:30~16:30
-  des: **規格驅動開發 (SDD)**：用 Agent Skills 讓 AI 照著規格精準建置系統
+  des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程，同時用 MCP 操作外部工具
 - label: 第 3 堂
   date: 6/13（六）
   time: 13:30~16:30
-  des: **高標準團隊協作**：建立自動化測試與多 Agent 並行工作流
+  des: **團隊協作與專案部署**：建立自動化測試，了解 Worktree 應用時機，並將專案部署上線
 [/time]
 
 ---
