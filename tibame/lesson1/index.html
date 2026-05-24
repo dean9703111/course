@@ -7683,12 +7683,12 @@ cd tibame-lesson1</div>
       }
     });
 
+    var TOC_ACTIVATION_LINE = 50;
     function updateToc() {
-      var scrollY = window.scrollY + 20;
       var activeAnchor = allAnchorIds[0];
       allAnchorIds.forEach(function (id) {
         var el = document.getElementById(id);
-        if (el && el.offsetTop <= scrollY) activeAnchor = id;
+        if (el && el.getBoundingClientRect().top <= TOC_ACTIVATION_LINE) activeAnchor = id;
       });
       var activeSection = sectionForAnchor[activeAnchor] || sectionIds[0];
       document.querySelectorAll('.toc-group').forEach(function (g) {
@@ -7708,9 +7708,22 @@ cd tibame-lesson1</div>
     }
 
     var ticking = false;
+    var pendingScroll = false;
+    function flushTocFrame() {
+      updateToc();
+      ticking = false;
+      if (pendingScroll) {
+        pendingScroll = false;
+        ticking = true;
+        requestAnimationFrame(flushTocFrame);
+      }
+    }
     window.addEventListener('scroll', function () {
-      if (!ticking) { requestAnimationFrame(function () { updateToc(); ticking = false }); ticking = true }
-    });
+      if (ticking) { pendingScroll = true; return; }
+      ticking = true;
+      requestAnimationFrame(flushTocFrame);
+    }, { passive: true });
+    window.addEventListener('scrollend', function () { updateToc(); });
     updateToc();
 
     // Anchor scroll stabilization — images may change layout after initial jump.
