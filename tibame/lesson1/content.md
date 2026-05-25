@@ -423,7 +423,8 @@ AI Agent 也有 **RAG 工具** 的功能，能用它`快速檢索、分析、統
 [lab-session title="🛠️  實作練習"]
 - 批量整理圖片檔，了解`多模態（Multimodal）`能力
 - 彙整不同格式資訊，確認`Python`可以順利被 AI Agent 使用
-- 用`/clear`開啟新對話，用`@`指定資料夾/檔案
+- 用`/clear`開啟新對話，用`@`指定資料夾/檔案，`選擇幾行`重點閱讀
+- 了解如何`限制讀取`範圍，**減少 Token 浪費**並**提升 AI 品質**
 [/lab-session]
 
 ## 認識 Agent Skills
@@ -461,13 +462,16 @@ AI 偵測到「音檔 → 字幕」意圖 → 載入 `audio-to-srt` Skill → �
    - macOS Apple Silicon → `mlx-whisper`
    - Linux/Windows + NVIDIA → `faster-whisper`
    - 其他（CPU-only）→ `openai-whisper`
-3. 跑 `.agents/skills/audio-to-srt/scripts/run.sh audio/audio-example.m4a`，`uv` 第一次會把 backend 套件裝進快取環境
-4. 自動分行（每行 22 字）、合併間隔 < 0.3 秒的片段
-5. 輸出 SRT 字幕檔
+3. 強制 `UTF-8 stdio`（PYTHONIOENCODING=utf-8 + PYTHONUTF8=1），確保 Windows 中文 console 能正確輸出
+4. 跑 `.agents/skills/audio-to-srt/scripts/run.sh audio/audio-example.m4a`，`uv` 第一次會把 backend 套件裝進快取環境
+5. `自動分行`（每行 22 字）、`合併間隔 < 0.3 秒`的片段
+6. 輸出 SRT 字幕檔到 `<audio_dir>/origin.srt`
 
 ```prompt [label="比對到關鍵字更容易觸發 Skill"]
 把 audio/audio-example.m4a 轉成 SRT 字幕
 ```
+
+![第一次執行時，因為要下載模型/套件所以時間較久](./assets/audio-to-srt-install.png)
 
 ![觸發 audio-to-srt 的 Skill](./assets/audio-to-srt.png)
 
@@ -499,6 +503,11 @@ AI 載入 `course-page-generator` Skill，依 workflow 執行：
 
 ![輸入主題生成的課程網頁](./assets/course-page-generator-topic-web.png)
 
+> **此 Skill 可以幫你確認**
+> 1. 電腦的 `Node.js` 是否順利安裝
+> 2. 未安裝的套件是否自動安裝（透過 `npm`）
+> 3. AI Agent 會去參考 `refernce` 的文件與 `scripts` 來生成網頁
+
 #### 情境 B：提供草稿生成講義
 
 ```prompt [label="觸發 Skill 就會使用對應的 Template"]
@@ -507,10 +516,15 @@ AI 載入 `course-page-generator` Skill，依 workflow 執行：
 
 ![提供草稿生成的課程網頁](./assets/course-page-generator-draft-web.png)
 
-> **此 Skill 可以幫你確認**
-> 1. 電腦的 `Node.js` 是否順利安裝
-> 2. 未安裝的套件是否自動安裝（透過 `npm`）
-> 3. AI Agent 會去參考 `refernce` 的文件與 `scripts` 來生成網頁
+[bonus title="🎁 製作心得"]
+這個課程網頁的製作，走過了一段從「結果不可控」到「完全掌控」的歷程。
+
+1. **遇到痛點** — Vibe Coding 出來的網頁，調整內容都要改 HTML，非常不方便
+2. **逆推結構** — 讓 AI 把現有網頁拆解，對應成一套可用 Markdown 撰寫的格式
+3. **內容與版型分離** — 只需改 Markdown，自動套用對應版型，細節完全可控
+4. **設計 Agent Skill** — 不是讓 AI 生成網頁，而是讓 AI 學會「這份 Markdown 怎麼寫」
+5. **模板生成器思維** — AI 負責生成結構化內容，程式再把內容轉成最終網頁
+[/bonus]
 
 ### 📑 提供課綱生成提案 PDF
 
@@ -519,7 +533,7 @@ AI 載入 `course-page-generator` Skill，依 workflow 執行：
 AI 載入 `proposal-writer` Skill，依 workflow 執行：
 
 1. **確定提案資料夾**：`proposal/todo/<客戶名稱>/`（狀態慣例 `todo` / `processing` / `done`）
-2. 讀使用者課綱，理解主軸、痛點、會教到的工具
+2. 閱讀使用者課綱，理解主軸、痛點、會教到的工具
 3. 套用版型寫 `README.md`，**六大區塊順序固定**：
    - 課程簡介 / 使用工具 / 預計成效 / 適合對象 / 課程目錄 / 課程大綱
 4. 讀 `proposal/config.yaml` 取講師介紹與品牌色（不寫在 README，build 時注入 PDF）
@@ -639,8 +653,6 @@ npx skills add https://github.com/vercel-labs/skills --skill find-skills
 
 ## 哪些任務值得設計成 Skill?
 
-> Skill 不是越多越好。先判斷任務本質，再決定要不要花時間設計。
-
 ### ✅ 適合做成 Skill 的情境
 
 - **重複性高**：每週、每個專案都會做（commit message、PR 描述、release notes）
@@ -654,6 +666,8 @@ npx skills add https://github.com/vercel-labs/skills --skill find-skills
 
 - **一次性任務**：寫過就不會再做，直接對話更省事
 - **判斷依賴情境**：每次狀況都不同，硬寫 SOP 反而`限制 AI 發揮`
+
+> Skill 不是越多越好。先判斷任務本質，再決定要不要花時間設計。
 
 ## 建立專屬 Skill
 
@@ -695,6 +709,11 @@ claude plugin install skill-creator@claude-plugins-official
 
 ![這次根據類型拆分成多個 commit](./assets/skill-creator-complete.png)
 
+> **Skill 製作心得**
+> 建立 Skill `不需要想太多`，前面那些複雜的 Skill，也都是用`模糊指令`或是`簡單範例`開頭的。
+> Skill 一開始`不可能完美`，但你**會用到的 Skill 就會在實戰中快速迭代**，至於那些**用不到或少用的沒有更新必要**，但要找時間移除。
+
+
 ### 🔧 優化 Skill 方向
 
 第一版能跑只是起點，依實際使用結果反覆優化：
@@ -713,10 +732,10 @@ claude plugin install skill-creator@claude-plugins-official
 生成 commit 的 Skill，有哪些優化的方向，目標是更能應對不同情境，並且希望 commit 訊息有固定的規範，讓格式一致
 ```
 
-![有時請 AI 動工前，可以先詢問方案](./assets/skill-enhancement-discuss.png)
+![請 AI 動工前，可以先詢問方案](./assets/skill-enhancement-discuss.png)
 
 ```prompt [label="讓 AI 優化 Skill"]
-這些方向都很重要，幫我一次搞定，並從 Skill 整體的角度幫我優化
+這些方向都很重要，從 Skill 整體的角度幫我做整體優化
 ```
 
 > **避免過度設計**
@@ -728,12 +747,32 @@ claude plugin install skill-creator@claude-plugins-official
 
 # 總結：打造可維護的 AI 工作流
 
+> **這四件事不是分開的功能，而是同一條軸線**
+> 從「在 AI 工具間複製貼上」開始，把流程收進一個入口；再用對的元件各司其職；最後讓你的經驗變成可累積的 Skill 護城河。**少了任何一段，AI 就會回到「一次性對話」的狀態。**
+
 [summary]
 - 🧱 **從工具拼貼到一站式 AI Agent** | 不再為了字幕、提案、講義在多個工具間複製貼上，**把工作流收斂到 Claude Code 一個入口**
 - 🛡️ **環境與權限先設好** | 禁止危險指令、調整隱私設定、依任務挑對 Mode 與 Model，**讓 AI 走得快也走得穩**
 - 🧩 **Rules / Skills / Commands / MCP 各司其職** | 專案規範寫進 Rules、自動觸發的歸 Skill、手動串接的歸 Command，**選對工具才事半功倍**
 - 🛠️ **打造可累積的專屬 Skill** | 用 `skill-creator` 生初版，依「觸發 / 產出 / Token」三方向迭代；**讓 AI 的經驗從一次性對話，變成團隊資產**
 [/summary]
+
+### 🚀 回家第一件事：把今天學到的東西「跑起來」
+
+挑一個你今晚就會用到的場景 — `commit 訊息`、`音檔轉字幕`、`整理筆記`、`回客戶信`⋯⋯任選一個，用 `skill-creator` 做出第一版 Skill。
+
+- **不要追求完善** — 能跑、能省下一次手動操作，就值得提交
+- **記得回頭審視** — 觀察 Skill 是否被自動觸發、產出符不符預期、Token 有沒有暴衝
+- **把 Skill 留下來** — 下一堂課我們會帶你把這個草版優化成真正能用的工具
+
+### 🔮 下一堂預告：規格驅動開發（SDD）
+
+> 一句話 AI 就能生成有前端、後端、資料庫的系統，但...**你敢直接交付給客戶嗎？**
+
+- 🚨 **不要讓 AI 的「快」，變成未來的「債」** — 沒有規格，今天省下的時間明天會用 bug 還回來
+- 📐 用 **OpenSpec** 讓 AI 照規格做事，從 0 到 1 建系統、從 1 到 100 做迭代
+- 🔁 設計 **Commit / PR / Worktree** Skill，讓 AI 寫的 code 可追溯、可協作、可 code review
+- 🧪 導入測試 + **MCP**，把舊功能守住的同時，連接外部工具讓 Agent 真的能動手
 
 [qa-session title="Q&A 時間"]
 [/qa-session]
