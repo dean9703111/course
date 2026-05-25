@@ -45,6 +45,8 @@
       --accent2-rgb: 232 184 120;
       --accent3: #e08898;
       --accent3-rgb: 224 136 152;
+      --accent4: #9c88ff;
+      --accent4-rgb: 156 136 255;
       --border: #2a2d3a;
       --code-bg: #12141c;
       --radius: 12px;
@@ -62,6 +64,8 @@
       --accent2-rgb: 154 112 40;
       --accent3: #b04860;
       --accent3-rgb: 176 72 96;
+      --accent4: #6f5cc4;
+      --accent4-rgb: 111 92 196;
       --border: #d4d4d8;
       --code-bg: #eaeaef;
     }
@@ -3816,6 +3820,99 @@
       background: rgb(var(--accent2-rgb) / .04);
     }
 
+    /* ── Interactive Moment (說明會互動環節) ── */
+    .interactive-page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .interactive-session {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .interactive-session__deco {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      font-size: clamp(12rem, 33vw, 22rem);
+      line-height: 1;
+      opacity: .07;
+      pointer-events: none;
+      user-select: none;
+      filter: grayscale(.2);
+    }
+
+    .interactive-session__inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .interactive-session__title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(2.4rem, 5.4vw, 3.8rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--text) 30%, var(--accent4) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      padding: 0.05em 0.15em 0.1em;
+      margin-bottom: .75rem;
+    }
+
+    .interactive-script {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 720px;
+      margin-top: 2.25rem;
+      padding: 1.75rem 2rem 1.75rem 3.25rem;
+      background: linear-gradient(135deg, rgb(var(--accent4-rgb) / .08), rgb(var(--accent4-rgb) / .04));
+      border: 1px solid rgb(var(--accent4-rgb) / .28);
+      border-radius: var(--radius);
+    }
+
+    .interactive-script__mark {
+      position: absolute;
+      top: .35rem;
+      left: 1.1rem;
+      font-family: 'Noto Serif TC', serif;
+      font-size: 4.5rem;
+      line-height: 1;
+      color: var(--accent4);
+      opacity: .55;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .interactive-script__body {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--text);
+      letter-spacing: .02em;
+    }
+
+    .interactive-script__body strong {
+      color: var(--accent4);
+    }
+
+    [data-theme="light"] .interactive-script {
+      background: linear-gradient(135deg, rgb(var(--accent4-rgb) / .05), rgb(var(--accent4-rgb) / .02));
+    }
+
     /* ===== SURVEY PAGE ===== */
     .survey-page {
       min-height: 100vh;
@@ -3972,6 +4069,7 @@
     html.og-mode .quote-page,
     html.og-mode .qa-page,
     html.og-mode .lab-page,
+    html.og-mode .interactive-page,
     html.og-mode .survey-page,
     html.og-mode .footer {
       display: none !important;
@@ -4365,6 +4463,7 @@
     body.pres-active>section.quote-page,
     body.pres-active>section.qa-page,
     body.pres-active>section.lab-page,
+    body.pres-active>section.interactive-page,
     body.pres-active>section.survey-page,
     body.pres-active>section.section,
     body.pres-active>hr.divider,
@@ -4471,6 +4570,7 @@
     .pres-slide--quote .quote-page,
     .pres-slide--quote .qa-page,
     .pres-slide--quote .lab-page,
+    .pres-slide--quote .interactive-page,
     .pres-slide--quote .survey-page {
       display: flex;
       flex-direction: column;
@@ -4865,6 +4965,21 @@
 </section>
   
   
+<section class="section section--header">
+  <div class="reveal">
+    <div class="interactive-session">
+    <div class="interactive-session__deco" aria-hidden="true">💬</div>
+    <div class="interactive-session__inner">
+      <h3 class="interactive-session__title">AI 工具使用調查</h3>
+    </div>
+    <div class="interactive-script">
+        <div class="interactive-script__mark" aria-hidden="true">"</div>
+        <div class="interactive-script__body">日常開發時，<strong>已經有在用 AI 的請「<code>+1</code>」</strong><br>還在觀望、公司不給用，<strong>不熟悉 AI 的請「<code>+2</code>」</strong></div>
+      </div>
+  </div>
+  </div>
+</section>
+
 <hr class="divider">
 <section class="section">
   <div class="reveal">
@@ -5064,7 +5179,24 @@
       <p>花錢訂閱了 AI 工具，但 AI 輸出的結果總是不符預期，自己還要重做。</p>
     </div>
   </div>
+</section>
 
+<hr class="divider">
+<section class="interactive-page" id="ai-2-interactive">
+  <div class="interactive-session">
+    <div class="interactive-session__deco" aria-hidden="true">💬</div>
+    <div class="interactive-session__inner">
+      <h3 class="interactive-session__title">AI 開發痛點</h3>
+    </div>
+    <div class="interactive-script">
+        <div class="interactive-script__mark" aria-hidden="true">"</div>
+        <div class="interactive-script__body">覺得 AI 結果<strong>常常不如預期的請「<code>+1</code>」</strong><br>同個問題 AI <strong>一直鬼打牆的請「<code>+2</code>」</strong></div>
+      </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
   <div class="reveal">
     <div class="sub-title" id="sub-ai-2"><span class="bar"></span>AI 不是神器，但它會放大使用者的思維</div>
   </div>
@@ -5446,6 +5578,20 @@
 </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="interactive-page" id="ai-3-8-interactive">
+  <div class="interactive-session">
+    <div class="interactive-session__deco" aria-hidden="true">💬</div>
+    <div class="interactive-session__inner">
+      <h3 class="interactive-session__title">翻車經驗分享</h3>
+    </div>
+    <div class="interactive-script">
+        <div class="interactive-script__mark" aria-hidden="true">"</div>
+        <div class="interactive-script__body">前面分享了許多常見的翻車經驗，如果有身旁<strong>看過類似經驗，可以在留言區「<code>+1</code>」</strong><br>也歡迎在聊天室<strong>分享你看過最瞎的翻車現場</strong>！</div>
+      </div>
   </div>
 </section>
 
@@ -6288,7 +6434,7 @@
   </div>
 
   <div class="reveal">
-    <h4 class="minor-title">結帳輸入「DEANONLY」，享優惠價再折 1,000 元 ( 優惠只到 2026/5/29 23:59 )</h4>
+    <h4 class="minor-title">結帳輸入「202605」，享優惠價再折 1,000 元 ( 優惠只到 2026/5/28 23:59 )</h4>
   </div>
 
   <div class="reveal">
@@ -7103,8 +7249,9 @@
         var isQA = qp.classList.contains('qa-page');
         var isLab = qp.classList.contains('lab-page');
         var isSurvey = qp.classList.contains('survey-page');
+        var isInteractive = qp.classList.contains('interactive-page');
         var qSlide = document.createElement('div');
-        qSlide.className = 'slide slide-quote' + (isQA ? ' slide-qa' : '') + (isLab ? ' slide-lab' : '') + (isSurvey ? ' slide-survey' : '');
+        qSlide.className = 'slide slide-quote' + (isQA ? ' slide-qa' : '') + (isLab ? ' slide-lab' : '') + (isSurvey ? ' slide-survey' : '') + (isInteractive ? ' slide-interactive' : '');
         var clone = qp.cloneNode(true);
         clone.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('visible'); });
         if (isQA) {
@@ -7122,7 +7269,7 @@
 
       // Walk all top-level slide-bearing nodes in document order so lab/qa/survey
       // pages are emitted at their actual position (mid-document, not all at end).
-      var orderedNodes = document.querySelectorAll('section.section:not(.section--header), section.quote-page, section.qa-page, section.lab-page, section.survey-page');
+      var orderedNodes = document.querySelectorAll('section.section:not(.section--header), section.quote-page, section.qa-page, section.lab-page, section.interactive-page, section.survey-page');
 
       // Track the previous chapter's title so continuation sections (those split
       // off by an inline lab/qa/survey) inherit the right header instead of going blank.
@@ -8001,7 +8148,7 @@
         var prevChapterCtx = null;
         var prevSubTitle = '';
         var prevSubId = '';
-        var presOrdered = document.querySelectorAll('section.section:not(.section--header), section.quote-page, section.qa-page, section.lab-page, section.survey-page');
+        var presOrdered = document.querySelectorAll('section.section:not(.section--header), section.quote-page, section.qa-page, section.lab-page, section.interactive-page, section.survey-page');
         presOrdered.forEach(function (section) {
           if (!section.classList.contains('section')) {
             var qs = cloneQuoteSlide(section);
@@ -8146,7 +8293,7 @@
         var anchors = [];
         var heroEl = document.querySelector('header.hero');
         if (heroEl) anchors.push({ el: heroEl, id: 'hero' });
-        document.querySelectorAll('section.quote-page, section.qa-page, section.lab-page, section.survey-page, .section-label[id], .sub-title[id], .group-block').forEach(function (el) {
+        document.querySelectorAll('section.quote-page, section.qa-page, section.lab-page, section.interactive-page, section.survey-page, .section-label[id], .sub-title[id], .group-block').forEach(function (el) {
           var aid = el.id;
           if (!aid && el.classList.contains('group-block')) {
             var prev = el.closest('.reveal');
