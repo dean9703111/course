@@ -78,7 +78,6 @@
 - **[nvm](https://github.com/nvm-sh/nvm)** — Node.js 版本管理工具，方便切換
 - **[Python](https://www.python.org/downloads/)** — Agent Skills 的 scripts 大部分使用 Python 撰寫
 - **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** — 安裝任一款程式碼編輯器（IDE）
-- **[cmux](https://cmux.com/zh-TW)** - 更好用的終端機工具（直接使用 IDE 內建的也可以）
 - **[Claude 帳號](https://claude.ai/)** — 目前 Claude Code 需要 Pro 級別以上才能使用
 
 #### 確認 Git & GitHub 帳號
@@ -156,6 +155,8 @@ curl -fsSL https://claude.ai/install.sh | bash
 irm https://claude.ai/install.ps1 | iex
 ```
 
+![這是安裝成功的參考畫面](./assets/claude-install.png)
+
 ### 🚀 啟動 Claude Code
 
 ```terminal [label="啟動 Claude Code"]
@@ -163,6 +164,9 @@ claude
 ```
 
 ![第一次啟動，會需要登入 Claude 帳號](./assets/login-claude.png)
+
+> **Windows 小提醒**
+> 如果想要貼上資訊，點擊滑鼠右鍵即可。
 
 ## 在 IDE 使用 Claude Code
 
@@ -206,6 +210,8 @@ AI 執行的指令是無法完全預期的，為了減少損失，可以透過�
 
 ![Global 設定會儲存在 ~/.claude/settings.json](./assets/global-settings-file.png)
 
+完成後建議`重啟 Claude`確認設定生效。
+
 ```prompt [label="確認 Claude 當前專案權限設定"]
 /permissions
 ```
@@ -225,7 +231,7 @@ AI 執行的指令是無法完全預期的，為了減少損失，可以透過�
 [html src="./html/claude-folder-structure.html"]
 
 > **Tips**
-> .claude/ 就像給 Claude 一本專屬手冊：告訴它你是誰（設定）、你可以做什麼（權限）、你想怎麼做（規則）、你希望它自動完成什麼（技能），以及特別的角色（代理）。
+> .claude/ 就像給 Claude 一本專屬手冊：告訴它你是誰（**設定**）、你可以做什麼（**權限**）、你想怎麼做（**規則**）、你希望它自動完成什麼（**技能**），以及特別的角色（**代理**）。
 > 專案層級放在 your-project/.claude/，使用者層級放在 ~/.claude/，**兩者會合併生效，專案設定優先。**
 
 ### ⚙️ 了解 Rules / Commands / Skills / MCP 應用場景
@@ -269,6 +275,18 @@ npx @kamranahmedse/claude-statusline
 ```
 
 ![這樣一目瞭然](./assets/status-line.png)
+
+#### Windows 可能會遇到的問題
+
+![出現安裝失敗的訊息](./assets/claude-statusline-install-err.png)
+
+如果安裝失敗，可以請 Claude 協助安裝事宜
+
+```prompt [label="請 Claude 協助環境設定"]
+我是 Windows 環境，請幫我安裝 npx @kamranahmedse/claude-statusline
+```
+
+![在 Claude 解決問題後，建議重開終端機（Terminal）測試](./assets/status-line-windows.png)
 
 [lab-session title="🛠️  實作練習"]
 - 設定 Status Line
@@ -348,7 +366,7 @@ npx @dean9703111/dotagents
 ![確認圖片處理如預期](./assets/identify-images.png)
 
 > **AI 未必都用相同方案處理**
-> 這次 AI 採用「mv」的方案來重新命名，但如果用「cp」的方案來複製，原本的檔案就會全部留下來，因為我們有禁止「rm」這類的刪除指令。
+> 這次 AI 採用「`mv`」的方案來重新命名，但如果用「`cp`」的方案來複製，原本的檔案就會全部留下來，因為我們有禁止「`rm`」這類的刪除指令。
 
 ### 彙整不同格式資訊
 
@@ -376,9 +394,9 @@ npx @dean9703111/dotagents
 
 #### 透過 Python 套件彙整資訊
 
-AI Agent 也有 **RAG 工具**的作用，能用它`快速檢索、分析、統整資訊`。
+AI Agent 也有 **RAG 工具** 的功能，能用它`快速檢索、分析、統整資訊`。
 
-但它目前只能檢索「文字檔」（Markdown / txt / JavaScript / Python 等），遇到 Word / PPT / PDF 預設無法解析；不過有了 Python，這一切就變成了可能。
+但它目前只能檢索「**文字檔**」（Markdown / txt / JavaScript / Python 等），遇到 Word / PPT / PDF `預設無法解析`；不過有了 Python，這一切就變成了可能。
 
 ```prompt [label="提取文件內容"]
 資料夾有 pdf/ppt/doc 等多種格式的文件，我想請你用 python 套件把所有文件內的「文字」取出來，並確定可以用繁體中文顯示。
@@ -388,7 +406,7 @@ AI Agent 也有 **RAG 工具**的作用，能用它`快速檢索、分析、統�
 ![將不同格式檔案轉換成 Markdown 格式](./assets/file-to-md.png)
 
 > **AI Agent 會自動設計執行步驟**
-> 安裝 Python 套件 → 解析文件 → 建立資料夾並儲存
+> **安裝 Python 套件 → 解析文件 → 建立資料夾並儲存**
 > 完成後，「doc」就能看到提取的內容，`省去手動複製貼上的步驟`；NotebookLM 原理也差不多，都是把`不同格式的資源先轉換為文字檔`
 
 #### 提取文件資訊
