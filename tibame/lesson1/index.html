@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW" >
 
@@ -4218,8 +4217,8 @@
     }
 
     .bonus-modal-close {
-      width: 36px;
-      height: 36px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       background: var(--bg-card-alt);
       border: 1px solid var(--border);
@@ -4227,32 +4226,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: .95rem;
       color: var(--text-dim);
-      transition: background .2s, border-color .2s, color .2s, transform .2s;
-      padding: 0;
-      flex-shrink: 0
-    }
-
-    .bonus-modal-close svg {
-      width: 16px;
-      height: 16px;
-      display: block
+      transition: all .2s;
     }
 
     .bonus-modal-close:hover {
-      background: rgb(var(--accent-rgb) / .12);
       border-color: var(--accent);
-      color: var(--accent);
-      transform: rotate(90deg)
-    }
-
-    .bonus-modal-close:active {
-      transform: rotate(90deg) scale(.92)
-    }
-
-    .bonus-modal-close:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px
+      color: var(--accent)
     }
 
     .bonus-modal-body {
@@ -4397,30 +4378,6 @@
 
     /* ===== RESPONSIVE ===== */
     @media(max-width:640px) {
-      .bonus-overlay {
-        padding: 0;
-        align-items: stretch
-      }
-
-      .bonus-modal {
-        max-width: none;
-        max-height: none;
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
-        border: none
-      }
-
-      .bonus-modal-close {
-        width: 40px;
-        height: 40px
-      }
-
-      .bonus-modal-close svg {
-        width: 18px;
-        height: 18px
-      }
-
       .section {
         padding: 3rem 1.25rem
       }
@@ -4514,6 +4471,10 @@
       .hero-nav {
         flex-direction: column;
         align-items: center
+      }
+
+      .bonus-modal {
+        max-height: 90vh
       }
     }
 
@@ -4870,14 +4831,12 @@
 
 <body>
 
-  
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
   <div class="sidebar-overlay" id="overlay"></div>
 
-  
-  <nav class="sidebar" id="sidebar">
+    <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="sidebar-brand-title">打造懂你的 AI 助手</div>
       <div class="sidebar-brand-controls"><button class="fontsize-toggle" id="fontsize-toggle"
@@ -4940,8 +4899,7 @@
       </ul>
     </li>
 
-      
-    </ul>
+          </ul>
     <div class="sidebar-progress">
       <div class="sidebar-progress-label"><span>閱讀進度</span><span id="progress-pct">0%</span></div>
       <div class="sidebar-progress-track">
@@ -4960,8 +4918,7 @@
     <div class="collapsed-progress-fill" id="collapsed-progress-fill"></div>
   </div>
 
-  
-  <header class="hero">
+    <header class="hero">
     <div class="hero-badge"><span class="dot"></span>Claude AI 驅動全端開發工作流</div>
     <h1>建立專屬 Agent Skills 護城河</h1>
     <p class="hero-sub">把解決問題的經驗，變成可重複使用的資產</p>
@@ -4972,8 +4929,7 @@
     <a href="#ai-agent-agent-skills">實戰操作</a>
     <a href="#skill-skill">建立 Skill</a>
     <a href="#summary">總結</a>
-      
-    </nav>
+          </nav>
   </header>
 
   <section class="quote-page">
@@ -4984,7 +4940,6 @@
   </div>
 </section>
   
-
   <section class="section">
   <div class="reveal">
     <span class="section-label" id="instructor"><span class="num">👤</span> 講師簡介</span>
@@ -5014,7 +4969,6 @@
   </div>
 </section>
   
-
   
 <section class="section section--header">
   <div class="reveal">
@@ -7706,17 +7660,10 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">這四件事不是分開的功能，而是同一條軸線</div>
-      <p>從「在 AI 工具間複製貼上」開始，把流程收進一個入口；再用對的元件各司其職；最後讓你的經驗變成可累積的 Skill 護城河。<strong>少了任何一段，AI 就會回到「一次性對話」的狀態。</strong></p>
-    </div>
-  </div>
-
-  <div class="reveal">
     <div class="summary-grid">
       <div class="summary-card">
         <div class="sc-icon">🧱</div>
-        <h4>從工具拼貼到一站式 AI Agent</h4>
+        <h4>把任務交給 AI Agent</h4>
         <p>不再為了字幕、提案、講義在多個工具間複製貼上，<strong>把工作流收斂到 Claude Code 一個入口</strong></p>
       </div>
       <div class="summary-card">
@@ -7726,8 +7673,8 @@ cd tibame-lesson1</div>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🧩</div>
-        <h4>Rules / Skills / Commands / MCP 各司其職</h4>
-        <p>專案規範寫進 Rules、自動觸發的歸 Skill、手動串接的歸 Command，<strong>選對工具才事半功倍</strong></p>
+        <h4>Skills / Commands 各司其職</h4>
+        <p>自動觸發的歸 Skill、手動串接的歸 Command，<strong>選對工具才事半功倍</strong></p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🛠️</div>
@@ -7741,7 +7688,7 @@ cd tibame-lesson1</div>
     <div class="group-block">
       <div class="group-header"><span class="icon">🚀</span> 回家第一件事：把今天學到的東西「跑起來」</div>
       <div class="group-body">
-        <p>挑一個你今晚就會用到的場景 — <code>commit 訊息</code>、<code>音檔轉字幕</code>、<code>整理筆記</code>、<code>回客戶信</code>⋯⋯任選一個，用 <code>skill-creator</code> 做出第一版 Skill。</p>
+        <p>挑一個你實際會用到的場景 — <code>commit 訊息</code>、<code>音檔轉字幕</code>、<code>整理筆記</code>、<code>回客戶信</code>⋯⋯任選一個，用 <code>skill-creator</code> 做出第一版 Skill。</p>
         <ul class="loose-list">
       <li><strong>不要追求完善</strong> — 能跑、能省下一次手動操作，就值得提交</li>
       <li><strong>記得回頭審視</strong> — 觀察 Skill 是否被自動觸發、產出符不符預期、Token 有沒有暴衝</li>
@@ -7780,7 +7727,6 @@ cd tibame-lesson1</div>
 </section>
 
   
-
   <section class="quote-page">
   <div class="reveal">
     <div class="quote-mark">“</div>
@@ -7789,8 +7735,7 @@ cd tibame-lesson1</div>
   </div>
 </section>
 
-  
-  <footer class="footer">
+    <footer class="footer">
     <p style="font-size:.9rem;color:var(--text);margin-bottom:1rem">歡迎追蹤我的社群，獲取更多 AI 開發實戰內容</p>
   <div class="social-links" style="justify-content:center;margin-bottom:1.5rem">
     <a href="https://medium.com/@dean-lin" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42S14.2 15.54 14.2 12s1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42zm2.94 0c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75c.66 0 1.19 2.58 1.19 5.75z"/></svg> Medium</a>
@@ -7802,8 +7747,7 @@ cd tibame-lesson1</div>
     <p>© 林鼎淵 Dean Lin</p>
   </footer>
 
-  
-  <div class="settings-panel" id="settings-panel">
+    <div class="settings-panel" id="settings-panel">
     <div class="settings-section">
       <div class="settings-label">主題色彩</div>
       <div class="color-swatches" id="color-swatches">
@@ -7843,8 +7787,7 @@ cd tibame-lesson1</div>
     </div>
   </div>
 
-  
-  <div class="break-overlay" id="break-overlay">
+    <div class="break-overlay" id="break-overlay">
     <div class="break-modal">
       <button class="break-modal-close" id="break-modal-close">✕</button>
       <div class="break-modal-icon" id="break-modal-icon">☕</div>
@@ -7865,21 +7808,17 @@ cd tibame-lesson1</div>
     </div>
   </div>
 
-  
-  <div class="bonus-overlay" id="bonus-overlay">
+    <div class="bonus-overlay" id="bonus-overlay">
     <div class="bonus-modal">
       <div class="bonus-modal-header">
         <h3 id="bonus-modal-title"></h3>
-        <button class="bonus-modal-close" id="bonus-modal-close" aria-label="關閉">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-        </button>
+        <button class="bonus-modal-close" id="bonus-modal-close">✕</button>
       </div>
       <div class="bonus-modal-body" id="bonus-modal-body"></div>
     </div>
   </div>
 
-  
-  <script>
+    <script>
     (function () {
       // OG mode: ?og=1 → hide sidebar/sections, hero-only layout for thumbnails
       try {
