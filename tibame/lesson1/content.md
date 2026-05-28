@@ -307,6 +307,18 @@ npx @kamranahmedse/claude-statusline
 }
 ```
 
+#### Python 設定 alias 對應（Mac）
+
+如果電腦環境中有安裝多個 Python 版本，可能會遇到 `python` 與 `python3` 指令執行時版本不同問題。
+
+為了減少意外，建議設定 alias，讓兩個指令指向 `同一個 Python 版本`。
+
+```prompt [label="請 AI 協助設定"]
+請幫我將 python 與 python3 透過 alias 設定指向同一個版本
+```
+
+![重開 Terminal 來檢核「python --version && python3 --version」](./assets/python-version-check.png)
+
 ---
 
 # 實戰操作：體驗 AI Agent & Agent Skills 的各項能力

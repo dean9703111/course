@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --border: #e8e4df;
+    --lane-line: #b8b2a8;
+    --arrow-color: #4a5061;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --radius: 12px;
+
+    --c-feature: #b878f0;
+    --c-develop: #2563eb;
+    --c-release: #f2c134;
+    --c-hotfix:  #d93b3b;
+    --c-master:  #4cc15b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    padding: 14px 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .diagram-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 12px 14px;
+    box-shadow: var(--shadow);
+    max-width: 980px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+  .diagram-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 400px;
+  }
+
+  .lane-axis {
+    stroke: var(--lane-line);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 3;
+    fill: none;
+  }
+  .commit {
+    stroke: var(--card);
+    stroke-width: 2;
+  }
+  .commit-arrow {
+    stroke: var(--arrow-color);
+    stroke-width: 1.8;
+    fill: none;
+  }
+  #arrow > path { fill: var(--arrow-color); }
+  #arrow-light > path { fill: var(--lane-line); }
+
+  /* ===== Hover interactions ===== */
+  .hit { fill: transparent; cursor: pointer; }
+  .el  { transition: opacity 0.18s; }
+
+  body[data-active]:not([data-active=""]) .el { opacity: 0.32; }
+
+  body[data-active="master"]        .el[data-b~="master"],
+  body[data-active="develop"]       .el[data-b~="develop"],
+  body[data-active="feature-upper"] .el[data-b~="feature-upper"],
+  body[data-active="feature-lower"] .el[data-b~="feature-lower"],
+  body[data-active="release"]       .el[data-b~="release"],
+  body[data-active="hotfix"]        .el[data-b~="hotfix"] { opacity: 1; }
+
+  /* Dark mode */
+  body.dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --border: #2d3148;
+    --lane-line: #4a5070;
+    --arrow-color: #b8bcca;
+    --shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+</style>
+</head>
+<body>
+<div class="diagram-wrap">
+  <svg viewBox="0 0 920 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Git Flow 分支流程圖">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z"/>
+      </marker>
+      <marker id="arrow-light" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z"/>
+      </marker>
+      <symbol id="branch-icon" viewBox="0 0 16 16">
+        <circle cx="3.5" cy="3" r="1.7" fill="none" stroke="white" stroke-width="1.4"/>
+        <circle cx="3.5" cy="13" r="1.7" fill="none" stroke="white" stroke-width="1.4"/>
+        <circle cx="12.5" cy="7" r="1.7" fill="none" stroke="white" stroke-width="1.4"/>
+        <line x1="3.5" y1="4.7" x2="3.5" y2="11.3" stroke="white" stroke-width="1.4"/>
+        <path d="M 3.5 11 Q 12.5 11 12.5 8.7" fill="none" stroke="white" stroke-width="1.4"/>
+      </symbol>
+    </defs>
+
+    <!-- ============ LANE AXES (dotted with right arrow) ============ -->
+    <line class="lane-axis el" data-b="feature-upper" x1="160" y1="55"  x2="900" y2="55"  marker-end="url(#arrow-light)"/>
+    <line class="lane-axis el" data-b="feature-lower" x1="160" y1="120" x2="900" y2="120" marker-end="url(#arrow-light)"/>
+    <line class="lane-axis el" data-b="develop"       x1="160" y1="190" x2="900" y2="190" marker-end="url(#arrow-light)"/>
+    <line class="lane-axis el" data-b="release"       x1="160" y1="255" x2="900" y2="255" marker-end="url(#arrow-light)"/>
+    <line class="lane-axis el" data-b="hotfix"        x1="160" y1="320" x2="900" y2="320" marker-end="url(#arrow-light)"/>
+    <line class="lane-axis el" data-b="master"        x1="160" y1="390" x2="900" y2="390" marker-end="url(#arrow-light)"/>
+
+    <!-- ============ LANE LABELS (rounded rect with icon + text) ============ -->
+    <g class="el" data-b="feature-upper">
+      <rect x="20" y="39" width="125" height="32" rx="7" fill="var(--c-feature)"/>
+      <use href="#branch-icon" x="32" y="47" width="16" height="16"/>
+      <text x="55" y="61" font-size="14" font-weight="700" fill="white">feature</text>
+    </g>
+    <g class="el" data-b="feature-lower">
+      <rect x="20" y="104" width="125" height="32" rx="7" fill="var(--c-feature)"/>
+      <use href="#branch-icon" x="32" y="112" width="16" height="16"/>
+      <text x="55" y="126" font-size="14" font-weight="700" fill="white">feature</text>
+    </g>
+    <g class="el" data-b="develop">
+      <rect x="20" y="174" width="125" height="32" rx="7" fill="var(--c-develop)"/>
+      <use href="#branch-icon" x="32" y="182" width="16" height="16"/>
+      <text x="55" y="196" font-size="14" font-weight="700" fill="white">develop</text>
+    </g>
+    <g class="el" data-b="release">
+      <rect x="20" y="239" width="125" height="32" rx="7" fill="var(--c-release)"/>
+      <use href="#branch-icon" x="32" y="247" width="16" height="16"/>
+      <text x="55" y="261" font-size="14" font-weight="700" fill="white">release</text>
+    </g>
+    <g class="el" data-b="hotfix">
+      <rect x="20" y="304" width="125" height="32" rx="7" fill="var(--c-hotfix)"/>
+      <use href="#branch-icon" x="32" y="312" width="16" height="16"/>
+      <text x="55" y="326" font-size="14" font-weight="700" fill="white">hotfix</text>
+    </g>
+    <g class="el" data-b="master">
+      <rect x="20" y="374" width="125" height="32" rx="7" fill="var(--c-master)"/>
+      <use href="#branch-icon" x="32" y="382" width="16" height="16"/>
+      <text x="55" y="396" font-size="14" font-weight="700" fill="white">master</text>
+    </g>
+
+    <!-- ============ ARROWS BETWEEN COMMITS ============ -->
+    <!-- master horizontal -->
+    <line class="commit-arrow el" data-b="master" x1="232" y1="390" x2="688" y2="390" marker-end="url(#arrow)"/>
+    <line class="commit-arrow el" data-b="master" x1="712" y1="390" x2="868" y2="390" marker-end="url(#arrow)"/>
+
+    <!-- develop horizontal -->
+    <line class="commit-arrow el" data-b="develop" x1="232" y1="190" x2="328" y2="190" marker-end="url(#arrow)"/>
+    <line class="commit-arrow el" data-b="develop" x1="352" y1="190" x2="508" y2="190" marker-end="url(#arrow)"/>
+    <line class="commit-arrow el" data-b="develop" x1="532" y1="190" x2="688" y2="190" marker-end="url(#arrow)"/>
+    <line class="commit-arrow el" data-b="develop" x1="712" y1="190" x2="868" y2="190" marker-end="url(#arrow)"/>
+
+    <!-- master v0.5 → develop d0 : branch out (straight up) -->
+    <line class="commit-arrow el" data-b="master develop" x1="220" y1="378" x2="220" y2="202" marker-end="url(#arrow)"/>
+
+    <!-- develop d1 → feature_lower fl0 : straight up -->
+    <line class="commit-arrow el" data-b="develop feature-lower" x1="340" y1="178" x2="340" y2="132" marker-end="url(#arrow)"/>
+
+    <!-- feature_lower horizontal fl0 → fl1 -->
+    <line class="commit-arrow el" data-b="feature-lower" x1="352" y1="120" x2="428" y2="120" marker-end="url(#arrow)"/>
+
+    <!-- feature_lower fl0 → feature_upper fu0 : diagonal up-right -->
+    <line class="commit-arrow el" data-b="feature-lower feature-upper" x1="347" y1="111" x2="431" y2="63" marker-end="url(#arrow)"/>
+
+    <!-- feature_upper horizontal fu0 → fu1 → fu2 -->
+    <line class="commit-arrow el" data-b="feature-upper" x1="452" y1="55" x2="528" y2="55" marker-end="url(#arrow)"/>
+    <line class="commit-arrow el" data-b="feature-upper" x1="552" y1="55" x2="628" y2="55" marker-end="url(#arrow)"/>
+
+    <!-- feature_lower fl1 → develop d2 : diagonal down-right -->
+    <line class="commit-arrow el" data-b="feature-lower develop" x1="447" y1="129" x2="513" y2="182" marker-end="url(#arrow)"/>
+
+    <!-- feature_upper fu2 → develop d3 : long diagonal down-right -->
+    <line class="commit-arrow el" data-b="feature-upper develop" x1="645" y1="64" x2="693" y2="181" marker-end="url(#arrow)"/>
+
+    <!-- develop d2 → release r0 : straight down (branch out) -->
+    <line class="commit-arrow el" data-b="develop release" x1="520" y1="202" x2="520" y2="243" marker-end="url(#arrow)"/>
+
+    <!-- release horizontal r0 → r1 -->
+    <line class="commit-arrow el" data-b="release" x1="532" y1="255" x2="628" y2="255" marker-end="url(#arrow)"/>
+
+    <!-- release r1 → develop d3 : back-merge (diagonal up-right) -->
+    <line class="commit-arrow el" data-b="release develop" x1="647" y1="247" x2="693" y2="199" marker-end="url(#arrow)"/>
+
+    <!-- release r1 → master v1.0 : merge (diagonal down-right) -->
+    <line class="commit-arrow el" data-b="release master" x1="645" y1="263" x2="693" y2="380" marker-end="url(#arrow)"/>
+
+    <!-- master v1.0 → hotfix h0 : branch out (diagonal up-right) -->
+    <line class="commit-arrow el" data-b="master hotfix" x1="708" y1="382" x2="792" y2="328" marker-end="url(#arrow)"/>
+
+    <!-- hotfix h0 → master v1.1 : merge (diagonal down-right) -->
+    <line class="commit-arrow el" data-b="hotfix master" x1="807" y1="328" x2="872" y2="382" marker-end="url(#arrow)"/>
+
+    <!-- hotfix h0 → develop d4 : back-merge (long diagonal up-right) -->
+    <line class="commit-arrow el" data-b="hotfix develop" x1="805" y1="312" x2="873" y2="199" marker-end="url(#arrow)"/>
+
+    <!-- ============ COMMITS ============ -->
+    <!-- master : v0.5 (develop branched from here) / v1.0 (release merges in, hotfix branched off) / v1.1 (hotfix merges in) -->
+    <circle class="commit el" data-b="master develop"                cx="220" cy="390" r="11" fill="var(--c-master)"/>
+    <circle class="commit el" data-b="master release hotfix"         cx="700" cy="390" r="11" fill="var(--c-master)"/>
+    <circle class="commit el" data-b="master hotfix"                 cx="880" cy="390" r="11" fill="var(--c-master)"/>
+
+    <!-- develop : d0 from master / d1 feature_lower branched / d2 feature_lower merge + release branched / d3 feature_upper merge + release back-merge / d4 hotfix back-merge -->
+    <circle class="commit el" data-b="develop master"                       cx="220" cy="190" r="11" fill="var(--c-develop)"/>
+    <circle class="commit el" data-b="develop feature-lower"                cx="340" cy="190" r="11" fill="var(--c-develop)"/>
+    <circle class="commit el" data-b="develop feature-lower release"        cx="520" cy="190" r="11" fill="var(--c-develop)"/>
+    <circle class="commit el" data-b="develop feature-upper release"        cx="700" cy="190" r="11" fill="var(--c-develop)"/>
+    <circle class="commit el" data-b="develop hotfix"                       cx="880" cy="190" r="11" fill="var(--c-develop)"/>
+
+    <!-- feature lower : fl0 from develop + feature_upper branched / fl1 merge back to develop -->
+    <circle class="commit el" data-b="feature-lower develop feature-upper" cx="340" cy="120" r="11" fill="var(--c-feature)"/>
+    <circle class="commit el" data-b="feature-lower develop"               cx="440" cy="120" r="11" fill="var(--c-feature)"/>
+
+    <!-- feature upper : fu0 from feature_lower / fu1 / fu2 merge back to develop -->
+    <circle class="commit el" data-b="feature-upper feature-lower"  cx="440" cy="55" r="11" fill="var(--c-feature)"/>
+    <circle class="commit el" data-b="feature-upper"                cx="540" cy="55" r="11" fill="var(--c-feature)"/>
+    <circle class="commit el" data-b="feature-upper develop"        cx="640" cy="55" r="11" fill="var(--c-feature)"/>
+
+    <!-- release : r0 from develop / r1 merges to develop + master -->
+    <circle class="commit el" data-b="release develop"              cx="520" cy="255" r="11" fill="var(--c-release)"/>
+    <circle class="commit el" data-b="release develop master"       cx="640" cy="255" r="11" fill="var(--c-release)"/>
+
+    <!-- hotfix : h0 from master, merges to master + develop -->
+    <circle class="commit el" data-b="hotfix master develop"        cx="800" cy="320" r="11" fill="var(--c-hotfix)"/>
+
+    <!-- ============ VERSION TAGS (below master) ============ -->
+    <g class="el" data-b="master">
+      <rect x="195" y="422" width="50" height="22" rx="5" fill="var(--c-master)"/>
+      <text x="220" y="438" font-size="12" font-weight="700" text-anchor="middle" fill="white">v0.5</text>
+    </g>
+    <g class="el" data-b="master release">
+      <rect x="675" y="422" width="50" height="22" rx="5" fill="var(--c-master)"/>
+      <text x="700" y="438" font-size="12" font-weight="700" text-anchor="middle" fill="white">v1.0</text>
+    </g>
+    <g class="el" data-b="master hotfix">
+      <rect x="855" y="422" width="50" height="22" rx="5" fill="var(--c-master)"/>
+      <text x="880" y="438" font-size="12" font-weight="700" text-anchor="middle" fill="white">v1.1</text>
+    </g>
+
+    <!-- ============ HOVER HIT ZONES (transparent, on top) ============ -->
+    <rect class="hit" data-hover="feature-upper" x="15" y="30"  width="890" height="58"/>
+    <rect class="hit" data-hover="feature-lower" x="15" y="92"  width="890" height="58"/>
+    <rect class="hit" data-hover="develop"       x="15" y="162" width="890" height="58"/>
+    <rect class="hit" data-hover="release"       x="15" y="232" width="890" height="48"/>
+    <rect class="hit" data-hover="hotfix"        x="15" y="292" width="890" height="58"/>
+    <rect class="hit" data-hover="master"        x="15" y="362" width="890" height="88"/>
+  </svg>
+</div>
+
+<script>
+const body = document.body;
+document.querySelectorAll('.hit').forEach(hit => {
+  const branch = hit.dataset.hover;
+  hit.addEventListener('mouseenter', () => body.setAttribute('data-active', branch));
+  hit.addEventListener('mouseleave', () => body.setAttribute('data-active', ''));
+});
+
+// ===== THEME SYNC =====
+function applyTheme() {
+  try {
+    const parentTheme = window.parent.document.documentElement.getAttribute('data-theme');
+    document.body.classList.toggle('dark', parentTheme !== 'light');
+  } catch (e) {
+    document.body.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+}
+applyTheme();
+try {
+  new MutationObserver(applyTheme).observe(
+    window.parent.document.documentElement,
+    { attributes: true, attributeFilter: ['data-theme'] }
+  );
+} catch (e) {
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+}
+</script>
+</body>
+</html>

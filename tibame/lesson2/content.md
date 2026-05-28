@@ -1,3 +1,19 @@
+[time]
+- label: 第 1 堂
+  date: 5/30（六）
+  time: 13:30~16:30
+  des: **打造懂你的 AI 助手**：設定開發環境，掌握 AI Agent 進階技巧，建議專屬 Agent Skills 護城河
+- label: 第 2 堂
+  date: 6/6（六）
+  time: 13:30~16:30
+  des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程，同時用 MCP 操作外部工具
+  active: true
+- label: 第 3 堂
+  date: 6/13（六）
+  time: 13:30~16:30
+  des: **團隊協作與專案部署**：建立自動化測試，了解 Worktree 應用時機，並將專案部署上線
+[/time]
+
 # 常見痛點：穩定性不足、難以維護、無法驗證
 
 > 一句話 AI 就能生成有前端、後端、資料庫的系統，但...你敢用嗎？
@@ -15,234 +31,166 @@
 [flow]
 1. Lint — 檢查程式碼風格，避免 AI 生成`風格不一致`，留下`多餘程式`，增加 Code Review 負擔。
 2. OpenSpec - `讓 AI 根據規格文件做事`，完成從 0 到 1 的建立，更處理從 1 到 100 的迭代
-3. 客製化 Agent Skills - 拆分 Commit 讓`邏輯可被追朔`、定義 Branch `命名規則`、設計 PR 方便 `Code Review`
-4. 導入測試 - 確保`新功能`符合預期，`舊功能`執行穩定，並透過`測試覆蓋率報告`了解實際狀況
+3. Postman - 認識`測試後端 API`的工具，透過 `MCP` 讓不同情境的 `Request 自動化建立`。
+4. 客製化 Agent Skills - 拆分 Commit 讓`邏輯可被追朔`、定義 Branch `命名規則`、設計 PR 方便 `Code Review`
 5. Git Flow - 加入`版本控制`與`分支策略`，確保出包時有回頭路，以及不影響到正式版本
-6. CI/CD - 透過自動化工作流`檢查格式、測試功能`，並設定要`保護的 Branch`
+6. 導入測試 - 確保`新功能`符合預期，`舊功能`執行穩定，並透過`測試覆蓋率報告`了解實際狀況
+7. CI/CD - 透過自動化工作流`檢查格式、測試功能`，並設定要`保護的 Branch`
+8. Zeabur - 將完成的系統`部署到線上環境`，選好 Server 後，透過 `MCP` 就能用白話文快速部署與迭代產品。
 [/flow]
 
 ---
 
-# 前製作業：初探 Claude Code & 確認開發環境
+# 前製作業：檢核開發環境 & 安裝所需工具
 
-## AI 是大腦，工具是雙手
+## 確認上一堂工具皆已安裝
 
-### 🛠️ 確認開發環境
+> **AI 是大腦，工具是雙手**
+> AI Agent 能做多少事，取決於你給它多少工具。
 
-- **[Git](https://git-scm.com/install/windows)** — 版本控制工具，用來追蹤每次改動
-- **[GitHub 帳號](https://github.com)** — 雲端 Git 儲存庫，用來管理專案
-- **[nvm](https://github.com/nvm-sh/nvm)** — Node.js 版本管理工具，方便切換
-- **[Python](https://www.python.org/downloads/)** — Agent Skills 的 scripts 大部分使用 Python 撰寫
-- **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** — 安裝任一款程式碼編輯器（IDE）
-- **[cmux](https://cmux.com/zh-TW)** - 更好用的終端機工具（直接使用 IDE 內建的也可以）
-- **[Claude 帳號](https://claude.ai/)** — 目前 Claude Code 需要 Pro 級別以上才能使用
+### ✅ 環境檢核清單
 
-#### 確認 Git & GitHub 帳號
-
-```terminal [label="確認 Git 版本與帳號設定"]
-git --version
-git config --global user.name
-git config --global user.email
-```
-
-> **若尚未設定，請執行**
-> git config --global user.name "你的名字"
-> git config --global user.email "你的 Email"
-
-#### 安裝 nvm & 確認版本
-
-**macOS / Linux**
-
-```terminal [label="安裝 nvm"]
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
-```
-
-**Windows**
-前往 **[github.com/coreybutler/nvm-windows/releases](https://github.com/coreybutler/nvm-windows/releases)** 下載最新的 `nvm-setup.exe` 安裝程式
-
-安裝完成後，**重新開啟終端機**，確認版本：
-
-```terminal [label="確認 nvm 版本"]
-nvm -v
-```
-
-#### 安裝最新版本的 Node.js 
-
-```terminal [label="安裝 Node.js（透過 nvm）"]
-nvm install --lts
-nvm use --lts
-node -v
-```
-
-#### 確認 Python 版本
-
-**macOS / Linux**：可透過 alias 讓 python 指向 python3 版本
-
-```terminal [label="確認 Python 版本"]
-python3 --version
-pip3 --version
-```
-
-**Windows**
-
-```terminal [label="確認 Python 版本（Windows PowerShell）"]
-python --version
-pip --version
-```
-
-[lab-session title="🛠️  實作時間" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 確認 Git & GitHub 帳號
-- 安裝 nvm & 確認 Node.js 版本
-- 確認 Python 版本
-[/lab-session]
-
-## 在終端機使用 Claude Code
-
-### 🛠️ 安裝 Claude Code
-
-**macOS, Linux, WSL**
-
-```terminal [label="安裝 Claude Code"]
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-**Windows PowerShell**
-
-```terminal [label="安裝 Claude Code"]
-irm https://claude.ai/install.ps1 | iex
-```
-
-### 🚀 啟動 Claude Code
-
-```terminal [label="啟動 Claude Code"]
-claude
-```
-
-![第一次啟動，會需要登入 Claude 帳號](./assets/login-claude.png)
-
-## 在 IDE 使用 Claude Code
-
-### 🧩 從 Extensions 安裝
-
-如果不習慣終端機操作，安裝 Claude Code 外掛也能使用大部分的功能。
-
-1. 打開側邊欄 `Extensions`
-2. 搜尋 `Claude Code`
-3. 點擊 `Install`
-
-![在 Extensions 安裝 Claude Code 外掛](./assets/ide-claude-extensions.png)
-
-![輸入「/login」登入帳號](./assets/ide-claude-login.png)
-
-### 🛡️ 調整隱私設定
-
-Help improve Claude 默認為 `true`，請調整為 `false`。
-
-```prompt [label="調整隱私設定"]
-/privacy-settings
-```
-
-![將 Help improve Claude 設定為 false](./assets/privacy-settings.png)
-
-### 🚫 禁止 Claude 使用危險指令
-
-AI 執行的指令是無法完全預期的，為了減少損失，可以透過設定來阻止危險操作。
-
-```prompt [label="要求修改設定"]
-我希望 Claude 在默認的 settings 禁止下面的指令（其他原有設定要保留）：
-- 刪除：rm -rf, rm -fr, rm -r, rm -R, rm -f
-- 最高權限：sudo
-- 磁碟破壞：dd, mkfs, diskutil erase
-- 權限濫用：chmod 777, chmod -R 777
-- Git 不可逆操作：reset --hard, push --force, push -f, clean -f, branch -D
-- 系統關機/重開：shutdown, reboot
-- 檔案清空：: >, truncate
-完成後給我看設定檔
-```
-
-[lab-session title="🛠️  實作時間" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 在終端機使用 Claude Code
-- 在 IDE 使用 Claude Code
-- 調整隱私設定
-- 禁止 Claude 使用危險指令
-[/lab-session]
-
-### 📂 了解 Claude Code 工作目錄
-
-[html src="./html/claude-folder-structure.html"]
-
-> **Tips**
-> .claude/ 就像給 Claude 一本專屬手冊：告訴它你是誰（設定）、你可以做什麼（權限）、你想怎麼做（規則）、你希望它自動完成什麼（技能），以及特別的角色（代理）。
-> 專案層級放在 your-project/.claude/，使用者層級放在 ~/.claude/，**兩者會合併生效，專案設定優先。**
-
-### ⚙️ 了解 Rules / Commands / Skills / MCP 應用場景
-
-**1. Rules（CLAUDE.md）：**`每次對話都會參考`，記錄專案技術棧、規範、注意事項；不要寫太多，會佔用上下文空間
-**2. Skills：**把日常工作中執行任務的細節、技巧、判斷模式放進去，AI 遇到`相關任務時會主動觸發`
-**3. Commands：**可以設計完整工作流（ex: 執行多個 Skills），要`手動觸發`
-**4. MCP：**透過標準介面`呼叫其他工具的 API`，操作方式較穩定、可預期
-
-### 🤖 Claude 不同操作模式
-
-| 模式 | 無需詢問即可執行的操作 | 最適合 |
+| 工具 | 角色 | 最低版本 |
 | --- | --- | --- |
-| **default** | 僅讀取 | 入門、敏感工作 |
-| **acceptEdits** | 讀取、檔案編輯和常見檔案系統命令（mkdir、touch、mv、cp 等） | 迭代您正在審查的程式碼 |
-| **plan** | 僅讀取 | 在變更前探索程式碼庫 |
-| **auto** | 所有操作，具有背景安全檢查 | 長時間執行的任務、減少提示疲勞 |
-| **dontAsk** | 僅預先批准的工具 | 鎖定的 CI 和指令碼 |
-| **bypassPermissions** | 除受保護路徑外的所有操作 | 僅隔離容器和 VM |
+| **Git** | 版本控制、追蹤每次改動 | 2.40+ |
+| **Node.js**（透過 nvm） | 執行專案、安裝套件 | LTS（20+） |
+| **Python** | 執行 Agent Skills 的 scripts | 3.10+ |
+| **Claude Code** | 本堂主要 AI 工具 | 最新版 |
+| **IDE** | Cursor / Antigravity / VSCode 擇一 | — |
 
-> **Tips:**
-> **對話時**：可以按 Shift+Tab 循環「default → acceptEdits → plan」
-> **啟動時**：可以用「claude --permission-mode `plan`」來設定
+### 🔍 一行指令跑完版本檢核
 
-### 🤖 Claude 不同模型
-
-- **Sonnet**— 速度與品質平衡，日常開發、寫程式、改 Bug 首選
-- **Opus** — 推理能力最強，適合需要深度分析的架構設計、複雜 Debug、長篇規格撰寫
-- **Haiku** — 最快最省，適合：簡單問答、格式轉換等不需要推理的任務
-
-```prompt [label="調整為 Opus Plan Mode"]
-/model
+```terminal [label="一次檢核所有版本"]
+git --version && node -v && python --version && claude --version
 ```
 
-![如果懶得手動調整，選擇 Opus Plan Mode 就好](./assets/opus-plan-mode.png)
+![你的版本可能跟我不同，高於表格即可](./assets/tool-check.png)
 
-### 📊 設定 Status Line
+> 4 個版本號都跳出來 → 環境就緒
+> 任何一行出錯 → 對照下方表格處理
 
-Context 被壓縮（Compact）、Claude 忘記前面資訊、額度耗盡時，如果沒有 Status Line 完全不會意識到。
+### 🛟 卡關速查表
 
-```terminal [label="了解目前 Claude Code 額度"]
+| 狀況 | 處理方式 |
+| --- | --- |
+| 出現 `command not found` | 該工具未安裝，請回顧[上一堂講義補裝](https://deanlin.net/course/tibame/lesson1/#sub-ai-2) |
+| Node 版本低於 LTS | `nvm install --lts && nvm use --lts` |
+| Git 未設定身份 | `git config --global user.name "..."`、`git config --global user.email "..."` |
+| Claude Code 未登入 | 執行 `claude`，依互動流程完成登入 |
+
+[lab-session title="🛠️  實作練習"]
+- 跑完一行式版本檢核指令
+- 確認 Git 已設定 user.name / user.email
+- 確認 `claude` 指令能正常啟動進入對話
+[/lab-session]
+
+## Claude Code 快速回顧
+
+### 🛡️ 兩項安全設定檢核
+
+| 設定 | 動作 | 為什麼重要 |
+| --- | --- | --- |
+| **關閉資料回傳** | `/privacy-settings` → Help improve Claude 設為 `false` | 避免專案內容被用於模型訓練 |
+| **危險指令黑名單** | `/permissions` → **Deny** 加入 `rm -rf`、`sudo`、`reset --hard`、`push --force` 等黑名單 | AI 執行的指令無法完全預期，這層防護可以救命 |
+
+### ⚙️ Rules / Skills / Commands / MCP 用途
+
+| 機制 | 觸發方式 | 適用情境 |
+| --- | --- | --- |
+| **Rules**（CLAUDE.md） | 每次對話自動載入 | 專案使用技術、規範、注意事項 |
+| **Skills** | AI 判斷需求後自動觸發 | 日常任務的細節、技巧、判斷邏輯 |
+| **Commands** | `/` 前綴手動觸發 | 完整工作流（可串多個 Skills） |
+| **MCP** | 標準介面呼叫外部 API | 對接 Postman、Zeabur 等工具 |
+
+> **.claude/ 是 Claude 的專屬手冊**
+> 專案層 `your-project/.claude/` 與使用者層 `~/.claude/` 會合併生效，**專案設定優先。**
+
+### 📊 設定 Status Line 了解使用狀態
+
+Context 被壓縮、額度耗盡時，沒有 Status Line 完全不會意識到。
+
+```terminal [label="安裝 Status Line"]
 npx @kamranahmedse/claude-statusline
 ```
 
 ![這樣一目瞭然](./assets/status-line.png)
 
-[lab-session title="🛠️  實作時間" duration="5 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+[lab-session title="🛠️  實作練習"]
+- 完成兩項安全設定檢核（隱私關閉、危險指令黑名單）
 - 設定 Status Line
 [/lab-session]
 
-### 📝 補充說明
+## 減少手動、提升品質的工具
 
-下面幾點可以根據需求自行調整。
+### 🐙 安裝 GitHub CLI（gh）
 
-#### 關閉貼上圖片自動傳給 Agent
+能透過指令直接**操作 GitHub**，不需要回到瀏覽器手動點。
 
-![將 Paste Images As Attachments 關閉](./assets/disable_image_paste.png)
+| 任務類型 | 用 gh 能做 |
+| --- | --- |
+| **Pull Request** | 建立、留言、查狀態、合併 |
+| **Issue / Label** | 建立、分類、加標籤 |
+| **Repo 設定** | description、topics、GitHub Pages |
+| **Release** | 打 tag、上傳檔案、發佈版本 |
 
-#### 不希望 Claude 成為 Commit & PR 合作者
-
-打開 `~/.claude/settings.json`，加上下面的設定
-
-```code [label="加上 attribution"]
-{
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  }
-}
+```terminal [label="macOS 安裝"]
+brew install gh
 ```
+
+```terminal [label="Windows 安裝（PowerShell）"]
+winget install --id GitHub.cli
+```
+
+```terminal [label="安裝完成後登入（通用）"]
+gh auth login
+```
+
+> **登入流程**
+> 依序選 `GitHub.com` → `SSH` → `Login with a web browser`，瀏覽器會自動開啟完成授權。
+> Linux 或沒有 winget 的環境，請參考 [GitHub CLI 官方安裝指南](https://github.com/cli/cli#installation)。
+
+#### 驗證安裝與登入狀態
+
+```terminal [label="一次檢查安裝版本與登入帳號"]
+gh --version && gh auth status
+```
+
+| 預期輸出 | 代表狀態 |
+| --- | --- |
+| `gh version 2.x.x ...` | 已成功安裝 |
+| `Logged in to github.com account <你的帳號>` | 登入成功，可以直接呼叫 GitHub API |
+| `command not found: gh` | 安裝失敗，重開終端機或重新執行安裝指令 |
+| `You are not logged into any GitHub hosts` | 已安裝但尚未登入，回到上一步執行 `gh auth login` |
+
+![確認 gh 有成功安裝與登入](./assets/gh-login-check.png)
+
+### 🧩 安裝實用的 Claude Code Plugin
+
+Plugin 用來擴充 **Claude Code 本身**的能力：
+
+| Plugin | 功能 | 為什麼安裝 |
+| --- | --- | --- |
+| **context7** | 即時抓取套件最新版文件 | AI 訓練資料有時效性，補上最新 API 才不會生成過時或已 deprecated 的寫法 |
+| **claude-md-management** | 體檢 CLAUDE.md 品質 | 規則太長、互相衝突時 AI 反而會搞混，這個 Plugin 會幫檢查 |
+
+```prompt [label="安裝 Plugin（在 Claude Code 中執行）"]
+# 確保 AI 取得套件的最新文件
+/plugin install context7
+
+# 檢查 CLAUDE.md 品質
+/plugin install claude-md-management
+```
+
+![輸入 /plugin 可查看安裝的外掛](./assets/installed-plugins.png)
+
+> **Plugin 跟 Skill 有什麼不同？**
+> Plugin 擴充的是 **Claude Code 本身**的功能（slash command、外部整合）；
+> Skill 則是 **AI 在對話中**根據需求自動觸發的任務模組。
+
+[lab-session title="🛠️  實作練習"]
+- 安裝 GitHub CLI 並完成 `gh auth login`
+- 安裝 context7、claude-md-management 兩個 Plugin
+[/lab-session]
 
 ---
 
@@ -252,11 +200,11 @@ npx @kamranahmedse/claude-statusline
 
 ### 🗂️ 課程範例 Repository
 
-[下載或 Fork 練習用 Repository](https://github.com/deancourse/wiwynn-ai-workshop) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（放在 `.agents` 資料夾下）
+[下載或 Fork 練習用 Repository](https://github.com/deancourse/tibame-lesson2) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（放在 `.agents` 資料夾下）
 
 ```terminal [label="僅 Clone 課程 main branch Repo"]
-git clone --branch main --single-branch git@github.com:deancourse/wiwynn-ai-workshop.git
-cd wiwynn-ai-workshop
+git clone --branch main --single-branch git@github.com:deancourse/tibame-lesson2.git
+cd tibame-lesson2
 ```
 
 > **還沒設定 SSH Key？**
@@ -274,6 +222,8 @@ npx @dean9703111/dotagents
 ```
 
 ![培養多個 AI 工具切換的能力](./assets/dotagents.png)
+
+> 單一來源管理，未來維護更方便，修改一次就能在所有工具中生效；此套件會在 `.agents` 底下管理。
 
 ### 🚀 懂技術會讓 AI 效能加倍
 
@@ -363,8 +313,8 @@ describe("echo skill", () => {
 > **把 AI 犯錯當成必然**
 > 比起讓 AI 永不犯錯，更重要的是設計當 AI 犯錯時警告的通知！
 
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 下載課程範例 `git clone --branch main --single-branch git@github.com:deancourse/wiwynn-ai-workshop.git`
+[lab-session title="🛠️  實作練習"]
+- 下載課程範例 `git clone --branch main --single-branch git@github.com:deancourse/tibame-lesson2.git`
 - 安裝 `npx @dean9703111/dotagents` 讓多個 AI Agents 更容易管理
 - 安裝專案套件 `npm install`
 - 設計 Lint + Test 錯誤，了解流程的重要性
@@ -379,7 +329,7 @@ npm install -g @fission-ai/openspec@latest
 openspec init
 ```
 
-### 📦 了解 Agent Skills 架構
+### 📦 了解 OpenSpec 架構
 
 - **Skills** — AI 在對話過程中自動觸發的技能包，不需要背指令
 - **Commands** — 用 `/opsx` 前綴強制驅動：apply / archive / explore / propose
@@ -394,11 +344,37 @@ openspec init
 
 ![不需要去背，知道有就可以了](./assets/open-spec-lists.png)
 
-[lab-session title="🛠️  實作時間" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+> **如果想強制驅動 OpenSpec**
+> 在 AI 指令不夠明確時，可能不會觸發對應的 Skill。可以先點擊右上角的 New Session（開啟新的對話），在對話窗中輸入 `/opsx` 來操作。
+
+[lab-session title="🛠️  實作練習"]
 - 安裝 OpenSpec `npm install -g @fission-ai/openspec@latest`
 - 在專案初始化 OpenSpec `openspec init`
 - 擴充 OpenSpec 技能 `openspec config profile`
 [/lab-session]
+
+## 安裝 Docker
+
+> **這次會完成全端專案**
+> - **前端**：是使用者看到的網頁畫面與操作介面
+> - **後端**：是在背後處理資料的程式邏輯
+> - **資料庫**：儲存所有資料的地方
+> 根據過去經驗，最容易在環境設定上`卡關的是「資料庫」`。你可以把資料庫想像一個**大型的 Excel 檔案**，專門用來**儲存系統的所有資料**。
+
+### 🐳 為什麼需要 Docker
+
+- 你可以把 Docker 想成一個「`標準化的容器`」，把專案需要的環境通通打包在裡面
+- 不管你用 Mac 還是 Windows，打開就能跑，`不用自己一個一個裝`
+- 也方便未來與其他人`一起維護專案`
+
+到 [Docker 官網](https://www.docker.com/) 根據自己的作業系統下載安裝後，就可以直接使用，不需要特別註冊、登入帳號。
+
+![不需註冊，確認有運行即可](./assets/docker-running.png)
+
+> **安裝完成後，記得啟動 Docker Desktop**
+> Docker 安裝完並不會自動啟動。請在應用程式中找到 Docker Desktop 並打開，**註冊相關步驟都可以直接 Skip**，看到左下角顯示綠色的 Running 狀態，才代表 Docker 已經準備好了。
+
+## 規格驅動開發（SDD）
 
 ### 🎯 用 SDD 讓 AI 根據規格建立專案
 
@@ -408,70 +384,172 @@ openspec init
 3. 細節討論 — 提醒 AI 主動提問，釐清模糊需求
 [/flow]
 
-> 使用「Plan Mode」並請 AI 與自己釐清細節會得到更好的結果；下面 Prompt 是讓大家快速體驗完整流程
-
-```prompt [label="建立 MVP 系統"]
+```prompt [label="AI 會先跟你討論細節"]
 設計車輛管理系統，包含以下功能：
 - 登入頁面（帳號密碼驗證，區分管理者與一般使用者）
 - 首頁儀表板（上方顯示關鍵數據卡片，下面顯示資料圖表）
 - 車輛管理頁（可檢視、新增、編輯、刪除車輛資料）
 - 員工管理頁（僅管理者可檢視、新增、編輯、刪除員工資料）
 
-前端使用 React 搭配 Magic UI(shadcn@latest)，使用 MSW Mock API 模擬後端回應
-參考 openspec 的 skill 執行，以最小可行性方案來規劃
+前端使用 React 搭配 Magic UI(shadcn@latest)，後端使用 Express，資料庫用 Postgres
+資料庫希望透過 Docker 啟動，並且要包含 Postgres Admin 網頁
+這是初步需求，我們可以透過討論釐清細節後，參考 OpenSpec 的 skill 執行
 ```
 
-### 📋 用 OpenSpec 建立文件規格並實作專案
+![貼上多行文字時被壓縮，再貼上一次就會展開了](./assets/context-extend.png)
+
+![AI 會跟你討論專案設計細節](./assets/ai-questions.png)
+
+### 📋 用 OpenSpec 建立文件規格
+
+釐清完需求後，AI 會觸發 OpenSpec 的 Skills 做更細部的規劃。相關的規格文件都會存放在 `changes` 資料夾底下。
 
 [flow]
 1. proposal.md — 確認目標與範圍
-2. design.md — 技術選型與風險評估
+2. design.md — 技術選擇與風險評估
 3. specs/ — 按功能分類的詳細規格
 4. task.md — 任務清單，完成自動打勾
 [/flow]
 
 ![請自行確認文件方向符合預期](./assets/openspec-markdown.png)
 
+> **如果希望都用中文寫規格**
+> 可以直接請 AI 調整：`規格文件請使用「中文」撰寫，但專有名詞與技術名詞維持「英文」，可以在後面用括弧顯示中文翻譯`
+
+### ⚡ 開始實作
+
+確認規劃都符合預期後，告訴 AI「開始實作」，AI 就會**根據規劃開始撰寫程式**。
+
 ```prompt [label="開始實作"]
 開始實作
 ```
 
-[lab-session title="🛠️  實作時間" duration="20 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+> **經驗分享**
+> 根據過去經驗，用 Claude Code 完成`專案初版`，大約需要`花費 30 分鐘左右`。
+> 如果想`跳過「開始實作」這段`，可以用`git fetch origin & git checkout -b feature/fullstack-foundation origin/feature/fullstack-foundation`
+
+![初始化專案通常需要 30 分鐘](./assets/ai-complete.png)
+
+[lab-session title="🛠️  實作練習"]
 - 先用 OpenSpec 建立文件規格
 - 讓 AI 根據規格實作專案
 [/lab-session]
 
-### 🤖 請 AI 協助啟動專案 & 驗證功能
+### 🤖 請 AI 協助啟動專案
 
 第一次啟動可以請 AI 幫忙，因為有很高的機率在第一版遇到零星錯誤
 
 ```prompt [label="讓 AI 協助啟動"]
-請幫我啟動專案
+請幫我啟動前後端專案，並確認 Postgres 跟 Postgres Admin 的 Docker 有啟動
+如果根目錄 README.md 沒有操作步驟，請協助補充
+我需要知道網址、管理者與一班使用者的登入密碼
+以及 Postgres Admin 登入與設定 Server 方式
 ```
 
-![因為要求 MVP 所以通常外型很素](./assets/project-init.png)
+![通常第一版完成的 UI 介面都很樸素](./assets/project-init.png)
 
-如果覺得外觀太醜，可以直接跟 AI 溝通（考量到額度，可以先不美化）
+### ✅ 驗證前端、後端、資料庫
 
-```prompt [label="歸檔"]
-扮演熟悉 Magic UI 的設計師，美化頁面視覺
-```
+#### 確認前端頁面都可以順利顯示
 
-![可以讓 AI 自行美化](./assets/enhance-ui.png)
+> **測試用帳號密碼**
+> admin / admin12345
 
-初步確認功能符合預期後，請他將變更歸檔
+1. 登入頁面
+2. 首頁儀表板（上方顯示關鍵數據卡片，下面顯示資料圖表）
+2. 車輛管理頁（可檢視、新增、編輯、刪除車輛資料）
+3. 員工管理頁（僅管理者可檢視、新增、編輯、刪除員工資料）
+
+![除了管理者外，資料都是空的](./assets/frontend-empty.png)
+
+![可以新增員工後登入，確認不會看到員工分頁](./assets/frontend-normal-user.png)
+
+> **可以做的測試**
+> 1. 登出後，改成`要登入`才能去的網址路徑（/vehicles）看是否跳回登入頁
+> 2. 一般使用者，改成`沒權限`的網址路徑（/employees）看是否跳回儀表板
+> 3. 登出後，改成`沒權限`的網址路徑（/errr）看是否跳回跳回登入頁
+
+#### 確認後端 API 都順利回應
+
+1. 打開 F12（點擊滑鼠右鍵，選擇檢查）
+2. 開啟「開發人員工具（Chrome DevTools）」
+3. 在「網路（Network）」的分頁瀏覽（Fetch/XHR）對應的 API
+
+![初步了解後端概念](./assets/backend-api.png)
+
+#### 打開 Docker，瀏覽 Postgres Admin 查看資料庫
+
+![打開 Docker，找到 pgadmin 往右滑找 port](./assets/docker-pgadmin.png)
+
+1. 進入 Postgres Admin: http://localhost:5050/browser
+2. Servers ⭢ VMS local ⭢ vms ⭢ Schemas ⭢ public ⭢ Tables ⭢ Employee
+3. 點擊右鍵 ⭢ View/Edit Data ⭢ All Rows
+
+![可以看到剛剛新增的 User](./assets/pgadmin-users.png)
+
+### 🏗️ 專案架構說明
+
+- **apps/web 資料夾**：前端程式，就是你看到的網頁畫面跟操作邏輯。用 `Vite + React + shadcn/ui`。
+- **apps/api 資料夾**：後端程式，負責資料處理、跟資料庫溝通。用 `Express + Prisma`。
+- **packages/shared 資料夾**：前後端共用的「資料規格與驗證規則」，例如「密碼至少 8 字」「車牌欄位必填」這類`規則只寫一份，兩邊一起用`。
+- **infra/pgadmin 資料夾**：pgAdmin 容器一啟動就`自動載入的設定檔`，省掉每次手動「Add Server」、輸入密碼的步驟。
+- **.env 環境檔**：存放資料庫帳密、JWT 密鑰、pgAdmin 預設帳號、初始 admin 帳密等隱私資訊。
+- **docker-compose.yml**：Postgres 資料庫與 pgAdmin 都是透過 Docker 啟動。
+- **openspec 資料夾**：本專案的`需求、設計、規格、任務文件`，跟著 OpenSpec 工作流走。
+- **README.md**：專案簡介、Local 開發步驟、各服務 URL 與測試帳密、pgAdmin 操作說明。
+
+### 📦 將完成的 SPEC 歸檔
 
 ```prompt [label="歸檔"]
 功能符合預期，進行歸檔
 ```
 
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+![建議都選擇「Sync now」讓 AI 幫忙整合](./assets/sync-openspec.png)
+
+![歸檔後 specs 就會有規格文件了](./assets/sync-openspec2.png)
+
+[lab-session title="🛠️  實作練習"]
 - 請 AI 協助啟動專案
-- 驗證功能符合需求（或進行優化）
+- 驗證功能符合需求
 - 將變更歸檔
 [/lab-session]
 
-## 建立專案規則、加入版本控制
+## 將變更提交到 GitHub
+
+### 初步瞭解 Git Flow
+
+- **main(master)**：主分支，對外的穩定版本，只接受來自 develop 的 Pull Request
+- **develop**：開發分支，日常更新都推送到這裡
+- **feature/xxx**：功能分支，開發單一功能時從 develop 切出，完成後合併回 develop
+- **release/xxx**：發布準備分支，從 develop 切出，只做版本號調整與小修復，完成後合併回 main 與 develop
+- **hotfix/xxx**：緊急修復分支，直接從 main 切出，修完後同時合併回 main 與 develop
+
+[html src="./html/git-flow.html"]
+
+> **為什麼需要分支策略？**
+> 如果把`邏輯錯誤`或`功能不完善`的版本直接推送到主分支，`產品就壞掉了`。分支策略的目的，是保護`對外服務的穩定性`。
+
+### 🔀 切換分支
+
+```terminal [label="切換到 feature 分支"]
+git checkout -b feature/fullstack-foundation
+```
+
+### 💾 提交變更
+
+```prompt [label="生成 commit 並 push"]
+幫我生成 commit，並執行 push
+```
+
+> **可能會遇到的問題**
+> Commit 前會透過 `Lint 檢查格式`，`eslint.config.js`需要在設計 ignores 的資料夾（ex:node_modules、coverage、dist...）。
+> AI 通常會幫你搞定，但如果卡住可以朝這個方向請他調整。
+
+![可以到 GitHub 確認有順利更新](./assets/github-success.png)
+
+# 優化專案：你相信 AI 會乖乖聽話，還是信我是秦始皇
+
+## 建立專案規則
 
 ### 📐 設定 CLAUDE、OpenSpec 專案規則
 
@@ -481,50 +559,119 @@ openspec init
 /init
 ```
 
+![CLAUDE.md 可以讓 AI 快速理解 Code Base](./assets/claude-md.png)
+
 ```prompt [label="OpenSpec 設定"]
 Please read openspec/config.yaml and help me fill it out
 with details about my project, tech stack, and conventions
 ```
 
+![openspec/config.yaml 讓規劃時負擔更輕](./assets/openspec-config-yaml.png)
+
 > **Tips**
 > 舊專案在使用 Claude & OpenSpec 前，可以先透過這兩段指令，讓 AI 初步了解專案的架構、功能、技術。
 
-### 🗂️ 設計 README.md、.gitignore 並加入版控
-
-初版完成後，要加入版控；未來更新時，才會清楚 AI 到底改了哪些細節
-
-```prompt [label="設計 .gitignore、README.md"]
-請幫我設計專案的「.gitignore」但「.claude、openspec」要加入版本控制
-並且將「專案簡介與啟動方式」寫入 README.md
-```
-
-```terminal [label="切換到開發分支"]
-git checkout -b develop
-```
-
-> 先使用內建的 AI 來 Generate Commit，Commit 後將變更 Sync Changes 更新上去
-
-有可能會遇到 commit 失敗，因為掃描到其他檔案
-
-```Prompt [label="解決 Lint 問題"]
-解決目前 Lint 問題
-```
-
-![可以到 GitHub 確認有順利更新](./assets/github-develop.png)
-
-[lab-session title="🛠️  實作時間" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+[lab-session title="🛠️  實作練習"]
 - 設定 CLAUDE、OpenSpec 專案規則
-- 設計 README.md、.gitignore
-- 加入版控
 [/lab-session]
 
----
+## 優化不足之處
 
-# 舊專案：根據情境設計 Skills，讓 AI 有執行依據
+### 🤔 目前有哪些問題？
 
-> **建立客製化 Skill 的重要性**
-> 不同部門、團隊都有自己的工作流，專案也有各自的情境；而 Agent Skills 讓每次達成的目標，成為下次的起點。
-> **根據需求建立 Agent Skills，畢竟能實際給予幫助的，才是好的 Skill。**
+[flow]
+- 畫面太過樸素
+- 預設只有 admin 帳號，資料需要自己建立
+- 建立員工、車輛時，所有欄位都要手打
+[/flow]
+
+### 🎨 請 AI 提出優化方案
+
+優化功能這塊，我建議使用 `Plan Mode` 讓 AI 先給出提案，使用 `shift+tab` 便可切換模式。
+
+```prompt [label="使用 Plan Mode 讓 AI 思考優化方向"]
+目前畫面太過樸素，從熟悉 Magic UI 設計師的角度來看，如何針對主題優化？
+另外 DB 初始資料只有 Admin，我想要有指令可以建立模擬資料測試所有情境
+還有員工、車輛的欄位都是用手打的，我認為有許多欄位應該可以設計成下拉選單，並且後端 API 也要進行選項的檢查
+```
+
+![在 Plan Mode 模式會詢問多輪問題](./assets/plan-mode-questions.png)
+
+![在 Plan Mode 模式會先給出優化方案](./assets/plan-mode.png)
+
+> **為何這次用 Plan Mode？**
+> 如果是`調整功能`，建議使用 OpenSpec；但如果是`優化＆重構`，會推薦 Plan Mode。
+> 因為這本身並不涉及功能的改變，用 AI Agent 來調整較為輕量，但通常也會`執行 10~20 分鐘`。
+
+### ✅ 確認優化結果符合預期
+
+因為涉及`資料庫調整、前後端邏輯優化`，建議直接請 AI 協助重啟。
+
+```prompt [label="重啟前後端並取得測試資訊"]
+幫我新增 mock 資料後，重啟前後端
+```
+
+#### 畫面質感升級
+
+![儀表板優化非常多](./assets/enhance-ui.png)
+
+#### 有模擬資料方便測試
+
+![這樣省去自行新增資料的麻煩](./assets/enhance-mock-data.png)
+
+#### 有設計下拉選單方便操作
+
+![有下拉選單可以限制輸入、提升使用體驗](./assets/enhance-mock-drop-down.png)
+
+> **優化是沒有盡頭的**
+> 以下拉選單為例，哪些適合`寫死`，哪些用資料庫`關聯`是需要評估的。
+> - **狀態**：不常變動，可以寫死
+> - **廠牌**：可能需要新增、刪除，用資料庫會更好
+
+### 😅 結果不如預期才是常態
+
+前面是分享優化完畢的結果，下面呈現第一次優化出現的問題。
+
+#### 負責員工僅顯示 ID
+
+![這樣根本無法直覺辨識由誰負責](./assets/employee-issue.png)
+
+#### 下拉選單 & 負責員工問題
+
+![看不清楚選項，員工難以對應](./assets/drop-down-issue.png)
+
+> **個人經驗分享**
+> **大範圍的 UI 優化**，通常伴隨許多`破版問題`。
+> **對欄位進行調整時**，也很常出現`關聯錯誤`的問題。
+> **結果還是需要人類確認、驗證，不要完全相信 AI。**
+
+### 📝 將變更寫回 OpenSpec
+
+如果改完後發現`變更範圍太大`，還是可以`回補 OpenSpec 內容`的。儘管可以要求 AI 直接修改主 spec，但建議還是`留下 changes 的資訊方便未來追溯`。
+
+```prompt [label="更新 OpenSpec"]
+根據變更，依 openspec/config.yaml 走完整 propose → archive：產出 proposal、design、tasks（N.M 樹狀、半天粒度、已完成標 [x]）、delta spec，最後同步主 specs 並歸檔。
+```
+
+![是否回填 OpenSpec 也是可以](./assets/supplement-openspec.png)
+
+### 🔀 切換分支 & 提交變更
+
+```prompt [label="切換分支 & 提交變更"]
+根據變更幫我切換 branch
+然後生成 commit，並執行 push
+```
+
+#### 建立 develop branch
+
+功能驗證 OK 後，就能把 `feature/xxx` 合進 `develop`。
+
+```prompt [label="建立 develop branch"]
+建立新的 develop branch
+```
+
+> **小提醒**
+> 因為目前尚無 develop branch 才能這樣處理，未來都要走 `Pull Request` 才能合併。
 
 ## 用 OpenSpec 新增功能
 
@@ -561,6 +708,14 @@ git checkout -b develop
 - 驗證功能符合需求
 - 用歸檔來整合規格文件
 [/lab-session]
+
+---
+
+# 舊專案：根據情境設計 Skills，讓 AI 有執行依據
+
+> **建立客製化 Skill 的重要性**
+> 不同部門、團隊都有自己的工作流，專案也有各自的情境；而 Agent Skills 讓每次達成的目標，成為下次的起點。
+> **根據需求建立 Agent Skills，畢竟能實際給予幫助的，才是好的 Skill。**
 
 ## 深入認識 Agent Skill
 

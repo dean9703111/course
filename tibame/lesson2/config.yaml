@@ -1,16 +1,16 @@
-# 緯穎 Claude Code 實戰工作坊
+# Claude AI 驅動全端開發工作流
 
 page:
-  title: "工程師的下一步升級路線"
-  badge: "緯穎 Claude Code 實戰工作坊"
-  hero_title: "從 AI 寫程式到驅動開發流程"
+  title: "規格驅動開發 (SDD)"
+  badge: "Claude AI 驅動全端開發工作流 - 2"
+  hero_title: "讓 AI 根據規格建立系統"
   subtitle: "AI 寫程式讓產能暴增，但「品質、維護、擴充」才決定產品能走多遠"
 
 seo:
-  title: "緯穎 Claude Code 實戰工作坊 - 林鼎淵"
-  description: "了解哪些環節可以導入 AI，增加專案的穩定性、擴充性，並透過需求規格與版本控制，為產品帶來更好的品質。建立 Agent Skills，讓 AI 從庸才變專家。"
-  image: "https://deanlin.net/course/wiwynn/assets/og-image.jpg"
-  url: "https://deanlin.net/course/wiwynn"
+  title: "規格驅動開發 (SDD)"
+  description: "讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程，同時用 MCP 操作外部工具。"
+  image: "https://deanlin.net/course/tibame/lesson2/assets/og-image.jpg"
+  url: "https://deanlin.net/course/tibame/lesson2"
 
 quotes:
   opening:
