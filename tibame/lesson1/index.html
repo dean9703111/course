@@ -47,6 +47,12 @@
       --accent3-rgb: 224 136 152;
       --accent4: #9c88ff;
       --accent4-rgb: 156 136 255;
+      --branch-main: #3fb950;
+      --branch-develop: #58a6ff;
+      --branch-feature: #bc8cff;
+      --branch-release: #56d4dd;
+      --branch-hotfix: #f0883e;
+      --branch-default: #8b949e;
       --border: #2a2d3a;
       --code-bg: #12141c;
       --radius: 12px;
@@ -66,6 +72,12 @@
       --accent3-rgb: 176 72 96;
       --accent4: #6f5cc4;
       --accent4-rgb: 111 92 196;
+      --branch-main: #1a7f37;
+      --branch-develop: #0969da;
+      --branch-feature: #8250df;
+      --branch-release: #1b7c83;
+      --branch-hotfix: #bc4c00;
+      --branch-default: #6e7781;
       --border: #d4d4d8;
       --code-bg: #eaeaef;
     }
@@ -1792,6 +1804,161 @@
       }
     }
 
+    /* ===== BRANCH RAIL (內容區左側 git graph：彎出 → 竪線 → 彎入收尾) ===== */
+    /* absolute 文檔流定位：隨內容自然捲動，不每幀重算 → 不晃 */
+    .branch-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      z-index: 5
+    }
+
+    /* 每個分支區段：JS 設 left/top/height（文檔座標）。border 畫彎出(左上)+竪線(左)+彎入(左下) */
+    .branch-seg {
+      position: absolute;
+      width: 20px;
+      box-sizing: border-box;
+      border-left: 2px solid var(--seg-color, var(--accent));
+      border-top: 2px solid var(--seg-color, var(--accent));
+      border-bottom: 2px solid var(--seg-color, var(--accent));
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      pointer-events: auto;
+      transition: border-width .12s
+    }
+
+    /* hover 線（非 tag 本體）：只變粗、不變色 */
+    /* hover 線本體 → 只變粗、不變色（tag 已是獨立元件、不在 rail 內，無需排除） */
+    .branch-seg:hover {
+      border-left-width: 4px;
+      border-top-width: 4px;
+      border-bottom-width: 4px
+    }
+
+    /* none / 文末 → 漂亮收尾：彎入末端一顆圓點（切到新分支則不放，下一段緊接彎出） */
+    .branch-seg[data-endkind="none"]::after,
+    .branch-seg[data-endkind="end"]::after {
+      content: '';
+      position: absolute;
+      left: calc(100% - 5px);
+      bottom: -6px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--seg-color, var(--accent));
+      box-shadow: 0 0 0 3px var(--bg)
+    }
+
+    /* branch name tag：真實內容流元件，佔垂直空間、上下各 5px、不疊加遮擋 */
+    .branch-flag {
+      display: block;
+      width: -moz-fit-content;
+      width: fit-content;
+      margin: 5px 0;
+      padding: .2rem .55rem;
+      border-radius: 6px;
+      font-family: ui-monospace, 'SF Mono', 'Menlo', monospace;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      white-space: nowrap;
+      background: var(--seg-color, var(--accent));
+      text-decoration: none;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .18);
+      transition: transform .15s
+    }
+
+    /* hover tag：只放大作選中回饋（不變色、無額外填色/陰影） */
+    .branch-flag:hover {
+      transform: scale(1.06)
+    }
+
+    /* tag 後緊接的標題若自帶較大上邊距（如 sub-title 的 3.5rem），改由 tag 的 5px 決定間距 */
+    .branch-flag+.sub-title {
+      margin-top: 0
+    }
+
+    /* tag 配色 + 文字色（特異性高於全域 [data-theme="light"] a） */
+    .branch-flag.branch-flag--main {
+      --seg-color: var(--branch-main)
+    }
+
+    .branch-flag.branch-flag--develop {
+      --seg-color: var(--branch-develop)
+    }
+
+    .branch-flag.branch-flag--feature {
+      --seg-color: var(--branch-feature)
+    }
+
+    .branch-flag.branch-flag--release {
+      --seg-color: var(--branch-release)
+    }
+
+    .branch-flag.branch-flag--hotfix {
+      --seg-color: var(--branch-hotfix)
+    }
+
+    .branch-flag.branch-flag--default {
+      --seg-color: var(--branch-default)
+    }
+
+    .branch-flag[class*="branch-flag--"] {
+      color: #fff
+    }
+
+    /* rail 各分支配色 */
+    .branch-line .branch-seg--main {
+      --seg-color: var(--branch-main)
+    }
+
+    .branch-line .branch-seg--develop {
+      --seg-color: var(--branch-develop)
+    }
+
+    .branch-line .branch-seg--feature {
+      --seg-color: var(--branch-feature)
+    }
+
+    .branch-line .branch-seg--release {
+      --seg-color: var(--branch-release)
+    }
+
+    .branch-line .branch-seg--hotfix {
+      --seg-color: var(--branch-hotfix)
+    }
+
+    .branch-line .branch-seg--default {
+      --seg-color: var(--branch-default)
+    }
+
+    /* hover tooltip（跟隨滑鼠，fixed） */
+    .branch-tip {
+      position: fixed;
+      left: 0;
+      top: 0;
+      transform: translate(14px, -50%);
+      padding: .24rem .6rem;
+      border-radius: 6px;
+      font-family: ui-monospace, 'SF Mono', 'Menlo', monospace;
+      font-size: .72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      color: #fff;
+      background: rgba(20, 22, 30, .92);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+      z-index: 97
+    }
+
+    .branch-tip.visible {
+      opacity: 1
+    }
+
     /* ===== SIDEBAR BRAND (TOP) ===== */
     .sidebar-brand {
       padding: .75rem 1.5rem 1rem;
@@ -2525,6 +2692,7 @@
 
       /* Explicitly target fixed-position UI that can bleed through in Chrome/Safari */
       .sidebar,
+      .branch-line,
       .hamburger,
       .sidebar-overlay,
       .sidebar-collapse-btn,
@@ -4086,6 +4254,7 @@
     }
 
     html.og-mode .sidebar,
+    html.og-mode .branch-line,
     html.og-mode .sidebar-collapse-btn,
     html.og-mode .hamburger,
     html.og-mode .sidebar-overlay {
@@ -4484,6 +4653,7 @@
     }
 
     body.pres-active .sidebar,
+    body.pres-active .branch-line,
     body.pres-active .sidebar-overlay,
     body.pres-active .sidebar-collapse-btn,
     body.pres-active .collapsed-progress,
@@ -4907,6 +5077,12 @@
       </div>
     </div>
   </nav>
+
+    <div class="branch-line" id="branch-line">
+    
+  </div>
+  <div class="branch-tip" id="branch-tip"></div>
+
   <button class="sidebar-collapse-btn" id="sidebar-collapse" aria-label="收合側邊欄">
     <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" stroke-width="2"
       stroke-linecap="round" stroke-linejoin="round">
@@ -4919,7 +5095,7 @@
   </div>
 
     <header class="hero">
-    <div class="hero-badge"><span class="dot"></span>Claude AI 驅動全端開發工作流</div>
+    <div class="hero-badge"><span class="dot"></span>Claude AI 驅動全端開發工作流 - 1</div>
     <h1>建立專屬 Agent Skills 護城河</h1>
     <p class="hero-sub">把解決問題的經驗，變成可重複使用的資產</p>
     <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
@@ -4998,7 +5174,7 @@
             <span class="class-timeline__status-tag is-upcoming">即將開始</span>
           </div>
           <div class="class-timeline__time">13:30~16:30</div>
-          <div class="class-timeline__des"><strong>規格驅動開發 (SDD)</strong>：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程，同時用 MCP 操作外部工具</div>
+          <div class="class-timeline__des"><strong>規格驅動開發 (SDD)</strong>：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程</div>
         </div>
       </div>
       <div class="class-timeline__item is-upcoming" data-status="upcoming">
@@ -5012,7 +5188,7 @@
             <span class="class-timeline__status-tag is-upcoming">即將開始</span>
           </div>
           <div class="class-timeline__time">13:30~16:30</div>
-          <div class="class-timeline__des"><strong>團隊協作與專案部署</strong>：建立自動化測試，了解 Worktree 應用時機，並將專案部署上線</div>
+          <div class="class-timeline__des"><strong>團隊協作與專案部署</strong>：建立自動化測試，了解 Worktree 應用時機，同時用 MCP 操作外部工具將專案部署上線</div>
         </div>
       </div>
     </div>
@@ -5022,17 +5198,18 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="ide-ai"><span class="num">1</span> 為什麼使用 IDE</span>
+    
+    <span class="section-label" id="ide-ai" data-seg="0"><span class="num">1</span> 為什麼使用 IDE</span>
     <h2>我厭倦在 AI 工具間複製貼上</h2>
     <p class="lead">網頁版的 AI 只能告訴你該怎麼做，AI Agent 能直接幫你完成工作</p>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-1"><span class="bar"></span>工具越多，流程越碎</div>
+    <div class="sub-title" id="sub-section-1" data-seg="0"><span class="bar"></span>工具越多，流程越碎</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header">‍💻 一開始的工作方式</div>
       <div class="group-body">
         <div class="flow">
@@ -5067,7 +5244,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">😩</span> 痛點 1：複製貼上讓人煩躁</div>
       <div class="group-body">
         <ul>
@@ -5080,7 +5257,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎬</span> 痛點 2：瑣碎的事情太多</div>
       <div class="group-body">
         <ul>
@@ -5105,7 +5282,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-ai"><span class="bar"></span>轉念：讓 AI 代勞</div>
+    <div class="sub-title" id="sub-ai" data-seg="0"><span class="bar"></span>轉念：讓 AI 代勞</div>
   </div>
 
   <div class="reveal">
@@ -5158,13 +5335,14 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="claude-code"><span class="num">2</span> 前製作業</span>
+    
+    <span class="section-label" id="claude-code" data-seg="0"><span class="num">2</span> 前製作業</span>
     <h2>初探 Claude Code &amp; 確認開發環境</h2>
     
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-ai-2"><span class="bar"></span>AI 是大腦，工具是雙手</div>
+    <div class="sub-title" id="sub-ai-2" data-seg="0"><span class="bar"></span>AI 是大腦，工具是雙手</div>
   </div>
 
   <div class="reveal">
@@ -5174,7 +5352,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🛠</span> ️ 確認開發環境</div>
       <div class="group-body">
         <ul>
@@ -5305,11 +5483,11 @@ pip --version</div>
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="sub-title" id="sub-claude-code"><span class="bar"></span>在終端機使用 Claude Code</div>
+    <div class="sub-title" id="sub-claude-code" data-seg="0"><span class="bar"></span>在終端機使用 Claude Code</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🛠</span> ️ 安裝 Claude Code</div>
       <div class="group-body">
         <p><strong>macOS, Linux, WSL</strong></p>
@@ -5345,7 +5523,7 @@ pip --version</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🚀</span> 啟動 Claude Code</div>
       <div class="group-body">
         <div class="prompt-block">
@@ -5372,11 +5550,11 @@ pip --version</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-ide-claude-code"><span class="bar"></span>在 IDE 使用 Claude Code</div>
+    <div class="sub-title" id="sub-ide-claude-code" data-seg="0"><span class="bar"></span>在 IDE 使用 Claude Code</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🧩</span> 從 Extensions 安裝</div>
       <div class="group-body">
         <p>如果不習慣終端機操作，安裝 Claude Code 外掛也能使用大部分的功能。</p>
@@ -5398,7 +5576,7 @@ pip --version</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🛡</span> ️ 調整隱私設定</div>
       <div class="group-body">
         <p>Help improve Claude 默認為 <code>true</code>，請調整為 <code>false</code>。</p>
@@ -5422,7 +5600,7 @@ pip --version</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🚫</span> 禁止 Claude 使用危險指令</div>
       <div class="group-body">
         <p>AI 執行的指令是無法完全預期的，為了減少損失，可以透過設定來阻止危險操作。</p>
@@ -5507,7 +5685,7 @@ pip --version</div>
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">📂</span> 了解 Claude Code 工作目錄</div>
       <div class="group-body">
         <iframe class="raw-html-frame" srcdoc="<!DOCTYPE html>
@@ -6064,7 +6242,7 @@ try {
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">⚙</span> ️ 了解 Rules / Commands / Skills / MCP 應用場景</div>
       <div class="group-body">
         <p><strong>1. Rules（CLAUDE.md）：</strong><code>每次對話都會參考</code>，記錄專案技術、規範、注意事項；不要寫太多，會佔用上下文空間</p>
@@ -6076,7 +6254,7 @@ try {
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🤖</span> Claude 不同操作模式</div>
       <div class="group-body">
         <div class="table-wrap">
@@ -6131,7 +6309,7 @@ try {
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🤖</span> Claude 不同模型</div>
       <div class="group-body">
         <ul>
@@ -6155,7 +6333,7 @@ try {
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">📊</span> 設定 Status Line</div>
       <div class="group-body">
         <p>Context 被壓縮（Compact）、Claude 忘記前面資訊、額度耗盡時，如果沒有 Status Line 完全不會意識到。</p>
@@ -6221,7 +6399,7 @@ try {
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">📝</span> 補充說明</div>
       <div class="group-body">
         <h4 class="minor-title">不希望 Claude 成為 Commit & PR 合作者</h4>
@@ -6242,6 +6420,24 @@ try {
   }
 }</div>
     </div>
+        <h4 class="minor-title">Python 設定 alias 對應（Mac）</h4>
+        <p class="loose-text">如果電腦環境中有安裝多個 Python 版本，可能會遇到 <code>python</code> 與 <code>python3</code> 指令執行時版本不同問題。</p>
+        <p class="loose-text">為了減少意外，建議設定 alias，讓兩個指令指向 <code>同一個 Python 版本</code>。</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">請 AI 協助設定</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">請幫我將 python 與 python3 透過 alias 設定指向同一個版本</div>
+    </div>
+        <figure class="content-image">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAu8AAABpCAYAAACK9c29AAABV2lDQ1BJQ0MgUHJvZmlsZQAAKJF1kE0rRHEUxn+DiRCShYU0SlYz0pDI6g4NymLylpfVnTvjjhrXvztXUpbsR1Z2Gj4Dlj6AslAWkg9gpcSG6Tp/g5khp07n19PT0+mBmgZTqWwdsOF47uxkLLS0vBKqfyRIF42E6DGtnDISiRmx8H2r5/WWgL43EZ3V1N79uBobM+ItI/ZT8ODhr79qGlPpnCX3XXbAUq4HgbBwYttTmneFO1x5Sjiv2S7xqeZkiS8+PfOz48JXwm1WxkwJ3wuHkxW6XcEb2S3r6wf9fXPaWZjTObJdLGIwSJQBRokQZ4qJf/xDn/5xNlHs4LKOTQZPmjNEUWRJC0/jYNFPWFinRhnWPf/ur6xtFmDkBWrzZS15BOf70HlX1nqPoXUPzq6V6Zo/rQZe63Jrg9ESN8cg+OD7z31QfwjFvO+/FXy/eCL50tGl8wFNxWGpyCR35wAAAFZlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA5KGAAcAAAASAAAARKACAAQAAAABAAAC76ADAAQAAAABAAAAaQAAAABBU0NJSQAAAFNjcmVlbnNob3S01foJAAAB1mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNi4wLjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczpleGlmPSJodHRwOi8vbnMuYWRvYmUuY29tL2V4aWYvMS4wLyI+CiAgICAgICAgIDxleGlmOlBpeGVsWURpbWVuc2lvbj4xMDU8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+NzUxPC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6VXNlckNvbW1lbnQ+U2NyZWVuc2hvdDwvZXhpZjpVc2VyQ29tbWVudD4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CjwqOkcAADmlSURBVHgB7Z0HuBRF1oYLjGDOoiKoCBgQMGNE3BUx54DxUcy6a/j9df0Rc0YQXQPLri6YRcWAixEwri6IWVRwYUVBMecVA/99C09b03d67vRMz70zl+88z73VXV2pv+6pPnXqq1MtVllllbkzZ850EiEgBISAEBACQkAICAEhIASqG4GW1d08tU4ICAEhIASEgBAQAkJACAgBQ0DKuyGhUAgIASEgBISAEBACQkAIVDkCUt6r/AGpeUJACAgBISAEhIAQEAJCwBBYYIklljj366+/tvOiw4UWWsh1797d7bTTTq5Pnz4O3vznn3/u87dp08ZtsMEGrm3btu7jjz92P/30U9Hl1mLCtdZay/Xr18/VrR9w4PLVV181+3uuxedUa21eaqml3EYbbeR/R99++637/vvva+0W1N4aQKBjx47uqKOOcl26dHHvvPOO++GHH2qg1aU3cfHFF3cLL7ywmzNnTupCysmburIay9Ac+qtFF13ULb300u6XX37RN7zG3r9imtuc+roFi7nhMA2d1yGHHOJ23313x4tu8vLLL7t3333Xn+63335uzz339Mdnnnmme/755y1Zsww7derkdt555+jevvnmG3fXXXe5u+++23333XdRvA6EQBoEtt12W3fqqaf6LEOHDnW33357muxKKwSKQuDcc8/1hgcSo7jfeOONReWrpUQYVY444gi32WabuTXWWMO1aNHCG5tGjRrlf1c//vhj4u2Ukzex0GZ4oRb7K3QYvt2bb765W2eddRz6jcl///tf99Zbb7lHHnnEjRkzxqIV1jACzamvS6W8Y02/8MIL3ZJLLpnz+H7++ef5WklFQQeDBRZYwONCB8CHYu+993Znn322e/XVV3Pw0sn8iQCzVJ07d/bvyrBhw+br38z8+QZU512HMzqrrrpqdTayjFYtuOCC7pxzznFbbbVVTinLLLOM76eXXXZZd9VVV+Vcs5Ny8loZtRrOD/3VCius4E466aS8jwjFvlu3bv5vvfXWcwMHDsybTpG1g0Bz6uuK5rwzfX/55ZfnKO7jx493p5xyih+5cjy/CvfO6B0sQhyYRgSzjTfeeH6FRvcdINCzZ0+32267+VkpFAaJEKgGBJgl/PTTT92///1vd+edd1ZDkzJtwx577BEp7tA4//73v7v777/fUyOoaJdddvF0x3yVlpM3X3m1FDc/9Vdz5851sAeYLf/LX/7i7rnnHscMugnvCLM2ktpGoDn1dUVZ3uF0X3rppVEH98knn7gLLrjAvfLKK7X9JDNsPVNsL730kv/r2rWrt7gvv/zynlp0ySWXuGOPPTaiFWVYrYoSAkJACJSFALQA/pqrbLrpptGtXXnllRGNc8011/Q8f6zrrFf6z3/+E6Wzg3LyWhkKqxcBBnODBw92L7zwgvvwww9zGnrzzTc76IorrbSSj9966619upxEOqkpBJpTX+ct75032j7xAbRs2dKddtppkeLOolQszFLcEyHz2IDRZ5995hPBmQRDsJQIASEgBIRA4yEAVc0EAwsC591mv3CogBKXT8rJm688xVUXAhjdmIWJK+608osvvvAWeGtxu3bt7FChEGhyBLzlvdNGvdxbLz6RtzHQQdZdd11/jRXYZ511lpsxY0betIUi4YPDOaQsVvrj1eDpp5/OmZrKl5+0rBDGMrLYYot5njDeXGxKi6lePHHEBcpKjx493IorruiwgNNB0+733nvPh3TWTJUlCZ5ymCaDA0q6qVOnutdee63oe6cusLruuuu80s59M/X2wAMPJFWp+AoiAL91tdVW8zWwCIkFasW8k7w7eE9C6OCTPvJcRyGAG0n45Zdf+neN+CyFAeCWW27pf0etW7f27+TEiRP9hyapnjqPUn4xFr8j7mXWrFluypQpbvLkyd4zUjwf5TLbhkybNs3/1uL1MnifMGGCK8VTVby+pjznd453CSSpL7H2FfN80/YbvIMslKNsnguzmsj666/vvXnByUXBoD9h7Uw+63Davg4u79prr223lRPabyMnMuGkVt6rjz76KKJ7sm6L93aHHXbwfTu39vrrryeuPyknbwJsRUWrv1rHf/ebur9q1apV9Lw++OCD6LgWD9TX5T61Wu/rvPK+2Q4HuX89equbNf3N3LurOzvggAOiuNGjR/sPfhRR5AGKKws3TQmybIceeqgbMGCAVyQsLgxZ8HnwwQc7OrIkueaaa3JGx6Q7/PDDfbtDbzjx/HDR//GPf8SjvaJ9+umnu969e9ezlLMoFT4cvKlCir8VyssBZvCckf3337/RlPc+b+zuWrddzM18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V5VAVWUKgeaDgJT35vMsdSdCQAgIASEgBISAEBACzRyBohesNnMcdHtCQAgIASEgBISAEBACQqDqEZDyXvWPSA0UAkJACAgBISAEhIAQEALzEJDyrjdBCAgBISAEhIAQEAJCQAjUCAJS3mvkQamZQkAICAEhIASEgBAQAkJAyrveASEgBISAEBACQkAICAEhUCMISHmvkQelZgoBISAEhIAQEAJCQAgIgdSbNFUzZEsttZRbb731fBPfeust99lnn1VzczNvGxt0LL744u6bb74p2o955o0oocCWLVs6nt33339fE+2uVZxLeDTKIgSEgBAQAkJACFQZAonKO1vBH3LIIW6BBRbIaTKb03z55Zf+b+rUqX7TmpwETXiy7bbbulNPPdW3YOjQoe72229vwtZUvmqUyJ133tltvvnmbp111vGKu9XKJkQMYB555BE3ZswYi65IyDuy6667ujZt2vjyn376aff6668n1tW6dWvXo0cPt80227h1113XLbfccn4TpLlz57qZM2e6d9991w0bNszNmDEjsYxyL6Rpc7XgXO49K78QEAJCQAgIASFQ+wgkKu/LL7+869u3b4N3yG6V/fv3d99++22DadMm2GmnnVznzp3dzz//7JW57777Lm0RzTr9Cius4E466aS894jC2a1bN//HbMTAgQPzpis3slOnTu700093HTp0iIpi4JCkvC+zzDLurrvucgsttFCU3g5atGjhVl11Vf+30UYbuXPPPddNmDDBLmcWpm1zNeCc2c2rICEgBISAEBACQqCmEUhU3uN39cMPP7hFFlkkHu26d+/uBg8e7BU4LPJZSs+ePd2mm27qi7znnnuclPf86GKxfuWVVxwzIVCFsGT37t07ssTvsssuDmv4Cy+8kL+AEmIZHBx55JFu77339lbzYovA4m2KO/QeazfvFs96zTXX9EUttthi7uSTT3YHHXRQsUU3mK7UNlvBTYGz1a1QCAgBISAEhIAQEAIgUJTy/sUXX7g99tjDK11YTldbbTW35557uq233tqj2LFjR3fwwQe7a6+9Vqg2IgIff/yxHzihlH/44Yc5Nd98880O6tBKK63k43lWWSrvw4cPj8rOqbiBEwZgTz75pHv22WfduHHj3I8//hjluOGGG1yvXr3cgAEDfBxW+FVWWcVTaaJEZRyU2uamxLmM21VWISAEhIAQ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CAEhMF8jkPmC1eHDh/vFnnDEQ28kcJdZNAkFRSIEhIAQEAJCQAgIASEgBIRAegQyV94XXXRRx18ocLAHDhzopk+fHkbrWAgIASEgBISAEBACQkAICIEUCGSuvLNratu2bV3Lli29z/Fp06a5sWPHyuKe4qEoqRAQAkJACAgBISAEhIAQyIdAxRes5qtUcUJACAgBISAEhIAQEAJCQAikRyDzBavpm6AcQkAICAEhIASEgBAQAkJACBSDgJT3YlBSGiEgBISAEBACQkAICAEhUAUISHmvgoegJggBISAEhIAQEAJCQAgIgWIQkPJeDEpKIwSEgBAQAkJACAgBISAEqgABKe9V8BDUBCEgBISAEBACQkAICAEhUAwCUt6LQUlphIAQEAJCQAgIASEgBIRAFSCQuZ/3prynpZZayq233nq+CW+99Zb77LPPmrI5jV43m2Mtvvji7ptvvnHsaFsrwp4APLvvv/++JtpdqzjXyvugdgoBISAEhIAQEALJCCQq761atXKHHHKIW2CBBXJyz5kzx3355Zf+b+rUqY5NmKpFtt12W3fqqaf65gwdOtTdfvvt1dK0irQDJXLnnXd2m2++uVtnnXW84m4VobwzgHnkkUfcmDFjLLoiIe/Irrvu6tq0aePLf/rpp93rr7+eWFfr1q1djx493DbbbOPWXXddt9xyy/lNvebOnetmzpzp3n33XTds2DA3Y8aMxDLKvZCmzdWCc7n3rPxCQAgIASEgBIRA7SOQqLwvv/zyrm/fvg3e4UsvveT69+/vvv322wbTpk2w0047uc6dO7uff/7ZK3Pfffdd2iKadfoVVljBnXTSSXnvEYWzW7du/o/ZiIEDB+ZNV25kp06d3Omnn+46dOgQFcXAIUl5X2aZZdxdd93lFlpooSi9HbRo0cKtuuqq/m+jjTZy5557rpswYYJdzixM2+ZqwDmzm1dBQkAICAEhIASEQE0jkKi8x+/qhx9+cIssskg82nXv3t0NHjzYK3BY5LOUnj17uk033dQXec899zgp7/nRxWL9yiuvOGZCoAphye7du3dkid9ll10c1vAXXnghfwElxDI4OPLII93ee+/trebFFoHF2xR36D3Wbt4tnvWaa67pi1psscXcySef7A466KBii24wXalttoKbAmerW6EQEAJCQAgIASEgBECgKOX9iy++cHvssYdXurCc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" alt="重開 Terminal 來檢核「python --version &amp;&amp; python3 --version」" loading="lazy">
+      <figcaption>重開 Terminal 來檢核「python --version &amp;&amp; python3 --version」</figcaption>
+    </figure>
       </div>
     </div>
   </div>
@@ -6250,17 +6446,18 @@ try {
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="ai-agent-agent-skills"><span class="num">3</span> 實戰操作</span>
+    
+    <span class="section-label" id="ai-agent-agent-skills" data-seg="0"><span class="num">3</span> 實戰操作</span>
     <h2>體驗 AI Agent &amp; Agent Skills 的各項能力</h2>
     
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-6"><span class="bar"></span>下載課程範例</div>
+    <div class="sub-title" id="sub-section-6" data-seg="0"><span class="bar"></span>下載課程範例</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🗂</span> ️ 課程範例 Repository</div>
       <div class="group-body">
         <p><a href="https://github.com/deancourse/tibame-lesson1" target="_blank" rel="noopener">下載或 Fork 練習用 Repository</a> 後，可以跟著課程進度操作</p>
@@ -6285,7 +6482,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🤖</span> 可以使用不同的 AI Agent</div>
       <div class="group-body">
         <p>雖然課程講的是 Claude Code，但 Cursor、Codex、Antigravity 這些<code>主流工具都支援  Rules / Commands / Skills</code>。</p>
@@ -6335,7 +6532,7 @@ cd tibame-lesson1</div>
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="sub-title" id="sub-ai-agent"><span class="bar"></span>了解 AI Agent 能力範圍</div>
+    <div class="sub-title" id="sub-ai-agent" data-seg="0"><span class="bar"></span>了解 AI Agent 能力範圍</div>
   </div>
 
   <div class="reveal">
@@ -6346,7 +6543,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header">批量整理圖片檔</div>
       <div class="group-body">
         <p>現在 AI Agent 已經具備<code>多模態（Multimodal）</code>能力，下面用<strong>識別圖片</strong>做為範例。</p>
@@ -6380,7 +6577,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header">彙整不同格式資訊</div>
       <div class="group-body">
         <p>儘管 AI 可以讀取不同格式，但目前 <code>PDF/Word/PPT/Excel</code> 這類格式還是無法讀取；但如果透過 <code>Python</code> 就能夠辦到了。</p>
@@ -6497,11 +6694,11 @@ cd tibame-lesson1</div>
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="sub-title" id="sub-agent-skills"><span class="bar"></span>認識 Agent Skills</div>
+    <div class="sub-title" id="sub-agent-skills" data-seg="0"><span class="bar"></span>認識 Agent Skills</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎒</span> Skill 的結構</div>
       <div class="group-body">
         <h4 class="minor-title">每個 Skill 會存在一個資料夾下方</h4>
@@ -7047,7 +7244,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🔍</span> Skill 的三個執行階段</div>
       <div class="group-body">
         <div class="flow">
@@ -7082,7 +7279,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-agent-skills-2"><span class="bar"></span>Agent Skills 實戰</div>
+    <div class="sub-title" id="sub-agent-skills-2" data-seg="0"><span class="bar"></span>Agent Skills 實戰</div>
   </div>
 
   <div class="reveal">
@@ -7093,7 +7290,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎙</span> ️ 讀取音訊轉成逐字稿</div>
       <div class="group-body">
         <h4 class="minor-title">Skill 執行順序</h4>
@@ -7140,7 +7337,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">📄</span> 輸入主題/草稿生成 HTML 講義</div>
       <div class="group-body">
         <h4 class="minor-title">Skill 執行順序</h4>
@@ -7207,7 +7404,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">📑</span> 提供課綱生成提案 PDF</div>
       <div class="group-body">
         <h4 class="minor-title">Skill 執行順序</h4>
@@ -7272,7 +7469,7 @@ cd tibame-lesson1</div>
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="sub-title" id="sub-command"><span class="bar"></span>使用 Command 技巧</div>
+    <div class="sub-title" id="sub-command" data-seg="0"><span class="bar"></span>使用 Command 技巧</div>
   </div>
 
   <div class="reveal">
@@ -7286,7 +7483,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎯</span> 強制驅動 Skill</div>
       <div class="group-body">
         <p>Claude 只要輸入<code>/</code>就能看到安裝好的 Skills；透過選擇的方式就可以<code>強制驅動</code>，而非被動觸發。</p>
@@ -7310,7 +7507,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🔗</span> 串接多個 Skills</div>
       <div class="group-body">
         <div class="insight">
@@ -7376,7 +7573,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🧐</span> 尋找需要的 Skills</div>
       <div class="group-body">
         <h4 class="minor-title">使用「/find-skills」搜尋 Skills</h4>
@@ -7424,7 +7621,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">⚠</span> ️ 安裝第三方 Skill 前，確認這三點</div>
       <div class="group-body">
         <ul>
@@ -7437,7 +7634,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">✅</span> Skill 使用經驗</div>
       <div class="group-body">
         <h4 class="minor-title">Skill 不是裝越多，AI 就越強</h4>
@@ -7461,7 +7658,8 @@ cd tibame-lesson1</div>
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="skill-skill"><span class="num">4</span> 建立 Skill</span>
+    
+    <span class="section-label" id="skill-skill" data-seg="0"><span class="num">4</span> 建立 Skill</span>
     <h2>根據自身需求建立專屬 Skill</h2>
     
   </div>
@@ -7473,11 +7671,11 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-skill"><span class="bar"></span>哪些任務值得設計成 Skill?</div>
+    <div class="sub-title" id="sub-skill" data-seg="0"><span class="bar"></span>哪些任務值得設計成 Skill?</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">✅</span> 適合做成 Skill 的情境</div>
       <div class="group-body">
         <ul>
@@ -7494,7 +7692,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">⚠</span> ️ 不建議做成 Skill 的情境</div>
       <div class="group-body">
         <ul>
@@ -7509,11 +7707,11 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-skill-2"><span class="bar"></span>建立專屬 Skill</div>
+    <div class="sub-title" id="sub-skill-2" data-seg="0"><span class="bar"></span>建立專屬 Skill</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🛠</span> ️ 生成 Skill 初版</div>
       <div class="group-body">
         <h4 class="minor-title">安裝 skill-creator</h4>
@@ -7563,7 +7761,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🧪</span> 驗證 Skill 符合預期</div>
       <div class="group-body">
         <div class="prompt-block">
@@ -7594,7 +7792,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🔧</span> 優化 Skill 方向</div>
       <div class="group-body">
         <p>第一版能跑只是起點，依實際使用結果反覆優化：</p>
@@ -7654,7 +7852,8 @@ cd tibame-lesson1</div>
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <span class="section-label" id="summary"><span class="num">★</span> 總結</span>
+    
+    <span class="section-label" id="summary" data-seg="0"><span class="num">★</span> 總結</span>
     <h2>打造可維護的 AI 工作流</h2>
     
   </div>
@@ -7685,7 +7884,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🚀</span> 回家第一件事：把今天學到的東西「跑起來」</div>
       <div class="group-body">
         <p>挑一個你實際會用到的場景 — <code>commit 訊息</code>、<code>音檔轉字幕</code>、<code>整理筆記</code>、<code>回客戶信</code>⋯⋯任選一個，用 <code>skill-creator</code> 做出第一版 Skill。</p>
@@ -7699,7 +7898,7 @@ cd tibame-lesson1</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block">
+    <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🔮</span> 下一堂預告：規格驅動開發（SDD）</div>
       <div class="group-body">
         <p>> 一句話 AI 就能生成有前端、後端、資料庫的系統，但...<strong>你敢直接交付給客戶嗎？</strong></p>
@@ -7904,6 +8103,89 @@ cd tibame-lesson1</div>
         }
       }
     });
+
+    // ── Branch rail（內容區左側 git graph；absolute 文檔流，隨內容捲動不晃）──
+    var branchLineEl = document.getElementById('branch-line');
+    var branchTip = document.getElementById('branch-tip');
+    var branchSegEls = branchLineEl ? Array.prototype.slice.call(branchLineEl.querySelectorAll('.branch-seg')) : [];
+    var branchEnabled = branchSegEls.length > 0;
+    if (branchLineEl && !branchEnabled) branchLineEl.style.display = 'none';
+
+    // 用 offsetTop 累加求文檔座標（布局位置，不受 reveal 進場動畫 transform 影響 → 任何時機測都一致）
+    function branchDocTop(el) {
+      var y = 0;
+      for (var n = el; n; n = n.offsetParent) y += n.offsetTop;
+      return y;
+    }
+
+    // 排版每個區段：left=內容框左緣-20，彎出點(top)落在對應 branch-flag 的中線，
+    // bottom=下一區段 flag 的中線（彎出相接）／結束標題上方／內容結尾
+    function flagFor(anchor) { return document.querySelector('.branch-flag[data-anchor="' + (anchor || '') + '"]'); }
+    function flagMid(flag) { return branchDocTop(flag) + flag.getBoundingClientRect().height / 2; }
+    function layoutBranchRail() {
+      if (!branchEnabled) return;
+      var sec = document.querySelector('section.section') || document.querySelector('section.section--header');
+      if (!sec) return;
+      var contentLeft = sec.getBoundingClientRect().left;
+      var lineX = Math.max(0, contentLeft - 20);
+      var segWidth = Math.max(8, contentLeft - lineX);
+      var footer = document.querySelector('footer.footer');
+      var docBottom = footer ? branchDocTop(footer) : document.documentElement.scrollHeight;
+      branchSegEls.forEach(function (seg) {
+        var tag = flagFor(seg.getAttribute('data-anchor'));
+        if (!tag) { seg.style.display = 'none'; return; }
+        var top = flagMid(tag); // 彎出點落在 tag 中線（分叉點在 tag 中間）
+        var endAttr = seg.getAttribute('data-end');
+        var bottom;
+        if (endAttr) {
+          var endTag = flagFor(endAttr);
+          if (endTag) {
+            bottom = flagMid(endTag); // 與下一區段彎出點相接
+          } else {
+            var endEl = document.getElementById(endAttr);
+            var endHead = endEl ? (endEl.querySelector('.group-header') || endEl) : null;
+            bottom = endHead ? branchDocTop(endHead) - 5 : docBottom - 14; // 結束標題上方收束
+          }
+        } else {
+          bottom = docBottom - 14;
+        }
+        seg.style.display = '';
+        seg.style.left = lineX + 'px';
+        seg.style.width = segWidth + 'px';
+        seg.style.top = top + 'px';
+        seg.style.height = Math.max(20, bottom - top) + 'px';
+      });
+    }
+
+    if (branchEnabled) {
+      layoutBranchRail();
+      window.addEventListener('resize', layoutBranchRail, { passive: true });
+      window.addEventListener('load', layoutBranchRail);
+      // 中文字體載入後行高改變會位移下方元素 → 重新排版，確保各層級間距一致
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutBranchRail);
+      if (window.ResizeObserver) {
+        var branchRO = new ResizeObserver(function () { layoutBranchRail(); });
+        branchRO.observe(document.body);
+      }
+      // hover 於滑鼠處顯示 branch tooltip（線只變粗、不變色）
+      branchSegEls.forEach(function (seg) {
+        var name = seg.getAttribute('data-branch');
+        seg.addEventListener('mousemove', function (e) {
+          // 滑到 tag 本體時不出 tooltip（只留 tag 自身的選中動態）
+          if (e.target.closest && e.target.closest('.branch-flag')) {
+            branchTip.classList.remove('visible');
+            return;
+          }
+          branchTip.textContent = name;
+          branchTip.style.left = e.clientX + 'px';
+          branchTip.style.top = e.clientY + 'px';
+          branchTip.classList.add('visible');
+        });
+        seg.addEventListener('mouseleave', function () {
+          branchTip.classList.remove('visible');
+        });
+      });
+    }
 
     var TOC_ACTIVATION_LINE = 50;
     function updateToc() {

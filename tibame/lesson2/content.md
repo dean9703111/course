@@ -6,12 +6,12 @@
 - label: 第 2 堂
   date: 6/6（六）
   time: 13:30~16:30
-  des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程，同時用 MCP 操作外部工具
+  des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程
   active: true
 - label: 第 3 堂
   date: 6/13（六）
   time: 13:30~16:30
-  des: **團隊協作與專案部署**：建立自動化測試，了解 Worktree 應用時機，並將專案部署上線
+  des: **團隊協作與專案部署**：建立自動化測試，了解 Worktree 應用時機，同時用 MCP 操作外部工具將專案部署上線
 [/time]
 
 # 常見痛點：穩定性不足、難以維護、無法驗證
@@ -198,7 +198,7 @@ Plugin 用來擴充 **Claude Code 本身**的能力：
 
 ## 下載課程範例，了解 Lint & Test 重要性
 
-### 🗂️ 課程範例 Repository
+### 🗂️ 課程範例 Repository | branch:main
 
 [下載或 Fork 練習用 Repository](https://github.com/deancourse/tibame-lesson2) 後，可以跟著課程進度操作，裡面有事先安裝好的 Agent Skills（放在 `.agents` 資料夾下）
 
@@ -353,7 +353,7 @@ openspec init
 - 擴充 OpenSpec 技能 `openspec config profile`
 [/lab-session]
 
-## 安裝 Docker
+## 安裝 Docker  | branch:develop
 
 > **這次會完成全端專案**
 > - **前端**：是使用者看到的網頁畫面與操作介面
@@ -400,7 +400,7 @@ openspec init
 
 ![AI 會跟你討論專案設計細節](./assets/ai-questions.png)
 
-### 📋 用 OpenSpec 建立文件規格
+### 📋 用 OpenSpec 建立文件規格  | branch:feature/openspec-bootstrap
 
 釐清完需求後，AI 會觸發 OpenSpec 的 Skills 做更細部的規劃。相關的規格文件都會存放在 `changes` 資料夾底下。
 
@@ -529,7 +529,7 @@ openspec init
 > **為什麼需要分支策略？**
 > 如果把`邏輯錯誤`或`功能不完善`的版本直接推送到主分支，`產品就壞掉了`。分支策略的目的，是保護`對外服務的穩定性`。
 
-### 🔀 切換分支
+### 🔀 切換分支 | branch:feature/fullstack-foundation
 
 ```terminal [label="切換到 feature 分支"]
 git checkout -b feature/fullstack-foundation
@@ -611,6 +611,12 @@ with details about my project, tech stack, and conventions
 幫我新增 mock 資料後，重啟前後端
 ```
 
+> **延伸思考**
+> Mock data（模擬資料）要以怎麼樣的形式寫入？
+> 1. 如果已經存在，要覆蓋嗎？
+> 2. 原有的資料要清除嗎？
+> 3. 是否執行前要先判斷環境呢？（僅允許 local / dev 環境執行）
+
 #### 畫面質感升級
 
 ![儀表板優化非常多](./assets/enhance-ui.png)
@@ -628,7 +634,7 @@ with details about my project, tech stack, and conventions
 > - **狀態**：不常變動，可以寫死
 > - **廠牌**：可能需要新增、刪除，用資料庫會更好
 
-### 😅 結果不如預期才是常態
+### 😅 結果不如預期才是常態  | branch:feature/add-form-enums-and-mock-seed
 
 前面是分享優化完畢的結果，下面呈現第一次優化出現的問題。
 
@@ -668,7 +674,7 @@ with details about my project, tech stack, and conventions
 然後生成 commit，並執行 push
 ```
 
-#### 建立 develop branch
+#### 建立 develop branch | branch:feature/develop
 
 功能驗證 OK 後，就能把 `feature/xxx` 合進 `develop`。
 
@@ -696,7 +702,7 @@ with details about my project, tech stack, and conventions
 [/flow]
 
 ```prompt [label="新增功能"]
-增加使用者紀錄頁面，供管理者查看
+增加使用者紀錄頁面（Audit Log），供管理者查看
 使用 OpenSpec
 ```
 
@@ -704,26 +710,78 @@ with details about my project, tech stack, and conventions
 開始實作
 ```
 
+> **為什麼 1 到 100 比 0 到 1 更難？**
+> 如果沒有規格文件，下次改功能時 AI **不知道之前的設計邏輯**，可能把**同一個功能重複寫**好幾次，或**改 A 壞 B**。
+>
+> 用 OpenSpec 每次迭代都會在 Source Control 留下規格變更，**AI 跟人類都有文件可以參考**。避免關鍵人物離職後，系統知識直接斷層。
+
+### ✅ 驗證功能符合預期
+
+#### 員工後看不到
+
+![確認頁面權限符合預期](./assets/normal-user-auditlog.png)
+
+#### 管理者可以看到自己與使用者的操作
+
+![驗證功能符合預期](./assets/admin-auditlog.png)
+
+### ✅ 確認都符合預期後再歸檔 | branch:feature/audit-log
+
 ```prompt [label="歸檔變更"]
 幫我歸檔
 ```
 
 ![OpenSpec會自動整合規格文件](./assets/openspec-integration.png)
 
-> **為什麼 1 到 100 比 0 到 1 更難？**
-> 如果沒有規格文件，下次改功能時 AI **不知道之前的設計邏輯**，可能把**同一個功能重複寫**好幾次，或**改 A 壞 B**。
->
-> 用 OpenSpec 每次迭代都會在 Source Control 留下規格變更，**AI 跟人類都有文件可以參考**。避免關鍵人物離職後，系統知識直接斷層。
-
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+[lab-session title="🛠️  實作練習"]
 - 用 OpenSpec 新增功能
 - 驗證功能符合需求
 - 用歸檔來整合規格文件
 [/lab-session]
 
+### 🧐 目前看到可以優化的細節
+
+現在這個介面操作起來體驗是好的嗎？功能正常嗎？
+
+1. 複選使用者、動作、結果
+2. 少了呼叫 API 時的參數
+3. 動作無法直觀理解
+4. 左下角跟右上角的使用者資訊重複
+5. 彈窗的「購買日、入職日期沒有正確顯示」
+6. 左側選單沒有固定，應該要 100% 高度
+
+### 👀 看到問題請 AI 優化就好
+
+```prompt [label="具體描述問題與期待優化"]
+Audit log 頁面有如下優化需求：
+1. 希望可以複選使用者、動作、結果
+2. 欄位少了呼叫 API 時的參數，希望滑鼠移過去時可以顯示
+3. 來源 ip 中間兩碼希望 mask，欄位上方可以開關
+4. 動作欄位無法直觀理解，希望對齊下拉選單
+還有以下 UI 問題：
+1. 左下角跟右上角的使用者資訊重複，整合到左下角
+2. 車輛編輯彈窗的「購買日」、員工編輯彈窗的「入職日期」沒有正確顯示
+3. 左側選單沒有固定，應該要 100% 高度
+使用 OpenSpec
+```
+
+### ✅ 驗證優化後的版本  | branch:feature/enhance-audit-log-and-ui
+
+網頁相關的自動化驗證，可以安裝 `Playwright MCP`，節省人工驗證的時間。
+
+#### Audit log 頁面符合預期
+
+![可以複選、IP 部分遮罩、API 參數顯示](./assets/admin-auditlog-enhance.png)
+
+#### 編輯彈窗資訊正確顯示
+
+![時間可以順利載入了、光暗模式也能切換了](./assets/ui-dark-light-enhance.png)
+
+> **符合需求後記得要「歸檔」**
+
 ---
 
-# 舊專案：根據情境設計 Skills，讓 AI 有執行依據
+# 客製 Skill：根據情境設計 Skills，讓 AI 有執行依據
 
 > **建立客製化 Skill 的重要性**
 > 不同部門、團隊都有自己的工作流，專案也有各自的情境；而 Agent Skills 讓每次達成的目標，成為下次的起點。
@@ -754,7 +812,7 @@ with details about my project, tech stack, and conventions
 生成 branch
 ```
 
-![確認 branch name 與期待相符](./assets/skill-branch-name.png)
+![有時 AI 會給你多個 branch name 選擇](./assets/skill-branch-name.png)
 
 > **團隊設計時要思考的細節**
 > 1. 是否需要跟著專案管理工具的 Tiket 命名（ex: feature/KAN-17_xxx）
@@ -808,8 +866,7 @@ Codex **只審查，不自動修改**；你確認後再決定要改哪些。
 - commit 訊息明確，不要多功能混一起
 
 ```prompt [label="提出需求設計 Skill"]
-幫我建立一個 Skill，我想將將現有變更依功能邏輯分群，產出 `<type>(<scope>): <繁體中文>`   
-  conventional commit 計畫，確認後逐批執行 git add + git commit。 
+幫我建立一個 Skill，我想將將現有變更依功能邏輯分群，產出 `<type>(<scope>): <繁體中文>` conventional commit 計畫，確認後逐批執行 git add + git commit。 
 ```
 
 #### 驗證 Commit Skill
@@ -819,6 +876,9 @@ Codex **只審查，不自動修改**；你確認後再決定要改哪些。
 ```
 
 ![確認有明確的 Commit 可以追蹤](./assets/skill-commit.png)
+
+> **小提醒**
+> 多個 commit 執行時，AI 偶爾會卡住；如果等待超過 1 分鐘，直接關閉這次對話，開一個新的對話處理通常就正常了。
 
 ### 🔀 設計 PR Skill
 
@@ -844,192 +904,35 @@ PR 是決定專案品質的重要環節，因為他是讓團隊成員 Code Revie
 
 #### 驗證 PR Skill
 
-```prompt [label="生成 PR"]
+```prompt [label="生成 PR 初稿"]
 撰寫 PR，與 develop branch 比對
 ```
 
 ![建立 PR 的初稿，先在 local 編輯](./assets/skill-pr.png)
 
-![確認沒問題後，再貼到 PR](./assets/skill-github-pr.png)
+```prompt [label="建立 PR"]
+推送 branch 並建立 PR
+```
+
+![確認沒問題後，可以讓 gh 建立 PR](./assets/skill-gh-pr.png)
+
+![點擊連結確認 PR 符合預期](./assets/skill-github-pr.png)
 
 > **人，才是 AI 的瓶頸**
 > Code Review 的速度已經跟不上 AI 寫程式的速度。當人成為 AI 的瓶頸時，要去想的是如何**降低門檻，而不是放棄審核。**
 >
 > **設計 Commit、PR 的 Skill 就是透過優化流程讓開發更順暢。**雖然每一步都是 AI 在執行，但如果沒有實務經驗，其實不知道怎麼串起這些工具。**真正值錢的不是工具本身，而是知道什麼時候用、怎麼組合。**
 
-[lab-session title="🛠️  實作時間" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 嘗試用 `/find-skills` 來搜尋符合自己需求的 Skills
+[lab-session title="🛠️  實作練習"]
 - 觸發 Branch Name Skill
 - 觸發 Commit Skill
 - 觸發 PR Skill
+- 合併回 develop branch
 [/lab-session]
 
 ---
 
-# 使用 MCP：賦予 AI 使用外部工具的權限
-
-## 為什麼需要 Postman？
-
-> **MCP 是 AI 與外部工具之間的標準插座**
-> 前面用 `F12 → Network` 只能看到「前端有打的 API」，而且看完即丟。
-> 真正要驗證後端，需要一個能`主動發出 Request`、能`重複執行`、能`模擬不同身份`的工具。
-
-### 🤔 只靠瀏覽器測 API 的三個痛點
-
-- **被動**：F12 只看得到前端`觸發過`的請求，沒有對應按鈕的 API 根本測不到
-- **難重現**：想測「缺欄位」「沒權限」「Token 過期」這些`錯誤情境`，瀏覽器很難湊出來
-- **無法累積**：今天測過的請求，明天又要從頭點一次，`情境沒有被保存下來`
-
-### 📮 Postman 是後端 API 的測試台
-
-把每一支 API 變成一張可重複執行的「Request 卡片」，存好`網址、Header、Body`，按一下就能驗證後端回應。
-
-到 [Postman 官網下載頁](https://www.postman.com/downloads/) 依作業系統下載安裝。
-
-> **記得註冊並登入帳號**
-> 後面要用的 **MCP** 與 **環境同步**功能需要登入；用 Email 或 Google 註冊都可以，免費方案就夠本堂課使用。
-
-### 🔗 結合 MCP，讓 AI 幫你建立與測試
-
-Postman 提供官方 MCP Server，串上後 AI 就能`直接幫你建立 Request、設定變數、甚至跑測試`。
-
-| 沒有 MCP | 有了 MCP |
-| --- | --- |
-| 一支一支手動填 URL、Header、Body | 用白話文描述情境，AI 自動建立 Request |
-| 錯誤情境要自己想、自己湊 | AI 依規格補齊`正確 / 錯誤 / 權限`各種案例 |
-| 改一次 API 要回頭逐張改 | 請 AI 依最新規格批次更新 |
-
-![Postman 把每支 API 變成可重複執行的卡片](./assets/postman-overview.png)
-
-## 安裝 Postman MCP 與 Token 設定
-
-> **官方文件是唯一真實來源**
-> MCP 的安裝指令與 Server 位置會隨版本更新，請以 [Postman MCP Server 官方文件](https://learning.postman.com/docs/developer/postman-api/mcp-server/) 為準，本段提供的是目前可運作的範例。
-
-### 🔑 取得 Postman API Key
-
-MCP 需要一把 API Key 來代表「你」操作 Postman。
-
-1. 登入 Postman 後，點右上角頭像 → **Settings** → **API keys**
-2. 點 **Generate API Key**，命名後複製產生的金鑰
-3. 詳細步驟參考 [Postman API Key 官方說明](https://learning.postman.com/docs/developer/postman-api/authentication/)
-
-> **API Key 等於你的帳號權限**
-> 這把金鑰`不要 commit 進 Git`、不要貼到公開頻道。如果外洩，回到同一頁 **Revoke** 後重新產生即可。
-
-### 🔌 在 Claude Code 設定 Postman MCP
-
-用 `claude mcp add` 把官方 MCP Server 接進來（金鑰透過環境變數帶入，不要寫死在指令裡）。
-
-```terminal [label="新增 Postman MCP（HTTP 遠端 Server）"]
-claude mcp add --transport http postman https://mcp.postman.com/mcp \
-  --header "Authorization: Bearer ${POSTMAN_API_KEY}"
-```
-
-```terminal [label="先把金鑰放進環境變數"]
-export POSTMAN_API_KEY="你剛剛產生的金鑰"
-```
-
-#### 驗證 MCP 是否連線成功
-
-```prompt [label="在 Claude Code 中確認"]
-/mcp
-```
-
-| 預期狀態 | 代表意義 |
-| --- | --- |
-| `postman ✔ connected` | 連線成功，AI 已可呼叫 Postman 工具 |
-| `postman ✘ failed` | 金鑰錯誤或過期，回上一步重新產生 API Key |
-| 清單中沒有 `postman` | 指令未成功執行，重新跑一次 `claude mcp add` |
-
-![輸入 /mcp 可查看已連線的 MCP Server](./assets/postman-mcp-connected.png)
-
-[lab-session title="🛠️  實作練習"]
-- 下載並安裝 Postman，完成註冊登入
-- 產生 Postman API Key 並設定環境變數
-- 用 `claude mcp add` 接上 Postman MCP，並用 `/mcp` 確認連線
-[/lab-session]
-
-## 根據專案 API 設計 Request
-
-> **好的 Request 集合 = 一份活的 API 文件**
-> 每支 API 都要寫清楚`描述`、抽出`變數`，並涵蓋`正確、錯誤、不同權限`的情境，
-> 這樣 Request 不只是測試，更是團隊可以照著操作的說明書。
-
-### 🚀 一句話讓 AI 建好整組 Collection
-
-不用一支一支慢慢教，直接請 AI 讀專案後端 API，把`環境、變數、所有 API 與各種情境`一次建立完善。
-
-```prompt [label="一次建立完整的 Postman Collection"]
-參考專案後端 API，用 Postman MCP 幫我建立一整組「VMS」測試 Collection：
-
-1. 建立「VMS Local」環境，變數含 base_url（預設 http://localhost:3000/api）、admin_token、user_token
-2. 登入 API 成功情境（admin / admin12345）的測試腳本，要自動把回傳 token 寫入對應變數
-3. 依後端建立 登入 / 車輛 / 員工 三個資料夾，每支 Request 都要有清楚描述、用 {{base_url}} 與 Authorization: Bearer {{token}} 變數，並涵蓋：
-   - 正確情境（200 / 201）
-   - 錯誤情境（缺欄位 400、查無資料 404、未帶 Token 401、選項不合法 400）
-   - 權限情境（員工 API 改用 user_token，預期 403）
-```
-
-> **為什麼一次建立就好？**
-> 變數、Token 自動寫入、各種情境彼此是有關聯的；與其分多次補，不如`一次給足上下文`，
-> 讓 AI 照規格把整組建完，你只要負責確認`情境有沒有漏`。
-
-![用一段指令請 AI 把整組 Collection 建好](./assets/postman-collection.png)
-
-### 🧪 在 Postman 逐一驗證不同情境
-
-AI 建好後，回到 Postman `親手跑過一遍`，確認後端在每種情境的回應都符合預期。
-
-#### 🔐 登入 API：先拿到 Token
-
-| 情境 | 輸入 | 預期回應 |
-| --- | --- | --- |
-| ✅ 正確登入 | `admin / admin12345` | `200`，回傳 `token`（自動寫入變數） |
-| ❌ 密碼錯誤 | `admin / wrong` | `401 Unauthorized` |
-| ❌ 缺欄位 | 只給 `username` | `400 Bad Request` |
-
-#### 🚗 車輛 API：完整 CRUD 與錯誤
-
-| 情境 | 方法 / 路徑 | 預期回應 |
-| --- | --- | --- |
-| ✅ 查詢列表 | `GET {{base_url}}/vehicles` | `200`，回傳車輛陣列 |
-| ✅ 新增車輛 | `POST {{base_url}}/vehicles` | `201`，回傳建立的車輛 |
-| ❌ 欄位驗證 | `POST` 缺車牌 / 廠牌不在選項內 | `400 Bad Request` |
-| ❌ 查無資料 | `GET {{base_url}}/vehicles/99999` | `404 Not Found` |
-| ❌ 未帶 Token | 任一車輛 API 不帶 `Authorization` | `401 Unauthorized` |
-
-> **後端有做選項檢查，Request 也要驗**
-> 前面優化時把廠牌、狀態設計成`下拉選單`，後端 API 也會檢查選項。
-> 記得跑一張`故意送出不存在選項`的 Request，確認後端真的擋下來（回 `400`）。
-
-#### 👥 員工 API：切換 Token 驗證權限
-
-員工管理`僅管理者可操作`，切換 `admin_token` / `user_token` 就能驗證權限控管是否確實。
-
-| 身份 | 使用變數 | 存取員工 API | 預期回應 |
-| --- | --- | --- | --- |
-| 管理者 | `{{admin_token}}` | 可檢視 / 新增 / 編輯 / 刪除 | `200 / 201` |
-| 一般使用者 | `{{user_token}}` | 不允許 | `403 Forbidden` |
-| 未登入 | 不帶 Token | 不允許 | `401 Unauthorized` |
-
-![同一支 API 切換 Token，驗證權限是否確實擋住](./assets/postman-permission.png)
-
-### 🤖 改完 API，請 AI 重跑整組
-
-> **情境用例設計成 Request，就是 E2E 測試的雛形**
-> 把「正確流程」「錯誤輸入」「越權存取」都沉澱成可重複執行的 Request，
-> 之後改完 API 只要請 AI`重跑整組`並用表格回報結果，就能快速確認`沒有改 A 壞 B`。
-
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 用一段指令請 AI 建好整組 VMS Collection（環境、變數、所有 API 與情境）
-- 在 Postman 逐一驗證登入 / 車輛 / 員工的正確、錯誤、權限情境
-- 改動 API 後請 AI 重跑整組，確認沒有改壞
-[/lab-session]
-
----
-
-# 總結：打造可維護的 AI 工作流
+# 總結：打造可維護的 AI 工作流  | branch:none
 
 [summary]
 - 🧠 **累積 AI 經驗** | 用 CLAUDE.md、Agent Skills 讓 AI 的知識可以複用，**不要每次都從零開始**
