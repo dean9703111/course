@@ -815,7 +815,7 @@ claude plugin install skill-creator@claude-plugins-official
 
 - 🚨 **不要讓 AI 的「快」，變成未來的「債」** — 沒有規格，今天省下的時間明天會用 bug 還回來
 - 📐 用 **OpenSpec** 讓 AI 照規格做事，從 0 到 1 建系統、從 1 到 100 做迭代
-- 🔁 設計 **Commit / PR / Worktree** Skill，讓 AI 寫的 code 可追溯、可協作、可 code review
+- 🔁 設計 **Commit / PR / branch** Skill，讓 AI 寫的 code 可追溯、可協作、可 code review
 - 🧪 導入測試 + **MCP**，把舊功能守住的同時，連接外部工具讓 Agent 真的能動手
 
 [qa-session title="Q&A 時間"]
