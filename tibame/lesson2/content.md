@@ -6,7 +6,7 @@
 - label: 第 2 堂
   date: 6/6（六）
   time: 13:30~16:30
-  des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程
+  des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立全端系統，並搭配自製 Skill 優化開發流程
   active: true
 - label: 第 3 堂
   date: 6/13（六）

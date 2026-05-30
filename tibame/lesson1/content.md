@@ -7,7 +7,7 @@
 - label: 第 2 堂
   date: 6/6（六）
   time: 13:30~16:30
-  des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程
+  des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立全端系統，並搭配自製 Skill 優化開發流程
 - label: 第 3 堂
   date: 6/13（六）
   time: 13:30~16:30
@@ -28,7 +28,7 @@
 [/flow]
 
 > **不同任務要切換不同工具**
-> 我認為自己對 AI 工具很熟悉，但學習的成本太高了，而且流程很瑣碎。
+> 我認為自己對 AI 工具很熟悉，但`學習的成本太高`了，而且`流程很瑣碎`。
 
 ### 😩 痛點 1：複製貼上讓人煩躁
 
@@ -43,25 +43,26 @@
 - **商業提案**：純文字`缺乏吸引力`、Word 完成後輸出 PDF `很麻煩`
 
 > **不要讓熱情被瑣事消耗**
-> - 這些事情各自不難，但加在一起非常耗時。
-> - 沒有成就感的事情重複做，會越來越不想做。
-> - 工具掌握在別人手上，就要承擔風險、限制。
+> - 這些事情各自不難，但加在一起`非常耗時`。
+> - 沒有成就感的事情`重複做`，會越來越不想做。
+> - 工具掌握在別人手上，就要承擔`風險、限制`。
 
 ![Gamma 製作的簡報，曾在我講課前一晚壞掉](./assets/gamma_error.jpg)
 
 ## 轉念：讓 AI 代勞
 
-> 於是我開始思考 — 有哪些任務可以交給 AI 處理？
-> 有沒有可能，把任務集中到一個工具搞定？
+> 於是我開始思考 — **有哪些任務可以交給 AI 處理？**
+> 有沒有可能，把任務集中到`一個工具搞定`？
 
 [flow]
-1. 格式轉換 — Word / PDF / PPT 丟進來，AI 自動解析
-2. 資訊彙整 — 去除重複資訊、合併重點
-3. 內容生成 — 影片腳本、字卡、宣傳文案一條龍產出
-4. 流程自動化 — 設計工作流，讓 AI 自動執行每一步
+1. 格式轉換 — Word / PDF / PPT 丟進來，AI `自動解析`
+2. 資訊彙整 — `去除重複資訊、合併重點`
+3. 內容生成 — 影片腳本、字卡、宣傳文案`一條龍`產出
+4. 流程自動化 — 設計工作流，讓 AI `自動執行每一步`
 [/flow]
 
-> **這就是 AI Agent 的潛力：** 不只是「問一句答一句」的聊天機器人，而是能理解你的任務脈絡、操作你的檔案、串接多個步驟，幫你從頭到尾把事情做完的 AI 助手。
+> **這就是 AI Agent 的潛力：**
+> 不只是「問一句答一句」的聊天機器人，而是能`理解你的任務脈絡、操作你的檔案、串接多個步驟`，幫你從頭到尾把事情做完的 AI 助手。
 
 ---
 
@@ -69,7 +70,7 @@
 
 ## AI 是大腦，工具是雙手
 
-> AI Agent 能做多少事，取決於你給它多少工具。
+> AI Agent 能做多少事，取決於你給它多少`工具`。
 
 ### 🛠️ 確認開發環境
 
@@ -78,6 +79,7 @@
 - **[nvm](https://github.com/nvm-sh/nvm)** — Node.js 版本管理工具，方便切換
 - **[Python](https://www.python.org/downloads/)** — Agent Skills 的 scripts 大部分使用 Python 撰寫
 - **[Cursor](https://cursor.com/)**、**[Antigravity](https://antigravity.google/)**、**[VSCode](https://code.visualstudio.com/)** — 安裝任一款程式碼編輯器（IDE）
+- **[iTerm2](https://iterm2.com/)**、**[cmux](https://cmux.com/zh-TW)**：這些終端機（terminal）在 `Mac` 都有不錯的體驗；`Windows` 可使用原生的 Powershell
 - **[Claude 帳號](https://claude.ai/)** — 目前 Claude Code 需要 Pro 級別以上才能使用
 
 #### 確認 Git & GitHub 帳號
@@ -117,6 +119,8 @@ nvm use --lts
 node -v
 ```
 
+![如果出現 node 版本跟實際安裝不符，可能過去有用 Homebrew 安裝過](./assets/node-version.png)
+
 #### 確認 Python 版本
 
 **macOS / Linux**：可透過 alias 讓 python 指向 python3 版本
@@ -132,6 +136,21 @@ pip3 --version
 python --version
 pip --version
 ```
+
+#### 用 Alias 統一 Python 版本
+
+AI 在使用 Python 指令時，有可能使用 `python3 xxx` or `python xxx`。
+
+而 pip 安裝的套件會相依於 python 版本，假使電腦有多個版本，就容易發生`套件找不到重新安裝的問題`。
+
+所以建議透過 `alias` 別名的方式來統一。
+
+```prompt [label="用 alias 統一 python 版本"]
+請協助我檢查目前電腦上的 Python 與 pip 指向哪個版本
+幫我設定 alias，我希望 python、python3 與 pip、pip3 都指向一樣的版本，避免套件版本飄移
+```
+
+![設定 alias 別名](./assets/python-alias.png)
 
 [lab-session title="🛠️  實作練習"]
 - 確認 Git & GitHub 帳號
@@ -172,7 +191,7 @@ claude
 
 ### 🧩 從 Extensions 安裝
 
-如果不習慣終端機操作，安裝 Claude Code 外掛也能使用大部分的功能。
+如果不習慣終端機操作，安裝 Claude Code 外掛也能使用大部分的功能；**但用一段時間後，終究是會回到終端機操作**。
 
 1. 打開側邊欄 `Extensions`
 2. 搜尋 `Claude Code`
@@ -218,12 +237,22 @@ AI 執行的指令是無法完全預期的，為了減少損失，可以透過�
 
 ![用指令確認是最穩的](./assets/permissions-deny.png)
 
+> **可以進一步設計成 hook**
+> - Claude 的 `permissions.deny` 是用**前綴字串比對**，比如："Bash(rm -rf *)", "Bash(sudo *)", "Bash(dd *)"
+> - PreToolUse Hook 在 `settings.json 的 hooks 腳本`，解析**整串指令、正規表示式比對**，比如：bash -c "rm -rf ..."
+
+```prompt [label="加入 hook 增加防護"]
+幫我將設定加入到 PreToolUse Hook 增加防護
+```
+
+![加入 Hook 增強防護，但「千萬不要」在跟目錄測試指令](./assets/hook-guard.png)
+
 [lab-session title="🛠️  實作練習"]
 - 在終端機使用 Claude Code
 - 在 IDE 使用 Claude Code
 - 調整隱私設定
 - 禁止 Claude 使用危險指令
-- 確認指令的禁止有生效
+- 確認指令的禁止有生效（不要在根目錄測試）
 [/lab-session]
 
 ### 📂 了解 Claude Code 工作目錄
@@ -258,13 +287,15 @@ AI 執行的指令是無法完全預期的，為了減少損失，可以透過�
 
 ### 🤖 Claude 不同模型
 
-- **Sonnet**— 速度與品質平衡，日常開發、寫程式、改 Bug 首選
 - **Opus** — 推理能力最強，適合需要深度分析的架構設計、複雜 Debug、長篇規格撰寫
+- **Sonnet**— 速度與品質平衡，日常開發、寫程式、改 Bug 首選
 - **Haiku** — 最快最省，適合：簡單問答、格式轉換等不需要推理的任務
 
 ```prompt [label="可根據任務調整 Model"]
 /model
 ```
+
+![Opus、Sonnet可以調整 effort，但越高只是代表思考更久，品質未必更好](./assets/model-show.png)
 
 ### 📊 設定 Status Line
 
@@ -406,7 +437,7 @@ npx @dean9703111/dotagents
 
 #### 透過 Python 套件彙整資訊
 
-AI Agent 也有 **RAG 工具** 的功能，能用它`快速檢索、分析、統整資訊`。
+AI Agent 也可以用它`快速檢索、分析、統整資訊`。
 
 但它目前只能檢索「**文字檔**」（Markdown / txt / JavaScript / Python 等），遇到 Word / PPT / PDF `預設無法解析`；不過有了 Python，這一切就變成了可能。
 
@@ -556,6 +587,10 @@ proposal/exmaple.md 把這份課綱寫成提案，客戶是「黑寶科技」
 ```
 
 ![生成的提案 PDF](./assets/proposal-writer-pdf.png)
+
+> **技術選擇**
+> 製作 PDF 這個任務，其實 **Python 跟 Node.js 都可以達成**。
+> 就看你想要哪種方案，`世界上沒有最好的選擇，只有是適合當下的選擇`。
 
 [lab-session title="🛠️  實作練習"]
 - 讀取音訊轉成逐字稿（SRT）

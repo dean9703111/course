@@ -316,6 +316,13 @@ const projectTree = {
           desc: '專案規範與設定：定義 Claude 的預設權限（如檔案存取）和全域專案設定。預設提交到 Git，團隊共用。' },
         { name: 'settings.local.json', nameClass: 'json-name', icon: '🔒', tags: ['.gitignore'],
           desc: '個人權限覆蓋：覆蓋全域權限設定，僅你可見。（務必 Git 忽略！）' },
+        { name: 'hooks/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: 'settings.json 裡 hooks 觸發的腳本。常見用 PreToolUse Hook 在指令執行前用正規表示式攔截 rm -rf、sudo、dd 等危險指令。',
+          children: [
+            { name: 'block-dangerous-cmd.sh', nameClass: 'md-name', icon: '📄',
+              desc: 'PreToolUse 攔截腳本：比對危險指令黑名單，命中即阻擋。' }
+          ]
+        },
         { name: 'commands/', nameClass: 'folder-name', icon: '📂', folder: true,
           desc: '自定義指令（斜線）：這些檔案定義了你的專案專用指令，你可以用 / 按鍵觸發。已與 skills 合併，舊檔案仍可使用。',
           children: [
@@ -383,6 +390,13 @@ const userTree = {
           desc: '全域使用者設定：你的個人預設偏好，包括慣用模型（如 claude-opus-4-5）、主題、清理週期等。優先級低於專案設定。' },
         { name: 'settings.local.json', nameClass: 'json-name', icon: '🔒',
           desc: '使用者本機設定：個人機器專屬設定，不同步到其他裝置。' },
+        { name: 'hooks/', nameClass: 'folder-name', icon: '📂', folder: true,
+          desc: '放在這裡的 hooks 跨所有專案生效，不必每個專案重設。',
+          children: [
+            { name: 'block-dangerous-cmd.sh', nameClass: 'md-name', icon: '📄',
+              desc: '全域 PreToolUse 攔截腳本：所有專案共用，與專案層級 hooks 合併生效。' }
+          ]
+        },
         { name: 'skills/', nameClass: 'folder-name', icon: '📂', folder: true,
           desc: '個人全域技能：放在這裡的技能跨所有專案可用，不需要每個專案重複設定。',
           children: [
