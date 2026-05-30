@@ -583,7 +583,7 @@ AI 載入 `proposal-writer` Skill，依 workflow 執行：
 5. 跑 `node build-pdf.mjs proposal/todo/<客戶名稱>` 產 PDF
 
 ```prompt [label="生成 PDF 格式提案"]
-proposal/exmaple.md 把這份課綱寫成提案，客戶是「黑寶科技」
+proposal/example.md 把這份課綱寫成提案，客戶是「黑寶科技」
 ```
 
 ![生成的提案 PDF](./assets/proposal-writer-pdf.png)
