@@ -7,7 +7,35 @@
 
 > 市場不會為爛產品買單；加入自動化測試，是 Vibe Coding **從玩具走向產品的關鍵**
 
-> 其實就算你不說，AI 有時也會自己主動加上去，但這個行為是不可空的
+> 其實就算你不說，AI 有時也會自己主動加上去，但這個行為是不可控的
+
+## 先看清楚：把測試交給 AI 的三個現實
+
+> **AI 會幫你寫測試，但不能全盤托付**
+> 測試是品質的最後一道防線，這道防線`不能假手 AI 就放著不管`。動手前，先認清三件事。
+
+### 🤖 AI 不一定會主動寫測試
+
+- 多數時候`你不開口，它就不寫`；就算偶爾自己補上，也`不保證`涵蓋你在意的情境
+- 把「寫測試」當成`明確的指令`，不要假設它會自動補齊
+- 這也是我們要用`專屬的 Skill` 固定流程的原因——讓「寫測試」變成`每次都會發生`的步驟
+
+### 🧐 AI 寫的測試未必好用
+
+- 可能寫出`為了通過而通過`的測試（斷言太鬆，程式怎麼改都是綠燈）
+- 可能測到`無關緊要`的細節，卻漏掉真正的核心邏輯
+- 測試程式`本身也可能有 bug`，綠燈不代表真的對
+- 所以`測試清單一定要人類 Review`，確認情境合理、沒有遺漏——這是 AI 無法取代的一步
+
+### 🗄️ 後端測試要能「重複執行」，且不污染資料庫
+
+- 後端測試常會`真的寫進資料庫`，要特別小心`能不能重複跑`
+- 典型地雷：第一次`新增成功`，第二次卻因為`資料已存在`而失敗——這種測試`不可靠`
+- 請 AI 用`獨立的測試資料庫`，或在`每個測試後自動還原`（transaction rollback／測完清掉資料）
+- 目標是`不管跑幾次、誰來跑，結果都一樣`，這就是測試的「冪等性（idempotent）」
+
+> **這三點是後面所有測試流程的前提**
+> 接下來用 Skill 把「AI 寫清單 → 人類 Review → 自主驗證」固定成一套工作流，正是為了`對症下藥`地解決上面三個問題。
 
 ## 建立適合專案的測試工作流
 
@@ -451,6 +479,27 @@ claude mcp add zeabur -e ZEABUR_TOKEN=${ZEABUR_TOKEN} -- npx -y @zeabur/mcp-serv
 
 ![輸入 /mcp 確認 Zeabur 已連線](./assets/zeabur-mcp-connected.png)
 
+### 🧩 更省事的選擇：Zeabur 官方 Skill（免 API Key）
+
+除了 MCP，Zeabur 也提供`官方的 Claude Code Skill`。它把`部署、查 log、綁網域、管資料庫`等操作包成一組 Skill，`不需要自己產 API Key`，一行指令安裝完就能用白話文操作。
+
+```terminal [label="安裝 Zeabur 官方 Skill（在終端機執行）"]
+claude plugin marketplace add zeabur/zeabur-claude-plugin
+claude plugin install zeabur@zeabur
+```
+
+> **Skill 與 MCP 差在哪？該用哪個？**
+> 兩者都能讓 AI 操作 Zeabur，挑一個順手的即可，不必兩個都裝。
+
+| 比較 | Zeabur MCP | Zeabur 官方 Skill |
+| --- | --- | --- |
+| 設定成本 | 要`自己產 API Key`、設環境變數 | `一行指令安裝`，免 API Key |
+| 接入方式 | `claude mcp add` 接 Server | `claude plugin install` 裝 plugin |
+| 適合 | 想`完全掌握`連線細節 | 想`最快上手`、少設定 |
+
+> **官方文件是唯一真實來源**
+> 安裝指令與 Skill 清單會隨版本更新，請以 [Zeabur Agent Skills 頁面](https://zeabur.com/zh-TW/skills) 與 [Claude Code Skills 官方文件](https://zeabur.com/docs/en-US/developer/claude-code-skills) 為準。
+
 ### 🚀 一句話完成第一次部署
 
 連上後，直接用白話文請 AI 部署。AI 會`建立服務、上傳 image、設定 port`。
@@ -484,7 +533,7 @@ claude mcp add zeabur -e ZEABUR_TOKEN=${ZEABUR_TOKEN} -- npx -y @zeabur/mcp-serv
 > 這樣同一份 image 在本地、雲端都能用，金鑰也`不會被打包`進去。
 
 [lab-session title="🛠️  實作時間" duration="20 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 設定 ZEABUR_TOKEN 環境變數，用 `claude mcp add` 接上 Zeabur MCP，並用 `/mcp` 確認
+- 接上 Zeabur（任選一種）：用 `claude mcp add` 接 MCP（需 API Key），或用 `claude plugin install zeabur@zeabur` 裝官方 Skill
 - 請 AI 部署後端與 Postgres 服務，拿到對外網址
 - 請 AI 設定必要的環境變數，綁定網域並確認 HTTPS
 - 打開網址，確認線上服務可以正常登入
