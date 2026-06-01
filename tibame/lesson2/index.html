@@ -5192,7 +5192,7 @@
             <span class="class-timeline__status-tag is-current">進行中</span>
           </div>
           <div class="class-timeline__time">13:30~16:30</div>
-          <div class="class-timeline__des"><strong>規格驅動開發 (SDD)</strong>：讓 AI 根據規格建立系統，並搭配自製 Skill 優化開發流程</div>
+          <div class="class-timeline__des"><strong>規格驅動開發 (SDD)</strong>：讓 AI 根據規格建立全端系統，並搭配自製 Skill 優化開發流程</div>
         </div>
       </div>
       <div class="class-timeline__item is-upcoming" data-status="upcoming">
@@ -6383,6 +6383,116 @@ openspec init</div>
 
   <div class="reveal">
     <div class="group-block" data-seg="3">
+      <div class="group-header"><span class="icon">🔍</span> 善用 Console.log 觀察前後端狀態</div>
+      <div class="group-body">
+        <p>當畫面或 API 怪怪的，<code>console.log</code> 是最快定位問題的方式——它把「看不見的程式邏輯」變成「看得見的訊息」。重點是先搞清楚 log 會印在哪裡：</p>
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left">位置</th>
+            <th class="align-left">log 印在哪裡</th>
+            <th class="align-left">怎麼看</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>前端</strong>（React 元件、呼叫 API 前後）</td>
+            <td class="align-left">瀏覽器 Console</td>
+            <td class="align-left">F12 → Console 分頁</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>後端</strong>（Express route、Prisma 查詢）</td>
+            <td class="align-left">啟動專案的終端機</td>
+            <td class="align-left">跑 <code>npm run dev</code> 的那個視窗</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <div class="insight">
+      <div class="insight-title">前端 log 看瀏覽器，後端 log 看終端機</div>
+      <p>同樣是 <code>console.log</code>，前端跑在瀏覽器、後端跑在 Node.js，印出的地方完全不同。找錯地方看 log，是新手最常卡關的點。</p>
+    </div>
+        <h4 class="minor-title">用登入流程跑一次前後端的 log</h4>
+        <p class="loose-text">登入是進系統的第一步，剛好是一個完整的「前端送出 → 後端驗證」往返，拿來示範最直覺。下面的變數與路徑是示意，請對照你專案實際的程式微調。</p>
+        <p class="loose-text">在前端送出登入的函式加上 log（<strong>只印帳號，別印密碼</strong>）：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Code
+        <span class="label">前端：登入送出前後</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">console.log(&quot;[login] 送出帳號：&quot;, account);
+const res = await api.post(&quot;/auth/login&quot;, { account, password });
+console.log(&quot;[login] 後端回應：&quot;, res.data);</div>
+    </div>
+        <p class="loose-text">在後端登入的 API route 加上 log（<strong>印布林值就好，別印明碼密碼</strong>）：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Code
+        <span class="label">後端：登入 API route</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">console.log(&quot;[auth] 收到登入請求，帳號：&quot;, req.body.account);
+const user = await prisma.user.findUnique({ where: { account } });
+console.log(&quot;[auth] 是否找到使用者？&quot;, Boolean(user));
+console.log(&quot;[auth] 密碼是否正確？&quot;, isMatch);</div>
+    </div>
+        <p class="loose-text">用 <code>admin / admin12345</code> 登入後：</p>
+        <ul class="loose-list">
+      <li><strong>瀏覽器 Console</strong> 會看到前端那兩行（送出帳號、後端回應）</li>
+      <li><strong>終端機</strong> 會看到後端那三行（收到請求、是否找到人、密碼對不對）</li>
+    </ul>
+        <p class="loose-text">一個動作、兩個地方的 log 串起來，就能判斷問題卡在前端、後端、還是資料查詢。</p>
+        <div class="insight">
+      <div class="insight-title">敏感資訊不要 log</div>
+      <p>密碼、Token、金鑰一旦印進 log，就可能被截圖或被收集。<br>範例裡刻意只印帳號與布林值，就是養成這個習慣。</p>
+    </div>
+        <div class="insight">
+      <div class="insight-title">debug 完記得清掉</div>
+      <p>還記得前面 ESLint 的 <code>no-console</code> 規則嗎？<code>console.log</code> 是開發時的好幫手，<br>卻不該留在正式程式碼裡——這正是為什麼 Lint 會把它擋下來。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="lab-page" id="new-project-lab-4">
+  <div class="lab-session">
+    <div class="lab-session__deco" aria-hidden="true">⚙</div>
+    <div class="lab-session__inner">
+      <h3 class="lab-session__title">🛠️  實作練習</h3>
+      <p class="lab-session__hint">有問題歡迎提出，你的問題可能是大家的問題</p>
+      
+    </div>
+    <div class="lab-task-list">
+      <div class="lab-task-item">
+        <span class="lab-task-num">1</span>
+        <span class="lab-task-text">在前端登入函式、後端登入 API 各加上 console.log</span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">2</span>
+        <span class="lab-task-text">用 admin / admin12345 登入，分別在瀏覽器 Console 與終端機看到對應的 log</span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">3</span>
+        <span class="lab-task-text">觀察完把 log 清掉，避免被 no-console 擋下</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <div class="group-block" data-seg="3">
       <div class="group-header"><span class="icon">🏗</span> ️ 專案架構說明</div>
       <div class="group-body">
         <ul>
@@ -6428,7 +6538,7 @@ openspec init</div>
 </section>
 
 <hr class="divider">
-<section class="lab-page" id="new-project-lab-4">
+<section class="lab-page" id="new-project-lab-5">
   <div class="lab-session">
     <div class="lab-session__deco" aria-hidden="true">⚙</div>
     <div class="lab-session__inner">
@@ -7360,8 +7470,7 @@ with details about my project, tech stack, and conventions</div>
 
   <div class="reveal">
     <div class="insight">
-      <div class="insight-title">建立客製化 Skill 的重要性</div>
-      <p>不同部門、團隊都有自己的工作流，專案也有各自的情境；而 Agent Skills 讓每次達成的目標，成為下次的起點。<br><strong>根據需求建立 Agent Skills，畢竟能實際給予幫助的，才是好的 Skill。</strong></p>
+      <p>上一堂課，一開始用 <strong>AI Agent 執行解析文件分析</strong>。你會發現他一切都要<code>重頭做起</code>，而且<code>不一定可以把任務完成</code>。<br>這是因為 <strong>AI 每次的思路都不一樣</strong>，而 Agent Skill 就是讓 AI 記住<code>能完成的路徑</code>。讓下次不需要重頭再來，每次都站在<code>更高的基礎上</code>。</p>
     </div>
   </div>
 
@@ -7371,7 +7480,8 @@ with details about my project, tech stack, and conventions</div>
 
   <div class="reveal">
     <div class="insight">
-      <p>Skill 的出現，讓 AI 的價值可以持續累積。只要教會一次，他就永遠記得怎麼做。</p>
+      <div class="insight-title">建立客製化 Skill 的重要性</div>
+      <p>不同部門、團隊都有自己的工作流，專案也有各自的情境；而 Agent Skills 讓每次達成的目標，成為下次的起點。<br><strong>根據需求建立 Agent Skills，畢竟能實際給予幫助的，才是好的 Skill。</strong><br>Skill 的出現，讓 AI 的價值可以持續累積。只要教會一次，他就永遠記得怎麼做。</p>
     </div>
   </div>
 

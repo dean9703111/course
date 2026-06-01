@@ -487,6 +487,59 @@ openspec init
 
 ![可以看到剛剛新增的 User](./assets/pgadmin-users.png)
 
+### 🔍 善用 Console.log 觀察前後端狀態
+
+當畫面或 API 怪怪的，`console.log` 是最快定位問題的方式——它把「看不見的程式邏輯」變成「看得見的訊息」。重點是先搞清楚 log 會印在哪裡：
+
+| 位置 | log 印在哪裡 | 怎麼看 |
+| --- | --- | --- |
+| **前端**（React 元件、呼叫 API 前後） | 瀏覽器 Console | F12 → Console 分頁 |
+| **後端**（Express route、Prisma 查詢） | 啟動專案的終端機 | 跑 `npm run dev` 的那個視窗 |
+
+> **前端 log 看瀏覽器，後端 log 看終端機**
+> 同樣是 `console.log`，前端跑在瀏覽器、後端跑在 Node.js，印出的地方完全不同。找錯地方看 log，是新手最常卡關的點。
+
+#### 用登入流程跑一次前後端的 log
+
+登入是進系統的第一步，剛好是一個完整的「前端送出 → 後端驗證」往返，拿來示範最直覺。下面的變數與路徑是示意，請對照你專案實際的程式微調。
+
+在前端送出登入的函式加上 log（**只印帳號，別印密碼**）：
+
+```code [label="前端：登入送出前後"]
+console.log("[login] 送出帳號：", account);
+const res = await api.post("/auth/login", { account, password });
+console.log("[login] 後端回應：", res.data);
+```
+
+在後端登入的 API route 加上 log（**印布林值就好，別印明碼密碼**）：
+
+```code [label="後端：登入 API route"]
+console.log("[auth] 收到登入請求，帳號：", req.body.account);
+const user = await prisma.user.findUnique({ where: { account } });
+console.log("[auth] 是否找到使用者？", Boolean(user));
+console.log("[auth] 密碼是否正確？", isMatch);
+```
+
+用 `admin / admin12345` 登入後：
+- **瀏覽器 Console** 會看到前端那兩行（送出帳號、後端回應）
+- **終端機** 會看到後端那三行（收到請求、是否找到人、密碼對不對）
+
+一個動作、兩個地方的 log 串起來，就能判斷問題卡在前端、後端、還是資料查詢。
+
+> **敏感資訊不要 log**
+> 密碼、Token、金鑰一旦印進 log，就可能被截圖或被收集。
+> 範例裡刻意只印帳號與布林值，就是養成這個習慣。
+
+> **debug 完記得清掉**
+> 還記得前面 ESLint 的 `no-console` 規則嗎？`console.log` 是開發時的好幫手，
+> 卻不該留在正式程式碼裡——這正是為什麼 Lint 會把它擋下來。
+
+[lab-session title="🛠️  實作練習"]
+- 在前端登入函式、後端登入 API 各加上 console.log
+- 用 admin / admin12345 登入，分別在瀏覽器 Console 與終端機看到對應的 log
+- 觀察完把 log 清掉，避免被 no-console 擋下
+[/lab-session]
+
 ### 🏗️ 專案架構說明
 
 - **apps/web 資料夾**：前端程式，就是你看到的網頁畫面跟操作邏輯。用 `Vite + React + shadcn/ui`。
@@ -783,12 +836,14 @@ Audit log 頁面有如下優化需求：
 
 # 客製 Skill：根據情境設計 Skills，讓 AI 有執行依據
 
-> **建立客製化 Skill 的重要性**
-> 不同部門、團隊都有自己的工作流，專案也有各自的情境；而 Agent Skills 讓每次達成的目標，成為下次的起點。
-> **根據需求建立 Agent Skills，畢竟能實際給予幫助的，才是好的 Skill。**
+> 上一堂課，一開始用 **AI Agent 執行解析文件分析**。你會發現他一切都要`重頭做起`，而且`不一定可以把任務完成`。
+> 這是因為 **AI 每次的思路都不一樣**，而 Agent Skill 就是讓 AI 記住`能完成的路徑`。讓下次不需要重頭再來，每次都站在`更高的基礎上`。
 
 ## 根據需求建立 Skill
 
+> **建立客製化 Skill 的重要性**
+> 不同部門、團隊都有自己的工作流，專案也有各自的情境；而 Agent Skills 讓每次達成的目標，成為下次的起點。
+> **根據需求建立 Agent Skills，畢竟能實際給予幫助的，才是好的 Skill。**
 > Skill 的出現，讓 AI 的價值可以持續累積。只要教會一次，他就永遠記得怎麼做。
 
 ### 🌿 設計 Branch Name Skill
