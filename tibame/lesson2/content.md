@@ -14,6 +14,83 @@
   des: **團隊協作與專案部署**：建立自動化測試，了解 Worktree 應用時機，同時用 MCP 操作外部工具將專案部署上線
 [/time]
 
+# 📝 課後問題：建立 User 層級的 Claude Code GitHub Repository
+
+## 為什麼要做這件事？
+
+### 🖥️ 讓 Claude Code 不用重頭設計
+
+- 使用者層級的 `skills`、`hooks`、`settings.json`、`CLAUDE.md` 平常散落在 `~/.claude/` 目錄
+- 如果沒有`版本控制`，一旦**換機器、重灌系統**，這些累積的心血就得從頭設定一次
+- 把它們放進 GitHub repo，用 `git` 管理版本、用 `symlink` 連回原位
+- 達成：**版本可追溯、跨裝置同步、隨時可還原**
+
+> **~/.claude/ 是「捷徑」，Git Repo 才是「來源」**
+
+### 🚫 請勿將「.claude」全部加入版控
+
+資料夾下有很多`不建議加入版控的內容`（ex: image-cache、sessions、projects、plugins...）
+
+![版本控制是加入自己理解的資訊，不是全部都傳](./assets/dont-push-all-claude.png)
+
+## 實作步驟
+
+### 🗂️ 先將資料搬進去，再連回來
+
+1. 先在 GitHub 建立新的 repository（參考範例 [user-dot-agents](https://github.com/deancourse/user-dot-agents)）
+2. Clone 到本地後，再依序輸入下面的指令
+
+```prompt [label="先確認可以找到檔案、資料夾"]
+列出使用者目錄(~/.claude/)底下的 skills、hooks、settings.json、CLAUDE.md 檔案，顯示對應路徑
+```
+
+![確認目前檔案、資料夾的現狀](./assets/check-file-folder-exists.png)
+
+```prompt [label="先確認可以找到檔案、資料夾"]
+我想要將「skills、hooks」資料夾與下面檔案，以及「settings.json、CLAUDE.md」檔案
+1. 透過 mv 的方式移動到目前這個工作區（若已建立 symlink，請移動原始的檔案）
+2. 設計一個 mac/windows 通用的 shell script，執行時可以將 repo 的內容 symlink 回去使用者目錄，skills 需要同時連結到「.agents/.claude」。
+3. 設計 .gitignore，排除不需加入版控的檔案、mac/windows 系統暫存檔
+4. 撰寫 README.md 說明使用方式
+```
+
+![確認 AI 有正確移動目標資料夾與檔案](./assets/check-file-folder-move.png)
+
+> **如果本業為工程師**
+> 可以參考 andrej 的 [CLAUDE.md](https://github.com/multica-ai/andrej-karpathy-skills/blob/main/CLAUDE.md)。
+
+### 🏃‍♂️ 執行 Shell Script
+
+可以請 AI 執行腳本，或是自己手動操作。
+
+```prompt [label="執行 Shell Script"]
+bash install.sh
+```
+
+![這是講者 Repository 執行範例](./assets/excute-script-sync.png)
+
+### ✅ 確認方案生效
+
+#### 從資料夾的角度確認
+
+![確認 CLAUDE.md、hooks、skills、settings.json](./assets/claude-folder.png)
+
+#### 登入 Claude Code 確認
+
+![輸入 /skills 確認結果](./assets/claude-skill-list.png)
+
+### 📝 Commit & Push 到 GitHub
+
+確認一切符合預期後，就可以更新到 GitHub，之後多台電腦就可以`輕鬆同步 & 版本控制`。
+
+![確認 GitHub 有成功更新](./assets/github-user-agents-setting.png)
+
+> **延伸思考**
+> 如果你同時使用不同 AI Agents（`Claude Code、Codex、Cursor、Antigravity`），因為彼此的目錄結構不同。
+> 如果想建立軟連結（symlinks），可以先針對通用性高的 `skills` 設計就好。
+
+---
+
 # 常見痛點：穩定性不足、難以維護、無法驗證
 
 > 一句話 AI 就能生成有前端、後端、資料庫的系統，但...你敢用嗎？
