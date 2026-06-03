@@ -64,11 +64,21 @@
 
 可以請 AI 執行腳本，或是自己手動操作。
 
+#### macOS / Linux / Git Bash / WSL
+
 ```prompt [label="執行 Shell Script"]
 bash install.sh
 ```
 
 ![這是講者 Repository 執行範例](./assets/excute-script-sync.png)
+
+#### Windows PowerShell
+
+```prompt [label="執行 Shell Script"]
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+![這是講者 Windows 跳出權限視窗後執行範例](./assets/windows-excute-script-sync.png)
 
 ### ✅ 確認方案生效
 
@@ -89,6 +99,13 @@ bash install.sh
 > **延伸思考**
 > 如果你同時使用不同 AI Agents（`Claude Code、Codex、Cursor、Antigravity`），因為彼此的目錄結構不同。
 > 如果想建立軟連結（symlinks），可以先針對通用性高的 `skills` 設計就好。
+
+[lab-session title="🛠️  實作練習"]
+1. 在 GitHub 上建立一個新 Repository 用來存放
+2. 請 AI 先將資料搬進去，再連回來
+3. 執行 Script 腳本完成軟連結
+4. 檢查 Claude Code 是否能正確讀取 skills/hooks/settings
+[/lab-session]
 
 ---
 
@@ -138,8 +155,16 @@ bash install.sh
 
 ### 🔍 一行指令跑完版本檢核
 
+#### macOS / Linux
+
 ```terminal [label="一次檢核所有版本"]
 git --version && node -v && python --version && claude --version
+```
+
+#### Windows Powershell
+
+```terminal [label="一次檢核所有版本"]
+git --version; node -v; python --version; claude --version
 ```
 
 ![你的版本可能跟我不同，高於表格即可](./assets/tool-check.png)
@@ -219,18 +244,25 @@ brew install gh
 winget install --id GitHub.cli
 ```
 
+Windows 系統建議`完整關閉終端機後重開`，這樣才能順利登入
+
 ```terminal [label="安裝完成後登入（通用）"]
 gh auth login
 ```
 
 > **登入流程**
 > 依序選 `GitHub.com` → `SSH` → `Login with a web browser`，瀏覽器會自動開啟完成授權。
+> GitHub 網頁會要求你輸入檢查碼，就是終端機上的 `First copy your one-time code`
 > Linux 或沒有 winget 的環境，請參考 [GitHub CLI 官方安裝指南](https://github.com/cli/cli#installation)。
 
 #### 驗證安裝與登入狀態
 
-```terminal [label="一次檢查安裝版本與登入帳號"]
+```terminal [label="macOS 查安裝版本與登入帳號"]
 gh --version && gh auth status
+```
+
+```terminal [label="Windows 查安裝版本與登入帳號"]
+gh --version ;; gh auth status
 ```
 
 | 預期輸出 | 代表狀態 |
@@ -262,7 +294,7 @@ Plugin 用來擴充 **Claude Code 本身**的能力：
 ![輸入 /plugin 可查看安裝的外掛](./assets/installed-plugins.png)
 
 > **Plugin 跟 Skill 有什麼不同？**
-> Plugin 擴充的是 **Claude Code 本身**的功能（slash command、外部整合）；
+> Plugin 擴充的是 **Claude Code 本身**的功能（外部整合）；
 > Skill 則是 **AI 在對話中**根據需求自動觸發的任務模組。
 
 [lab-session title="🛠️  實作練習"]
@@ -388,8 +420,10 @@ describe("echo skill", () => {
 
 ![讓檢查自動發生](./assets/precommit.png)
 
+![了解錯誤在哪裡發生](./assets/precommit-error.png)
+
 > **把 AI 犯錯當成必然**
-> 比起讓 AI 永不犯錯，更重要的是設計當 AI 犯錯時警告的通知！
+> 比起讓 AI 永不犯錯，更重要的是`設計當 AI 犯錯時警告的通知`！
 
 [lab-session title="🛠️  實作練習"]
 - 下載課程範例 `git clone --branch main --single-branch git@github.com:deancourse/tibame-lesson2.git`
@@ -400,7 +434,7 @@ describe("echo skill", () => {
 
 ## 用 OpenSpec 規格驅動開發（SDD）
 
-### 🔧 安裝 OpenSpec，完成基礎設定
+### 🔧 安裝 OpenSpec，完成基礎設定  | branch:feature/openspec-bootstrap
 
 ```terminal [label="安裝指令"]
 npm install -g @fission-ai/openspec@latest
@@ -423,7 +457,7 @@ openspec init
 ![不需要去背，知道有就可以了](./assets/open-spec-lists.png)
 
 > **如果想強制驅動 OpenSpec**
-> 在 AI 指令不夠明確時，可能不會觸發對應的 Skill。可以先點擊右上角的 New Session（開啟新的對話），在對話窗中輸入 `/opsx` 來操作。
+> 在 AI 指令不夠明確時，可能不會觸發對應的 Skill。可以在對話窗中輸入 `/opsx` 來操作。
 
 [lab-session title="🛠️  實作練習"]
 - 安裝 OpenSpec `npm install -g @fission-ai/openspec@latest`
@@ -431,7 +465,7 @@ openspec init
 - 擴充 OpenSpec 技能 `openspec config profile`
 [/lab-session]
 
-## 安裝 Docker | branch:develop
+## 安裝 Docker
 
 > **這次會完成全端專案**
 > - **前端**：是使用者看到的網頁畫面與操作介面
@@ -455,12 +489,12 @@ openspec init
 ## 在隔離環境執行 Claude Code
 
 > **如果打算讓 Claude Code 自行發揮到極致**
-> 現在執行 Claude Code 時，`AI 會時常詢問你是否要 Accept`，可能問多了會覺得煩。
+> 現在執行 Claude Code 時，`AI 會時常詢問你是否要 Accept`。
 > 但如果想要執行 `claude --dangerously-skip-permissions`，讓 AI 放手去做，請參考下面的設定。
 
 ### 🧩 下載 Dev Containers
 
-安裝好 Docker 後，在 IDE 的 Extensions 搜尋「Dev Containers」並安裝。
+安裝好 Docker 後，在 IDE 的 Extensions 搜尋「dev docker」，找到 `Dev Containers` 並安裝。
 
 ![安裝 Dev Containers 外掛](./assets/dev-containers.png)
 
@@ -472,13 +506,16 @@ openspec init
 
 開啟後，輸入「F1」貼上 `Dev Containers: Reopen in Container`
 
-![第一次會花比較久的時間](./assets/reopen-in-container.png)
+![第一次需要拉取資訊，會花比較久的時間](./assets/reopen-in-container.png)
 
 ![啟動完成後，左下角就會顯示開發容器](./assets/success-sandbox.png)
 
+> **如果啟動失敗**
+> 可以嘗試`關掉後重啟`，如果還是不行，將錯誤訊息貼到 Claude Code 進行分析。
+
 ### 🛠️ 確認運作環境，嘗試生成網站
 
-接著在終端機輸入 `claude`，後續的操作都一樣（`第一次需要重新登入帳號`）。
+接著在終端機輸入 `claude`，後續的操作都一樣（`第一次需要登入帳號`）。
 
 ![確認可以順利登入 Claude 帳號](./assets/sandbox-login-claude.png)
 
@@ -486,7 +523,9 @@ openspec init
 
 ![會是一個乾淨的 Claude 原廠狀況](./assets/init-claude-setting.png)
 
-你可以大膽地執行 `claude --dangerously-skip-permissions` 了
+你可以退出 Claude 後，於終端機可以大膽地執行 `claude --dangerously-skip-permissions` 了
+
+![執行時，Claude 會提出警告，建議僅在隔離環境使用](./assets/dangerously-skip-permissions.png)
 
 ```prompt [label="讀取外部資料"]
 幫我列出桌面有哪些檔案
@@ -563,7 +602,12 @@ openspec init
 
 > **經驗分享**
 > 根據過去經驗，用 Claude Code 完成`專案初版`，大約需要`花費 30 分鐘左右`。
-> 如果想`跳過「開始實作」這段`，可以用`git fetch origin & git checkout -b feature/fullstack-foundation origin/feature/fullstack-foundation`
+> 如果想`跳過「開始實作」這段`，可以用下面方案，這樣有需要時，後續可以用 `git switch [branch]` 切換練習分支
+> ```terminal [label="拉取遠端 branch"]
+> git remote add upstream git@github.com:deancourse/tibame-lesson2.git
+> git fetch upstream
+> git switch feature/fullstack-foundation
+> ```
 
 ![初始化專案通常需要 30 分鐘](./assets/ai-complete.png)
 
@@ -623,6 +667,15 @@ openspec init
 3. 點擊右鍵 ⭢ View/Edit Data ⭢ All Rows
 
 ![可以看到剛剛新增的 User](./assets/pgadmin-users.png)
+
+### 🤔 這個專案結構合理嗎？
+
+**能正常執行的專案，不代表就是好的專案！**
+
+1. 專案根目錄的 package.json/.env 是後端在使用的
+2. 目前後端單元測試會自動生成 3 個使用者，這是我們要的結果嗎?
+3. 後端單元測試重複執行時，使用者會持續遞增，這沒問題嗎?
+
 
 ### 🔍 善用 Console.log 觀察前後端狀態
 
