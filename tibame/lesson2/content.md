@@ -430,7 +430,7 @@ openspec init
 - 擴充 OpenSpec 技能 `openspec config profile`
 [/lab-session]
 
-## 安裝 Docker  | branch:develop
+## 安裝 Docker | branch:develop
 
 > **這次會完成全端專案**
 > - **前端**：是使用者看到的網頁畫面與操作介面
@@ -450,6 +450,65 @@ openspec init
 
 > **安裝完成後，記得啟動 Docker Desktop**
 > Docker 安裝完並不會自動啟動。請在應用程式中找到 Docker Desktop 並打開，**註冊相關步驟都可以直接 Skip**，看到左下角顯示綠色的 Running 狀態，才代表 Docker 已經準備好了。
+
+## 在隔離環境執行 Claude Code
+
+> **如果打算讓 Claude Code 自行發揮到極致**
+> 現在執行 Claude Code 時，`AI 會時常詢問你是否要 Accept`，可能問多了會覺得煩。
+> 但如果想要執行 `claude --dangerously-skip-permissions`，讓 AI 放手去做，請參考下面的設定。
+
+### 🧩 下載 Dev Containers
+
+安裝好 Docker 後，在 IDE 的 Extensions 搜尋「Dev Containers」並安裝。
+
+![安裝 Dev Containers 外掛](./assets/dev-containers.png)
+
+### 📥 下載測試範例，啟動 Sanbox
+
+我這邊有參考 [Cluade 官方指引](https://github.com/anthropics/claude-code/tree/main/.devcontainer)，建立了一個方便大家[練習用的 GitHub Repository](https://github.com/deancourse/claude-code-docker-container-demo)。
+
+![GitHub 專案可以直接下載體驗](./assets/claude-code-docker-container-demo.png)
+
+開啟後，輸入「F1」貼上 `Dev Containers: Reopen in Container`
+
+![第一次會花比較久的時間](./assets/reopen-in-container.png)
+
+![啟動完成後，左下角就會顯示開發容器](./assets/success-sandbox.png)
+
+### 🛠️ 確認運作環境，嘗試生成網站
+
+接著在終端機輸入 `claude`，後續的操作都一樣（`第一次需要重新登入帳號`）。
+
+![確認可以順利登入 Claude 帳號](./assets/sandbox-login-claude.png)
+
+目前這個是完全獨立的環境，所以過去 `User Scope 的相關設定都不會出現`（ex: Skills、Rules、Plugins、Perminssions）。
+
+![會是一個乾淨的 Claude 原廠狀況](./assets/init-claude-setting.png)
+
+你可以大膽地執行 `claude --dangerously-skip-permissions` 了
+
+```prompt [label="讀取外部資料"]
+幫我列出桌面有哪些檔案
+```
+
+![確認無法聯繫到外部資源](./assets/cannot-access-external-resouce.png)
+
+```prompt [label="生成前端網站"]
+/goal 生成一個極具創意性的前端網站，使用 React，讓大家為之震撼的視覺設計體驗
+多使用一些 CSS、動畫、漸層技巧
+```
+
+![在這個模式下，AI 不會再詢問權限相關問題](./assets/ai-like-crazy-worker.png)
+
+```prompt [label="啟動專案"]
+幫我啟動專案，需要讓開發容器外的也可檢視網頁
+```
+
+![AI 啟動的會放到 Shell，記得要關閉否則會有殘存](./assets/checkout-shell-web-site.png)
+
+> **個人使用經驗**
+> 讓 AI 在隔離環境執行很美好；但這也代表**使用外部資源需要額外設定、放白名單**。
+> 如果沒有設計好，就像`設計漏洞給 Sandbox`。
 
 ## 規格驅動開發（SDD）
 
