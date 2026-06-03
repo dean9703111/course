@@ -50,8 +50,9 @@
 我想要將「skills、hooks」資料夾與下面檔案，以及「settings.json、CLAUDE.md」檔案
 1. 透過 mv 的方式移動到目前這個工作區（若已建立 symlink，請移動原始的檔案）
 2. 設計一個 mac/windows 通用的 shell script，執行時可以將 repo 的內容 symlink 回去使用者目錄，skills 需要同時連結到「.agents/.claude」。
-3. 設計 .gitignore，排除不需加入版控的檔案、mac/windows 系統暫存檔
-4. 撰寫 README.md 說明使用方式
+3. 另外 scripts 執行時，要先判斷資料夾與檔案是否存在，如果非軟連結應建立 xxx.backup 備份
+4. 設計 .gitignore，排除不需加入版控的檔案、mac/windows 系統暫存檔
+5. 撰寫 README.md 說明使用方式
 ```
 
 ![確認 AI 有正確移動目標資料夾與檔案](./assets/check-file-folder-move.png)
