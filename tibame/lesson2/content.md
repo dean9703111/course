@@ -90,6 +90,14 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 
 ![輸入 /skills 確認結果](./assets/claude-skill-list.png)
 
+#### 確認防禦機制啟動
+
+```prompt [label="嘗試刪除檔案"]
+透過 find delete 方案，刪除 skills 資料夾
+```
+
+![確認無法執行危險指令](./assets/deny-dangerous-commands.png)
+
 ### 📝 Commit & Push 到 GitHub
 
 確認一切符合預期後，就可以更新到 GitHub，之後多台電腦就可以`輕鬆同步 & 版本控制`。
@@ -576,7 +584,7 @@ openspec init
 
 ![AI 會跟你討論專案設計細節](./assets/ai-questions.png)
 
-### 📋 用 OpenSpec 建立文件規格  | branch:feature/openspec-bootstrap
+### 📋 用 OpenSpec 建立文件規格
 
 釐清完需求後，AI 會觸發 OpenSpec 的 Skills 做更細部的規劃。相關的規格文件都會存放在 `changes` 資料夾底下。
 
@@ -592,7 +600,7 @@ openspec init
 > **如果希望都用中文寫規格**
 > 可以直接請 AI 調整：`規格文件請使用「中文」撰寫，但專有名詞與技術名詞維持「英文」，可以在後面用括弧顯示中文翻譯`
 
-### ⚡ 開始實作
+### ⚡ 開始實作  | branch:feature/fullstack-foundation
 
 確認規劃都符合預期後，告訴 AI「開始實作」，AI 就會**根據規劃開始撰寫程式**。
 
@@ -618,7 +626,7 @@ openspec init
 
 ### 🤖 請 AI 協助啟動專案
 
-第一次啟動可以請 AI 幫忙，因為有很高的機率在第一版遇到零星錯誤
+第一次啟動可以請 AI 幫忙，因為有很高的機率在`第一版遇到零星錯誤`
 
 ```prompt [label="讓 AI 協助啟動"]
 請幫我啟動前後端專案，並確認 Postgres 跟 Postgres Admin 的 Docker 有啟動
@@ -675,67 +683,14 @@ openspec init
 在「feature/fullstack-foundation」，可以透過下面指令看到原本 AI 設計
 
 ```terminal [label="回退到指定版本"]
-get reset 3585d65e39c272f73dbf262b00c70af9f7a38156
+git reset --soft 3585d65e39c272f73dbf262b00c70af9f7a38156
 ```
 
 [flow]
-1. 環境變數 — .env 設計在`根目錄`，但後端與前端`讀取不到、容易混亂`，現在調整讀取的方案
-2. port 衝突 - 默認的 `3000、5173` 容易與其他專案衝突，因此直接設計成冷門的 `3098、8090`
-3. 啟動與測試 - 原本都用 `npm run dev`、`npm run test` 可以前後端都跑，但有時看 `log 資訊、確認錯誤` 時，前後端分離更好
+1. 環境變數 — .env 設計在`根目錄`，但後端與前端`讀取不到、容易混亂`，現在調整讀取的方案（參考 `loadDotenv.ts`）
+2. port 衝突 - 默認的 `3000、5173` 容易與其他專案衝突，因此直接設計成冷門的 `3098、8090`（參考 `.env.exmaple`）
+3. 啟動與測試 - 原本都用 `npm run dev`、`npm run test` 可以前後端都跑，但有時看 `log 資訊、確認錯誤` 時，前後端分離更好（參考 `package.json`）
 [/flow]
-
-### 🔍 善用 Console.log 觀察前後端狀態
-
-當畫面或 API 怪怪的，`console.log` 是最快定位問題的方式——它把「看不見的程式邏輯」變成「看得見的訊息」。重點是先搞清楚 log 會印在哪裡：
-
-| 位置 | log 印在哪裡 | 怎麼看 |
-| --- | --- | --- |
-| **前端**（React 元件、呼叫 API 前後） | 瀏覽器 Console | F12 → Console 分頁 |
-| **後端**（Express route、Prisma 查詢） | 啟動專案的終端機 | 跑 `npm run dev` 的那個視窗 |
-
-> **前端 log 看瀏覽器，後端 log 看終端機**
-> 同樣是 `console.log`，前端跑在瀏覽器、後端跑在 Node.js，印出的地方完全不同。找錯地方看 log，是新手最常卡關的點。
-
-#### 用登入流程跑一次前後端的 log
-
-登入是進系統的第一步，剛好是一個完整的「前端送出 → 後端驗證」往返，拿來示範最直覺。下面的變數與路徑是示意，請對照你專案實際的程式微調。
-
-在前端送出登入的函式加上 log（**只印帳號，別印密碼**）：
-
-```code [label="前端：登入送出前後"]
-console.log("[login] 送出帳號：", account);
-const res = await api.post("/auth/login", { account, password });
-console.log("[login] 後端回應：", res.data);
-```
-
-在後端登入的 API route 加上 log（**印布林值就好，別印明碼密碼**）：
-
-```code [label="後端：登入 API route"]
-console.log("[auth] 收到登入請求，帳號：", req.body.account);
-const user = await prisma.user.findUnique({ where: { account } });
-console.log("[auth] 是否找到使用者？", Boolean(user));
-console.log("[auth] 密碼是否正確？", isMatch);
-```
-
-用 `admin / admin12345` 登入後：
-- **瀏覽器 Console** 會看到前端那兩行（送出帳號、後端回應）
-- **終端機** 會看到後端那三行（收到請求、是否找到人、密碼對不對）
-
-一個動作、兩個地方的 log 串起來，就能判斷問題卡在前端、後端、還是資料查詢。
-
-> **敏感資訊不要 log**
-> 密碼、Token、金鑰一旦印進 log，就可能被截圖或被收集。
-> 範例裡刻意只印帳號與布林值，就是養成這個習慣。
-
-> **debug 完記得清掉**
-> 還記得前面 ESLint 的 `no-console` 規則嗎？`console.log` 是開發時的好幫手，
-> 卻不該留在正式程式碼裡——這正是為什麼 Lint 會把它擋下來。
-
-[lab-session title="🛠️  實作練習"]
-- 在前端登入函式、後端登入 API 各加上 console.log
-- 用 admin / admin12345 登入，分別在瀏覽器 Console 與終端機看到對應的 log
-- 觀察完把 log 清掉，避免被 no-console 擋下
-[/lab-session]
 
 ### 🏗️ 專案架構說明
 
@@ -779,7 +734,7 @@ console.log("[auth] 密碼是否正確？", isMatch);
 > **為什麼需要分支策略？**
 > 如果把`邏輯錯誤`或`功能不完善`的版本直接推送到主分支，`產品就壞掉了`。分支策略的目的，是保護`對外服務的穩定性`。
 
-### 🔀 切換分支 | branch:feature/fullstack-foundation
+### 🔀 切換分支
 
 ```terminal [label="切換到 feature 分支"]
 git checkout -b feature/fullstack-foundation
@@ -801,7 +756,7 @@ git checkout -b feature/fullstack-foundation
 
 ## 建立專案規則
 
-### 📐 設定 CLAUDE、OpenSpec 專案規則
+### 📐 設定 CLAUDE、OpenSpec 專案規則 | branch:feature/add-form-enums-and-mock-seed
 
 **CLAUDE.md** 是給「做事」用的，**openspec/config.yaml** 是給「規劃」用的
 
@@ -862,10 +817,12 @@ with details about my project, tech stack, and conventions
 ```
 
 > **延伸思考**
-> Mock data（模擬資料）要以怎麼樣的形式寫入？
-> 1. 如果已經存在，要覆蓋嗎？
+> **Mock data（模擬資料）要以怎麼樣的形式寫入？**
+> 1. 如果資料已經存在，要覆蓋嗎？
 > 2. 原有的資料要清除嗎？
-> 3. 是否執行前要先判斷環境呢？（僅允許 local / dev 環境執行）
+> 3. 是否每次都寫入相同的資料？
+> 4. 執行前有要先判斷環境嗎？（僅允許 local / dev 環境執行）
+> 5. 指令多次執行會有問題嗎？
 
 #### 畫面質感升級
 
@@ -943,7 +900,7 @@ with details about my project, tech stack, and conventions
 
 ## 用 OpenSpec 新增功能
 
-### ✨ 新增功能並整合規格文件
+### ✨ 新增功能並整合規格文件  | branch:feature/audit-log
 
 [flow]
 1. 閱讀專案既有架構、功能 — 確認要新增還是修改
@@ -975,7 +932,7 @@ with details about my project, tech stack, and conventions
 
 ![驗證功能符合預期](./assets/admin-auditlog.png)
 
-### ✅ 確認都符合預期後再歸檔 | branch:feature/audit-log
+### ✅ 確認都符合預期後再歸檔
 
 ```prompt [label="歸檔變更"]
 幫我歸檔
@@ -983,13 +940,15 @@ with details about my project, tech stack, and conventions
 
 ![OpenSpec會自動整合規格文件](./assets/openspec-integration.png)
 
+> 完成後記得新增 branch 並完成 commit & push
+
 [lab-session title="🛠️  實作練習"]
 - 用 OpenSpec 新增功能
 - 驗證功能符合需求
 - 用歸檔來整合規格文件
 [/lab-session]
 
-### 🧐 目前看到可以優化的細節
+### 🧐 目前看到可以優化的細節  | branch:feature/enhance-audit-log-and-ui
 
 現在這個介面操作起來體驗是好的嗎？功能正常嗎？
 
@@ -999,6 +958,8 @@ with details about my project, tech stack, and conventions
 4. 左下角跟右上角的使用者資訊重複
 5. 彈窗的「購買日、入職日期沒有正確顯示」
 6. 左側選單沒有固定，應該要 100% 高度
+
+> **要求的 AI 未必做到，更何況沒要求的。**
 
 ### 👀 看到問題請 AI 優化就好
 
@@ -1015,9 +976,29 @@ Audit log 頁面有如下優化需求：
 使用 OpenSpec
 ```
 
-### ✅ 驗證優化後的版本  | branch:feature/enhance-audit-log-and-ui
+### ✅ 安裝 Playwright MCP 自動驗證
 
-網頁相關的自動化驗證，可以安裝 `Playwright MCP`，節省人工驗證的時間。
+網頁相關的自動化驗證，可以安裝 `Playwright MCP`，讓 AI 打開瀏覽器確認。
+
+```terminal [label="安裝 playwright"]
+claude mcp add playwright npx @playwright/mcp@latest
+```
+
+重啟 Claude 後，可以要求 AI 驗證
+
+```prompt [label="用 playwright 驗證"]
+用 playwright 驗證 Audit log 頁面有如下功能：
+1. 希望可以複選使用者、動作、結果
+2. 欄位少了呼叫 API 時的參數，希望滑鼠移過去時可以顯示
+3. 來源 ip 中間兩碼希望 mask，欄位上方可以開關
+```
+
+![Playwright 可以幫你確認頁面邏輯](./assets/playwright-mcp.png)
+
+> **更多延伸**
+> PR 裡面的`畫面截圖`，其實可以使用 Playwright 輔助。
+
+### 👁️‍🗨️ 人工再次確認
 
 #### Audit log 頁面符合預期
 
@@ -1035,6 +1016,28 @@ Audit log 頁面有如下優化需求：
 
 > 上一堂課，一開始用 **AI Agent 執行解析文件分析**。你會發現他一切都要`重頭做起`，而且`不一定可以把任務完成`。
 > 這是因為 **AI 每次的思路都不一樣**，而 Agent Skill 就是讓 AI 記住`能完成的路徑`。讓下次不需要重頭再來，每次都站在`更高的基礎上`。
+
+## 前置設定
+
+> **如果按照講義操作，可以跳過這一步**
+
+### ⏪ 將專案推回到方便測試的版本
+
+```terminal [label="先切回上一個 branch 來測試"]
+git checkout feature/audit-log
+```
+
+```terminal [label="然後拉取更新"]
+git pull origin feature/enhance-audit-log-and-ui
+```
+
+如果遇到警告，建議選擇 `git config pull. rebase false` 來合併。
+
+![可能會有警告](./assets/git-pull-warnging.png)
+
+這樣可以取得對應的`變更資訊`了。
+
+![在 Source Control 可以看到](./assets/source-control-change.png)
 
 ## 根據需求建立 Skill
 
