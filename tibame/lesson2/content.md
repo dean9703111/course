@@ -976,27 +976,38 @@ Audit log 頁面有如下優化需求：
 使用 OpenSpec
 ```
 
-### ✅ 安裝 Playwright MCP 自動驗證
+### ✅ 安裝 Playwright + Chrome DevTools MCP 自動驗證
 
-網頁相關的自動化驗證，可以安裝 `Playwright MCP`，讓 AI 打開瀏覽器確認。
+網頁相關的自動化驗證，可以一次安裝`兩個 MCP`，讓 AI 打開瀏覽器、從不同層面幫你確認：
 
-```terminal [label="安裝 playwright"]
+- **[Playwright MCP](https://github.com/microsoft/playwright-mcp)**：負責`功能與互動`驗證 — 點擊、複選、填表、hover、抓 UI 結構與截圖。回答的是「點得到嗎？欄位在不在？操作會動嗎？」，可以負責 95% 的任務。
+- **[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp)**：負責`網路與底層`診斷 — 實際 API 請求參數、console 錯誤、效能追蹤。回答的是「API 送了什麼？有沒有報錯？卡在哪？」，處理 5% 的難題。
+
+> 兩者是`互補`而非取代：Playwright 看的是`畫面表現`，Chrome DevTools 看的是`底層發生什麼事`。
+
+```terminal [label="一次安裝兩個 MCP"]
 claude mcp add playwright npx @playwright/mcp@latest
+claude mcp add chrome-devtools npx chrome-devtools-mcp@latest
 ```
 
-重啟 Claude 後，可以要求 AI 驗證
+重啟 Claude 後，用`一個 prompt`就能請兩個工具分工驗證，也順便讓你體會兩者的定位差異
 
-```prompt [label="用 playwright 驗證"]
-用 playwright 驗證 Audit log 頁面有如下功能：
-1. 希望可以複選使用者、動作、結果
-2. 欄位少了呼叫 API 時的參數，希望滑鼠移過去時可以顯示
-3. 來源 ip 中間兩碼希望 mask，欄位上方可以開關
+```prompt [label="Playwright + Chrome DevTools 雙重驗證"]
+請從兩個層面驗證 Audit log 頁面：
+
+【Playwright：功能與互動】
+1. 可以複選使用者、動作、結果
+2. 滑鼠移到欄位上會顯示呼叫 API 的參數
+
+【Chrome DevTools：網路與底層】
+3. 切換查詢條件時，3 種條件下，API 回傳的時間
 ```
 
-![Playwright 可以幫你確認頁面邏輯](./assets/playwright-mcp.png)
+![Playwright & Chrome DevTools 可以幫你確認頁面邏輯](./assets/playwright-mcp.png)
 
 > **更多延伸**
 > PR 裡面的`畫面截圖`，其實可以使用 Playwright 輔助。
+> [這個 Repo](https://github.com/dean9703111/yt-comment) 的 README.md 的`截圖`涵蓋`標記`說明都是 AI 生成的（截圖使用到 Pillow  套件）。
 
 ### 👁️‍🗨️ 人工再次確認
 
