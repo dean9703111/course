@@ -109,10 +109,10 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 > 如果想建立軟連結（symlinks），可以先針對通用性高的 `skills` 設計就好。
 
 [lab-session title="🛠️  實作練習"]
-1. 在 GitHub 上建立一個新 Repository 用來存放
-2. 請 AI 先將資料搬進去，再連回來
-3. 執行 Script 腳本完成軟連結
-4. 檢查 Claude Code 是否能正確讀取 skills/hooks/settings
+- 在 GitHub 上建立一個新 Repository 用來存放
+- 請 AI 先將資料搬進去，再連回來
+- 執行 Script 腳本完成軟連結
+- 檢查 Claude Code 是否能正確讀取 skills/hooks/settings
 [/lab-session]
 
 ---
@@ -637,6 +637,9 @@ openspec init
 
 ![通常第一版完成的 UI 介面都很樸素](./assets/project-init.png)
 
+> **在初始啟動後，未來可自行啟動**
+> 指令在 package.json 下的 scripts，以這個專案來說，輸入 `npm run dev` 便可啟動
+
 ### ✅ 驗證前端、後端、資料庫
 
 #### 確認前端頁面都可以順利顯示
@@ -690,7 +693,12 @@ git reset --soft 3585d65e39c272f73dbf262b00c70af9f7a38156
 1. 環境變數 — .env 設計在`根目錄`，但後端與前端`讀取不到、容易混亂`，現在調整讀取的方案（參考 `loadDotenv.ts`）
 2. port 衝突 - 默認的 `3000、5173` 容易與其他專案衝突，因此直接設計成冷門的 `3098、8090`（參考 `.env.exmaple`）
 3. 啟動與測試 - 原本都用 `npm run dev`、`npm run test` 可以前後端都跑，但有時看 `log 資訊、確認錯誤` 時，前後端分離更好（參考 `package.json`）
+4. 權限清除 - 如果你`登出後`，直接輸入網頁路徑，會`可以看到頁面`（這是因為登出 Cookie 沒有正確清除導致）
 [/flow]
+
+> **知道才能做到**
+> 上課時，有些人問我為甚麼能`找出這麼多問題`；講實話，這些就是`經驗積累`，你會出猜測那些地方可能有問題。
+> 當然，這些經驗你也可以請 AI `設計成一個 Skill`，讓他在專案完成`時逐點檢查`
 
 ### 🏗️ 專案架構說明
 
@@ -815,6 +823,13 @@ with details about my project, tech stack, and conventions
 ```prompt [label="重啟前後端並取得測試資訊"]
 幫我新增 mock 資料後，重啟前後端
 ```
+
+> **如果想自己執行 Migration & Seed 作業**
+> 指令在 package.json 下的 scripts：
+> ```
+> npm run db:migrate
+> npm run seed:mock
+> ```
 
 > **延伸思考**
 > **Mock data（模擬資料）要以怎麼樣的形式寫入？**
@@ -990,14 +1005,16 @@ claude mcp add playwright npx @playwright/mcp@latest
 claude mcp add chrome-devtools npx chrome-devtools-mcp@latest
 ```
 
+![安裝完成後，輸入 /mcp 確認有安裝成功](./assets/install-playwright-chrome-devtools.png)
+
 重啟 Claude 後，用`一個 prompt`就能請兩個工具分工驗證，也順便讓你體會兩者的定位差異
 
 ```prompt [label="Playwright + Chrome DevTools 雙重驗證"]
 請從兩個層面驗證 Audit log 頁面：
 
 【Playwright：功能與互動】
-1. 可以複選使用者、動作、結果
-2. 滑鼠移到欄位上會顯示呼叫 API 的參數
+1. 可以複選使用者
+2. 滑鼠移到 API 參數欄位會顯示參數
 
 【Chrome DevTools：網路與底層】
 3. 切換查詢條件時，3 種條件下，API 回傳的時間
@@ -1039,14 +1056,14 @@ git checkout feature/audit-log
 ```
 
 ```terminal [label="然後拉取更新"]
-git pull origin feature/enhance-audit-log-and-ui
+git pull upstream feature/enhance-audit-log-and-ui
 ```
 
 如果遇到警告，建議選擇 `git config pull. rebase false` 來合併。
 
 ![可能會有警告](./assets/git-pull-warnging.png)
 
-這樣可以取得對應的`變更資訊`了。
+這樣可以取得對應的`變更資訊`了，想關閉終端機訊息，可以輸入`:q`。
 
 ![在 Source Control 可以看到](./assets/source-control-change.png)
 
