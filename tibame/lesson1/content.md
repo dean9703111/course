@@ -554,7 +554,7 @@ AI 載入 `course-page-generator` Skill，依 workflow 執行：
 #### 情境 B：提供草稿生成講義
 
 ```prompt [label="觸發 Skill 就會使用對應的 Template"]
-參考 course/template-exmaple/README.md，幫我做成課程網頁
+參考 course/README.md，幫我做成課程網頁
 ```
 
 ![提供草稿生成的課程網頁](./assets/course-page-generator-draft-web.png)
