@@ -905,7 +905,7 @@ with details about my project, tech stack, and conventions
 然後生成 commit，並執行 push
 ```
 
-#### 建立 develop branch | branch:feature/develop
+### 🆕 建立 develop branch | branch:feature/develop
 
 功能驗證 OK 後，就能把 `feature/xxx` 合進 `develop`。
 
