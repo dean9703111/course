@@ -229,6 +229,9 @@ AI 執行的指令是無法完全預期的，為了減少損失，可以透過�
 
 ![Global 設定會儲存在 ~/.claude/settings.json](./assets/global-settings-file.png)
 
+> **Windows 小提醒**
+> `~/.claude/` 在 Windows 系統中相當於 `C:\Users\你的帳號\.claude\`。注意「.」開頭的資料夾預設是隱藏的，記得要到檔案總管的資料夾選項中開啟「顯示隱藏的項目」，才能看到這個目錄。
+
 完成後建議`重啟 Claude`確認設定生效。
 
 ```prompt [label="確認 Claude 當前專案權限設定"]
