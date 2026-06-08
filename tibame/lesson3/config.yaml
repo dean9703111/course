@@ -1,0 +1,22 @@
+# Claude AI 驅動全端開發工作流
+
+page:
+  title: "團隊協作與專案部署"
+  badge: "Claude AI 驅動全端開發工作流 - 3"
+  hero_title: "團隊協作與專案部署"
+  subtitle: "AI 就像是一面鏡子，它會放大使用者的一切，不管好的還是壞的"
+
+seo:
+  title: "團隊協作與專案部署"
+  description: "建立自動化測試，了解 Worktree 應用時機，同時用 MCP 操作外部工具將專案部署上線。"
+  image: "https://deanlin.net/course/tibame/lesson3/assets/og-image.jpg"
+  url: "https://deanlin.net/course/tibame/lesson3"
+
+quotes:
+  opening:
+    text: "AI 犯錯並不可怕，<br>可怕的是你沒意識到它犯錯！"
+  closing:
+    text: >
+      只要系統有人使用，<br>
+      那優化是永無止盡的。
+

@@ -14,23 +14,159 @@
   active: true
 [/time]
 
+# 課前回顧：全端系統可以在電腦運行了
+
+## 建立 User 層級的 Claude Code GitHub Repository
+
+### 🖥️ 讓 Claude Code 不用重頭設計
+
+- 使用者層級的 `skills`、`hooks`、`settings.json`、`CLAUDE.md` 平常散落在 `~/.claude/` 目錄
+- 如果沒有`版本控制`，一旦**換機器、重灌系統**，這些累積的心血就得從頭設定一次
+- 把它們放進 GitHub repo，用 `git` 管理版本、用 `symlink` 連回原位
+- 達成：**版本可追溯、跨裝置同步、隨時可還原、專案有更好的起點**
+
+![強烈建議大家建立 User 層級的 Repo 來管理、同步](./assets/user-dot-agents-repo.png)
+
+> **參考資源**
+> - [講者範例 Repository](https://github.com/deancourse/user-dot-agents)
+> - 建議跟著[講義步驟實作](https://deanlin.net/course/tibame/lesson2/#user-claude-code-github-repository)
+
+### 🤖 AI 的成果可能不完全正確
+
+上週的範例 Repository 其實有個小問題，由於 Shell Script 是給`每個 Skill` 個別建立 symlink，而不是給 `skills 資料夾`建立 symlink。
+
+因此會有如下問題：
+1. 在`user-dot-agents`底下建立的 Skill，需要**執行 Script 才會同步**到 User 層級的`~/.claude/skills`中
+2. 當 Skill 新增到 User 層級的`~/.claude/skills`時，`user-dot-agents`下的 Skill **不會自動更新**
+
+```prompt [label="修復問題"]
+目前的 script 好像不是直接同步 skills 資料夾，而是根據下面資料夾同步，這樣我新增 skill 時，不會自動建立軟連結，請協助修改
 ```
-針對使用者登入這塊功能我想要建立 MockDB 與 TestDB 來進行測試，我不希望在執行測試時污染到真實 DB，並且每次測試都是乾淨的環境，這要如何設計呢？
+
+有興趣了解差異的可以看 [commit 變更](https://github.com/deancourse/user-dot-agents/commit/c5d88595e3bb1bfa0f22477aac7720658e78357b)
+
+![持續使用的專案，會發現可以優化的細節](./assets/user-dot-agents-enhance.png)
+
+### ✅ 確認同步生效
+
+```prompt [label="讓 Claude 找出來源"]
+目前 User 層級的 CLAUDE.md、hooks、skills、settings.json，原始資料夾與檔案在哪裡？
 ```
 
+![CLAUDE.md、hooks、skills、settings.json 有成功建立軟連結](./assets/claude-folder.png)
 
+![輸入 /skills 確認技能可以順利顯示](./assets/claude-skill-list.png)
 
-# 課前回顧：上一堂，我們把系統「做出來」了
+![輸入 /permissions 確認 deny 指令有同步](./assets/deny-dangerous-commands.png)
 
-> 用 OpenSpec 規格驅動開發，從零打造出前後端 + 資料庫的全端系統；這一堂，要讓它**穩得住、也交付得出去**
+> **這個 Repository 可以放在電腦的任何位置**
+> 我們是透過`symlink`來建立**資料夾、檔案**之間的軟連結，因此專案放在任何位置皆可。
+> 重要的是變更時記得`commit`與`push`來更新，並且更新後其他台電腦要`pull`下載更新。
+> 如果害怕**忘記這些操作**，可以跟 AI 討論設計 `Shell Script`，設計概念如下：
+> - 登入電腦後，自動拉取最新檔案（若有衝突會引導使用者進入專案處理）
+> - 每 30 分檢查是否有變更
+> - 有變更才需要執行 commit 與 push
+> - commit 訊息可以使用「auto sync user agents: YYYY-MM-DD HH:mm:ss」
 
-## 30 秒喚醒上一堂的記憶
+## 在隔離環境（Sandbox）執行 Claude Code
 
-### 🏗️ 規格驅動開發（SDD）
+### 🐳 安裝 Docker
 
-- 用 `OpenSpec` 把需求拆成 `proposal → design → specs → task` 文件
-- AI 依規格建出 VMS 車輛管理系統：`React 前端 + Express 後端 + Postgres`
-- 資料庫用 `Docker` 啟動，搭配 pgAdmin 檢視資料
+到 [Docker 官網](https://www.docker.com/) 根據自己的作業系統下載安裝後，就可以直接使用，不需要特別註冊、登入帳號。
+
+![不需註冊，確認有運行即可](./assets/docker-running.png)
+
+> **安裝完成後，記得啟動 Docker Desktop**
+> Docker 安裝完並不會自動啟動。請在應用程式中找到 Docker Desktop 並打開，**註冊相關步驟都可以直接 Skip**，看到左下角顯示綠色的 Running 狀態，才代表 Docker 已經準備好了。
+> 也可以在終端機執行 `docker --version` 來確認有安裝成功。
+
+### 🏝️ 在隔離環境執行 Claude Code
+
+#### 下載 Dev Containers
+
+在 IDE 的 Extensions 搜尋「Dev Containers」 並安裝。
+
+![安裝 Dev Containers 外掛](./assets/dev-containers.png)
+
+#### 下載測試範例，啟動 Sanbox
+
+可以下載[練習用的 GitHub Repository](https://github.com/deancourse/claude-code-docker-container-demo)體驗。
+
+![GitHub 專案可以直接下載體驗](./assets/claude-code-docker-container-demo.png)
+
+開啟後，輸入「F1」貼上 `Dev Containers: Reopen in Container`
+
+![啟動完成後，左下角就會顯示 Claude Code Sandbox](./assets/success-sandbox.png)
+
+> **如果啟動失敗**
+> 可以嘗試`關掉後重啟`，如果還是不行，將錯誤訊息貼到 Claude Code 進行分析。
+> Windows 可以嘗試 `wsl --update` 更新到新版。
+
+#### 確認讀取不到外部資訊，在隔離環境運作
+
+在終端機輸入 `claude`，第一次需要登入帳號。
+
+目前這個是完全獨立的環境，所以過去 `User Scope 的相關設定都不會出現`（ex: Skills、Rules、Plugins、Perminssions）。
+
+![會是一個乾淨的 Claude 原廠設定](./assets/init-claude-setting.png)
+
+隔離環境可以透過 `claude --dangerously-skip-permissions` 啟動，這時給 Claude 任務時，**除了會跟你釐清細節外，執行過程不會再詢問權限相關問題**。
+
+```prompt [label="讀取外部資料"]
+幫我列出桌面有哪些檔案
+```
+
+![確認無法聯繫到外部資源後，再讓 AI 放手執行](./assets/cannot-access-external-resouce.png)
+
+### 🎯 用 OpenSpec 規格驅動開發（SDD）
+
+- **Skills** — AI 在對話過程中自動觸發的技能包，不需要背指令
+- **Commands** — 用 `/opsx` 前綴強制驅動：apply / archive / explore / propose
+- 可透過 `openspec config profile` 擴充更多 workflows
+
+```terminal [label="安裝 OpenSpec"]
+npm install -g @fission-ai/openspec@latest
+openspec init
+```
+
+提出需求後觸發 OpenSpec 的 Skills 後，相關的規格文件都會存放在 `changes` 資料夾底下。
+
+[flow]
+1. proposal.md — 確認目標與範圍
+2. design.md — 技術選擇與風險評估
+3. specs/ — 按功能分類的詳細規格
+4. task.md — 任務清單，完成自動打勾
+[/flow]
+
+![AI 完成的只是初稿，請審閱是否如預期](./assets/openspec-markdown.png)
+
+```prompt [label="歸檔"]
+功能符合預期，進行歸檔
+```
+
+![建議都選擇「Sync now」讓 AI 幫忙整合](./assets/sync-openspec.png)
+
+![歸檔後 specs 就會有規格文件了](./assets/sync-openspec2.png)
+
+### 🤖 讓 AI 執行專案時有規則
+
+**CLAUDE.md** 是給「做事」用的，**openspec/config.yaml** 是給「規劃」用的
+
+```prompt [label="初始化 CLAUDE.md"]
+/init
+```
+
+![CLAUDE.md 可以讓 AI 快速理解 Code Base](./assets/claude-md.png)
+
+```prompt [label="OpenSpec 設定"]
+Please read openspec/config.yaml and help me fill it out
+with details about my project, tech stack, and conventions
+```
+
+![openspec/config.yaml 讓規劃時負擔更輕](./assets/openspec-config-yaml.png)
+
+> **legacy（既有）專案**
+> 如果想在舊專案`導入 Claude Code、OpenSpec`，執行完上面的指令後，AI 執行的品質會好很多。
 
 ### 🛡️ 讓 AI 犯錯時被擋下
 
@@ -38,11 +174,14 @@
 - `Git Flow`：main / develop / feature 分支策略，出包有回頭路
 - 重點不是讓 AI 不犯錯，而是`設計讓錯誤被攔截`的機制
 
+![讓檢查自動發生，並了解錯誤在哪裡](./assets/precommit-error.png)
+
 ### 🧩 把經驗沉澱成 Skill
 
 - 客製 `Branch Name / Commit / PR` 三個 Skill，讓 AI 有規範可循
-- 用 `CLAUDE.md + OpenSpec` 讓 AI 的知識可累積、不斷層
 - Skill 的價值：教會一次，下次都站在`更高的起點`
+
+![範例的 Skill 只是參考，請根據需求客製化](./assets/skill-exmaples.png)
 
 > **能「做出來」不等於能「交付」**
 > 上一堂的系統功能跑得起來，但你敢直接交給別人用嗎？
