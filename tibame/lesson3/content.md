@@ -190,15 +190,94 @@ with details about my project, tech stack, and conventions
 ### 🎯 這一堂，補上「品質」與「上線」的最後一哩
 
 [flow]
-1. 導入測試 — 用 Skill 生成測試、CI/CD 守住品質，認識 Worktree 協作時機
-2. 同步文件 — 用 Skill ＋ pre-push hook 讓 README 自動跟上專案變更
-3. 使用 MCP — 讓 AI 透過 Postman 主動驗證後端 API
-4. 部署上線 — 用 Docker 打包，靠 Zeabur 一句話發佈
+1. 導入測試 — 了解測試注意事項、用 Skill 生成`測試案例`
+2. 加入自動化 - 用 `CI/CD` 守住品質，並設定要`保護的 Branch`
+3. 團隊協作 - 認識 `Worktree` 使用時機，讓協作更輕鬆
+4. 使用 MCP — 讓 AI 協助建立 `Postman Requests`，驗證 API 更靈活
+4. 部署上線 — 將前後端打包成 `Docker image`，透過 `Zeabur` 白話文部署迭代
 [/flow]
 
 ---
 
-# 提出問題：AI 寫的測試，正在污染你的資料庫
+# 導入測試：讓維護與擴充更有底氣
+
+> 市場不會為爛產品買單；加入自動化測試，是 Vibe Coding **從玩具走向產品的關鍵**
+
+## 上週完成的專案存在什麼問題？
+
+### 🗂️ 下載課程範例 Repository | branch:main
+
+[下載或 Fork 練習用 Repository](https://github.com/deancourse/tibame-lesson3) 後，可以跟著課程進度操作。
+
+```terminal [label="僅 Clone 課程 main branch Repo"]
+git clone --branch main --single-branch git@github.com:deancourse/tibame-lesson3.git
+cd tibame-lesson3
+```
+
+> **還沒設定 SSH Key？**
+> 如果 clone 失敗，代表尚未設定 GitHub SSH 金鑰。
+> 請參考 [GitHub 官方教學](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) 完成設定。
+
+### 🚀 啟動專案
+
+你可以執行請 AI 幫忙啟動專案，但一個專案`如果想長期維護，至少要知道如何手動啟動`。
+
+```terminal
+cp .env.example .env          # 第一次先複製出來、按需修改
+docker compose up -d          # 啟 db (Postgres) + pgadmin (5050)
+npm install                   # 安裝所有 workspace 依賴
+npm run db:migrate            # 建立 schema
+npm run seed                  # 建立第一個 admin（讀 .env 的 SEED_ADMIN_*）
+npm run seed:mock             # 選用：塞 30 員工 + 50 車輛模擬資料，方便看 dashboard / 分頁
+```
+
+啟動完成後，可以進入 local 本地網址: [http://localhost:3098](http://localhost:3098)
+
+登入帳號密碼:
+- **帳號**: admin
+- **密碼**: admin12345
+
+![透過登入確認前後端與資料庫街順利啟動](./assets/check-fullstack-start.png)
+
+### ⚠️ AI 生成的測試可能會污染資料庫
+
+就算沒有要求，AI 有時也會主動`撰寫測試程式`；但測試程式不是有寫就好，還需要考量到許多面向。
+
+```terminal [label="執行測試程式"]
+npm run test
+```
+
+在執行上次 AI 自動寫的程式時，會有如下`嚴重問題`：
+1. 後端測試程式會`污染資料庫`
+2. 測試行為被`寫入 Audit Log（使用者紀錄）`
+3. 執行越多次，`資料庫越亂`；甚至重複執行，`預期通過卻出現錯誤`
+
+![你會發現使用者越來越多了](./assets/ai-gen-test-issues1.png)
+
+![測試的行為也被寫入使用者紀錄了](./assets/ai-gen-test-issues2.png)
+
+## 後端測試程式需要注意的細節
+
+> 不是要 AI「不要動資料庫」，而是`給它一個動了也沒關係的資料庫`。
+
+### 🛠️ 兩種方案：MockDB 與 TestDB
+
+> MockDB 是`模擬別人`，TestDB 是`隔離自己`。
+
+| 方案 | 它在模擬什麼 | 使用情境 |
+| --- | --- | --- |
+| **MockDB** | 模擬`外部系統 / 第三方 API`的回應格式 | 後端要呼叫金流、簡訊、其他微服務，但測試時不想真的打對方 API，可以用 Mock 模擬對方不同情境回應的資料 |
+| **TestDB** | 你`自己系統`專用的測試資料庫 | 驗證自己的 API 是否正確，但不想動到正式 DB，就另開一個一樣的 DB 供測試使用 |
+
+- **MockDB**：我不在乎對方 API 背後邏輯，我只在乎`它回應的的格式`，所以根本不需要真資料庫，模擬回應就好。
+- **TestDB**：要確認`自己寫的 API 業務邏輯`都符合預期，會牽涉到`資料庫真實行為`，所以一定要有一個真的（但可拋棄的）資料庫。
+
+### 🤖 讓 AI 改成 TestDB 設計
+
+> 因為這堂課沒有使用第三方 API 服務，所以用 TestDB 示範
+
+
+
 
 > 系統「做出來」之後，第一件想補的就是測試；但你一旦讓 AI 動手，往往會撞上第一個地雷——**它寫的測試，直接打進你的真實資料庫**。
 > 動手導入測試前，先看清這個問題，再決定要用哪一種測試資料策略。
@@ -984,3 +1063,6 @@ claude plugin install zeabur@zeabur
 ---
 
 
+# 技術名詞：了解這系列課程用到的技術
+
+> 用分類的方向來呈現所有技術，說明功能與在專案的使用時機
