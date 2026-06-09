@@ -129,6 +129,26 @@ npm install -g @fission-ai/openspec@latest
 openspec init
 ```
 
+#### STEP 1: 提出需求觸發 OpenSpec Skill 進行規劃
+
+```prompt [label="觸發 OpenSpec Skill(propose)"]
+設計車輛管理系統，包含以下功能：
+- 登入頁面（帳號密碼驗證，區分管理者與一般使用者）
+- 首頁儀表板（上方顯示關鍵數據卡片，下面顯示資料圖表）
+- 車輛管理頁（可檢視、新增、編輯、刪除車輛資料）
+- 員工管理頁（僅管理者可檢視、新增、編輯、刪除員工資料）
+
+前端使用 React 搭配 Magic UI(shadcn@latest)，後端使用 Express，資料庫用 Postgres
+資料庫希望透過 Docker 啟動，並且要包含 Postgres Admin 網頁
+這是初步需求，我們可以透過討論釐清細節後，參考 OpenSpec 的 skill 執行
+```
+
+#### STEP 2: 確認規劃符合需求後，根據 Spec 規劃執行
+
+```prompt [label="開始實作(apply)"]
+開始實作
+```
+
 提出需求後觸發 OpenSpec 的 Skills 後，相關的規格文件都會存放在 `changes` 資料夾底下。
 
 [flow]
@@ -140,7 +160,9 @@ openspec init
 
 ![AI 完成的只是初稿，請審閱是否如預期](./assets/openspec-markdown.png)
 
-```prompt [label="歸檔"]
+#### STEP 3: 確認結果符合預期後進入歸檔
+
+```prompt [label="歸檔（sync + archive）"]
 功能符合預期，進行歸檔
 ```
 
@@ -178,7 +200,7 @@ with details about my project, tech stack, and conventions
 
 ### 🧩 把經驗沉澱成 Skill
 
-- 客製 `Branch Name / Commit / PR` 三個 Skill，讓 AI 有規範可循
+- 根據公司、團隊客製 `Branch Name / Commit / PR` 個 Skill，讓 AI 有規範可循
 - Skill 的價值：教會一次，下次都站在`更高的起點`
 
 ![範例的 Skill 只是參考，請根據需求客製化](./assets/skill-exmaples.png)
@@ -203,7 +225,7 @@ with details about my project, tech stack, and conventions
 
 > 市場不會為爛產品買單；加入自動化測試，是 Vibe Coding **從玩具走向產品的關鍵**
 
-## 上週完成的專案存在什麼問題？
+## 上週專案存在什麼問題？
 
 ### 🗂️ 下載課程範例 Repository | branch:main
 
@@ -218,11 +240,21 @@ cd tibame-lesson3
 > 如果 clone 失敗，代表尚未設定 GitHub SSH 金鑰。
 > 請參考 [GitHub 官方教學](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) 完成設定。
 
+#### 同步 Skills 到不同 AI Agent
+
+```prompt [label="將 Agent Skills 同步到指定的 AI Agent"]
+npx @dean9703111/dotagents
+```
+
+![讓不同 AI Agents 共用 Skills](./assets/dotagents.png)
+
+> 單一來源管理，未來維護更方便，修改一次就能在所有工具中生效；此套件會在 `.agents` 底下管理。
+
 ### 🚀 啟動專案
 
 你可以執行請 AI 幫忙啟動專案，但一個專案`如果想長期維護，至少要知道如何手動啟動`。
 
-```terminal
+```terminal [label="完成專案初始化"]
 cp .env.example .env          # 第一次先複製出來、按需修改
 docker compose up -d          # 啟 db (Postgres) + pgadmin (5050)
 npm install                   # 安裝所有 workspace 依賴
@@ -231,19 +263,31 @@ npm run seed                  # 建立第一個 admin（讀 .env 的 SEED_ADMIN_
 npm run seed:mock             # 選用：塞 30 員工 + 50 車輛模擬資料，方便看 dashboard / 分頁
 ```
 
-啟動完成後，可以進入 local 本地網址: [http://localhost:3098](http://localhost:3098)
+![在終端機貼上指令完成初始化作業](./assets/init-project.png)
+
+```terminal [label="啟動專案"]
+npm run dev
+```
+
+啟動完成後，可以進入 local 本地網址: http://localhost:3087
 
 登入帳號密碼:
 - **帳號**: admin
 - **密碼**: admin12345
 
-![透過登入確認前後端與資料庫街順利啟動](./assets/check-fullstack-start.png)
+![透過登入確認前後端與資料庫皆順利啟動](./assets/check-fullstack-start.png)
+
+[lab-session title="🛠️  實作練習"]
+- 下載課程[範例 Repository](https://github.com/deancourse/tibame-lesson3)
+- 同步 Skills 到不同 AI Agent: `npx @dean9703111/dotagents`
+- 啟動專案，並登入確認前後端與資料庫皆順利啟動
+[/lab-session]
 
 ### ⚠️ AI 生成的測試可能會污染資料庫
 
 就算沒有要求，AI 有時也會主動`撰寫測試程式`；但測試程式不是有寫就好，還需要考量到許多面向。
 
-```terminal [label="執行測試程式"]
+```terminal [label="開新終端機執行測試指令"]
 npm run test
 ```
 
@@ -252,11 +296,13 @@ npm run test
 2. 測試行為被`寫入 Audit Log（使用者紀錄）`
 3. 執行越多次，`資料庫越亂`；甚至重複執行，`預期通過卻出現錯誤`
 
-![你會發現使用者越來越多了](./assets/ai-gen-test-issues1.png)
+![資料被清空，刷新會回到首頁](./assets/ai-gen-test-issues1.png)
 
-![測試的行為也被寫入使用者紀錄了](./assets/ai-gen-test-issues2.png)
+因為無法登入，所以可以到 PGAdmin 頁面看資料發生了什麼事: http://localhost:5050/browser/
 
-## 後端測試程式需要注意的細節
+![使用者紀錄被清除，還被塞入測試資料](./assets/ai-gen-test-issues2.png)
+
+## 將後端測試改為 TestDB
 
 > 不是要 AI「不要動資料庫」，而是`給它一個動了也沒關係的資料庫`。
 
@@ -272,138 +318,52 @@ npm run test
 - **MockDB**：我不在乎對方 API 背後邏輯，我只在乎`它回應的的格式`，所以根本不需要真資料庫，模擬回應就好。
 - **TestDB**：要確認`自己寫的 API 業務邏輯`都符合預期，會牽涉到`資料庫真實行為`，所以一定要有一個真的（但可拋棄的）資料庫。
 
-### 🤖 讓 AI 改成 TestDB 設計
+### 🤖 讓後端測試改用 TestDB | branch:feature/isolate-api-test-database
 
-> 因為這堂課沒有使用第三方 API 服務，所以用 TestDB 示範
+> 這堂課沒有使用第三方 API 服務，所以設計 TestDB 示範
 
-
-
-
-> 系統「做出來」之後，第一件想補的就是測試；但你一旦讓 AI 動手，往往會撞上第一個地雷——**它寫的測試，直接打進你的真實資料庫**。
-> 動手導入測試前，先看清這個問題，再決定要用哪一種測試資料策略。
-
-## 問題：AI 預設會「來真的」操作資料庫
-
-> **AI 不知道哪個是「正式」資料庫**
-> 你叫它「幫後端寫測試」，它通常就接著 `.env` 裡那條連線，把新增、刪除`通通做真的`——這在開發初期最容易被忽略。
-
-### 🗄️ AI 寫的後端測試，常直接連到正式 DB
-
-- 測試一跑，正式資料庫就`多出一堆假資料`，或被`改掉、刪掉`真實資料
-- 第一次`新增成功`，第二次卻因為`資料已存在`而失敗——測試`不可重複`
-- CI/CD 上更尷尬：總不能讓`雲端的自動測試`去連你的`正式資料庫`
-
-### ⚠️ 三個被忽略的後果
-
-| 後果 | 發生了什麼 |
-| --- | --- |
-| **污染資料** | 測試產生的假資料混進正式資料，分不清真假 |
-| **不可重複** | 同一份測試跑第二次就紅燈，結果`看心情` |
-| **不敢自動化** | 測試會動真 DB，沒人敢把它掛進 CI/CD 自動跑 |
-
-> **這不是 AI 的錯，是我們沒給它「測試專用的環境」**
-> 解法不是叫 AI「不要動資料庫」，而是`給它一個動了也沒關係的地方`——這就帶出後端測試的兩種資料策略。
-
-## 後端測試的兩種資料策略：MockDB 與 TestDB
-
-> **核心問題只有一個：測試時，資料要從哪來？**
-> 業界常見兩條路——`完全模擬（MockDB）`，或`另開一個真的測試庫（TestDB）`。
-
-### 🆚 MockDB vs TestDB 怎麼選
-
-| 比較 | MockDB（模擬資料庫） | TestDB（獨立測試資料庫） |
-| --- | --- | --- |
-| 做法 | 用`記憶體假物件`模擬 DB 回應，`不連真的 DB` | 另外開一個`獨立資料庫`，測前建、測後清 |
-| 速度 | `快`，不需連線 | `較慢`，要實際讀寫 |
-| 污染風險 | `零`，根本沒碰真 DB | 低，但要確實`隔離`正式庫 |
-| 驗證真實性 | 測不到真實 SQL／約束 | 能驗`真實查詢、外鍵、交易` |
-| 建置成本 | `低`，AI 幾乎能直接生成 | `高`，要額外起 DB、管理連線 |
-| 適合 | 單元測試、邏輯驗證 | 整合測試、上線前驗證 |
-
-> **沒有哪個一定對，是`不同階段`用不同工具**
-> 開發初期先用 MockDB 把`邏輯`測穩；接近上線，再補 TestDB 驗`真實資料庫行為`。
-
-## 本堂的選擇：用 MockDB 示範
-
-### 💡 為什麼這堂課用 MockDB？
-
-- 教學現場`不要求每個人`都另外架一個測試資料庫，門檻最低
-- `快、零污染、跨機器結果一致`，最適合課堂與 CI/CD
-- 讓我們把焦點放在`測試邏輯怎麼寫、Skill 怎麼固化流程`，而不是 DB 架設
-
-> **但別忘了 TestDB 的存在**
-> MockDB 測不到`真實的資料庫約束`。等專案上線、邏輯穩定後，重要流程仍建議補上 TestDB 或整合測試，才是完整的安全網。
-
-### 🔀 用 MockDB 改寫測試
-
-直接請 AI 把後端測試改成`不連真實資料庫`，用 MockDB 模擬資料層。
-
-[flow]
-1. 指定策略 — 明確要求用 MockDB，不連 .env 的真實 DB
-2. 模擬資料層 — 把資料庫操作換成記憶體假物件
-3. 每測重置 — 每個測試前清空 mock，確保互不影響
-4. 驗證冪等 — 連跑兩次結果一致，沒有殘留資料
-[/flow]
-
-```prompt [label="用 MockDB 改寫後端測試"]
-幫後端測試改用 MockDB 策略：
-1. 測試時不要連到 .env 裡的真實資料庫
-2. 用記憶體中的假資料層（mock）模擬資料庫操作
-3. 每個測試開始前重置 mock 資料，確保測試之間互不影響
-4. 確認同一份測試連續跑兩次，結果都一致
+```prompt [label="讓後端測試改用 TestDB"]
+目前的 API 測試會改寫實際的 DB
+我希望執行測試時，會有專屬的 TestDB，並確保每次測試都是乾淨的環境
+且 PGAdmin 也能觀察測試結果
+若涉及指令、規則，完成任務後更新 CLAUDE.md、README.md
 ```
 
-![改用 MockDB 後，測試不再碰到真實資料庫](./assets/mockdb-test.png)
+待 AI 修改完畢後，`先復原專案 DB 資料`；這樣才能驗證執行測試時`不會對原有 DB 造成影響`。
 
-> **怎麼確認真的沒碰到 DB？**
-> 把資料庫`關掉`再跑一次測試——如果還是綠燈，代表測試確實`只用 mock`，沒有偷偷連線。
+```terminal [label="復原專案 DB"]
+npm run seed                  # 建立第一個 admin（讀 .env 的 SEED_ADMIN_*）
+npm run seed:mock             # 選用：塞 30 員工 + 50 車輛模擬資料，方便看 dashboard / 分頁
+```
 
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 確認目前 AI 寫的測試是否會連到真實資料庫
-- 請 AI 用 MockDB 策略改寫後端測試
-- 連續跑兩次測試，確認結果一致、沒有殘留資料
-- （進階）把資料庫關掉再跑一次，驗證測試只用 mock
+#### 驗證結果符合預期
+
+```terminal [label="重啟 PGAdmin 讓測試 DB 也能看見"]
+! docker compose restart pgadmin
+```
+
+然後執行測試指令，確認不會動到原有 DB，並且 PGAdmin 也可看到測試 DB
+
+```terminal [label="執行測試"]
+npm run test
+```
+
+![到 pgadmin 確認測試 DB 可以檢視](./assets/pgadmin-test-db.png)
+
+> **了解 PR 的重要性**
+> 為了讓大家更清楚`專案脈絡`，**每個 branch 都有[建立 PR](https://github.com/deancourse/tibame-lesson3/pull/1)**
+> 這樣回顧調整內容時，會更輕鬆。
+
+[lab-session title="🛠️  實作練習"]
+- 執行 `npm run test` 了解測試會污染資料庫
+- 讓後端測試`改用 TestDB`
+- 透過 `seed 指令` 將資料還原
+- 執行 `npm run test` 確認確認不會動到原有 DB，並且 PGAdmin 也可看到測試 DB
 [/lab-session]
-
----
-
-# 導入測試：讓維護與擴充更有底氣
-
-> 市場不會為爛產品買單；加入自動化測試，是 Vibe Coding **從玩具走向產品的關鍵**
-
-> 其實就算你不說，AI 有時也會自己主動加上去，但這個行為是不可控的
-
-## 先看清楚：把測試交給 AI 的三個現實
-
-> **AI 會幫你寫測試，但不能全盤托付**
-> 測試是品質的最後一道防線，這道防線`不能假手 AI 就放著不管`。動手前，先認清三件事。
-
-### 🤖 AI 不一定會主動寫測試
-
-- 多數時候`你不開口，它就不寫`；就算偶爾自己補上，也`不保證`涵蓋你在意的情境
-- 把「寫測試」當成`明確的指令`，不要假設它會自動補齊
-- 這也是我們要用`專屬的 Skill` 固定流程的原因——讓「寫測試」變成`每次都會發生`的步驟
-
-### 🧐 AI 寫的測試未必好用
-
-- 可能寫出`為了通過而通過`的測試（斷言太鬆，程式怎麼改都是綠燈）
-- 可能測到`無關緊要`的細節，卻漏掉真正的核心邏輯
-- 測試程式`本身也可能有 bug`，綠燈不代表真的對
-- 所以`測試清單一定要人類 Review`，確認情境合理、沒有遺漏——這是 AI 無法取代的一步
-
-### 🗄️ 後端測試要能「重複執行」，且不污染資料庫
-
-- 後端測試常會`真的寫進資料庫`，要特別小心`能不能重複跑`
-- 典型地雷：第一次`新增成功`，第二次卻因為`資料已存在`而失敗——這種測試`不可靠`
-- 請 AI 用`獨立的測試資料庫`，或在`每個測試後自動還原`（transaction rollback／測完清掉資料）
-- 目標是`不管跑幾次、誰來跑，結果都一樣`，這就是測試的「冪等性（idempotent）」
-
-> **這三點是後面所有測試流程的前提**
-> 接下來用 Skill 把「AI 寫清單 → 人類 Review → 自主驗證」固定成一套工作流，正是為了`對症下藥`地解決上面三個問題。
 
 ## 建立適合專案的測試工作流
 
-### 🔀 驗證生成測試的 Skill
+### 🔀 驗證生成測試的 Skill | branch:feature/restructure-tests-with-type-groups
 
 [flow]
 1. 建立資料夾 — 存放測試清單
@@ -413,28 +373,32 @@ npm run test
 5. 自主驗證 — 最多嘗試 5 次
 [/flow]
 
-```prompt [label="生成測試案例"]
-（拖入要測試的檔案，ex: src/pages/LoginPage.tsx）
-生成測試
+```prompt [label="描述要測試情境"]
+列出「登入」操作，前後端會涉及的檔案
+並根據 gen-test-cases skill 建立測試文件
 ```
 
 #### 人類要確認測試清單符合預期
 
-![會建立 doc 資料夾來存放測試清單](./assets/test-doc.png)
+![會建立 doc 資料夾來存放前後端測試清單](./assets/test-doc.png)
 
 #### 確認生成的測試運作正常
 
-![可輸入 npm run test 來手動驗證](./assets/npm-run-test.png)
+![輸入 npm run test 來手動驗證](./assets/npm-run-test.png)
+
+> **在實戰過程中，你會持續優化 Agent Skill**
+> [這個 PR](https://github.com/deancourse/tibame-lesson3/pull/2) 是與前面 `feature/isolate-api-test-database` 比對的。
+> 除了優化測試程式外，也優化了既有 Agent Skill 的設計。
 
 ### 💡 實務建議
-- 不要一口氣生成所有測試，`先放一個檔案`確認結果符合預期
+- 不要一口氣生成所有情境的測試，`根據情境設計`會更好理解
 - 每個頁面/模組有`獨立的測試程式`，方便定位問題
 - 測試案例會隨規格變更而調整，`不可能一次到位`
 
 > **千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。**
 > 現在儘管有 AI 輔助撰寫測試程式，我們還是要仔細檢查 AI 給的測試情境是否合理、有遺漏。
 
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+[lab-session title="🛠️  實作練習"]
 - 觸發生成測試的 Skill
 - 確認測試清單符合預期
 - 驗證測試程式運行如預期
