@@ -265,6 +265,11 @@ npm run seed:mock             # 選用：塞 30 員工 + 50 車輛模擬資料�
 
 ![在終端機貼上指令完成初始化作業](./assets/init-project.png)
 
+> **小提醒**
+> 如果 `Docker Conatiner 啟動失敗`的問題，通常原因如下：
+> 1. 若出現**指令錯誤**，可能是因為 Docker 版本較舊，建議升級，或是改用 `docker-compose up -d` 啟動
+> 2. 若`卡在 Starting 狀態`，通常是因為有`port 衝突`，可以到 Docker Desktop 查看。
+
 ```terminal [label="啟動專案"]
 npm run dev
 ```
@@ -404,31 +409,204 @@ npm run test
 - 驗證測試程式運行如預期
 [/lab-session]
 
-## 加入 CI/CD 自動化
+# 加入自動化：用 CI/CD 守住專案品質，設定 Branch Rule
 
-### 🔁 加入 GitHub Action 自動化
+## 為什麼專案需要 CI/CD？
 
-- 每次推送到 GitHub 都觸發測試
-- 測試完畢生成覆蓋率報告
+> **把「人類會忘記做的事」，變成「推上 GitHub 就自動發生的事」。**
+
+### 🤔 白話理解 CI/CD
+
+| 名詞 | 白話翻譯 | 在做什麼 |
+| --- | --- | --- |
+| **CI**（Continuous Integration，持續整合） | 「每次交作業，自動批改」 | 每次 push / 開 PR，自動跑`測試、Lint、Build`，確認你的程式跟大家的`合得起來` |
+| **CD**（Continuous Deployment，持續部署） | 「批改通過，自動上架」 | 確認沒問題後，自動`打包、部署`到測試或正式環境 |
+
+在 GitHub 上，這一切由 **GitHub Actions** 完成：在 Repository 根目錄 `.github/workflows/` 放一份 YAML 設定檔，描述「`什麼事件發生`時，要`依序做哪些事`」，GitHub 就會幫你在雲端的乾淨機器上執行。
+
+### 🧠 哪些「人類會忘記的事」可以交給它？
+
+回想一下，這些事你是不是`偶爾`會忘：
+
+- 改完程式，**忘記跑測試**就直接 push
+- 只測了自己改的部分，**沒發現改 A 壞了 B**
+- 合併前**忘記確認 Lint / Build** 有沒有過
+- 上線流程靠記憶力：**漏了一個步驟**，半夜被叫起來救火
+
+CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不會偷懶、不會看心情**——每一次 push 都用同一套標準檢查。
+
+> **在 AI 寫程式的年代尤其重要**
+> AI 產出程式的速度遠超過人類 Review 的速度，`你不可能每次都手動驗證所有功能`。
+> CI/CD 就是那道**不管是人還是 AI 寫的 Code，都得通過的關卡**。
+
+### 📐 設計 CI/CD 的兩個關鍵思維
+
+**1️⃣ 階段化設計（先快後慢，越早失敗越省錢）**
+
+把檢查依「速度」排序成關卡，前面的關卡失敗就`直接喊停`，不浪費時間跑後面的：
+
+[flow]
+1. Lint / 格式檢查 — 幾秒鐘，最快發現低級錯誤
+2. 單元測試 — 幾十秒，驗證邏輯正確
+3. 整合測試 / Build — 幾分鐘，驗證整體合得起來
+4. 部署 — 前面全過才執行，確保上線的是好東西
+[/flow]
+
+如果順序倒過來——先花 10 分鐘 Build 完才發現一個分號打錯，那就是在`浪費等待時間`。
+
+**2️⃣ 平行執行（互不依賴的事，就同時做）**
+
+- `前端測試`和`後端測試`互不相干，拆成兩個 job **同時跑**，總時間取決於最慢的那個，而不是兩者相加
+- 原則：**有依賴關係的用階段串起來，沒依賴關係的就平行攤開**
+
+> **CI 跑越快，大家越願意用**
+> 一條要等 30 分鐘的 CI，工程師會想盡辦法繞過它；一條 3 分鐘的 CI，大家會自然依賴它。
+> `階段化 + 平行化`就是在買「願意被檢查」這件事。
+
+## 加入 GitHub Action 自動化
+
+### 🔁 設計 GitHub Action 要做的事 | branch:add-github-actions-ci
+
+- 每次推送到 GitHub 都`觸發測試`
+- 先`檢查 Lint`，然後前後端`平行測試`
+- 測試完畢生成`覆蓋率報告`
 
 ```prompt [label="自動化測試"]
-我希望在 GitHub Action 加入自動化測試的流程
-每一個分支將更新推送到 GitHub 都會觸發一次自動化測試
+在 GitHub Action 加入自動化流程
+每一個分支(branch)將更新推送到 GitHub 時都會觸發
+先檢查 Lint，然後前後端平行測試
 測試完畢後，要生成覆蓋率報告讓我下載
+若現有資源不足以完成目標，請安裝對應套件
 ```
 
-![GitHub Action 的 CI/CD](./assets/github-cicd.png)
+![GitHub Action 初步設計的 CI/CD](./assets/github-cicd.png)
+
+### ✅ 驗證 GitHub Action 符合預期
+
+```prompt [label="設計完成後記得提交"]
+切換 branch、設計 commit、然後 push
+```
+
+到 [GitHub 頁面](https://github.com/)，切換到 Actions 分頁，確認有成功觸發。
+
+![每次 Push 都會觸發一個 Action](./assets/trigger-github-action.png)
+
+![點擊進去後，可以看到完整的流程](./assets/trigger-github-action2.png)
+
+![最下方的 Artifacts 有測試報告可以下載，解壓縮打開 html 即可檢視](./assets/test-report.png)
 
 > **測試覆蓋率不需追求 100%**
 > 重要邏輯都包含在測試程式內，才是最重要的；有了測試，規格書上的功能才能被真正驗證。
+> **人記不住的，就交給 AI 吧**，[這是第一版 GitHub Action 執行的狀況](https://github.com/deancourse/tibame-lesson3/actions/runs/27251992685) 。
 
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+[lab-session title="🛠️  實作練習"]
 - 加入 GitHub Action 自動化
 - 切換 branch
 - 生成 commit
 - Push 到 GitHub
-- 建立 Pull Request 到 develop
+- 到 GitHub 的 Actions 頁面確認有順利觸發
 [/lab-session]
+
+## 更新專案使用套件
+
+> 套件升級就像`牙痛`：拖得越久，治療成本越高；但過去「看牙」實在太痛，所以大家能拖就拖。
+
+### 🤔 為什麼套件版本要更新？
+
+- **安全漏洞**：舊版套件的 `CVE 漏洞`是公開資訊，等於告訴駭客「我家的門鎖壞在哪」；許多資安事件的源頭就是`一個沒更新的套件`
+- **Bug 與效能**：你遇到的詭異問題，很可能`新版早就修好了`，不更新等於一直繞路
+- **生態系一直往前走**：Node.js、框架、周邊套件彼此牽動，`拖越久落差越大`，最後想升都升不動
+- **越晚升越貴**：小版本一路跟，每次改一點；拖到被迫`一次跳好幾個大版本`，就是把小手術拖成大刀
+
+### 😖 過去升級版本，為什麼大家能拖就拖？
+
+| 挑戰 | 發生了什麼 |
+| --- | --- |
+| **相依性地獄** | 套件之間互相依賴，升了 A 卻壞了 B，`牽一髮動全身` |
+| **不向前相容** | 大版本常有 `Breaking Changes`，API 用法整個改掉，原本正常的程式直接壞 |
+| **遷移文件苦工** | 要逐一啃 `Changelog / Migration Guide`，跨好幾個版本時，文件得一版一版讀 |
+| **看不到商業價值** | 升級完`畫面長一樣、功能沒變多`，對老闆來說像是「花一週什麼都沒做」 |
+| **沒測試就是賭博** | 沒有自動化測試的團隊，升級後`不知道壞了什麼`，只能上線後等使用者回報 |
+
+所以許多團隊都是在**不得已**（資安稽核、套件停止維護、新功能被卡）的狀態下才升級——但這樣累積的隱患更多。
+
+> **現在的局面不一樣了**
+> 前面我們已經補上`自動化測試`與 `CI/CD`，升級後**壞了什麼馬上看得到**；
+> 而啃 Changelog、改 Breaking Changes 這些苦工，正好是 **AI 最擅長的事**。
+> 過去「不划算」的升級任務，現在變成`可定期安排的例行維護`。
+
+### 🆙 更新專案套件版本、GitHub Action 使用工具 | branch:feature/upgrade-major-dependencies
+
+1. AI 安裝的`套件未必是最新版本`，因此可能**會有漏洞**
+2. 剛剛設計的`GitHub Action`，裡面有許多**工具是舊版所以會出現警告**。
+
+```prompt [label="確保 AI 取得套件的最新文件"]
+/plugin install context7
+```
+
+安裝完成後，`Claude 重啟才能找到 context7` 並使用。
+
+```prompt [label="使用 contenxt7"]
+使用 contenxt7 檢查專案前後端套件版本、以及 GitHub Action 工具，並協助更新到最新版本。
+並確認更新後，自動化測試沒有出現錯誤。
+```
+
+![套件升級跟專案重構是很像的，涉及範圍大、風險高](./assets/use-contexnt7-upgrade-project.png)
+
+> **個人經驗**
+> 這次升級橫跨多個大版本（React 19、Express 5、Prisma 7…），放在過去至少是`以週為單位`的工程；
+> 有了 AI 搭配自動化測試，一個指令就能完成大部分苦工。詳細的變更可以[參考這個 PR](https://github.com/deancourse/tibame-lesson3/pull/4)。
+
+### ✅ 驗證更新後的內容符合預期
+
+就算基礎的測試全都通過，還是建議大家要`親手跑一次流程`。
+
+```terminal [label="確認專案可以順利啟動"]
+npm install  # lockfile 大改（React 19、Express 5、Prisma 7…），必須重裝
+npm run db:generate --workspace apps/api   # 產生 Prisma client 到 src/generated/（不進版控）
+npm run dev
+```
+
+![有些套件的更新可能會影像畫面、行為，需要自行確認](./assets/check-update1.png)
+
+```terminal [label="確認專案測試都通過"]
+npm run test
+```
+
+![可以手動測試確認原有邏輯有通過](./assets/check-update2.png)
+
+[lab-session title="🛠️  實作練習"]
+- 更新專案套件版本、GitHub Action 使用工具
+- 驗證更新後的內容符合預期
+- 切換 branch
+- 生成 commit
+- Push 到 GitHub
+[/lab-session]
+
+## 設計保護 Branch 的規則
+
+> **Branch 保護就像機場安檢**：不管你是誰、再怎麼趕時間，`沒通過檢查就是不能登機`。
+> 程式碼也一樣——**只有通過測試、通過 Review 的變更，才能進入 `main/develop`**，沒有例外。
+
+### 🤔 為什麼重要的 Branch 需要保護？
+
+`main`（正式）和 `develop`（開發）是**所有人共用的基準**。
+
+大家的分支（branch）都從這裡長出來、最後也都合併回這裡。一旦它壞了，影響的不是一個人，而是`整個團隊 + 線上的使用者`。
+
+沒有保護規則時，這些事`隨時可能發生`：
+
+| 情境 | 後果 |
+| --- | --- |
+| 手滑直接 `push` 到 main | 沒測過的程式`直接進到正式版`，全團隊跟著踩雷 |
+| 趕時間跳過測試就合併 | 「我改很小應該沒事」——`出事的永遠是這句話` |
+| AI Agent 推錯分支 | AI 執行力強、動作快，`推錯目標時破壞力也大` |
+| 沒人 Review 就合併 | 問題上線後才被使用者發現，`修復成本最高` |
+
+**保護規則的本質：把「靠自覺」變成「靠制度」。**
+
+- 規則不是不信任誰，而是`讓對的流程成為唯一的路`。想合進受保護的分支，就必須`走 PR、過測試`，沒有例外
+- 還記得前面建好的 `CI/CD` 嗎？只要測試不過，**合併按鈕直接變灰色**，而不只是「亮紅燈提醒你」
 
 ### 🛡️ 設計保護 Branch 的規則
 
@@ -439,11 +617,17 @@ npm run test
 
 ![選擇 Settings ⭢ 選擇 Branches 下面的「Add branch ruleset」](./assets/branch-rule.png)
 
-- name 的部分你可以輸入「Protect main branch」
+- name 的部分你可以輸入「Protect main/develop branch」
 - 「Enforcement status」切換到 Active 才會生效
-- Target branch 需要**分兩次**加入：先輸入 `main` 按 Add，再輸入 `develop` 按 Add（不能用逗號寫在同一筆，否則 Applies to 0 targets）
+
+![name 可以自由定義，但 Status 記得切到 Active](./assets/branch-rule2.png)
+
+- Target branch 需要**分兩次**加入，選擇「Add target ⭢ Include by pattern」
+- 先輸入 `main` 按 Add，再輸入 `develop` 按 Add（不能用逗號寫在同一筆，否則 Applies to 0 targets）
 
 ![Target branch 輸入要保護的 branches](./assets/protect-branches.png)
+
+#### Branch rules
 
 - 把`Require a pull request before merging`這個必須「用 PR 才能合併的選項」打勾。
 - 將`Require status checks to pass`打勾，以及下面的`Require branches to be up to date before merging`」`也打勾，這是在設定「測試必須通過才能合併」。
@@ -451,167 +635,144 @@ npm run test
 
 ![自動生成的 Test 名稱可能略有不同](./assets/test-check.png)
 
-### 🎯 模擬失敗情境，確認會擋住
+完成上述設定後，滑到最下面點擊`Create`便可建立 Rule。
 
-1. 故意把測試案例弄失敗
-2. 建立「Pull request」，確認合併目標為「main/develop」時是否會無法合併
+![之後在 Rulesets 分頁，就能看到](./assets/complete-rulesets.png)
+
+### 🎯 模擬失敗情境，確認會擋住 | branch:feature/test-fail-condition
+
+#### STEP 1：故意把測試案例弄失敗
+
+編輯後端 API 的測試程式 `apps/api/src/routes/auth.test.ts`，故意讓判斷結果不匹配。
+
+![把 404 改成 999 讓結果出錯](./assets/create-error.png)
+
+#### STEP 2：繞過 pre-commit 檢查
+
+![因為過去有設計 pre-commit，所以用正常路徑會 commit 失敗](./assets/create-error2.png)
+
+```terminal [label="繞過 pre-commit 檢查並 Push"]
+git checkout -b feature/test-fail-condition
+git add apps/api/src/routes/auth.test.ts
+git commit --no-verify -m "test fail condition"
+git push --set-upstream origin feature/test-fail-condition
+git checkout feature/upgrade-major-dependencies // 最後切回來上一個分支避免後續錯誤
+```
+
+#### STEP 3：建立「Pull request」
+
+確認合併目標為「develop」時是否會無法合併，參考[範例 PR](https://github.com/deancourse/tibame-lesson3/pull/6)。
 
 ![測試不過時，Merge pull request 無法點擊](./assets/merge-disable.png)
 
-> **小提醒**
-> 你注意到 `pre-commit` 沒有觸發嗎？如果觸發的話，根本不會等到 CI/CD 時才發現問題。
-> 你可以請 AI 改寫 pre-commit 讓他涵蓋到這塊的測試：`我希望 pre-commit hook 能攔截 vehicle-management 的測試失敗`
-
-[lab-session title="🛠️  實作時間" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+[lab-session title="🛠️  實作練習"]
 - 確認目前為 Public Repo
 - 設計保護 Branch 的規則
 - 故意把測試案例弄失敗後更新到雲端
 - 確認合併目標為「develop」時會無法合併
 [/lab-session]
 
-## 認識 Git Worktree，了解多人專案協作技巧
+# 認識 Git Worktree：了解多人專案協作技巧
 
-### 🌳 讓每個 AI Agent 有獨立的工作區
+> **讓同一個專案「分身」出好幾個資料夾，每個資料夾各停在不同分支，互不干擾。**
 
-- 多人協作專案時，你可能要同時撰寫**新功能、Code Review、修 Bug**
-- 用 Git Stash 時常會混亂
-- 使用 Worktree 可以區隔工作區，AI 可以獨立運作
+## 當專案有多個分支同時進行
+
+### 😵 先看沒有 Worktree 時的日常 | branch:feature/upgrade-major-dependencies
+
+你正在 `feature/A-function` 分支寫新功能，寫到一半：
+
+1. 同事敲你：「幫我 Review 一下程式（`feature/B-function`）」
+2. QA 測試敲你：「版本有 Bug，請修復（`release/1.0.0`）」
+
+如果你只有一個資料夾，就代表只能停在一個分支，只好：
+1. 把寫到一半的程式用 `git stash` 暫存
+2. 切對應分支處理
+3. 處理完再切回來，用 `git stash pop` 把暫存撈出來。
+
+> **實戰經驗**
+> 如果一個專案`同時處理多個任務`，那`git stash`暫存的東西，往往會在切來切去、恢復的過程搞丟。
+
+## Git Worktree 提高協作效率
+
+### 🌳 Worktree 概念：與其切來切去，不如多開幾個資料夾
+
+- `git worktree` 可以替同一個專案**多開幾個資料夾**，每個資料夾`各自停在一個分支`
+- 它們**共用同一份 Git 紀錄**——不是笨重的「整包再 clone 一次」，而是輕量的分身
+- 寫到一半的東西`原封不動留在原資料夾`，你只是「走到另一個房間做另一件事」，回來繼續就好
+
+打開 Extentions，搜尋 `Git Worktree Manager` 來安裝外掛。
 
 ![可以搭配 Git Worktree Manager 管理](./assets/git-worktree.png)
 
-### 🌳 開發、測試、修 Bug 三線並行
+### 🆚 開發、Review、修 Bug 三線並行
 
-| 工作情境 | Worktree 用途 |
-| --- | --- |
-| **開發新功能** | 在獨立目錄開分支開發，不影響主線 |
-| **Code Review** | 切到別人的分支，不需要 stash 當前工作 |
-| **修緊急 Bug** | 直接從 main 開一個 worktree 修，不打斷進行中的開發 |
+| 工作情境 | 沒有 Worktree | 有 Worktree |
+| --- | --- | --- |
+| **開發新功能** | 跟其他任務搶同一個資料夾 | 在`獨立資料夾`安心開發，不影響主線 |
+| **Code Review** | 先 stash 手上的工作再切分支 | `直接開一個資料夾`看別人的分支 |
+| **修緊急 Bug** | 打斷開發、暫存半成品 | 用有問題的分支`另開一個資料夾`修 |
 
 > **使用心得**
 > **Git Worktree 主要的目的不是「平行開發」，而是方便處理不同性質的「任務」。**
 > AI 執行的效率已經非常高了，與其平行開發後解衝突，還不如**把精力放在 Code Review 上面確保專案穩定性**。
 
----
+## 使用 pnpm 減少硬碟浪費
 
+### 💽 全局安裝 pnpm
 
-# 同步文件：讓 README 永遠跟得上專案
+因為 Git Worktree 會`建立多個工作目錄`，而 Node.js 專案的 `node_modules 動輒上百 MB`。
 
-> 程式天天改，README 卻常常停在`專案第一天`；這一段用一個 Skill 加一道 push 前的 hook，讓文件`自動跟上`你改了又改的程式
+如果用 npm 安裝會消耗大量硬碟資源，因此我推薦大家`使用 pnpm 這款套件`。
 
-## 為什麼 README 永遠是過期的？
+pnpm 會將`所有套件存放在電腦的一個共用儲存區`，各專案的 `node_modules 則是透過連結指向同一份套件`。
 
-> **README 是別人認識專案的第一扇門**
-> 課前回顧問過：「怎麼讓別人`在自己的電腦也跑得起來`？」答案常常就寫在 README——
-> 前提是，這份 README 得`跟得上`你的程式。
-
-### 😵 文件腐化的三個現實
-
-- 寫程式時`一頭熱`，幾乎沒人記得`回頭改 README`
-- 改的明明是`小地方`（多一個環境變數、換個啟動指令），對`第一次接手的人`卻是`跑不起來`的關鍵
-- 久了 README `沒人敢信`，新人乾脆`直接問人`——文件就失去了意義
-
-### 📌 真正該同步的，是「會擋住別人跑起來」的那幾類變更
-
-不是每次改動都要動 README。真正該反映到文件上的，是這幾類`會卡住別人`的變更：
-
-| 變更類型 | 為什麼一定要寫進 README |
-| --- | --- |
-| **啟動 / 操作指令** | 指令一變，別人`照舊步驟就跑不起來` |
-| **前置需求 / 相依套件** | Node 版本、要先裝的工具，少一個就`卡在第一步` |
-| **資料庫設定** | 連線方式、初始化步驟沒交代，`接不上 DB` |
-| **專案結構** | 資料夾搬了、模組拆了，別人`找不到入口` |
-
-> **沒涉及這幾項，就不該亂動 README**
-> 改個內部變數命名、調整不影響使用方式的邏輯，硬要更新 README 反而是`雜訊`。
-> 關鍵是讓文件`只記該記的`，維護起來才不會累。
-
-## 用 Skill 讓 AI 判斷「該不該更新 README」
-
-> **把判斷準則寫進 Skill，讓更新 README 變成有規則的動作**
-> 跟前面生成測試的 Skill 一樣，我們不靠`每次手動提醒`，而是把「什麼變更該更新、要更新哪幾段」`固化成一個 Skill`。
-
-### 🧠 Skill 的核心：先判斷，再決定要不要動
-
-[flow]
-1. 讀取變更 — 比對這次的 diff 改了什麼
-2. 判斷影響 — 是否涉及指令／前置需求／資料庫／結構
-3. 沒涉及就略過 — 明確回報「不需更新」
-4. 涉及才更新 — 只改對應的 README 段落
-5. 回報摘要 — 說明動了哪裡、為什麼
-[/flow]
-
-### ⚙️ 建立維護 README 的 Skill
-
-把判斷準則寫進 Skill 說明，讓 AI `每次都用同一套標準`檢查、`針對性`更新。
-
-```prompt [label="建立 README 維護 Skill"]
-幫我建立一個維護專案根目錄 README.md 的 Skill：
-1. 比對最近的變更（diff），判斷是否涉及下列任一面向：
-   - 啟動 / 操作指令的變化
-   - 前置需求或相依套件的增減
-   - 資料庫設定或初始化步驟
-   - 專案結構（資料夾 / 模組）的調整
-2. 若都沒涉及，明確回報「README 不需更新」，不要亂改
-3. 若有涉及，只更新對應段落，其餘內容保持不動
-4. 最後條列：更新了哪些段落、各自對應哪個變更
+```terminal [label="全局安裝"]
+npm install -g pnpm 
 ```
 
-> **為什麼要「判斷」，而不是每次整份重寫？**
-> 每次請 AI`從頭重寫` README，它可能`動到不該動的段落`、甚至`蓋掉你手寫的說明`。
-> 讓它`先判斷、再針對性更新`，文件才會`愈維護愈準`，而不是愈改愈亂。
+### 🆕 在新的 Worktree 工作區設計 pnpm 環境 | branch:feature/pnpm-demo
 
-![Skill 判斷變更涉及啟動指令，只針對性更新 README 對應段落](./assets/readme-skill.png)
+1. 點擊「Add Worktree」
+2. 選擇「Create New branch」
+3. 輸入「feature/pnpm-demo」
 
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 建立維護 README 的 Skill，把四類判斷準則寫清楚
-- 故意做一個「涉及啟動指令」的變更，觸發 Skill，確認它有更新 README
-- 再做一個「不涉及」的小改動，確認 Skill 回報「不需更新」
-[/lab-session]
+![用 Add Worktree 選擇 feature/pnpm-demo](./assets/worktree-pnpm.png)
 
-## 用 push 前的 Hook 把同步變自動
+因為 pnpm 跟 npm 安裝方式略有不同，可以請 Claude 協助設計
 
-> **再好的 Skill，忘了用就等於沒有**
-> `pre-commit` 在`commit 前`擋格式與測試；現在我們用 `pre-push` 在`push 前`補一道關——
-> 提醒你：「這批變更動到了關鍵設定，README 跟上了嗎？」
-
-### 🪝 pre-push hook：push 前的最後一次把關
-
-- `pre-commit` 管`單次提交`；`pre-push` 管`整批要送上雲端`的變更
-- README 過期往往`不是一次造成`，而是`累積好幾個 commit`才發現——剛好適合在 push 前統一檢查
-- Hook 偵測到`涉及指令／結構／DB／前置需求`的變更，就`提醒（或擋下）`，要你先跑 README Skill
-
-```prompt [label="加入 pre-push 檢查 hook"]
-幫我加一個 pre-push 的 git hook：
-push 之前，檢查這批要推送的 commit 是否動到了
-啟動指令、相依套件、資料庫設定或專案結構相關的檔案。
-若有，就在終端機提醒「README 可能需要更新，請先跑 README 維護 Skill」，
-讓我確認過再 push。
+```prompt [label="請 AI 協助設定並安裝"]
+我想要讓專案也可以透過「pnpm install」安裝套件，幫我設計環境，並確認可以啟動專案，處理安裝環境這塊即可
+完成後將操作寫入 README.md 文件
 ```
 
-> **要提醒，還是直接擋下？**
-> 初期建議`先提醒就好`，別擋住正常流程；等團隊習慣後，再升級成`README 沒更新就擋下 push`。
-> 重點是讓「文件同步」從`靠記性`，變成`流程自動會發生`的事。
+### 🧩 透過 pnpm 安裝套件、啟動專案
 
-### 🧩 三道關卡，各司其職
+```terminal [label="安裝專案套件"]
+pnpm install
+```
 
-| 關卡 | 觸發時機 | 守的東西 |
-| --- | --- | --- |
-| **pre-commit** | 每次 commit | 格式、Lint、單元測試 |
-| **pre-push** | push 到遠端前 | README 是否跟上關鍵變更 |
-| **CI/CD** | 推上 GitHub 後 | 完整測試、覆蓋率報告 |
+![用 pnpm 來安裝套件](./assets/worktree-pnpm2.png)
 
-> **層層攔截，愈早發現愈省事**
-> 同一個疏漏，能在`本機 commit / push`時擋下，就不必等到`CI 跑完`、甚至`別人接手`才爆出來。
-> 這三道關卡疊起來，就是讓 AI 跟你`都不容易出包`的安全網。
+```terminal [label="啟動專案"]
+cp .env.example .env
+pnpm run dev
+```
 
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 請 AI 加入 pre-push hook，偵測涉及關鍵設定的變更
-- 故意改動啟動指令但`不更新 README`，嘗試 push，確認 hook 有提醒
-- 跑一次 README Skill 補上文件後，再 push 成功
+![如果啟動失敗，多半是後端 API Port 衝突導致](./assets/worktree-pnpm3.png)
+
+> **向前相容的重要性**
+> 雖然 pnpm 很好用，但也要考量到`並非所有人都使用`；且導入新功能，建議以最`小影響範圍來導入`。
+
+[lab-session title="🛠️  實作練習"]
+- 建立一個新的 Worktree 工作區（建議使用 Git Worktree Manager）
+- `npm install -g pnpm` 全局安裝 pnpm，減少硬碟浪費
+- 切到 `feature/pnpm` 分支
+- 在新的 Worktree 工作區透過 pnpm 安裝套件 `pnpm install`
+- 在新的 Worktree 工作區開啟 AI Agent 處理任務，原資料夾繼續開發
+- 確認兩邊工作互不影響
+- 任務完成後，移除 Worktree 工作區（若不移除，資料夾會越來越多）
 [/lab-session]
-
----
-
 
 ---
 
