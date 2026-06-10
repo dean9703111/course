@@ -3,10 +3,12 @@
   date: 5/30（六）
   time: 13:30~16:30
   des: **打造懂你的 AI 助手**：設定開發環境，掌握 AI Agent 進階技巧，建立專屬 Agent Skills 護城河
+  link: [課程講義](https://deanlin.net/course/tibame/lesson1)
 - label: 第 2 堂
   date: 6/6（六）
   time: 13:30~16:30
   des: **規格驅動開發 (SDD)**：讓 AI 根據規格建立全端系統，並搭配自製 Skill 優化開發流程
+  link: [課程講義](https://deanlin.net/course/tibame/lesson2)
 - label: 第 3 堂
   date: 6/13（六）
   time: 13:30~16:30
@@ -776,19 +778,22 @@ pnpm run dev
 
 ---
 
-# 使用 MCP：賦予 AI 使用外部工具的權限
+# 初探 Postman：測試後端 API 更靈活
 
 ## 為什麼需要 Postman？
 
-> **MCP 是 AI 與外部工具之間的標準插座**
-> 前面用 `F12 → Network` 只能看到「前端有打的 API」，而且看完即丟。
+> 網頁用 `F12 → Network` 只能看到「前端打的 API」。
 > 真正要驗證後端，需要一個能`主動發出 Request`、能`重複執行`、能`模擬不同身份`的工具。
 
-### 🤔 只靠瀏覽器測 API 的三個痛點
+### 🤔 只靠瀏覽器測 API 的三個痛點 | branch:feature/upgrade-major-dependencies
 
-- **被動**：F12 只看得到前端`觸發過`的請求，沒有對應按鈕的 API 根本測不到
-- **難重現**：想測「缺欄位」「沒權限」「Token 過期」這些`錯誤情境`，瀏覽器很難湊出來
-- **無法累積**：今天測過的請求，明天又要從頭點一次，`情境沒有被保存下來`
+- **被動**：F12 只看得到前端`觸發`的請求（Request），但實務上有`很多 API 不會在網頁顯示`（ex: 第三方 API）。
+- **難重現**：想測「缺欄位、沒權限、Token 過期」這些`錯誤情境`，瀏覽器很難實現。
+- **無法累積**：今天測過的請求（Request），明天又要從頭點一次，`情境沒有被保存下來`
+
+> **經驗分享**
+> 許多管理後台，`操作路徑極為複雜`；如果用瀏覽器光是要點到對應的測試情境，都需要花許多力氣。
+> 這樣不如使用`Postman`來精準打擊，不需要透過瀏覽器慢慢來。
 
 ### 📮 Postman 是後端 API 的測試台
 
@@ -796,8 +801,10 @@ pnpm run dev
 
 到 [Postman 官網下載頁](https://www.postman.com/downloads/) 依作業系統下載安裝。
 
-> **記得註冊並登入帳號**
-> 後面要用的 **MCP** 與 **環境同步**功能需要登入；用 Email 或 Google 註冊都可以，免費方案就夠本堂課使用。
+![Postman 有一定的學習成本，但是個很棒的工具](./assets/download-postman.png)
+
+> **請註冊並登入帳號**
+> 後面要用的 `MCP` 功能需要登入；用 Email 或 Google 註冊都可以，**免費方案就夠本堂課使用**。
 
 ### 🔗 結合 MCP，讓 AI 幫你建立與測試
 
@@ -809,8 +816,6 @@ Postman 提供官方 MCP Server，串上後 AI 就能`直接幫你建立 Request
 | 錯誤情境要自己想、自己湊 | AI 依規格補齊`正確 / 錯誤 / 權限`各種案例 |
 | 改一次 API 要回頭逐張改 | 請 AI 依最新規格批次更新 |
 
-![Postman 把每支 API 變成可重複執行的卡片](./assets/postman-overview.png)
-
 ## 安裝 Postman MCP 與 Token 設定
 
 > **官方文件是唯一真實來源**
@@ -820,12 +825,14 @@ Postman 提供官方 MCP Server，串上後 AI 就能`直接幫你建立 Request
 
 MCP 需要一把 API Key 來代表「你」操作 Postman。
 
-1. 登入 Postman 後，點右上角頭像 → **Settings** → **API keys**
-2. 點 **Generate API Key**，命名後複製產生的金鑰
-3. 詳細步驟參考 [Postman API Key 官方說明](https://learning.postman.com/docs/developer/postman-api/authentication/)
+登入 Postman 後，點右上角 **Settings** → **Account settings** → **API keys** → **Generate API Key**
+
+![到達 API Key 頁面](./assets/postman-api-list.png)
+
+![命名後，複製產生的金鑰，他只會出現一次](./assets/postman-api-gen.png)
 
 > **API Key 等於你的帳號權限**
-> 這把金鑰`不要 commit 進 Git`、不要貼到公開頻道。如果外洩，回到同一頁 **Revoke** 後重新產生即可。
+> 這把金鑰`不要 commit 進 Git`、不要貼到公開頻道。如果外洩，可以透過 **Regenerate** 重新產生即可。
 
 ### 🔌 在 Claude Code 設定 Postman MCP
 
@@ -836,7 +843,9 @@ claude mcp add --transport http postman https://mcp.postman.com/mcp \
   --header "Authorization: Bearer ${POSTMAN_API_KEY}"
 ```
 
-```terminal [label="先把金鑰放進環境變數"]
+![這段指令會讓 Postman 成為 User 層級的 MCP 設定](./assets/postman-mcp-init.png)
+
+```terminal [label="把金鑰放進環境變數"]
 export POSTMAN_API_KEY="你剛剛產生的金鑰"
 ```
 
@@ -857,7 +866,9 @@ export POSTMAN_API_KEY="你剛剛產生的金鑰"
 [lab-session title="🛠️  實作練習"]
 - 下載並安裝 Postman，完成註冊登入
 - 產生 Postman API Key 並設定環境變數
-- 用 `claude mcp add` 接上 Postman MCP，並用 `/mcp` 確認連線
+- 用 `claude mcp add` 接上 Postman MCP
+- 用 `export POSTMAN_API_KEY="xxx"` 把金鑰設定在環境變數
+- 用 `/mcp` 確認連線（connected）
 [/lab-session]
 
 ## 根據專案 API 設計 Request
@@ -866,30 +877,28 @@ export POSTMAN_API_KEY="你剛剛產生的金鑰"
 > 每支 API 都要寫清楚`描述`、抽出`變數`，並涵蓋`正確、錯誤、不同權限`的情境，
 > 這樣 Request 不只是測試，更是團隊可以照著操作的說明書。
 
-### 🚀 一句話讓 AI 建好整組 Collection
+### 🚀 讓 AI 建好整組 Collection
 
-不用一支一支慢慢教，直接請 AI 讀專案後端 API，把`環境、變數、所有 API 與各種情境`一次建立完善。
+可以直接請 AI 讀專案後端 API，把`環境、變數、所有 API 與各種情境`一次建立完善。
 
 ```prompt [label="一次建立完整的 Postman Collection"]
-參考專案後端 API，用 Postman MCP 幫我建立一整組「VMS」測試 Collection：
+使用 Postman MCP 建立「tibame-practice」的 Workspace
 
-1. 建立「VMS Local」環境，變數含 base_url（預設 http://localhost:3000/api）、admin_token、user_token
-2. 登入 API 成功情境（admin / admin12345）的測試腳本，要自動把回傳 token 寫入對應變數
-3. 依後端建立 登入 / 車輛 / 員工 三個資料夾，每支 Request 都要有清楚描述、用 {{base_url}} 與 Authorization: Bearer {{token}} 變數，並涵蓋：
-   - 正確情境（200 / 201）
-   - 錯誤情境（缺欄位 400、查無資料 404、未帶 Token 401、選項不合法 400）
-   - 權限情境（員工 API 改用 user_token，預期 403）
+並參考專案後端 API，幫我建立一整組「VMS」測試 Collection：
+
+1. 建立「VMS Local」環境，環境變數含 base_url（預設 http://localhost:3087/api）、admin_token、user_token
+2. 依後端功能分類子資料夾，「每個 API 端點只建一支 Request」，Request 名稱清楚標示方法與功能（如「建立車輛」），預設參數帶入可成功執行的正確情境；但登入的 Request 要有 Admin 跟一般 User，這樣方便切換測試
+3. 登入 Request 加 post-response script：依回應角色自動把 csrfToken 寫入 admin_token / user_token；建立類 Request 自動把回應 id 存成環境變數供後續請求引用
 ```
 
-> **為什麼一次建立就好？**
-> 變數、Token 自動寫入、各種情境彼此是有關聯的；與其分多次補，不如`一次給足上下文`，
-> 讓 AI 照規格把整組建完，你只要負責確認`情境有沒有漏`。
+![AI 完成的的時候我超感動，過去手動建立超費時間](./assets/postman-collection.png)
 
-![用一段指令請 AI 把整組 Collection 建好](./assets/postman-collection.png)
+> **瑣碎的任務，就交給 AI 吧！**
+> 變數、Token 自動寫入、各種情境彼此是有關聯的；與其分多次補，不如`一次給足上下文`，讓 AI 照規格把整組建完，你只要負責確認`情境有沒有漏`。
 
-### 🧪 在 Postman 逐一驗證不同情境
+### 🧪 在 Postman 驗證不同情境
 
-AI 建好後，回到 Postman `親手跑過一遍`，確認後端在每種情境的回應都符合預期。
+AI 建好後，回到 Postman `親手執行`來確認後端回應符合預期。
 
 #### 🔐 登入 API：先拿到 Token
 
@@ -899,15 +908,18 @@ AI 建好後，回到 Postman `親手跑過一遍`，確認後端在每種情境
 | ❌ 密碼錯誤 | `admin / wrong` | `401 Unauthorized` |
 | ❌ 缺欄位 | 只給 `username` | `400 Bad Request` |
 
+![登入後會順利帶入 Token](./assets/postman-login.png)
+
 #### 🚗 車輛 API：完整 CRUD 與錯誤
 
 | 情境 | 方法 / 路徑 | 預期回應 |
 | --- | --- | --- |
 | ✅ 查詢列表 | `GET {{base_url}}/vehicles` | `200`，回傳車輛陣列 |
-| ✅ 新增車輛 | `POST {{base_url}}/vehicles` | `201`，回傳建立的車輛 |
 | ❌ 欄位驗證 | `POST` 缺車牌 / 廠牌不在選項內 | `400 Bad Request` |
 | ❌ 查無資料 | `GET {{base_url}}/vehicles/99999` | `404 Not Found` |
 | ❌ 未帶 Token | 任一車輛 API 不帶 `Authorization` | `401 Unauthorized` |
+
+![錯誤的參數會被成功攔截](./assets/postman-params.png)
 
 > **後端有做選項檢查，Request 也要驗**
 > 前面優化時把廠牌、狀態設計成`下拉選單`，後端 API 也會檢查選項。
@@ -925,16 +937,9 @@ AI 建好後，回到 Postman `親手跑過一遍`，確認後端在每種情境
 
 ![同一支 API 切換 Token，驗證權限是否確實擋住](./assets/postman-permission.png)
 
-### 🤖 改完 API，請 AI 重跑整組
-
-> **情境用例設計成 Request，就是 E2E 測試的雛形**
-> 把「正確流程」「錯誤輸入」「越權存取」都沉澱成可重複執行的 Request，
-> 之後改完 API 只要請 AI`重跑整組`並用表格回報結果，就能快速確認`沒有改 A 壞 B`。
-
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+[lab-session title="🛠️  實作練習"]
 - 用一段指令請 AI 建好整組 VMS Collection（環境、變數、所有 API 與情境）
-- 在 Postman 逐一驗證登入 / 車輛 / 員工的正確、錯誤、權限情境
-- 改動 API 後請 AI 重跑整組，確認沒有改壞
+- 在 Postman 驗證登入 / 車輛 / 員工的正確、錯誤、權限情境
 [/lab-session]
 
 
