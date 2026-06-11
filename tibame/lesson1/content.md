@@ -341,6 +341,16 @@ npx @kamranahmedse/claude-statusline
 }
 ```
 
+#### 調整 Claude 對話保留時間
+
+打開 `~/.claude/settings.json`，調整數值(默認為 30 天)，[官網說明](https://code.claude.com/docs/en/settings)
+
+```code [label="加上 cleanupPeriodDays"]
+{
+  "cleanupPeriodDays": 20
+}
+```
+
 #### Python 設定 alias 對應（Mac）
 
 如果電腦環境中有安裝多個 Python 版本，可能會遇到 `python` 與 `python3` 指令執行時版本不同問題。

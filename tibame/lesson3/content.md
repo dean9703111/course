@@ -818,9 +818,6 @@ Postman 提供官方 MCP Server，串上後 AI 就能`直接幫你建立 Request
 
 ## 安裝 Postman MCP 與 Token 設定
 
-> **官方文件是唯一真實來源**
-> MCP 的安裝指令與 Server 位置會隨版本更新，請以 [Postman MCP Server 官方文件](https://learning.postman.com/docs/developer/postman-api/mcp-server/) 為準，本段提供的是目前可運作的範例。
-
 ### 🔑 取得 Postman API Key
 
 MCP 需要一把 API Key 來代表「你」操作 Postman。
@@ -834,6 +831,10 @@ MCP 需要一把 API Key 來代表「你」操作 Postman。
 > **API Key 等於你的帳號權限**
 > 這把金鑰`不要 commit 進 Git`、不要貼到公開頻道。如果外洩，可以透過 **Regenerate** 重新產生即可。
 
+```terminal [label="把金鑰放進環境變數"]
+export POSTMAN_API_KEY="你剛剛產生的金鑰"
+```
+
 ### 🔌 在 Claude Code 設定 Postman MCP
 
 用 `claude mcp add` 把官方 MCP Server 接進來（金鑰透過環境變數帶入，不要寫死在指令裡）。
@@ -843,11 +844,7 @@ claude mcp add --transport http postman https://mcp.postman.com/mcp \
   --header "Authorization: Bearer ${POSTMAN_API_KEY}"
 ```
 
-![這段指令會讓 Postman 成為 User 層級的 MCP 設定](./assets/postman-mcp-init.png)
-
-```terminal [label="把金鑰放進環境變數"]
-export POSTMAN_API_KEY="你剛剛產生的金鑰"
-```
+![這段指令會讓 Postman 根據專案寫入 MCP 設定](./assets/postman-mcp-init.png)
 
 #### 驗證 MCP 是否連線成功
 
@@ -887,8 +884,9 @@ export POSTMAN_API_KEY="你剛剛產生的金鑰"
 並參考專案後端 API，幫我建立一整組「VMS」測試 Collection：
 
 1. 建立「VMS Local」環境，環境變數含 base_url（預設 http://localhost:3087/api）、admin_token、user_token
-2. 依後端功能分類子資料夾，「每個 API 端點只建一支 Request」，Request 名稱清楚標示方法與功能（如「建立車輛」），預設參數帶入可成功執行的正確情境；但登入的 Request 要有 Admin 跟一般 User，這樣方便切換測試
-3. 登入 Request 加 post-response script：依回應角色自動把 csrfToken 寫入 admin_token / user_token；建立類 Request 自動把回應 id 存成環境變數供後續請求引用
+2. 依後端功能分類子資料夾，命名規則：名稱（英文），比如：車輛（vehicle）
+3. 每個 API 端點只建一支 Request，Request 名稱清楚標示方法與功能以及 api path（如「取得車輛 - vehicles/{id}」），預設參數帶入可成功執行的正確情境；但登入的 Request 要有 Admin 跟一般 User，這樣方便切換測試
+4. 登入 Request 加 post-response script：依回應角色自動把 csrfToken 寫入 admin_token / user_token；建立類 Request 自動把回應 id 存成環境變數供後續請求引用
 ```
 
 ![AI 完成的的時候我超感動，過去手動建立超費時間](./assets/postman-collection.png)

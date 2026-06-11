@@ -947,6 +947,49 @@
       margin-top: .35rem;
     }
 
+    .class-timeline__link {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      margin-top: .55rem;
+      padding: .28rem .7rem;
+      border: 1px solid rgb(var(--accent-rgb) / .4);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: .8rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background .15s ease, border-color .15s ease;
+    }
+
+    .class-timeline__link svg {
+      width: .85em;
+      height: .85em;
+    }
+
+    .class-timeline__link:hover {
+      background: rgb(var(--accent-rgb) / .14);
+      border-color: rgb(var(--accent-rgb) / .7);
+    }
+
+    .class-timeline__item.is-past .class-timeline__link {
+      color: var(--text-dim);
+      border-color: rgb(120 130 145 / .35);
+    }
+    .class-timeline__item.is-past .class-timeline__link:hover {
+      background: rgb(120 130 145 / .15);
+      border-color: rgb(120 130 145 / .6);
+    }
+
+    .class-timeline__item.is-upcoming .class-timeline__link {
+      color: var(--accent2);
+      border-color: rgb(var(--accent2-rgb) / .4);
+    }
+    .class-timeline__item.is-upcoming .class-timeline__link:hover {
+      background: rgb(var(--accent2-rgb) / .14);
+      border-color: rgb(var(--accent2-rgb) / .7);
+    }
+
     /* ===== Class Timeline – Status states ===== */
     .class-timeline__marker svg {
       width: 60%;
@@ -5276,6 +5319,7 @@
           </div>
           <div class="class-timeline__time">13:30~16:30</div>
           <div class="class-timeline__des"><strong>打造懂你的 AI 助手</strong>：設定開發環境，掌握 AI Agent 進階技巧，建議專屬 Agent Skills 護城河</div>
+          
         </div>
       </div>
       <div class="class-timeline__item is-upcoming" data-status="upcoming">
@@ -5290,6 +5334,7 @@
           </div>
           <div class="class-timeline__time">13:30~16:30</div>
           <div class="class-timeline__des"><strong>規格驅動開發 (SDD)</strong>：讓 AI 根據規格建立全端系統，並搭配自製 Skill 優化開發流程</div>
+          
         </div>
       </div>
       <div class="class-timeline__item is-upcoming" data-status="upcoming">
@@ -5304,6 +5349,7 @@
           </div>
           <div class="class-timeline__time">13:30~16:30</div>
           <div class="class-timeline__des"><strong>團隊協作與專案部署</strong>：建立自動化測試，了解 Worktree 應用時機，同時用 MCP 操作外部工具將專案部署上線</div>
+          
         </div>
       </div>
     </div>
@@ -6602,6 +6648,21 @@ try {
     &quot;commit&quot;: &quot;&quot;,
     &quot;pr&quot;: &quot;&quot;
   }
+}</div>
+    </div>
+        <h4 class="minor-title">調整 Claude 對話保留時間</h4>
+        <p class="loose-text">打開 <code>~/.claude/settings.json</code>，調整數值(默認為 30 天)，<a href="https://code.claude.com/docs/en/settings" target="_blank" rel="noopener">官網說明</a></p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Code
+        <span class="label">加上 cleanupPeriodDays</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">{
+  &quot;cleanupPeriodDays&quot;: 20
 }</div>
     </div>
         <h4 class="minor-title">Python 設定 alias 對應（Mac）</h4>
