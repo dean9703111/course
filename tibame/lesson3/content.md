@@ -305,7 +305,7 @@ npm run test
 
 ![資料被清空，刷新會回到首頁](./assets/ai-gen-test-issues1.png)
 
-因為無法登入，所以可以到 PGAdmin 頁面看資料發生了什麼事: http://localhost:5050/browser/
+剛剛登入的 Admin 在`刷新後會被登出`，可以到 PGAdmin 頁面看資料發生了什麼事: http://localhost:5050/browser/
 
 ![使用者紀錄被清除，還被塞入測試資料](./assets/ai-gen-test-issues2.png)
 
@@ -339,8 +339,8 @@ npm run test
 待 AI 修改完畢後，`先復原專案 DB 資料`；這樣才能驗證執行測試時`不會對原有 DB 造成影響`。
 
 ```terminal [label="復原專案 DB"]
-npm run seed                  # 建立第一個 admin（讀 .env 的 SEED_ADMIN_*）
-npm run seed:mock             # 選用：塞 30 員工 + 50 車輛模擬資料，方便看 dashboard / 分頁
+npm run seed        # 建立第一個 admin（讀 .env 的 SEED_ADMIN_*）
+npm run seed:mock   # 選用：塞 30 員工 + 50 車輛模擬資料
 ```
 
 #### 驗證結果符合預期
@@ -349,7 +349,7 @@ npm run seed:mock             # 選用：塞 30 員工 + 50 車輛模擬資料�
 ! docker compose restart pgadmin
 ```
 
-然後執行測試指令，確認不會動到原有 DB，並且 PGAdmin 也可看到測試 DB
+然後執行測試指令，確認不會動到原有 DB，並且 [PGAdmin](http://localhost:5050/browser/) 也可看到測試 DB
 
 ```terminal [label="執行測試"]
 npm run test
@@ -358,8 +358,9 @@ npm run test
 ![到 pgadmin 確認測試 DB 可以檢視](./assets/pgadmin-test-db.png)
 
 > **了解 PR 的重要性**
-> 為了讓大家更清楚`專案脈絡`，**每個 branch 都有[建立 PR](https://github.com/deancourse/tibame-lesson3/pull/1)**
-> 這樣回顧調整內容時，會更輕鬆。
+> 為了讓大家更清楚`專案脈絡`，**每個 branch 都有建立 PR**，這樣回顧調整內容時，會更輕鬆。
+
+[pr from="feature/isolate-api-test-database" to="develop" title="test: 隔離 API 測試資料庫為獨立的 vms_test，避免動到開發 DB" url="https://github.com/deancourse/tibame-lesson3/pull/1"]
 
 [lab-session title="🛠️  實作練習"]
 - 執行 `npm run test` 了解測試會污染資料庫
@@ -389,13 +390,18 @@ npm run test
 
 ![會建立 doc 資料夾來存放前後端測試清單](./assets/test-doc.png)
 
+```prompt [label="讓 AI 撰寫測試"]
+撰寫測試程式
+```
+
 #### 確認生成的測試運作正常
 
 ![輸入 npm run test 來手動驗證](./assets/npm-run-test.png)
 
 > **在實戰過程中，你會持續優化 Agent Skill**
-> [這個 PR](https://github.com/deancourse/tibame-lesson3/pull/2) 是與前面 `feature/isolate-api-test-database` 比對的。
-> 除了優化測試程式外，也優化了既有 Agent Skill 的設計。
+> 生成測試案例的 Skill，直到講課前我在根據自己的需求`持續優化`。
+
+[pr from="feature/restructure-tests-with-type-groups" to="feature/isolate-api-test-database" title="test: 依測試類型重構登入測試並建立測試案例文件" url="https://github.com/deancourse/tibame-lesson3/pull/2"]
 
 ### 💡 實務建議
 - 不要一口氣生成所有情境的測試，`根據情境設計`會更好理解
@@ -1000,49 +1006,44 @@ docker compose -f docker-compose-prod.yml up -d --build
 
 ### ☁️ 為什麼選 Zeabur 這類託管平台？
 
+> **使用講者連結註冊有 29 美金（有效期為 30 天）**
+> 使用講者連結註冊: https://zeabur.com/events?code=deanlin0613 可以`免費體驗`
+
 | 自己租 VM | 用 Zeabur |
 | --- | --- |
 | 要自己裝環境、設防火牆、上 SSL | 平台`自動處理`建置、TLS、網域 |
-| 出事要自己 SSH 進去查 | 後台或 MCP `直接看 logs` |
+| 出事要自己 SSH 進去查 | 後台或用 Skill `直接看 logs` |
 
 對個人與小團隊，把`維運瑣事交給平台`，才能把時間留給產品本身。
 
-### 🌏 建立專案、選擇機房
+註冊完成後，到[付款方式](https://zeabur.com/account/billing)頁面，確認餘額有 29 美金，`無需綁信用卡`。
 
-> **使用講者連結註冊有 29 美金（有效期為 30 天）**
-> 如果使用講者連結註冊: https://zeabur.com/events?code=deanlin0613
-> 會獲得更多的初始測試資金
+![29 美金體驗期限為 30 天](./assets/check-free-credits.png)
+### 開啟 GitHub 整合功能
+### 🌏 建立伺服器
+
+[註冊 Zeabur 後](https://zeabur.com/events?code=deanlin0613)，我們要來建立伺服器
 
 [flow]
-1. 建立新專案
-2. 購買新伺服器 - 挑`離自己最近`的節點，例如台灣使用者選 `亞洲`，至於 CPU 可以選擇 `2 vCPU`、記憶體選擇 `2 GB`
-3. 供應商 - 如果希望穩定，選擇 `GCP、AWS`，但**價格較貴**；其他較便宜的也可以。
-4. 確認方案 — 29 美金的額度非常夠本堂課練習，基本可`全額抵免`
+1. 建立伺服器 - 從 Zeabur 購買伺服器
+2. 服務商 - AWS、GCP 最穩定
+3. 機房區域 — 挑`離使用者最近`的節點，例如台灣使用者選 `亞洲`
+3. 確認方案 — 免費方案足夠本堂課練習，正式營運再升級
 [/flow]
-
-![選擇合適的伺服器](./assets/zeabur-select-server.png)
 
 > **機房為什麼要選近的？**
 > 機房離使用者越近，`網路延遲越低`、體驗越好；台灣使用者選東京通常比選美國節點快得多。
-> 這個選擇`部署後不易更動`，所以放在最前面手動決定。
 
-![選擇合適的伺服器](./assets/zeabur-check-price.png)
+![建立 Server 並選擇離使用者最近的機房](./assets/zeabur-create-server.png)
 
-![伺服器初始化狀態](./assets/zeabur-server-init.png)
-
-### 🔑 取得 Zeabur API Key
-
-MCP 需要一把 API Key 代表「你」操作 Zeabur。
-
-1. 進入 **左上角頭像 → 設定 → API 金鑰**
-2. 點 **產生新的 API 金鑰**，輸入名稱（ex: `tibame-test`）。
-
-![產生 API Keys 並複製](./assets/zeabur-api-key.png)
+> **個人經驗**
+> 使用 AWS、GCP 的伺服器通常`最穩定`，但相對的`金額較高`。
+> 如果想要節省經費，其他的服務商也不錯，但如果你選擇`中國區域`，Docker image 與一些連線`需要額外調整`。
 
 [lab-session title="🛠️  實作練習"]
 - 用[推薦連結](https://zeabur.com/events?code=deanlin0613)註冊 Zeabur
-- 建立專案並選擇離你最近的伺服器（Server）
-- 產生 API Key 並安全保存
+- 在[付款方式](https://zeabur.com/account/billing)，確認餘額有 29 美金
+- 建立伺服器
 [/lab-session]
 
 ### 🧩 安裝 Zeabur 官方 Skill 執行更順利
@@ -1054,58 +1055,95 @@ claude plugin marketplace add zeabur/zeabur-claude-plugin
 claude plugin install zeabur@zeabur
 ```
 
-![第一次執行時，會需要透過瀏覽器登入給予授權](./assets/zeabur-skill-login.png)
-
 ```terminal [label="確認自己登入成功"]
 確認我現在登入的 Zeabur 帳號
 ```
+
+![第一次執行時，會需要透過瀏覽器登入給予授權](./assets/zeabur-skill-login.png)
 
 > **多帳號警告**
 > 如果有多個 Zeabur 帳號，請在自己的電腦登出，`確認當前所使用的帳號`。
 > Zeabur Skill 雖然好用，但`犯錯率並不低`，尤其如果你`有綁信用卡，那更危險`。
 
-### 🚀 一句話完成第一次部署
+### 🚀 用白話文完成部署
 
 登入帳號後，用白話文就能讓 AI 部署。
 
+![直接給予對應的伺服器 ID 能加快部署效率](./assets/zeabur-server-info.png)
+
 ```prompt [label="部署到 Zeabur"]
+Zeabur 使用這個伺服器 [伺服器 id]
 參考 docker-compose-prod.yml 的架構，用 Zeabur 把這個專案部署到伺服器
-然後使用「vms-dean」作為子域名，若重名就在後面加上 6 位 hash 值
+注意：Zeabur 的 Docker 服務一律監聽 8080，所有服務（proxy、web、api）都改成聽 8080
+然後使用「vms-deanlin」作為子域名，若重名就在後面加上 6 位 hash 值
 ```
 
 > **使用 Skill 要注意的事情**
 > Zeabur Skill 將的`建立服務、設定、查 log`都變成 AI 能呼叫的工具，你描述`想達成的結果`，AI 負責`一步步呼叫 API`，不用在到後台來回點。
-> 但使用什麼伺服器，我個人建議還是自己選擇會更好。
+> 但使用什麼伺服器，我個人建議還是`自己選擇會更好`。
+> 另外第一次部署大約`會需要 15~30 分鐘`，中間 Zeabur 會遇到各式各樣的錯誤，然後想辦法自己解決。
 
-![請 AI 透過 MCP 完成部署並回傳網址](./assets/zeabur-deployed.png)
+![在儀表板確認 Zeabur 成功完成部署](./assets/zeabur-dahboard-deployed.png)
+
+### ✅ 驗證部署是否成功
+
+![登入頁可以渲染](./assets/zeabur-dahboard-load.png)
+
+> **範例專案的管理者帳密僅為練習用，登入後記得調整密碼**
+
+![管理者可以登入](./assets/zeabur-dahboard-login.png)
 
 > **小提醒**
-> 目前的免費方案，是無法在線上看到資料庫細節的，如果想看到就需要拿出魔法小卡，升級到 Dev 級別，提醒大家，這個真的要小心，因為你可能會沒有意識到自己正在消費。
+> 目前的免費方案，是`無法在線上看到資料庫內容`的，如果想看到就需要拿出魔法小卡，升級到 Dev 級別。
+> 提醒大家，這個真的要小心，因為`你可能會沒有意識到自己正在消費`。
 
-### 🔧 部署後的迭代也靠 Zeabur Skill
-
-上線不是結束，後續調整一樣用白話文交給 AI。
-
-| 想做的事 | 對 AI 說 |
-| --- | --- |
-| 設定環境變數 | 「把 DATABASE_URL、JWT_SECRET 設到後端服務的環境變數」 |
-| 綁定網域 + HTTPS | 「幫後端服務綁一個 Zeabur 提供的網域，並確認有 HTTPS」 |
-| 查錯誤 | 「抓最近的部署 log，看看為什麼啟動失敗」 |
-| 重新部署 | 「我推了新的程式，幫我重新部署後端服務」 |
-
-> **環境變數要在雲端設定，不要寫進 image**
-> 資料庫連線、JWT 密鑰這些`會因環境不同`的值，要在 Zeabur 的`環境變數`設定；
-> 這樣同一份 image 在本地、雲端都能用，金鑰也`不會被打包`進去。
-
-[lab-session title="🛠️  實作時間" duration="20 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 接上 Zeabur（任選一種）：用 `claude mcp add` 接 MCP（需 API Key），或用 `claude plugin install zeabur@zeabur` 裝官方 Skill
-- 請 AI 部署後端與 Postgres 服務，拿到對外網址
-- 請 AI 設定必要的環境變數，綁定網域並確認 HTTPS
+[lab-session title="🛠️  實作練習"]
+- 使用 Zeabur 完成部署作業
+- 取得對外網址
 - 打開網址，確認線上服務可以正常登入
 [/lab-session]
 
-## 上線前的基礎網路防護
+## 部署完成只是下一個開始
 
+### 🛡️ 距離完善還有很長一段路
+
+- 如果有機器人嘗試瘋狂登入帳號？封鎖特定 ip 的政策
+- 未來流量高的時候，你要如何擴充？
+- 短時間大流量時（搶票），架構如何設計？
+- 資料庫效率不夠時，如何設計？
+
+### 🌐 註冊自己的網域，更有專業感
+
+部署完成後，平台給你的預設網址通常長這樣：`vms-dean.zeabur.app`。
+
+練習夠用，但如果你想把作品`放上履歷、分享給客戶`，自己的網域會專業得多。
+
+| 平台預設網址 | 自己的網域 |
+| --- | --- |
+| `vms-deanlin.zeabur.app` | `vms.dean.net` |
+| 一看就知道是託管平台 | 像一個`正式的產品` |
+| 平台收回或改名就失效 | 網域跟著你，`搬家也帶得走` |
+
+[flow]
+1. 挑選網域 — 想一個好記的名字，`.com`、`.dev`、`.app` 都是常見選擇
+2. 註冊購買 — 一年通常只要幾百塊台幣，可以直接在 Zeabur 上購買（或是選擇 `Namecheap/Cloudflare`）
+3. 綁定服務 — 在 Zeabur 後台或直接請 AI 幫你把網域綁到服務上
+[/flow]
+
+```prompt [label="用白話文綁定網域"]
+我的服務商是 [Namecheap]
+我想透過 CNAME 綁定 Zeabur 專案對外網址 [blackbao.dean.com]
+幫我設定 Zeabur 並告訴我 [Namecheap] 怎麼操作
+```
+
+> **個人經驗**
+> 網域是少數`花小錢、長面子`的投資；
+> 同一個網域還能透過`子網域`掛上多個專案（例如 `blog.dean.com`、`vms.dean.com`），買一次用很久。
+
+[lab-session title="🛠️  實作練習"]
+- 請 AI 檢查目前部署的安全疑慮，並修正高風險項目
+- （選做）註冊一個自己的網域，綁定到 Zeabur 服務上
+[/lab-session]
 
 
 ---
