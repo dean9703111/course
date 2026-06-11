@@ -922,6 +922,7 @@ AI 建好後，回到 Postman `親手執行`來確認後端回應符合預期。
 > **後端有做選項檢查，Request 也要驗**
 > 前面優化時把廠牌、狀態設計成`下拉選單`，後端 API 也會檢查選項。
 > 記得跑一張`故意送出不存在選項`的 Request，確認後端真的擋下來（回 `400`）。
+> **有點 Vibe Coding 出來的電商平台，會將價格透過前端傳送給後端，如果防護沒做好，那打 API 是什麼就是什麼。**
 
 #### 👥 員工 API：切換 Token 驗證權限
 
@@ -940,42 +941,32 @@ AI 建好後，回到 Postman `親手執行`來確認後端回應符合預期。
 - 在 Postman 驗證登入 / 車輛 / 員工的正確、錯誤、權限情境
 [/lab-session]
 
-
 ---
 
+# 部署上線：用 Docker 打包，透過 Zeabur 部署上線
 
----
-
-# 部署上線：用 Docker 打包，靠 MCP 一句話發佈
-
-> **能在 localhost 跑，不等於能交付**
-> 產品要讓別人用得到，必須先`打包成標準化的 image`，再`部署到雲端`並掛上 `HTTPS`。
-> 這一段循序漸進：先用 Docker 打包，再用 Zeabur MCP 部署，最後補上基礎的網路防護。
+> **能在 localhost 跑，不等於能上線**
+> 產品要讓別人使用，建議先`打包成標準化的 Docker image`，再`部署到雲端`。
 
 ## 用 Docker 把專案打包成 image
 
 ### 🐳 為什麼要先做出 image？
 
-還記得第二堂用 Docker 跑 Postgres 嗎？那時 Docker 幫我們`把資料庫環境標準化`；
-現在要上線，換成`把整個專案`打包成一份 image。
-
-- **環境一致**：image 把 `Node 版本、套件、設定`通通鎖在裡面，避免「在我電腦可以跑」
+- **環境一致**：image 把 `Node 版本、套件、設定`通通寫在裡面，避免發生「在我電腦可以跑」的窘境
 - **一次打包、到處執行**：本地 build 出來的 image，Zeabur 拿去跑`結果一模一樣`
-- **可重現**：每次部署都是`同一份基底`，出問題容易回溯是程式還是環境
+- **可重現**：每次部署都是`同一份基底`，出問題容易回溯是`程式還是環境`
 
-> **資料庫不用自己打包**
-> Postgres 這類服務 Zeabur 直接提供，我們`只打包自己的前後端程式`，資料庫到雲端再接上去就好。
+### 📝 請 AI 寫 Dockerfile | branch:feature/add-docker-production-setup
 
-### 📝 請 AI 寫 Dockerfile
-
-把專案丟給 AI，請它依專案結構產生 `Dockerfile` 與 `.dockerignore`。
+請 AI 依專案結構產生 `Dockerfile` 與 `.dockerignore`。
 
 ```prompt [label="生成 Dockerfile"]
-參考專案結構，幫後端服務寫一份多階段建置（multi-stage build）的 Dockerfile：
+扮演一位專業的 DevOps，幫專案前、後端寫一份多階段建置（multi-stage build） Dockerfile：
 1. build 階段安裝套件、編譯
-2. 最終映像只保留執行所需檔案，基底用輕量的 node:20-alpine
-3. 對外開放 3000 port，啟動指令為正式環境的 start
-同時建立 .dockerignore，排除 node_modules、.env、.git，避免 image 過大或把機密打包進去
+2. 最終映像只保留執行所需檔案，基底用輕量的 node:24-alpine
+3. 建立 .dockerignore，排除 node_modules、.env、.git，避免 image 過大或把機密打包進去
+4. 建立 docker-compose-prod.yml，可以完成前後端與資料庫的啟動，只有前端有對外端口
+最後將啟動指令更新到 README.md
 ```
 
 > **為什麼要 multi-stage 與 .dockerignore？**
@@ -984,28 +975,25 @@ AI 建好後，回到 Postman `親手執行`來確認後端回應符合預期。
 
 ![AI 依專案結構產生的 Dockerfile](./assets/dockerfile-generated.png)
 
+![設計模擬正式環境啟動的檔案 docker-compose-prod.yml](./assets/dockerfile-generated.png)
+
 ### 🔨 本地 build 並跑起來驗證
 
 上雲之前，先在本地確認 image `build 得起來、跑得動`。
 
-```terminal [label="build 出 image"]
-docker build -t vms-backend .
+```terminal [label="生成前後端資料庫 image 並啟動"]
+docker compose -f docker-compose-prod.yml up -d --build
 ```
 
-```terminal [label="跑起來測試（對應 3000 port）"]
-docker run --rm -p 3000:3000 --env-file .env vms-backend
-```
-
-打開瀏覽器或用 Postman 打 `http://localhost:3000`，確認回應正常，就代表 image 沒問題。
+![在 Docker Desktop 觀察執行後啟動狀態](./assets/docker-desktop.png)
 
 > **本地能跑，雲端才有意義**
 > 如果 image 在本地就起不來，丟到雲端只會`更難 debug`。先在熟悉的環境驗證，是最省時間的做法。
 
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 請 AI 產生 Dockerfile 與 .dockerignore
-- 確認 .dockerignore 有排除 .env、node_modules
-- 本地 docker build 出 image
-- docker run 跑起來，用瀏覽器或 Postman 驗證回應正常
+[lab-session title="🛠️  實作練習"]
+- 請 AI 產生前後端的 Dockerfile 與 .dockerignore
+- 本地 docker build 出 image 並跑起來
+- 用瀏覽器驗證回應正常
 [/lab-session]
 
 ## 用 Zeabur 把產品搬上雲端
@@ -1152,41 +1140,7 @@ claude plugin install zeabur@zeabur
 
 ## 上線前的基礎網路防護
 
-> **公開到網路上，就會有人來敲門**
-> 服務一上線，掃描機器人`幾分鐘內`就會找上門。上線前先補上這幾道基本防線。
 
-### 🛡️ 五個一定要做的防護
-
-| 防護項目 | 為什麼重要 | 怎麼做 |
-| --- | --- | --- |
-| **強制 HTTPS** | 沒加密的連線，`帳密、Token 會被攔截` | Zeabur 綁定網域後`自動發 TLS 憑證`，確認用 https 進站 |
-| **機密放環境變數** | 金鑰寫死在程式裡，`一推上 Git 就外洩` | DB 密碼、JWT 密鑰`一律用環境變數`，`.env 不進 Git` |
-| **設定 CORS 白名單** | 開放 `*` 等於`誰都能打你的 API` | 只允許`自己的前端網域`跨域存取 |
-| **資料庫不對公網** | DB 直接暴露，`等於把金庫門打開` | 用 Zeabur `專案內部網路`連線，不對外開 port |
-| **換掉預設帳密** | `admin / admin12345` 是教學用，`上線等於沒鎖門` | 上線前`改成強密碼`，移除測試帳號 |
-
-### 🤖 請 AI 幫你做上線前體檢
-
-不用自己逐項檢查，先請 AI 對照清單掃一遍。
-
-```prompt [label="上線前安全體檢"]
-這個專案準備部署上線，幫我做一次基礎的安全檢查：
-1. 檢查是否有金鑰、密碼寫死在程式碼裡，應改用環境變數
-2. 檢查 CORS 設定是否限制在我的前端網域，而不是開放 *
-3. 確認資料庫只走內部網路、沒有對公網開放
-4. 列出仍使用預設 / 測試帳密的地方
-逐項回報現況與建議的修法
-```
-
-> **防護是`持續`的，不是`一次性`的**
-> 這裡列的是`最低標`。隨著使用者變多，再逐步加上`登入頻率限制`、`錯誤訊息不洩漏細節`、`相依套件定期更新`等防護。
-
-[lab-session title="🛠️  實作時間" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- 請 AI 做一次上線前安全體檢
-- 確認機密都走環境變數、`.env` 沒進 Git
-- 把預設帳密改成強密碼
-- 確認線上服務走 HTTPS、資料庫沒有對公網開放
-[/lab-session]
 
 ---
 
