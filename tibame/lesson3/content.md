@@ -998,125 +998,91 @@ docker compose -f docker-compose-prod.yml up -d --build
 
 ## 用 Zeabur 把產品搬上雲端
 
-> **第一次靠手動引導，之後全交給 MCP**
-> 建立專案、`選擇機房`這種「一次性的決定」我們手動在後台做；
-> 真正每天會`重複`的部署與迭代，再交給 MCP 用白話文處理。
-
 ### ☁️ 為什麼選 Zeabur 這類託管平台？
 
 | 自己租 VM | 用 Zeabur |
 | --- | --- |
 | 要自己裝環境、設防火牆、上 SSL | 平台`自動處理`建置、TLS、網域 |
 | 出事要自己 SSH 進去查 | 後台或 MCP `直接看 logs` |
-| 擴充要自己調設定 | 介面上`點一下`或請 AI 處理 |
 
 對個人與小團隊，把`維運瑣事交給平台`，才能把時間留給產品本身。
 
-### 🌏 建立專案、選擇機房（一次性引導）
+### 🌏 建立專案、選擇機房
 
-到 [Zeabur](https://zeabur.com/) 用 GitHub 登入後：
+> **使用講者連結註冊有 29 美金（有效期為 30 天）**
+> 如果使用講者連結註冊: https://zeabur.com/events?code=deanlin0613
+> 會獲得更多的初始測試資金
 
 [flow]
-1. 建立 Project — 點 `Create Project`，取一個專案名稱
-2. 選擇機房（Region）— 挑`離使用者最近`的節點，例如台灣使用者選 `Tokyo`
-3. 確認方案 — 免費方案足夠本堂課練習，正式營運再升級
+1. 建立新專案
+2. 購買新伺服器 - 挑`離自己最近`的節點，例如台灣使用者選 `亞洲`，至於 CPU 可以選擇 `2 vCPU`、記憶體選擇 `2 GB`
+3. 供應商 - 如果希望穩定，選擇 `GCP、AWS`，但**價格較貴**；其他較便宜的也可以。
+4. 確認方案 — 29 美金的額度非常夠本堂課練習，基本可`全額抵免`
 [/flow]
+
+![選擇合適的伺服器](./assets/zeabur-select-server.png)
 
 > **機房為什麼要選近的？**
 > 機房離使用者越近，`網路延遲越低`、體驗越好；台灣使用者選東京通常比選美國節點快得多。
 > 這個選擇`部署後不易更動`，所以放在最前面手動決定。
 
-![建立 Project 並選擇離使用者最近的機房](./assets/zeabur-create-project.png)
+![選擇合適的伺服器](./assets/zeabur-check-price.png)
+
+![伺服器初始化狀態](./assets/zeabur-server-init.png)
 
 ### 🔑 取得 Zeabur API Key
 
 MCP 需要一把 API Key 代表「你」操作 Zeabur。
 
-1. 進入 **Dashboard → Settings → API Keys**
-2. 點 **Generate new API key**
-3. 點眼睛圖示顯示金鑰，立刻`複製保存`
+1. 進入 **左上角頭像 → 設定 → API 金鑰**
+2. 點 **產生新的 API 金鑰**，輸入名稱（ex: `tibame-test`）。
 
-> **金鑰只會顯示這一次**
-> Zeabur 的 API Key`關閉頁面後就看不到`，請當下就存好。`不要 commit 進 Git`；外洩就回同一頁刪除後重新產生。
-
-![到 Settings → API Keys 產生並複製金鑰](./assets/zeabur-api-key.png)
+![產生 API Keys 並複製](./assets/zeabur-api-key.png)
 
 [lab-session title="🛠️  實作練習"]
-- 用 GitHub 登入 Zeabur
-- 建立 Project 並選擇離你最近的機房
+- 用[推薦連結](https://zeabur.com/events?code=deanlin0613)註冊 Zeabur
+- 建立專案並選擇離你最近的伺服器（Server）
 - 產生 API Key 並安全保存
 [/lab-session]
 
-## 接上 Zeabur MCP，用白話文部署
+### 🧩 安裝 Zeabur 官方 Skill 執行更順利
 
-> **官方文件是唯一真實來源**
-> MCP 的套件名稱與啟動方式會隨版本更新，請以 [Zeabur MCP 官方文件](https://zeabur.com/docs/en-US/mcp) 為準，本段是目前可運作的範例。
-
-### 🔌 在 Claude Code 設定 Zeabur MCP
-
-一樣把金鑰`透過環境變數`帶入，不要寫死在指令裡。
-
-```terminal [label="先把 Token 放進環境變數"]
-export ZEABUR_TOKEN="你剛剛產生的 API Key"
-```
-
-```terminal [label="新增 Zeabur MCP（透過 npx 啟動）"]
-claude mcp add zeabur -e ZEABUR_TOKEN=${ZEABUR_TOKEN} -- npx -y @zeabur/mcp-server
-```
-
-#### 驗證 MCP 是否連線成功
-
-```prompt [label="在 Claude Code 中確認"]
-/mcp
-```
-
-| 預期狀態 | 代表意義 |
-| --- | --- |
-| `zeabur ✔ connected` | 連線成功，AI 已可操作 Zeabur |
-| `zeabur ✘ failed` | Token 錯誤或過期，回上一步重新產生 |
-| 清單中沒有 `zeabur` | 指令未成功執行，重新跑一次 `claude mcp add` |
-
-![輸入 /mcp 確認 Zeabur 已連線](./assets/zeabur-mcp-connected.png)
-
-### 🧩 更省事的選擇：Zeabur 官方 Skill（免 API Key）
-
-除了 MCP，Zeabur 也提供`官方的 Claude Code Skill`。它把`部署、查 log、綁網域、管資料庫`等操作包成一組 Skill，`不需要自己產 API Key`，一行指令安裝完就能用白話文操作。
+Zeabur 提供`官方的 Claude Code Skill`。它把`部署、查 log、綁網域、管資料庫`等操作包成一組 Skill，白話文操作更方便。
 
 ```terminal [label="安裝 Zeabur 官方 Skill（在終端機執行）"]
 claude plugin marketplace add zeabur/zeabur-claude-plugin
 claude plugin install zeabur@zeabur
 ```
 
-> **Skill 與 MCP 差在哪？該用哪個？**
-> 兩者都能讓 AI 操作 Zeabur，挑一個順手的即可，不必兩個都裝。
+![第一次執行時，會需要透過瀏覽器登入給予授權](./assets/zeabur-skill-login.png)
 
-| 比較 | Zeabur MCP | Zeabur 官方 Skill |
-| --- | --- | --- |
-| 設定成本 | 要`自己產 API Key`、設環境變數 | `一行指令安裝`，免 API Key |
-| 接入方式 | `claude mcp add` 接 Server | `claude plugin install` 裝 plugin |
-| 適合 | 想`完全掌握`連線細節 | 想`最快上手`、少設定 |
+```terminal [label="確認自己登入成功"]
+確認我現在登入的 Zeabur 帳號
+```
 
-> **官方文件是唯一真實來源**
-> 安裝指令與 Skill 清單會隨版本更新，請以 [Zeabur Agent Skills 頁面](https://zeabur.com/zh-TW/skills) 與 [Claude Code Skills 官方文件](https://zeabur.com/docs/en-US/developer/claude-code-skills) 為準。
+> **多帳號警告**
+> 如果有多個 Zeabur 帳號，請在自己的電腦登出，`確認當前所使用的帳號`。
+> Zeabur Skill 雖然好用，但`犯錯率並不低`，尤其如果你`有綁信用卡，那更危險`。
 
 ### 🚀 一句話完成第一次部署
 
-連上後，直接用白話文請 AI 部署。AI 會`建立服務、上傳 image、設定 port`。
+登入帳號後，用白話文就能讓 AI 部署。
 
 ```prompt [label="部署到 Zeabur"]
-用 Zeabur MCP 把這個專案部署到我剛建立的 Project：
-1. 後端用我們的 Dockerfile 建置成服務
-2. 另外建立一個 Postgres 服務給後端使用
-3. 部署完成後給我服務的網址
+參考 docker-compose-prod.yml 的架構，用 Zeabur 把這個專案部署到伺服器
+然後使用「vms-dean」作為子域名，若重名就在後面加上 6 位 hash 值
 ```
 
-> **為什麼能「一句話」就部署？**
-> MCP 把 Zeabur 的`建立服務、設定、查 log`都變成 AI 能呼叫的工具，
-> 你描述`想達成的結果`，AI 負責`一步步呼叫 API`，不用在後台來回點。
+> **使用 Skill 要注意的事情**
+> Zeabur Skill 將的`建立服務、設定、查 log`都變成 AI 能呼叫的工具，你描述`想達成的結果`，AI 負責`一步步呼叫 API`，不用在到後台來回點。
+> 但使用什麼伺服器，我個人建議還是自己選擇會更好。
 
 ![請 AI 透過 MCP 完成部署並回傳網址](./assets/zeabur-deployed.png)
 
-### 🔧 部署後的迭代也靠 MCP
+> **小提醒**
+> 目前的免費方案，是無法在線上看到資料庫細節的，如果想看到就需要拿出魔法小卡，升級到 Dev 級別，提醒大家，這個真的要小心，因為你可能會沒有意識到自己正在消費。
+
+### 🔧 部署後的迭代也靠 Zeabur Skill
 
 上線不是結束，後續調整一樣用白話文交給 AI。
 
