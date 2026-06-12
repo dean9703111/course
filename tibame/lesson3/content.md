@@ -35,13 +35,13 @@
 
 ### 🤖 AI 的成果可能不完全正確
 
-上週的範例 Repository 其實有個小問題，由於 Shell Script 是給`每個 Skill` 個別建立 symlink，而不是給 `skills 資料夾`建立 symlink。
+[上週的範例 Repository](https://github.com/deancourse/user-dot-agents) 其實有個小問題，由於 Shell Script 是給`每個 Skill` 個別建立 symlink，而不是給 `skills 資料夾`建立 symlink。
 
 因此會有如下問題：
 1. 在`user-dot-agents`底下建立的 Skill，需要**執行 Script 才會同步**到 User 層級的`~/.claude/skills`中
 2. 當 Skill 新增到 User 層級的`~/.claude/skills`時，`user-dot-agents`下的 Skill **不會自動更新**
 
-```prompt [label="修復問題"]
+```prompt [label="我修復問題的指令"]
 目前的 script 好像不是直接同步 skills 資料夾，而是根據下面資料夾同步，這樣我新增 skill 時，不會自動建立軟連結，請協助修改
 ```
 
@@ -64,13 +64,8 @@
 > **這個 Repository 可以放在電腦的任何位置**
 > 我們是透過`symlink`來建立**資料夾、檔案**之間的軟連結，因此專案放在任何位置皆可。
 > 重要的是變更時記得`commit`與`push`來更新，並且更新後其他台電腦要`pull`下載更新。
-> 如果害怕**忘記這些操作**，可以跟 AI 討論設計 `Shell Script`，設計概念如下：
-> - 登入電腦後，自動拉取最新檔案（若有衝突會引導使用者進入專案處理）
-> - 每 30 分檢查是否有變更
-> - 有變更才需要執行 commit 與 push
-> - commit 訊息可以使用「auto sync user agents: YYYY-MM-DD HH:mm:ss」
 
-## 在隔離環境（Sandbox）執行 Claude Code
+## 搭配 Agent Skills 開發全端專案
 
 ### 🐳 安裝 Docker
 
@@ -81,44 +76,6 @@
 > **安裝完成後，記得啟動 Docker Desktop**
 > Docker 安裝完並不會自動啟動。請在應用程式中找到 Docker Desktop 並打開，**註冊相關步驟都可以直接 Skip**，看到左下角顯示綠色的 Running 狀態，才代表 Docker 已經準備好了。
 > 也可以在終端機執行 `docker --version` 來確認有安裝成功。
-
-### 🏝️ 在隔離環境執行 Claude Code
-
-#### 下載 Dev Containers
-
-在 IDE 的 Extensions 搜尋「Dev Containers」 並安裝。
-
-![安裝 Dev Containers 外掛](./assets/dev-containers.png)
-
-#### 下載測試範例，啟動 Sanbox
-
-可以下載[練習用的 GitHub Repository](https://github.com/deancourse/claude-code-docker-container-demo)體驗。
-
-![GitHub 專案可以直接下載體驗](./assets/claude-code-docker-container-demo.png)
-
-開啟後，輸入「F1」貼上 `Dev Containers: Reopen in Container`
-
-![啟動完成後，左下角就會顯示 Claude Code Sandbox](./assets/success-sandbox.png)
-
-> **如果啟動失敗**
-> 可以嘗試`關掉後重啟`，如果還是不行，將錯誤訊息貼到 Claude Code 進行分析。
-> Windows 可以嘗試 `wsl --update` 更新到新版。
-
-#### 確認讀取不到外部資訊，在隔離環境運作
-
-在終端機輸入 `claude`，第一次需要登入帳號。
-
-目前這個是完全獨立的環境，所以過去 `User Scope 的相關設定都不會出現`（ex: Skills、Rules、Plugins、Perminssions）。
-
-![會是一個乾淨的 Claude 原廠設定](./assets/init-claude-setting.png)
-
-隔離環境可以透過 `claude --dangerously-skip-permissions` 啟動，這時給 Claude 任務時，**除了會跟你釐清細節外，執行過程不會再詢問權限相關問題**。
-
-```prompt [label="讀取外部資料"]
-幫我列出桌面有哪些檔案
-```
-
-![確認無法聯繫到外部資源後，再讓 AI 放手執行](./assets/cannot-access-external-resouce.png)
 
 ### 🎯 用 OpenSpec 規格驅動開發（SDD）
 
@@ -189,7 +146,7 @@ with details about my project, tech stack, and conventions
 
 ![openspec/config.yaml 讓規劃時負擔更輕](./assets/openspec-config-yaml.png)
 
-> **legacy（既有）專案**
+> **Legacy（既有）專案**
 > 如果想在舊專案`導入 Claude Code、OpenSpec`，執行完上面的指令後，AI 執行的品質會好很多。
 
 ### 🛡️ 讓 AI 犯錯時被擋下
@@ -270,7 +227,7 @@ npm run seed:mock             # 選用：塞 30 員工 + 50 車輛模擬資料�
 > **小提醒**
 > 如果 `Docker Conatiner 啟動失敗`的問題，通常原因如下：
 > 1. 若出現**指令錯誤**，可能是因為 Docker 版本較舊，建議升級，或是改用 `docker-compose up -d` 啟動
-> 2. 若`卡在 Starting 狀態`，通常是因為有`port 衝突`，可以到 Docker Desktop 查看。
+> 2. 若`卡在 Starting 狀態`，通常是因為有`port 衝突`，可以到 Docker Desktop 查看）。
 
 ```terminal [label="啟動專案"]
 npm run dev
@@ -313,6 +270,15 @@ npm run test
 
 > 不是要 AI「不要動資料庫」，而是`給它一個動了也沒關係的資料庫`。
 
+### 🚀 切換到 develop 開發分支
+
+這堂課我們會遵循 `Git Flow`，所以要先切換到開發分支。
+
+```terminal [label="執行測試"]
+git checkout -b develop
+git push --set-upstream origin develop
+```
+
 ### 🛠️ 兩種方案：MockDB 與 TestDB
 
 > MockDB 是`模擬別人`，TestDB 是`隔離自己`。
@@ -345,17 +311,29 @@ npm run seed:mock   # 選用：塞 30 員工 + 50 車輛模擬資料
 
 #### 驗證結果符合預期
 
-```terminal [label="重啟 PGAdmin 讓測試 DB 也能看見"]
-! docker compose restart pgadmin
-```
-
-然後執行測試指令，確認不會動到原有 DB，並且 [PGAdmin](http://localhost:5050/browser/) 也可看到測試 DB
-
 ```terminal [label="執行測試"]
 npm run test
 ```
 
+然後執行測試指令，確認不會動到原有 DB，並且 [PGAdmin](http://localhost:5050/browser/) 也可看到測試 DB
+
+```terminal [label="重啟 PGAdmin 讓測試 DB 也能看見"]
+! docker compose restart pgadmin
+```
+
 ![到 pgadmin 確認測試 DB 可以檢視](./assets/pgadmin-test-db.png)
+
+### 🦄 Git 版本控制
+
+確認功能符合預期後，接下來`每個新功能`都要如下操作：
+
+[flow]
+1. 建立 Branch — /git-branch-name
+2. 生成 Commit - /git-smart-commit
+3. 推送到 GitHub - 手動點擊「發布 Branch」
+4. 建立 PR 草稿回 develop - /git-pr-description 回 develop
+5. Merge pull request - 把分之合併回 develop
+[/flow]
 
 > **了解 PR 的重要性**
 > 為了讓大家更清楚`專案脈絡`，**每個 branch 都有建立 PR**，這樣回顧調整內容時，會更輕鬆。
@@ -396,7 +374,7 @@ npm run test
 
 #### 確認生成的測試運作正常
 
-![輸入 npm run test 來手動驗證](./assets/npm-run-test.png)
+![輸入「npm run test」來手動驗證](./assets/npm-run-test.png)
 
 > **在實戰過程中，你會持續優化 Agent Skill**
 > 生成測試案例的 Skill，直到講課前我在根據自己的需求`持續優化`。
@@ -409,7 +387,7 @@ npm run test
 - 測試案例會隨規格變更而調整，`不可能一次到位`
 
 > **千萬不要嫌寫測試浪費時間，測試其實是在幫你加速開發。**
-> 現在儘管有 AI 輔助撰寫測試程式，我們還是要仔細檢查 AI 給的測試情境是否合理、有遺漏。
+> 現在儘管有 AI 輔助撰寫測試程式，我們還是要仔細檢查 AI 給的測試情境`是否合理、有遺漏`。
 
 [lab-session title="🛠️  實作練習"]
 - 觸發生成測試的 Skill
@@ -454,10 +432,10 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 把檢查依「速度」排序成關卡，前面的關卡失敗就`直接喊停`，不浪費時間跑後面的：
 
 [flow]
-1. Lint / 格式檢查 — 幾秒鐘，最快發現低級錯誤
-2. 單元測試 — 幾十秒，驗證邏輯正確
-3. 整合測試 / Build — 幾分鐘，驗證整體合得起來
-4. 部署 — 前面全過才執行，確保上線的是好東西
+1. Lint / 格式檢查 — 幾秒鐘內先抓出語法風格、未使用變數、明顯錯誤，最快阻擋低級問題
+2. 單元測試 / 整合測試 — 驗證核心邏輯與模組串接是否正確，時間可能從幾十秒到數分鐘不等
+3. Build — 確認專案真的能被打包成功，例如前端產生靜態檔案，或後端建立 Docker Image
+4. 部署 — 前面檢查都通過後才執行，降低把有問題版本上線的風險
 [/flow]
 
 如果順序倒過來——先花 10 分鐘 Build 完才發現一個分號打錯，那就是在`浪費等待時間`。
@@ -584,7 +562,8 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 
 ```terminal [label="確認專案可以順利啟動"]
 npm install           # lockfile 全量更新，須重裝相依
-npm run db:migrate    # 順帶執行 prisma generate，重建 gitignored 的 generated client
+npm run db:generate --workspace apps/api    # 重建 gitignored 的 generated client
+npm run dev           # 啟動專案
 ```
 
 ![有些套件的更新可能會影像畫面、行為，需要自行確認](./assets/check-update1.png)
@@ -595,6 +574,19 @@ npm run test
 
 ![可以手動測試確認原有邏輯有通過](./assets/check-update2.png)
 
+> **如果你前面拉取了「deancourse/tibame-lesson3」**
+> 此時你合併回 develop，一定會`遇到衝突`
+> 此時你可以請 AI 協助解決遇到的衝突（**非常規做法，只是讓你往下一步前進**）
+> ```
+> 我將分之合併回 develop 時遇到衝突，我想都以這個分支內容為主，幫我處理
+> [貼上 Pull Request 連結]
+> ```
+> 完成後切回 develop 請執行下面指令，確認符合預期
+> ```
+> npm run test
+> npm run dev
+> ```
+
 [pr from="feature/upgrade-major-dependencies" to="develop" title="chore: 升級主要相依至最新版" url="https://github.com/deancourse/tibame-lesson3/pull/4"]
 
 [lab-session title="🛠️  實作練習"]
@@ -603,6 +595,7 @@ npm run test
 - 切換 branch
 - 生成 commit
 - Push 到 GitHub
+- 合併回 develop
 [/lab-session]
 
 ## 設計保護 Branch 的規則
@@ -652,8 +645,12 @@ npm run test
 #### Branch rules
 
 - 把`Require a pull request before merging`這個必須「用 PR 才能合併的選項」打勾。
-- 將`Require status checks to pass`打勾，以及下面的`Require branches to be up to date before merging`」`也打勾，這是在設定「測試必須通過才能合併」。
+- 將`Require status checks to pass`打勾，這代表要「檢查的事項」；以及下面的`Require branches to be up to date before merging`」`也打勾，這是在設定「測試必須通過才能合併」。
 - 點擊`Add Checks`，搜尋 test，然後把他打勾，這就是要檢查的項目。
+
+> **小提醒**
+> 如果前面的操作`涵蓋讓 AI 解決合併回 develop 的衝突`。
+> 搜尋 test 時可能會出現 4 個，`請選擇最後 Actions 使用的 Test`。
 
 ![自動生成的 Test 名稱可能略有不同](./assets/test-check.png)
 
@@ -678,7 +675,7 @@ git checkout -b feature/test-fail-condition
 git add apps/api/src/routes/auth.test.ts
 git commit --no-verify -m "test fail condition"
 git push --set-upstream origin feature/test-fail-condition
-git checkout feature/develop # 最後切回 develop 方便後續操作
+git checkout develop # 最後切回 develop 方便後續操作
 ```
 
 #### STEP 3：建立「Pull request」
