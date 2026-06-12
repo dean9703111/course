@@ -1,0 +1,28 @@
+<style>
+  body { margin: 0; }
+  .url-bar {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;
+    gap: 4px; padding: 12px 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 18px;
+  }
+  .seg { text-align: center; }
+  .seg .chip { padding: 8px 10px; border-radius: 8px; }
+  .seg .name { font-size: 12px; margin-top: 4px; font-family: system-ui, sans-serif; }
+  .protocol .chip { background: #e2e8f0; color: #475569; }
+  .protocol .name { color: #64748b; }
+  .sub .chip { background: #dbeafe; color: #1d4ed8; font-weight: 700; }
+  .sub .name { color: #1d4ed8; }
+  .main .chip { background: #fef3c7; color: #b45309; font-weight: 700; }
+  .main .name { color: #b45309; }
+  .tld .chip { background: #dcfce7; color: #15803d; font-weight: 700; }
+  .tld .name { color: #15803d; }
+  .path .chip { background: #fce7f3; color: #be185d; }
+  .path .name { color: #be185d; }
+</style>
+<div class="url-bar">
+  <div class="seg protocol"><div class="chip">https://</div><div class="name">協定</div></div>
+  <div class="seg sub"><div class="chip">vms</div><div class="name">子網域</div></div>
+  <div class="seg main"><div class="chip">.dean</div><div class="name">主網域</div></div>
+  <div class="seg tld"><div class="chip">.net</div><div class="name">頂級網域</div></div>
+  <div class="seg path"><div class="chip">/login</div><div class="name">路徑</div></div>
+</div>
