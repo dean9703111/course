@@ -401,7 +401,7 @@ npm run test
 > **在實戰過程中，你會持續優化 Agent Skill**
 > 生成測試案例的 Skill，直到講課前我在根據自己的需求`持續優化`。
 
-[pr from="feature/restructure-tests-with-type-groups" to="feature/isolate-api-test-database" title="test: 依測試類型重構登入測試並建立測試案例文件" url="https://github.com/deancourse/tibame-lesson3/pull/2"]
+[pr from="feature/restructure-tests-with-type-groups" to="develop" title="test: 依測試類型重構登入測試並建立測試案例文件" url="https://github.com/deancourse/tibame-lesson3/pull/2"]
 
 ### 💡 實務建議
 - 不要一口氣生成所有情境的測試，`根據情境設計`會更好理解
@@ -473,7 +473,7 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 
 ## 加入 GitHub Action 自動化
 
-### 🔁 設計 GitHub Action 要做的事 | branch:add-github-actions-ci
+### 🔁 設計 GitHub Action 要做的事 | branch:feature/add-github-actions-ci
 
 - 每次推送到 GitHub 都`觸發測試`
 - 先`檢查 Lint`，然後前後端`平行測試`
@@ -507,6 +507,8 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 > 重要邏輯都包含在測試程式內，才是最重要的；有了測試，規格書上的功能才能被真正驗證。
 > **人記不住的，就交給 AI 吧**，[這是第一版 GitHub Action 執行的狀況](https://github.com/deancourse/tibame-lesson3/actions/runs/27251992685) 。
 
+[pr from="feature/add-github-actions-ci" to="develop" title="chore: 新增 GitHub Actions CI 流程與前後端 coverage 設定" url="https://github.com/deancourse/tibame-lesson3/pull/3"]
+
 [lab-session title="🛠️  實作練習"]
 - 加入 GitHub Action 自動化
 - 切換 branch
@@ -521,7 +523,7 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 
 ### 🤔 為什麼套件版本要更新？
 
-- **安全漏洞**：舊版套件的 `CVE 漏洞`是公開資訊，等於告訴駭客「我家的門鎖壞在哪」；許多資安事件的源頭就是`一個沒更新的套件`
+- **安全漏洞**：舊版套件的 `漏洞`是公開資訊，等於告訴駭客「我家的門鎖壞在哪」；許多資安事件的源頭就是`一個沒更新的套件`
 - **Bug 與效能**：你遇到的詭異問題，很可能`新版早就修好了`，不更新等於一直繞路
 - **生態系一直往前走**：Node.js、框架、周邊套件彼此牽動，`拖越久落差越大`，最後想升都升不動
 - **越晚升越貴**：小版本一路跟，每次改一點；拖到被迫`一次跳好幾個大版本`，就是把小手術拖成大刀
@@ -554,7 +556,7 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 
 安裝完成後，`Claude 重啟才能找到 context7` 並使用。
 
-```prompt [label="使用 contenxt7"]
+```prompt [label="使用 contenxt7 檢查套件版本並協助升級"]
 使用 contenxt7 檢查專案前後端套件版本、以及 GitHub Action 工具，並協助更新到最新版本。
 並確認更新後，自動化測試沒有出現錯誤。
 ```
@@ -566,6 +568,15 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 > 有了 AI 搭配自動化測試，一個指令就能完成大部分苦工。詳細的變更可以[參考這個 PR](https://github.com/deancourse/tibame-lesson3/pull/4)。
 
 ### ✅ 驗證更新後的內容符合預期
+
+> **經驗分享**
+> 根據過去經驗，這類`升級作業`，AI 大約需要`花費 30~50 分鐘左右`（過去讓人類來搞，時間單位都是以「週」起跳的）。
+> 如果練習想`跳過「升級重構」這段`，可以用下面方案，這樣有需要時，後續可以用 git switch [branch] 切換練習分支
+> ```
+> git remote add upstream git@github.com:deancourse/tibame-lesson3.git
+> git fetch upstream
+> git switch feature/upgrade-major-dependencies
+> ```
 
 就算基礎的測試全都通過，還是建議大家要`親手跑一次流程`。
 
@@ -582,6 +593,8 @@ npm run test
 ```
 
 ![可以手動測試確認原有邏輯有通過](./assets/check-update2.png)
+
+[pr from="feature/upgrade-major-dependencies" to="develop" title="chore: 新增 GitHub Actions CI 流程與前後端 coverage 設定" url="https://github.com/deancourse/tibame-lesson3/pull/3"]
 
 [lab-session title="🛠️  實作練習"]
 - 更新專案套件版本、GitHub Action 使用工具
