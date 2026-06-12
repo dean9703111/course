@@ -1112,15 +1112,15 @@ Zeabur 使用這個伺服器 [伺服器 id]
 > 但使用什麼伺服器，我個人建議還是`自己選擇會更好`。
 > 另外第一次部署大約`會需要 15~30 分鐘`，中間 Zeabur 會遇到各式各樣的錯誤，然後想辦法自己解決。
 
-![在儀表板確認 Zeabur 成功完成部署](./assets/zeabur-dahboard-deployed.png)
+![在儀表板確認 Zeabur 成功完成部署](./assets/zeabur-dahboard-load.png)
 
 ### ✅ 驗證部署是否成功
 
-![登入頁可以渲染](./assets/zeabur-dahboard-load.png)
+![登入頁可以渲染](./assets/zeabur-dahboard-login.png)
 
 > **範例專案的管理者帳密僅為練習用，登入後記得調整密碼**
 
-![管理者可以登入](./assets/zeabur-dahboard-login.png)
+![管理者可以登入，資料為空是符合預期的](./assets/zeabur-dahboard-page.png)
 
 > **小提醒**
 > 目前的免費方案，是`無法在線上看到資料庫內容`的，如果想看到就需要拿出魔法小卡，升級到 Dev 級別。
