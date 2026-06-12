@@ -569,6 +569,8 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 
 ### ✅ 驗證更新後的內容符合預期
 
+![重構與升級需要較長的時間](./assets/refactor-upgrade-long-time.png)
+
 > **經驗分享**
 > 根據過去經驗，這類`升級作業`，AI 大約需要`花費 30~50 分鐘左右`（過去讓人類來搞，時間單位都是以「週」起跳的）。
 > 如果練習想`跳過「升級重構」這段`，可以用下面方案，這樣有需要時，後續可以用 git switch [branch] 切換練習分支
@@ -581,9 +583,8 @@ CI/CD 的價值不是「做得比人好」，而是**它永遠不會忘記、不
 就算基礎的測試全都通過，還是建議大家要`親手跑一次流程`。
 
 ```terminal [label="確認專案可以順利啟動"]
-npm install  # lockfile 大改（React 19、Express 5、Prisma 7…），必須重裝
-npm run db:generate --workspace apps/api   # 產生 Prisma client 到 src/generated/（不進版控）
-npm run dev
+npm install           # lockfile 全量更新，須重裝相依
+npm run db:migrate    # 順帶執行 prisma generate，重建 gitignored 的 generated client
 ```
 
 ![有些套件的更新可能會影像畫面、行為，需要自行確認](./assets/check-update1.png)
@@ -594,7 +595,7 @@ npm run test
 
 ![可以手動測試確認原有邏輯有通過](./assets/check-update2.png)
 
-[pr from="feature/upgrade-major-dependencies" to="develop" title="chore: 新增 GitHub Actions CI 流程與前後端 coverage 設定" url="https://github.com/deancourse/tibame-lesson3/pull/3"]
+[pr from="feature/upgrade-major-dependencies" to="develop" title="chore: 升級主要相依至最新版" url="https://github.com/deancourse/tibame-lesson3/pull/4"]
 
 [lab-session title="🛠️  實作練習"]
 - 更新專案套件版本、GitHub Action 使用工具
@@ -638,13 +639,13 @@ npm run test
 
 ![選擇 Settings ⭢ 選擇 Branches 下面的「Add branch ruleset」](./assets/branch-rule.png)
 
-- name 的部分你可以輸入「Protect main/develop branch」
-- 「Enforcement status」切換到 Active 才會生效
+- **Ruleset Name**：可以輸入`Protect main/develop branch`
+- **Enforcement status**：切換到 `Active` 才會生效
 
 ![name 可以自由定義，但 Status 記得切到 Active](./assets/branch-rule2.png)
 
-- Target branch 需要**分兩次**加入，選擇「Add target ⭢ Include by pattern」
-- 先輸入 `main` 按 Add，再輸入 `develop` 按 Add（不能用逗號寫在同一筆，否則 Applies to 0 targets）
+- **Target branch**：需要**分兩次**加入，選擇「Add target ⭢ Include by pattern」
+- 先輸入 `main` 按 Add，再輸入 `develop` 按 Add
 
 ![Target branch 輸入要保護的 branches](./assets/protect-branches.png)
 
@@ -677,19 +678,21 @@ git checkout -b feature/test-fail-condition
 git add apps/api/src/routes/auth.test.ts
 git commit --no-verify -m "test fail condition"
 git push --set-upstream origin feature/test-fail-condition
-git checkout feature/upgrade-major-dependencies // 最後切回來上一個分支避免後續錯誤
+git checkout feature/develop # 最後切回 develop 方便後續操作
 ```
 
 #### STEP 3：建立「Pull request」
 
-確認合併目標為「develop」時是否會無法合併，參考[範例 PR](https://github.com/deancourse/tibame-lesson3/pull/6)。
+確認合併目標為「develop」時是否會無法合併。
+
+[pr from="feature/test-fail-condition" to="develop" title="test fail condition" url="https://github.com/deancourse/tibame-lesson3/pull/5"]
 
 ![測試不過時，Merge pull request 無法點擊](./assets/merge-disable.png)
 
 [lab-session title="🛠️  實作練習"]
 - 確認目前為 Public Repo
 - 設計保護 Branch 的規則
-- 故意把測試案例弄失敗後更新到雲端
+- 故意把測試案例弄失敗後更新到 GitHub
 - 確認合併目標為「develop」時會無法合併
 [/lab-session]
 
@@ -699,7 +702,7 @@ git checkout feature/upgrade-major-dependencies // 最後切回來上一個分�
 
 ## 當專案有多個分支同時進行
 
-### 😵 先看沒有 Worktree 時的日常 | branch:feature/upgrade-major-dependencies
+### 😵 先看沒有 Worktree 時的日常 | branch:feature/develop
 
 你正在 `feature/A-function` 分支寫新功能，寫到一半：
 
@@ -780,10 +783,20 @@ cp .env.example .env
 pnpm run dev
 ```
 
-![如果啟動失敗，多半是後端 API Port 衝突導致](./assets/worktree-pnpm3.png)
+![如果啟動失敗，多半是後端 API Port 衝突導致(原本有開的要先關閉)](./assets/worktree-pnpm3.png)
 
 > **向前相容的重要性**
 > 雖然 pnpm 很好用，但也要考量到`並非所有人都使用`；且導入新功能，建議以最`小影響範圍來導入`。
+
+[pr from="feature/pnpm-demo" to="develop" title="chore: 新增 pnpm 安裝支援（npm / pnpm 雙 lockfile 並行）" url="https://github.com/deancourse/tibame-lesson3/pull/6"]
+
+### ✅ 任務完成後移除 Worktree
+
+儘管 pnpm 可以透過`共用套件節省硬碟空間`，但專案`本身的文件`也是很佔硬碟空間的。
+
+成熟的系統，拋開套件不算，可能`光程式檔案就要上百 MB`；而**一個人手上可能有數個系統，每個系統又有多個 Worktree 工作區**，這樣硬碟容易遇到瓶頸。
+
+![Worktree 要找時間移除](./assets/remove-worktree.png)
 
 [lab-session title="🛠️  實作練習"]
 - 建立一個新的 Worktree 工作區（建議使用 Git Worktree Manager）
@@ -804,7 +817,7 @@ pnpm run dev
 > 網頁用 `F12 → Network` 只能看到「前端打的 API」。
 > 真正要驗證後端，需要一個能`主動發出 Request`、能`重複執行`、能`模擬不同身份`的工具。
 
-### 🤔 只靠瀏覽器測 API 的三個痛點 | branch:feature/upgrade-major-dependencies
+### 🤔 只靠瀏覽器測 API 的三個痛點 | branch:develop
 
 - **被動**：F12 只看得到前端`觸發`的請求（Request），但實務上有`很多 API 不會在網頁顯示`（ex: 第三方 API）。
 - **難重現**：想測「缺欄位、沒權限、Token 過期」這些`錯誤情境`，瀏覽器很難實現。
@@ -965,15 +978,15 @@ AI 建好後，回到 Postman `親手執行`來確認後端回應符合預期。
 # 部署上線：用 Docker 打包，透過 Zeabur 部署上線
 
 > **能在 localhost 跑，不等於能上線**
-> 產品要讓別人使用，建議先`打包成標準化的 Docker image`，再`部署到雲端`。
+> 產品要讓別人使用，建議先用 Dockerfile `定義標準化的打包方式`，再`部署到雲端`。
 
-## 用 Docker 把專案打包成 image
+## 用 Dockerfile 定義專案的打包方式
 
-### 🐳 為什麼要先做出 image？
+### 🐳 為什麼要先寫好 Dockerfile？
 
-- **環境一致**：image 把 `Node 版本、套件、設定`通通寫在裡面，避免發生「在我電腦可以跑」的窘境
-- **一次打包、到處執行**：本地 build 出來的 image，Zeabur 拿去跑`結果一模一樣`
-- **可重現**：每次部署都是`同一份基底`，出問題容易回溯是`程式還是環境`
+- **環境一致**：Dockerfile 把 `Node 版本、套件、設定`通通寫成明確步驟，避免發生「在我電腦可以跑」的窘境
+- **一次設計、到處建置**：同一份 Dockerfile，`本地與雲端 build 出來的 image 一模一樣`，Zeabur 拿去就能照著建
+- **可重現**：每次部署都從`同一份設計圖`建出來，出問題容易回溯是`程式還是環境`
 
 ### 📝 請 AI 寫 Dockerfile | branch:feature/add-docker-production-setup
 
@@ -994,7 +1007,7 @@ AI 建好後，回到 Postman `親手執行`來確認後端回應符合預期。
 
 ![AI 依專案結構產生的 Dockerfile](./assets/dockerfile-generated.png)
 
-![設計模擬正式環境啟動的檔案 docker-compose-prod.yml](./assets/dockerfile-generated.png)
+![設計模擬正式環境啟動的檔案 docker-compose-prod.yml](./assets/docker-compose-generated.png)
 
 ### 🔨 本地 build 並跑起來驗證
 
