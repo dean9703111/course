@@ -201,6 +201,8 @@ claude
 
 ![輸入「/login」登入帳號](./assets/ide-claude-login.png)
 
+## Claude Code 安全設定
+
 ### 🛡️ 調整隱私設定
 
 Help improve Claude 默認為 `true`，請調整為 `false`。
