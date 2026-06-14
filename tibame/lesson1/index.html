@@ -2015,6 +2015,185 @@
       opacity: 1
     }
 
+    /* ===== PR CARD (merge A → B) ===== */
+    .pr-card {
+      --pr-color: var(--branch-feature);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.25rem 0;
+      padding: 1rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--pr-color);
+      border-radius: var(--radius);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform .18s, box-shadow .18s, border-color .18s;
+    }
+
+    .pr-card--merged {
+      --pr-color: var(--branch-feature)
+    }
+
+    .pr-card--open {
+      --pr-color: var(--branch-main)
+    }
+
+    .pr-card--draft {
+      --pr-color: var(--branch-default)
+    }
+
+    .pr-card--closed {
+      --pr-color: var(--branch-hotfix)
+    }
+
+    a.pr-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--pr-color);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .22);
+      color: var(--text);
+    }
+
+    .pr-card__icon {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: var(--pr-color);
+      background: color-mix(in srgb, var(--pr-color) 14%, transparent);
+    }
+
+    .pr-card__main {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+
+    .pr-card__title {
+      font-weight: 700;
+      font-size: 1.02rem;
+      line-height: 1.5;
+    }
+
+    .pr-card__number {
+      margin-left: .45rem;
+      color: var(--text-dim);
+      font-family: ui-monospace, 'SF Mono', 'Menlo', monospace;
+      font-size: .85em;
+      font-weight: 600;
+    }
+
+    .pr-card__route {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+
+    .pr-card__arrow {
+      flex: 0 0 auto;
+      color: var(--text-dim);
+    }
+
+    .pr-chip {
+      padding: .16rem .55rem;
+      border-radius: 6px;
+      font-family: ui-monospace, 'SF Mono', 'Menlo', monospace;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .01em;
+      white-space: nowrap;
+      color: var(--chip-color, var(--branch-default));
+      background: color-mix(in srgb, var(--chip-color, var(--branch-default)) 15%, transparent);
+    }
+
+    .pr-chip--main {
+      --chip-color: var(--branch-main)
+    }
+
+    .pr-chip--develop {
+      --chip-color: var(--branch-develop)
+    }
+
+    .pr-chip--feature {
+      --chip-color: var(--branch-feature)
+    }
+
+    .pr-chip--release {
+      --chip-color: var(--branch-release)
+    }
+
+    .pr-chip--hotfix {
+      --chip-color: var(--branch-hotfix)
+    }
+
+    .pr-chip--default {
+      --chip-color: var(--branch-default)
+    }
+
+    .pr-card__desc {
+      font-size: .85rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    .pr-card__meta {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: .45rem;
+    }
+
+    .pr-status {
+      padding: .18rem .65rem;
+      border-radius: 999px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: #fff;
+      background: var(--pr-color);
+    }
+
+    .pr-card__ext {
+      color: var(--text-dim);
+      opacity: 0;
+      transform: translate(-2px, 2px);
+      transition: opacity .18s, transform .18s;
+    }
+
+    a.pr-card:hover .pr-card__ext {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 640px) {
+      .pr-card {
+        align-items: flex-start;
+        gap: .75rem;
+        padding: .9rem 1rem;
+      }
+
+      .pr-card__icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .pr-card__meta {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .pr-card__ext {
+        display: none;
+      }
+    }
+
     /* ===== SIDEBAR BRAND (TOP) ===== */
     .sidebar-brand {
       padding: .75rem 1.5rem 1rem;
@@ -5790,6 +5969,7 @@ pip --version</div>
       <div class="group-header"><span class="icon">🚫</span> 禁止 Claude 使用危險指令</div>
       <div class="group-body">
         <p>AI 執行的指令是無法完全預期的，為了減少損失，可以透過設定來阻止危險操作。</p>
+        <h4 class="minor-title">Mac / Linux 系統</h4>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
@@ -5807,6 +5987,26 @@ pip --version</div>
 - Git 不可逆操作：reset --hard, push --force, push -f, clean -f, branch -D
 - 系統關機/重開：shutdown, reboot
 - 檔案清空：: &gt;, truncate
+完成後給我看設定檔</div>
+    </div>
+        <h4 class="minor-title">Windows 系統</h4>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">要求修改設定</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">我希望 Claude 在默認的 settings 禁止下面的指令（其他原有設定要保留）：
+- 刪除：Remove-Item -Recurse -Force, Remove-Item -Force, rm -r -Force, rd /s /q, del /f /q
+- 最高權限：Start-Process -Verb RunAs
+- 磁碟破壞：Format-Volume, Clear-Disk, format, diskpart
+- 權限濫用：icacls /grant Everyone:F, takeown /f
+- Git 不可逆操作：reset --hard, push --force, push -f, clean -f, branch -D
+- 系統關機/重開：Stop-Computer, Restart-Computer, shutdown /s, shutdown /r
+- 檔案清空：Clear-Content, Set-Content -Value $null
 完成後給我看設定檔</div>
     </div>
         <figure class="content-image">
@@ -8150,7 +8350,9 @@ cd tibame-lesson1</div>
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🔮</span> 下一堂預告：規格驅動開發（SDD）</div>
       <div class="group-body">
-        <p>> 一句話 AI 就能生成有前端、後端、資料庫的系統，但...<strong>你敢直接交付給客戶嗎？</strong></p>
+        <div class="insight">
+      <p>一句話 AI 就能生成有前端、後端、資料庫的系統，但...<strong>你敢直接交付給客戶嗎？</strong></p>
+    </div>
         <ul class="loose-list">
       <li>🚨 <strong>不要讓 AI 的「快」，變成未來的「債」</strong> — 沒有規格，今天省下的時間明天會用 bug 還回來</li>
       <li>📐 用 <strong>OpenSpec</strong> 讓 AI 照規格做事，從 0 到 1 建系統、從 1 到 100 做迭代</li>
@@ -8366,6 +8568,24 @@ cd tibame-lesson1</div>
       }
     });
 
+    // 出現在 TOC 的 ## 子連結 id（依文件順序）。任一 anchor（含 ###／#### 更深層）→ 其所屬的 ## 子連結，
+    // 使捲到 ## 之後的內層標題時，該 ## 子連結持續保持 active，直到下一個 ## 為止。
+    var subAnchorIds = Array.prototype.slice.call(document.querySelectorAll('.toc-sub a'))
+      .map(function (a) { return a.getAttribute('href').replace('#', ''); });
+    var subForAnchor = {};
+    allAnchorIds.forEach(function (id) {
+      if (sectionIds.includes(id)) return;            // 章節標題本身（##↑ 的 #）不對應任何 ## 子連結
+      if (subAnchorIds.includes(id)) { subForAnchor[id] = id; return; }
+      var idIdx = allAnchorIds.indexOf(id);
+      for (var i = subAnchorIds.length - 1; i >= 0; i--) {
+        // 往前找最近、且與自己同屬一個章節的 ## 子連結（避免回填到上一章節的子連結）
+        if (allAnchorIds.indexOf(subAnchorIds[i]) <= idIdx &&
+            sectionForAnchor[subAnchorIds[i]] === sectionForAnchor[id]) {
+          subForAnchor[id] = subAnchorIds[i]; break;
+        }
+      }
+    });
+
     // ── Branch rail（內容區左側 git graph；absolute 文檔流，隨內容捲動不晃）──
     var branchLineEl = document.getElementById('branch-line');
     var branchTip = document.getElementById('branch-tip');
@@ -8496,9 +8716,10 @@ cd tibame-lesson1</div>
         g.classList.toggle('expanded', isActive);
         g.querySelector('.toc-group-title').classList.toggle('active', isActive);
       });
+      var activeSub = subForAnchor[activeAnchor];
       document.querySelectorAll('.toc-sub a').forEach(function (a) {
         var href = a.getAttribute('href').replace('#', '');
-        a.classList.toggle('active', href === activeAnchor);
+        a.classList.toggle('active', href === activeSub);
       });
       var docH = document.documentElement.scrollHeight - window.innerHeight;
       var pct = docH > 0 ? Math.round((window.scrollY / docH) * 100) : 0;

@@ -215,6 +215,8 @@ Help improve Claude 默認為 `true`，請調整為 `false`。
 
 AI 執行的指令是無法完全預期的，為了減少損失，可以透過設定來阻止危險操作。
 
+#### Mac / Linux 系統
+
 ```prompt [label="要求修改設定"]
 我希望 Claude 在默認的 settings 禁止下面的指令（其他原有設定要保留）：
 - 刪除：rm -rf, rm -fr, rm -r, rm -R, rm -f
@@ -224,6 +226,20 @@ AI 執行的指令是無法完全預期的，為了減少損失，可以透過�
 - Git 不可逆操作：reset --hard, push --force, push -f, clean -f, branch -D
 - 系統關機/重開：shutdown, reboot
 - 檔案清空：: >, truncate
+完成後給我看設定檔
+```
+
+#### Windows 系統
+
+```prompt [label="要求修改設定"]
+我希望 Claude 在默認的 settings 禁止下面的指令（其他原有設定要保留）：
+- 刪除：Remove-Item -Recurse -Force, Remove-Item -Force, rm -r -Force, rd /s /q, del /f /q
+- 最高權限：Start-Process -Verb RunAs
+- 磁碟破壞：Format-Volume, Clear-Disk, format, diskpart
+- 權限濫用：icacls /grant Everyone:F, takeown /f
+- Git 不可逆操作：reset --hard, push --force, push -f, clean -f, branch -D
+- 系統關機/重開：Stop-Computer, Restart-Computer, shutdown /s, shutdown /r
+- 檔案清空：Clear-Content, Set-Content -Value $null
 完成後給我看設定檔
 ```
 
