@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenSpec 流程與資料夾結構</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #5c5c5c;
+    --border: #e8e4df;
+    --highlight: #fff8e1;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --radius: 10px;
+    --line-color: #d5cfc7;
+
+    /* stage accents */
+    --c-start:   #2c7a7b;
+    --c-prop:    #6c5ce7;
+    --c-new:     #1f8a5b;
+    --c-old:     #2d6fb8;
+    --c-design:  #2d6fb8;
+    --c-tasks:   #b1442b;
+    --c-impl:    #6b7280;
+    --c-archive: #3f7a2e;
+    --c-sot:     #2c7a7b;
+
+    --folder: #e67e22;
+    --file-md: #8e44ad;
+    --file-sot: #1f8a5b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 24px 16px 24px;
+    max-width: 980px;
+    margin: 0 auto;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-x: hidden; /* 防止任何子元素造成整頁橫向捲動 */
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.86rem;
+    margin-bottom: 20px;
+  }
+  .hint {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-bottom: 22px;
+  }
+  .hint b { color: var(--c-prop); }
+
+  /* ===== layout ===== */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  @media (max-width: 760px) {
+    body { padding: 18px 12px 24px; }
+    .layout { grid-template-columns: 1fr; gap: 16px; }
+  }
+
+  .panel-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-left: 4px;
+  }
+
+  /* ===== flow column ===== */
+  .flow { display: flex; flex-direction: column; align-items: stretch; }
+
+  .step {
+    position: relative;
+    border-radius: var(--radius);
+    padding: 11px 14px;
+    cursor: pointer;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+    border-left-width: 4px;
+  }
+  .step:hover { transform: translateX(2px); }
+  .step.active {
+    box-shadow: 0 4px 18px rgba(0,0,0,0.14);
+    transform: translateX(2px);
+  }
+  .step .st-head { display: flex; align-items: center; gap: 8px; }
+  .step .badge {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step .title { font-weight: 700; font-size: 0.92rem; }
+  .step .title code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+  .step .sub {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    margin-top: 3px;
+    padding-left: 30px;
+    line-height: 1.5;
+  }
+
+  /* connector arrow */
+  .arrow {
+    align-self: center;
+    color: var(--line-color);
+    font-size: 1rem;
+    line-height: 1;
+    margin: 5px 0;
+  }
+
+  /* color binding per step */
+  .step[data-c="start"]   { border-left-color: var(--c-start); }
+  .step[data-c="start"]   .badge { background: var(--c-start); }
+  .step[data-c="prop"]    { border-left-color: var(--c-prop); }
+  .step[data-c="prop"]    .badge { background: var(--c-prop); }
+  .step[data-c="delta"]   { border-left-color: var(--c-new); }
+  .step[data-c="delta"]   .badge { background: var(--c-new); }
+  .step[data-c="design"]  { border-left-color: var(--c-design); }
+  .step[data-c="design"]  .badge { background: var(--c-design); }
+  .step[data-c="tasks"]   { border-left-color: var(--c-tasks); }
+  .step[data-c="tasks"]   .badge { background: var(--c-tasks); }
+  .step[data-c="impl"]    { border-left-color: var(--c-impl); }
+  .step[data-c="impl"]    .badge { background: var(--c-impl); }
+  .step[data-c="archive"] { border-left-color: var(--c-archive); }
+  .step[data-c="archive"] .badge { background: var(--c-archive); }
+  .step[data-c="sot"]     { border-left-color: var(--c-sot); background: linear-gradient(180deg,var(--card),rgba(44,122,123,.06)); }
+  .step[data-c="sot"]     .badge { background: var(--c-sot); }
+
+  .step.active[data-c="start"]   { border-color: var(--c-start); }
+  .step.active[data-c="prop"]    { border-color: var(--c-prop); }
+  .step.active[data-c="delta"]   { border-color: var(--c-new); }
+  .step.active[data-c="design"]  { border-color: var(--c-design); }
+  .step.active[data-c="tasks"]   { border-color: var(--c-tasks); }
+  .step.active[data-c="impl"]    { border-color: var(--c-impl); }
+  .step.active[data-c="archive"] { border-color: var(--c-archive); }
+  .step.active[data-c="sot"]     { border-color: var(--c-sot); }
+
+  /* delta sub-branches */
+  .delta-branches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); /* 窄螢幕自動疊成一欄 */
+    gap: 8px;
+    margin-top: 9px;
+    padding-left: 30px;
+  }
+  .mini {
+    border-radius: 8px;
+    padding: 7px 9px;
+    font-size: 0.7rem;
+    line-height: 1.45;
+  }
+  .mini.new { background: rgba(31,138,91,.1); border:1px solid rgba(31,138,91,.3); }
+  .mini.old { background: rgba(45,111,184,.1); border:1px solid rgba(45,111,184,.3); }
+  .mini b { display:block; margin-bottom:2px; }
+  .mini.new b { color: var(--c-new); }
+  .mini.old b { color: var(--c-old); }
+  .mini code {
+    font-family:'JetBrains Mono',monospace; font-size:0.66rem;
+    display:inline-block; margin:1px 0;
+  }
+  .tag-new code { color: var(--c-new); }
+  .tag-old code { color: var(--c-old); }
+
+  /* loop notes */
+  .loops {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .loop {
+    font-size: 0.78rem;
+    padding: 10px 13px;
+    border-radius: 8px;
+    background: var(--highlight);
+    border-left: 3px solid var(--c-prop);
+    line-height: 1.6;
+  }
+  .loop.fluid { border-left-color: var(--c-design); }
+  .loop.next  { border-left-color: var(--c-archive); }
+  .loop .loop-h { font-weight: 700; margin-bottom: 4px; }
+  .loop .loop-b { color: var(--text-secondary); }
+  .loop .loop-b b { color: var(--text); }
+  .loop .loop-b code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--c-prop);
+  }
+
+  /* ===== tree column ===== */
+  .tree-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 16px 18px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 12px;
+  }
+  .scroll-hint {
+    display: none;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 760px) {
+    .subtitle, .hint { display: none; }  /* 手機精簡：隱藏說明文字 */
+    .tree-wrap { display: none; }        /* 手機不顯示資料夾結構，資訊過多，只保留流程 */
+    body .legend { display: none; }      /* 提高權重，蓋過後方的 .legend 基底樣式 */
+  }
+  .tree { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background .15s, box-shadow .15s;
+    white-space: nowrap;
+  }
+  .row .twig { color: var(--line-color); white-space: pre; }
+  .row .ico { flex-shrink:0; }
+  .row .fname { font-weight: 600; }
+  .row .cmt {
+    font-family:'Noto Sans TC',sans-serif;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 400;
+    margin-left: 4px;
+    white-space: normal;
+  }
+  .row.folder .fname { color: var(--folder); }
+  .row.md .fname { color: var(--file-md); }
+  .row.sot .fname { color: var(--file-sot); }
+
+  .row.hl {
+    background: var(--highlight);
+    box-shadow: inset 0 0 0 1.5px rgba(108,92,231,.55);
+  }
+  .row.hl .cmt { color: var(--text); }
+
+  .sot-zone {
+    margin: 6px 0;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px dashed rgba(31,138,91,.45);
+    background: rgba(31,138,91,.05);
+  }
+  .change-zone {
+    margin: 6px 0;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px dashed rgba(108,92,231,.45);
+    background: rgba(108,92,231,.05);
+  }
+  .zone-tag {
+    font-family:'Noto Sans TC',sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 99px;
+    margin-left: 6px;
+  }
+  .zone-tag.sot { background: rgba(31,138,91,.16); color: var(--c-new); }
+  .zone-tag.chg { background: rgba(108,92,231,.16); color: var(--c-prop); }
+
+  .merge-note {
+    margin-top: 12px;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.6;
+    padding: 9px;
+    background: var(--bg);
+    border-radius: 8px;
+  }
+  .merge-note b { color: var(--c-archive); }
+
+  .legend {
+    display:flex; flex-wrap:wrap; gap:14px; justify-content:center;
+    margin-top:22px; font-size:0.74rem; color:var(--text-secondary);
+  }
+  .legend span { display:flex; align-items:center; gap:5px; }
+  .dotc { width:10px; height:10px; border-radius:3px; display:inline-block; }
+
+  /* ===== DARK MODE ===== */
+  body.dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --text: #e4e4e7;
+    --text-secondary: #9095a6;
+    --border: #2d3148;
+    --highlight: #252a3d;
+    --line-color: #3a3e57;
+    --shadow: 0 2px 12px rgba(0,0,0,0.35);
+    --c-prop: #8b7bf0;
+    --c-new: #34b37a;
+    --c-old: #4d93e0;
+    --c-design: #4d93e0;
+    --c-tasks: #d96a4f;
+    --c-impl: #9aa0b0;
+    --c-archive: #5da646;
+    --c-sot: #3ea6a7;
+    --folder: #f0934a;
+    --file-md: #b07bd0;
+    --file-sot: #34b37a;
+  }
+</style>
+</head>
+<body>
+
+
+<div class="hint">👉 點擊任一步驟，資料夾結構就會 <b>高亮</b> 對應的檔案位置</div>
+
+<div class="layout">
+
+  <!-- ============ FLOW ============ -->
+  <div>
+    <div class="panel-label">流程 Workflow</div>
+    <div class="flow" id="flow">
+
+      <div class="step" data-c="start" data-targets="specs-root">
+        <div class="st-head"><span class="badge">0</span><span class="title">新專案（Greenfield）</span></div>
+        <div class="sub"><code>openspec/specs/</code> 是空的，從零開始。</div>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" data-c="prop" data-targets="proposal">
+        <div class="st-head"><span class="badge">1</span><span class="title"><code>proposal.md</code></span></div>
+        <div class="sub">Why + What：意圖、範圍邊界（人類語言，<b>不談技術</b>）。</div>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" data-c="delta" data-targets="change-specs">
+        <div class="st-head"><span class="badge">2</span><span class="title">delta specs（行為契約）</span></div>
+        <div class="sub">What：把意圖轉成「可驗收的行為」，寫進 <code>changes/&lt;id&gt;/specs/</code>。</div>
+        <div class="delta-branches">
+          <div class="mini new tag-new"><b>新專案</b>全部都是<br><code>## ADDED Requirements</code></div>
+          <div class="mini old tag-old"><b>舊專案</b>delta 四態<br><code>## ADDED</code> <code>## MODIFIED</code> <code>## REMOVED</code> <code>## RENAMED</code></div>
+        </div>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" data-c="design" data-targets="design">
+        <div class="st-head"><span class="badge">3</span><span class="title"><code>design.md</code></span></div>
+        <div class="sub">How：技術選型、架構決策與理由。</div>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" data-c="tasks" data-targets="tasks">
+        <div class="st-head"><span class="badge">4</span><span class="title"><code>tasks.md</code></span></div>
+        <div class="sub">Steps：可逐條打勾的實作清單。</div>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" data-c="impl" data-targets="proposal design tasks change-specs">
+        <div class="st-head"><span class="badge">5</span><span class="title">implement <code>/opsx:apply</code></span></div>
+        <div class="sub">照 tasks 實作，可隨時回頭修改 change 內任何文件。</div>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" data-c="archive" data-targets="archive specs-cap">
+        <div class="st-head"><span class="badge">6</span><span class="title">archive <code>/opsx:archive</code></span></div>
+        <div class="sub">delta 合併進 <code>specs/</code> → Source of Truth 更新，change 移入 <code>archive/</code>。</div>
+      </div>
+      <div class="arrow">↓</div>
+
+      <div class="step" data-c="sot" data-targets="specs-zone">
+        <div class="st-head"><span class="badge">✓</span><span class="title">有 Source of Truth 的專案</span></div>
+        <div class="sub"><code>openspec/specs/</code> 更新完成，從此每一次改動都由此進入下一個 change。</div>
+      </div>
+
+      <div class="loops">
+        <div class="loop fluid">
+          <div class="loop-h">🔄 同一個 change 內：流動式修改，不是「從頭來」</div>
+          <div class="loop-b">在 design / tasks / implement 任何時候發現問題，<b>只回去改受影響的那一份 artifact</b>，其他已完成的不用重做：<br>
+            scope 變 → <code>proposal.md</code>　需求變 → <code>spec.md</code>　技術決策 → <code>design.md</code>　多了工作 → <code>tasks.md</code>。<br>
+            OpenSpec 用 status 個別追蹤每份 artifact 是否 done，只有被牽連的才要重新確認。
+          </div>
+        </div>
+        <div class="loop next">
+          <div class="loop-h">➡️ 完成之後：開「下一個 change」（全新一輪，不是打掉重練）</div>
+          <div class="loop-b">archive 後 SoT 更新完成，下一次修改是一個<b>新的 change folder</b>。<br>
+            改動小 → proposal / design 寫得精簡即可；但仍跑同一套流程，OpenSpec <b>不會讓你跳過 artifact</b>。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TREE ============ -->
+  <div class="tree-wrap">
+    <div class="panel-label tree-label">資料夾結構 openspec/</div>
+    <div class="scroll-hint">← 可左右滑動檢視完整路徑 →</div>
+    <div class="tree">
+
+      <div class="row folder"><span class="twig"></span><span class="ico">📂</span><span class="fname">openspec/</span></div>
+
+      <div class="row" data-id="config"><span class="twig">├─ </span><span class="ico">⚙️</span><span class="fname">config.yaml</span><span class="cmt">schema / context / rules — 給 AI 的專案脈絡與規範</span></div>
+
+      <!-- Source of Truth zone -->
+      <div class="sot-zone">
+        <div class="row sot" data-id="specs-zone specs-root"><span class="twig">├─ </span><span class="ico">📂</span><span class="fname">specs/</span><span class="zone-tag sot">✅ Source of Truth</span></div>
+        <div class="row sot" data-id="specs-zone"><span class="twig">│&nbsp;&nbsp;├─ </span><span class="ico">📄</span><span class="fname">auth/spec.md</span></div>
+        <div class="row sot" data-id="specs-zone"><span class="twig">│&nbsp;&nbsp;├─ </span><span class="ico">📄</span><span class="fname">vehicles/spec.md</span></div>
+        <div class="row sot" data-id="specs-zone specs-cap"><span class="twig">│&nbsp;&nbsp;├─ </span><span class="ico">📄</span><span class="fname">audit-log/spec.md</span><span class="cmt">← archive 後由 delta 併入</span></div>
+        <div class="row" data-id="specs-zone"><span class="twig">│&nbsp;&nbsp;└─ </span><span class="cmt">… 每個 capability 一個資料夾（employees / dashboard / web-shell）</span></div>
+      </div>
+
+      <!-- Change workspace zone -->
+      <div class="change-zone">
+        <div class="row folder" data-id="change-zone"><span class="twig">└─ </span><span class="ico">📂</span><span class="fname">changes/</span><span class="zone-tag chg">🚧 變更工作區</span></div>
+
+        <div class="row folder" data-id="change-zone"><span class="twig">&nbsp;&nbsp;&nbsp;├─ </span><span class="ico">📂</span><span class="fname">2026-05-29-add-audit-log/</span><span class="cmt">進行中的 change（日期-slug）</span></div>
+        <div class="row md" data-id="proposal"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─ </span><span class="ico">①</span><span class="fname">proposal.md</span><span class="cmt">Why + What</span></div>
+        <div class="row folder" data-id="change-specs"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─ </span><span class="ico">②</span><span class="fname">specs/audit-log/spec.md</span></div>
+        <div class="row md" data-id="change-specs"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cmt">delta：ADDED / MODIFIED / REMOVED / RENAMED（可含多個 capability）</span></div>
+        <div class="row md" data-id="design"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─ </span><span class="ico">③</span><span class="fname">design.md</span><span class="cmt">How</span></div>
+        <div class="row md" data-id="tasks"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─ </span><span class="ico">④</span><span class="fname">tasks.md</span><span class="cmt">Steps</span></div>
+        <div class="row" data-id="change-zone"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└─ </span><span class="ico">⚙️</span><span class="fname">.openspec.yaml</span><span class="cmt">schema + created</span></div>
+
+        <div class="row folder" data-id="archive"><span class="twig">&nbsp;&nbsp;&nbsp;└─ </span><span class="ico">📦</span><span class="fname">archive/</span><span class="cmt">⑥ 完成後整包 change 移來這</span></div>
+        <div class="row folder" data-id="archive"><span class="twig">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ </span><span class="ico">📂</span><span class="fname">2026-05-28-add-vehicle-management-system/</span></div>
+        <div class="row" data-id="archive"><span class="twig">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cmt">… proposal / design / tasks / specs（多個 capability）</span></div>
+      </div>
+
+      <div class="merge-note">
+        ⑥ <b>archive</b> 同時做兩件事：把整包 change 移進 <code style="font-family:'JetBrains Mono'">changes/archive/</code>，<br>
+        並把它 <code style="font-family:'JetBrains Mono'">specs/</code> 的 delta <b>合併</b>進根目錄 <code style="font-family:'JetBrains Mono'">specs/</code>，讓 Source of Truth 永遠反映「現況」。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="dotc" style="background:var(--c-new)"></span> specs/ = 現況（已實作）</span>
+  <span><span class="dotc" style="background:var(--c-prop)"></span> changes/ = 提案（草稿/進行中）</span>
+  <span><span class="dotc" style="background:var(--folder)"></span> 📂 資料夾</span>
+</div>
+
+<script>
+  const steps = Array.from(document.querySelectorAll('.step'));
+  const rows  = Array.from(document.querySelectorAll('.row[data-id]'));
+
+  function clearHL(){ rows.forEach(r => r.classList.remove('hl')); }
+
+  function activate(step){
+    steps.forEach(s => s.classList.remove('active'));
+    step.classList.add('active');
+    clearHL();
+    const targets = (step.dataset.targets || '').split(/\s+/).filter(Boolean);
+    rows.forEach(r => {
+      const ids = (r.dataset.id || '').split(/\s+/);
+      if (targets.some(t => ids.includes(t))) r.classList.add('hl');
+    });
+  }
+
+  steps.forEach(s => s.addEventListener('click', () => activate(s)));
+  // default: highlight proposal step
+  activate(steps[1]);
+
+  // ===== THEME SYNC (matches sibling reference pages) =====
+  function applyTheme() {
+    try {
+      var parentTheme = window.parent.document.documentElement.getAttribute('data-theme');
+      document.body.classList.toggle('dark', parentTheme !== 'light');
+    } catch(e) {
+      document.body.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+  }
+  applyTheme();
+  try {
+    new MutationObserver(applyTheme).observe(
+      window.parent.document.documentElement,
+      { attributes: true, attributeFilter: ['data-theme'] }
+    );
+  } catch(e) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+  }
+</script>
+</body>
+</html>

@@ -1244,6 +1244,10 @@ PR 是決定專案品質的重要環節，因為他是讓團隊成員 Code Revie
 - **Agent Skills** — 將過去解決過的問題設計成 SOP，並持續優化細節
 - **OpenSpec** — 將規格文件版本化，新成員、AI 都有文件可以參考，不怕知識斷層
 
+## OpenSpec 架構流程圖
+
+[html src="./html/openspec-flow.html"]
+
 ## 建立公司、團隊、專案、個人的 Agent Skills
 
 | 層級 | 說明 | 範例 |
