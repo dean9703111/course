@@ -245,26 +245,34 @@
     .tree-wrap { display: none; }        /* 手機不顯示資料夾結構，資訊過多，只保留流程 */
     body .legend { display: none; }      /* 提高權重，蓋過後方的 .legend 基底樣式 */
   }
-  .tree { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
-  .row {
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: background .15s, box-shadow .15s;
-    white-space: nowrap;
+  .tree { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.5; }
+  .tree ul { list-style: none; margin: 0; padding-left: 20px; position: relative; }
+  .tree > ul.tree-root { padding-left: 0; }
+  .tree li { position: relative; }
+
+  /* ===== continuous CSS guide lines（取代文字框線，不留斷點）===== */
+  .tree ul:not(.tree-root) > li::before {        /* 垂直主幹：滿高 → 與相鄰列相連 */
+    content: ''; position: absolute; left: -12px; top: 0; bottom: 0;
+    border-left: 1.5px solid var(--line-color);
   }
-  .row .twig { color: var(--line-color); white-space: pre; }
-  .row .ico { flex-shrink:0; }
-  .row .fname { font-weight: 600; }
+  .tree ul:not(.tree-root) > li:last-child::before { bottom: auto; height: 20px; } /* 末項收成 └ */
+  .tree ul:not(.tree-root) > li::after {         /* 水平分支 */
+    content: ''; position: absolute; left: -12px; top: 20px; width: 11px;
+    border-top: 1.5px solid var(--line-color);
+  }
+  .tree-root > li::before, .tree-root > li::after { content: none; } /* 根目錄無連線 */
+
+  .row {
+    display: flex; align-items: flex-start; gap: 6px;
+    padding: 10px 6px; border-radius: 6px;   /* 上下加大，整體間距約 2 倍 */
+    transition: background .15s, box-shadow .15s;
+  }
+  .row .ico { flex-shrink: 0; }
+  .row .fname { font-weight: 600; white-space: nowrap; }
   .row .cmt {
-    font-family:'Noto Sans TC',sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
     color: var(--text-secondary);
-    font-size: 0.72rem;
-    font-weight: 400;
-    margin-left: 4px;
-    white-space: normal;
+    font-size: 0.72rem; font-weight: 400; margin-left: 4px;
   }
   .row.folder .fname { color: var(--folder); }
   .row.md .fname { color: var(--file-md); }
@@ -276,27 +284,14 @@
   }
   .row.hl .cmt { color: var(--text); }
 
-  .sot-zone {
-    margin: 6px 0;
-    padding: 6px 8px;
-    border-radius: 8px;
-    border: 1px dashed rgba(31,138,91,.45);
-    background: rgba(31,138,91,.05);
-  }
-  .change-zone {
-    margin: 6px 0;
-    padding: 6px 8px;
-    border-radius: 8px;
-    border: 1px dashed rgba(108,92,231,.45);
-    background: rgba(108,92,231,.05);
-  }
+  /* 色塊包住「節點 + 其子樹」，內部連線自然連在一起 */
+  .sot-zone, .change-zone { border-radius: 8px; margin: 3px 0; padding: 3px 6px 5px; }
+  .sot-zone { border: 1px dashed rgba(31,138,91,.45); background: rgba(31,138,91,.05); }
+  .change-zone { border: 1px dashed rgba(108,92,231,.45); background: rgba(108,92,231,.05); }
   .zone-tag {
     font-family:'Noto Sans TC',sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    padding: 1px 8px;
-    border-radius: 99px;
-    margin-left: 6px;
+    font-size: 0.68rem; font-weight: 700;
+    padding: 1px 8px; border-radius: 99px; margin-left: 6px;
   }
   .zone-tag.sot { background: rgba(31,138,91,.16); color: var(--c-new); }
   .zone-tag.chg { background: rgba(108,92,231,.16); color: var(--c-prop); }
@@ -428,38 +423,65 @@
   <!-- ============ TREE ============ -->
   <div class="tree-wrap">
     <div class="panel-label tree-label">資料夾結構 openspec/</div>
-    <div class="scroll-hint">← 可左右滑動檢視完整路徑 →</div>
     <div class="tree">
+      <ul class="tree-root">
+        <li>
+          <div class="row folder"><span class="ico">📂</span><span class="fname">openspec/</span></div>
+          <ul>
+            <li><div class="row" data-id="config"><span class="ico">⚙️</span><span class="fname">config.yaml</span><span class="cmt">schema / context / rules — 給 AI 的專案脈絡與規範</span></div></li>
 
-      <div class="row folder"><span class="twig"></span><span class="ico">📂</span><span class="fname">openspec/</span></div>
+            <!-- Source of Truth zone -->
+            <li class="sot-zone">
+              <div class="row sot" data-id="specs-zone specs-root"><span class="ico">📂</span><span class="fname">specs/</span><span class="zone-tag sot">✅ Source of Truth</span></div>
+              <ul>
+                <li><div class="row sot" data-id="specs-zone"><span class="ico">📄</span><span class="fname">auth/spec.md</span></div></li>
+                <li><div class="row sot" data-id="specs-zone"><span class="ico">📄</span><span class="fname">vehicles/spec.md</span></div></li>
+                <li><div class="row sot" data-id="specs-zone specs-cap"><span class="ico">📄</span><span class="fname">audit-log/spec.md</span><span class="cmt">← archive 後由 delta 併入</span></div></li>
+                <li><div class="row" data-id="specs-zone"><span class="cmt">… 每個 capability 一個資料夾（employees / dashboard / web-shell）</span></div></li>
+              </ul>
+            </li>
 
-      <div class="row" data-id="config"><span class="twig">├─ </span><span class="ico">⚙️</span><span class="fname">config.yaml</span><span class="cmt">schema / context / rules — 給 AI 的專案脈絡與規範</span></div>
-
-      <!-- Source of Truth zone -->
-      <div class="sot-zone">
-        <div class="row sot" data-id="specs-zone specs-root"><span class="twig">├─ </span><span class="ico">📂</span><span class="fname">specs/</span><span class="zone-tag sot">✅ Source of Truth</span></div>
-        <div class="row sot" data-id="specs-zone"><span class="twig">│&nbsp;&nbsp;├─ </span><span class="ico">📄</span><span class="fname">auth/spec.md</span></div>
-        <div class="row sot" data-id="specs-zone"><span class="twig">│&nbsp;&nbsp;├─ </span><span class="ico">📄</span><span class="fname">vehicles/spec.md</span></div>
-        <div class="row sot" data-id="specs-zone specs-cap"><span class="twig">│&nbsp;&nbsp;├─ </span><span class="ico">📄</span><span class="fname">audit-log/spec.md</span><span class="cmt">← archive 後由 delta 併入</span></div>
-        <div class="row" data-id="specs-zone"><span class="twig">│&nbsp;&nbsp;└─ </span><span class="cmt">… 每個 capability 一個資料夾（employees / dashboard / web-shell）</span></div>
-      </div>
-
-      <!-- Change workspace zone -->
-      <div class="change-zone">
-        <div class="row folder" data-id="change-zone"><span class="twig">└─ </span><span class="ico">📂</span><span class="fname">changes/</span><span class="zone-tag chg">🚧 變更工作區</span></div>
-
-        <div class="row folder" data-id="change-zone"><span class="twig">&nbsp;&nbsp;&nbsp;├─ </span><span class="ico">📂</span><span class="fname">2026-05-29-add-audit-log/</span><span class="cmt">進行中的 change（日期-slug）</span></div>
-        <div class="row md" data-id="proposal"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─ </span><span class="ico">①</span><span class="fname">proposal.md</span><span class="cmt">Why + What</span></div>
-        <div class="row folder" data-id="change-specs"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─ </span><span class="ico">②</span><span class="fname">specs/audit-log/spec.md</span></div>
-        <div class="row md" data-id="change-specs"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cmt">delta：ADDED / MODIFIED / REMOVED / RENAMED（可含多個 capability）</span></div>
-        <div class="row md" data-id="design"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─ </span><span class="ico">③</span><span class="fname">design.md</span><span class="cmt">How</span></div>
-        <div class="row md" data-id="tasks"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;├─ </span><span class="ico">④</span><span class="fname">tasks.md</span><span class="cmt">Steps</span></div>
-        <div class="row" data-id="change-zone"><span class="twig">&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└─ </span><span class="ico">⚙️</span><span class="fname">.openspec.yaml</span><span class="cmt">schema + created</span></div>
-
-        <div class="row folder" data-id="archive"><span class="twig">&nbsp;&nbsp;&nbsp;└─ </span><span class="ico">📦</span><span class="fname">archive/</span><span class="cmt">⑥ 完成後整包 change 移來這</span></div>
-        <div class="row folder" data-id="archive"><span class="twig">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ </span><span class="ico">📂</span><span class="fname">2026-05-28-add-vehicle-management-system/</span></div>
-        <div class="row" data-id="archive"><span class="twig">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cmt">… proposal / design / tasks / specs（多個 capability）</span></div>
-      </div>
+            <!-- Change workspace zone -->
+            <li class="change-zone">
+              <div class="row folder" data-id="change-zone"><span class="ico">📂</span><span class="fname">changes/</span><span class="zone-tag chg">🚧 變更工作區</span></div>
+              <ul>
+                <li>
+                  <div class="row folder" data-id="change-zone"><span class="ico">📂</span><span class="fname">2026-05-29-add-audit-log/</span><span class="cmt">進行中的 change（日期-slug）</span></div>
+                  <ul>
+                    <li><div class="row md" data-id="proposal"><span class="ico">①</span><span class="fname">proposal.md</span><span class="cmt">Why + What</span></div></li>
+                    <li><div class="row folder" data-id="change-specs"><span class="ico">②</span><span class="fname">specs/audit-log/spec.md</span><span class="cmt">delta：ADDED / MODIFIED / REMOVED / RENAMED</span></div></li>
+                    <li><div class="row md" data-id="design"><span class="ico">③</span><span class="fname">design.md</span><span class="cmt">How</span></div></li>
+                    <li><div class="row md" data-id="tasks"><span class="ico">④</span><span class="fname">tasks.md</span><span class="cmt">Steps</span></div></li>
+                    <li><div class="row" data-id="change-zone"><span class="ico">⚙️</span><span class="fname">.openspec.yaml</span><span class="cmt">schema + created</span></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="row folder" data-id="archive"><span class="ico">📦</span><span class="fname">archive/</span><span class="cmt">⑥ 完成後整包 change 移來這</span></div>
+                  <ul>
+                    <li>
+                      <div class="row folder" data-id="archive"><span class="ico">📂</span><span class="fname">2026-05-28-add-vehicle-management-system/</span></div>
+                      <ul>
+                        <li><div class="row" data-id="archive"><span class="ico">📝</span><span class="fname">proposal.md</span></div></li>
+                        <li><div class="row" data-id="archive"><span class="ico">📝</span><span class="fname">design.md</span></div></li>
+                        <li><div class="row" data-id="archive"><span class="ico">📝</span><span class="fname">tasks.md</span></div></li>
+                        <li>
+                          <div class="row folder" data-id="archive"><span class="ico">📂</span><span class="fname">specs/</span></div>
+                          <ul>
+                            <li><div class="row" data-id="archive"><span class="ico">📄</span><span class="fname">auth/spec.md</span></div></li>
+                            <li><div class="row" data-id="archive"><span class="ico">📄</span><span class="fname">vehicles/spec.md</span></div></li>
+                            <li><div class="row" data-id="archive"><span class="cmt">… employees / dashboard</span></div></li>
+                          </ul>
+                        </li>
+                        <li><div class="row" data-id="archive"><span class="ico">⚙️</span><span class="fname">.openspec.yaml</span></div></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
 
       <div class="merge-note">
         ⑥ <b>archive</b> 同時做兩件事：把整包 change 移進 <code style="font-family:'JetBrains Mono'">changes/archive/</code>，<br>
