@@ -1,0 +1,31 @@
+# ===================================================
+# EDA 課程 — 頁面專屬設定
+# 只寫需要覆蓋 global config 的欄位
+# ===================================================
+
+page:
+  title: "Claude + Claude Cowork 實戰"
+  badge: "EDA · AI 協作工作術"
+  hero_title: "別再讓 AI「每次都失憶」"
+  subtitle: "從聊天到交辦，用 Connector / Project / Skill / Cowork 讓 AI 真正替你動手做事"
+
+seo:
+  title: "Claude + Claude Cowork 實戰｜AI 協作工作術"
+  description: "從聊天升級到交辦自動化：串接日常工具、建立專屬知識庫、把流程固化成 Skill、讓 Cowork 動手整理檔案，並守住企業資安原則。"
+  image: "https://deanlin.net/course/eda/assets/og-image.jpg"
+  url: "https://deanlin.net/course/eda/"
+
+# ---------------------------------------------------
+# 引言
+# ---------------------------------------------------
+quotes:
+  opening:
+    text: "AI 不是不夠聰明，<br>是你每次都讓它「失憶」。"
+  closing:
+    text: >
+      今天你不是學會了五個功能，<br>
+      而是學會一件事——<br><br>
+      把「每次重新交代」，<br>
+      變成「一次設定、長期受用」。
+
+# nav 預設從 content.md 的 # 章節自動產生
