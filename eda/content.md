@@ -18,6 +18,7 @@
 2. **背景資訊** - 品牌「黑寶科技」主打靜音馬達與零重力舒展技術，售價 NT$98,000，目標客群為 35–55 歲注重身體保養的上班族與家庭主力決策者，禁用「最強」「第一」「保證」等涉及不實廣告的字眼
 3. **輸出結構** - 開頭用個人體驗情境帶入、中段呈現 2–3 個功能亮點、結尾加上 CTA 與 3–5 個 hashtag，全文控制在 500 字內
 [/flow]
+
 ```prompt [label="寫提示詞需要花很多力氣"]
 你是一位熟悉台灣中高端生活風格的社群行銷文案專家，擅長撰寫 KOL 體驗分享文，語氣真實、有溫度，不像廣告。
 
@@ -82,12 +83,13 @@
 
 ### 🔒 調整隱私權限
 
+**建議下載桌面版**: 到[官網下載桌面 App](https://claude.ai/downloads) 可以讓 AI 有更多發揮的地方，比如 `Cowrok 要桌面版才能使用`。
 **操作路徑**: 左下角頭像 → Privacy → 將「Location metadata、Help improve our AI models」關閉
 
 ![建議關閉，不讓 AI 用於模型訓練](./assets/claude-privacy.png)
 
-
-[lab-session title="🛠️ 實戰演練" duration="3 分鐘" hint="調整隱私權"]
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="下載桌面 App & 調整隱私權"]
+- 下載[Claude 桌面 App](https://claude.ai/downloads) 
 - 在設定將「Location metadata、Help improve our AI models」關閉
 [/lab-session]
 
@@ -114,19 +116,52 @@
 
 ![建議先勾選前兩個，熟悉後再全選](./assets/claude-gmail-permissions.png)
 
+![讀取的權限通常設為允許，寫入刪除則會詢問](./assets/claude-gmail-permissions-list.png)
+
 #### 整理郵件、加標籤、設黑名單
 
 [flow]
-1. 建立標籤 — 根據內容分出「重要、歸檔、刪除」
+1. 建立標籤 — 根據內容分出「重要、封存、刪除」
 2. 廣告黑名單 — 找出重複的廣告寄件者，產出封鎖／篩選器清單
 [/flow]
 
+- **封存**：已處理完但未來可能需要參考的資料（ex: 收據、訂單、客戶信件），可在「所有郵件」找回。
+- **刪除**：垃圾訊息、廣告、確定絕對不再需要的過期資料，30 天後永久消失。
+
 ```prompt [label="整理 Gmail 信件"]
-幫我整理 Gmail 信件夾
-1. 閱讀信件後，根據內容建立「重要、歸檔、刪除」的標籤
-2. 找出常寄廣告／電子報的寄件者，整理成一份可加入黑名單的清單
-刪除或封鎖前先給我清單確認，不要直接執行。
+幫我整理 Gmail 最近 30 天內未標籤的信件（最多 100 封），步驟如下：
+
+## 第一步：分類打標籤
+閱讀每封信的寄件人、主旨，依下列規則加上標籤：
+
+- 🔴 重要：來自真人（非系統信）、需要回覆或行動、來自我的聯絡人
+- 📁 封存：通知類、收據、訂單確認、已讀但無需回覆
+- 🗑️ 刪除候選：促銷、電子報、自動發送的廣告信、過期的會議邀請、寄件人是 no-reply
+
+有疑慮時，優先歸入「歸檔」而非「刪除候選」。
+
+## 第二步：整理廣告寄件者清單
+找出符合以下任一條件的寄件者：
+- 過去 30 天內寄超過 2 封促銷/電子報
+- 主旨含有「優惠、折扣、限時、unsubscribe、newsletter」等關鍵字
+- 寄件地址為 no-reply@ 或 marketing@ 開頭
+
+輸出格式：
+| 寄件者名稱 | Email 地址 | 封數 | 建議動作（取消訂閱／封鎖） |
+
+## ⚠️ 執行前確認
+以上兩步驟完成後，先給我清單讓我確認，
+我明確說「確認執行」後，才進行標籤套用動作。
 ```
+
+![Claude 執行修改操作時，會先詢問權限多一層保險](./assets/claude-gmail-permissions-check.png)
+
+![Claude 執行完成後，前往 Gmail 確認是否符合預期](./assets/claude-gmail-result-check.png)
+
+> **使用提醒**
+> 建立與 Gmail 的連結後，Claude 可以`閱讀信件、建立草稿、設計標籤`
+> 但`刪除信件、取消訂閱`這類高風險操作，還是由人類在標籤建立後判斷更合適；因為有些 **no-reply** 的信件依舊重要。
+> 建議`小範圍`測試，沒問題後再擴大測試範圍。
 
 [lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="整理你的 Gmail"]
 - 在 Connector 授權連接你的 Gmail
@@ -134,18 +169,55 @@
 - 可以透過標籤快速移除、封鎖信件
 [/lab-session]
 
-## 主題二：Google Calendar 寫入行程與參考資訊
+### 彙整特定主題信件脈絡
 
-> **痛點：資訊散落，行程要「貼來貼去」**
+與同事、客戶的信件通常有`多段來回、細節持續調整`，而且每一段可能都有`重要資訊`。
+
+甚至討論過程可能`不在同一封 Email 而是散落成多封`。
+
+```prompt [label="彙整信件脈絡"]
+幫我整理 Gmail 信箱中 [Blackbao AI] 合作的過程
+```
+
+![有些信件來回可能超過數個月份，回憶、閱讀都很花時間](./assets/claude-gmail-integration.png)
+
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="嘗試整理複雜脈絡的信件"]
+- 提供主旨 or Email 的方式，讓 AI 可以搜尋到討論串
+- 將內容彙整成自己期待的格式、結論
+[/lab-session]
+
+> **個人心得**
+> [Claude Chrome Extension](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) 也能讀取信件，但如果`散落成多封信件`就無法了
+> 如果不是 Gmail，Claude 也支援 `Microsoft Outlook`
+> 如果為特殊信箱，`若不涉及機密，可考慮用副本寄到 Gmail` 讓 Claude 讀取
+
+## Google Calendar 寫入行程與參考資訊
+
+> **資訊散落，行程要「貼來貼去」**
 >
-> - 會議時間在 Email、地點在訊息、連結在另一個頁面，建一個行程要切好幾個視窗
-> - 手動複製貼上，常常漏帶會議連結或議程
-> - 想找空檔還要自己一格一格看
+> - 會議`時間在 Email、地點在訊息、連結在另一個頁面`，建一個行程要切好幾個視窗
+> - 手動彙整資訊，容易`漏帶會議連結或議程`
 
-### 📅 解法：一句話把零散資訊變成完整行程
+### 📅 把零散資訊彙整為完整行程
+
+#### 將 Google Calendar 加入 Connector
+
+**操作路徑**: Customize → Connectors → 選擇 Google Calendar 點擊「Connect」
+
+![將 Gmail 加入 Connector](./assets/claude-calendar.png)
+
+![如果想讓 AI 可以編輯行事曆，目前需要全選才能達到目標](./assets/claude-calendar-permissions.png)
+
+#### 讓 AI 統整信件細節、加入行事曆
+
+
+
+人工閱讀需要逐步觀看，但 AI 在彙整資訊的同時也能`建立行事曆`。
 
 [flow]
-1. 直接生成事件 — 把一段 Email／訊息丟給它，自動抽出時間、地點、與會者
+1. 彙整資訊 — 把ㄒㄧㄣ
+
+把一段 Email／訊息丟給它，自動抽出時間、地點、與會者
 2. 帶入參考資訊 — 把會議連結、議程、注意事項一起寫進事件說明
 3. 查空檔安排 — 問它哪個時段有空，直接幫你卡位
 [/flow]
