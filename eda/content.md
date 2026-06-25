@@ -96,9 +96,12 @@
 ---
 
 # 串接日常工具：透過 Connector 讓 AI 長出眼睛和手
-> 授權連接 Gmail、Google Calendar、Notion——一個主題搭一個實作，邊學邊做
 
-## Gmail：整理信件、設計回信草稿
+> **將過去在不同的工具操作的任務集中到 Claude**
+> 以前寫信開 Gmail、建立行程去 Google Calendar、搜尋知識到 Notion。
+> 不同工具切換很耗費精神，設定好 Connector 就能`在 Claude 集中管理`。
+
+## Gmail 整理信件、設計回信草稿
 
 > **信箱爆炸，重要的信被淹沒**
 >
@@ -116,7 +119,7 @@
 
 ![建議先勾選前兩個，熟悉後再全選](./assets/claude-gmail-permissions.png)
 
-![讀取的權限通常設為允許，寫入刪除則會詢問](./assets/claude-gmail-permissions-list.png)
+![讀取的權限預設為允許，寫入刪除則會詢問](./assets/claude-gmail-permissions-list.png)
 
 #### 整理郵件、加標籤、設黑名單
 
@@ -156,12 +159,12 @@
 
 ![Claude 執行修改操作時，會先詢問權限多一層保險](./assets/claude-gmail-permissions-check.png)
 
-![Claude 執行完成後，前往 Gmail 確認是否符合預期](./assets/claude-gmail-result-check.png)
+![Claude 執行完成後，前往 Gmail 確認結果是否符合預期](./assets/claude-gmail-result-check.png)
 
 > **使用提醒**
 > 建立與 Gmail 的連結後，Claude 可以`閱讀信件、建立草稿、設計標籤`
-> 但`刪除信件、取消訂閱`這類高風險操作，還是由人類在標籤建立後判斷更合適；因為有些 **no-reply** 的信件依舊重要。
-> 建議`小範圍`測試，沒問題後再擴大測試範圍。
+> 但`刪除信件、取消訂閱`這類高風險操作，建議由人類在標籤建立後判斷更合適；因為有些 **no-reply** 的信件依舊重要。
+> 建議`小範圍`測試，沒問題後再擴大測試範圍、調整判斷規則。
 
 [lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="整理你的 Gmail"]
 - 在 Connector 授權連接你的 Gmail
@@ -178,25 +181,26 @@
 ```prompt [label="彙整信件脈絡"]
 幫我整理 Gmail 信箱中 [Blackbao AI] 合作的過程
 ```
+![有些信件來回可能超過數個月份，回憶、閱讀都很花時間](./assets/claude-gmail-example.png)
 
-![有些信件來回可能超過數個月份，回憶、閱讀都很花時間](./assets/claude-gmail-integration.png)
+![給予關鍵字 AI 就能做好整理任務](./assets/claude-gmail-integration.png)
+
+> **個人心得**
+> 安裝 [Claude Chrome Extension](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) 也能在瀏覽器讀取單個信件討論串，但如果`散落到多個主題信件`就無法了
+> 如果不是 Gmail，Claude 也支援 `Microsoft Outlook`
+> 假使為特殊信箱（ex: 公司為了節省經費自建的信件伺服器），`若不涉及機密，可考慮用副本寄到 Gmail` 讓 Claude 讀取
 
 [lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="嘗試整理複雜脈絡的信件"]
 - 提供主旨 or Email 的方式，讓 AI 可以搜尋到討論串
 - 將內容彙整成自己期待的格式、結論
 [/lab-session]
 
-> **個人心得**
-> [Claude Chrome Extension](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) 也能讀取信件，但如果`散落成多封信件`就無法了
-> 如果不是 Gmail，Claude 也支援 `Microsoft Outlook`
-> 如果為特殊信箱，`若不涉及機密，可考慮用副本寄到 Gmail` 讓 Claude 讀取
-
 ## Google Calendar 寫入行程與參考資訊
 
 > **資訊散落，行程要「貼來貼去」**
 >
-> - 會議`時間在 Email、地點在訊息、連結在另一個頁面`，建一個行程要切好幾個視窗
-> - 手動彙整資訊，容易`漏帶會議連結或議程`
+> - 會議`時間、地點、文件`可能散落在信箱討論串，建一個行程要反覆確認
+> - 手動彙整資訊，容易`遺漏且每次格式不一`
 
 ### 📅 把零散資訊彙整為完整行程
 
@@ -204,49 +208,145 @@
 
 **操作路徑**: Customize → Connectors → 選擇 Google Calendar 點擊「Connect」
 
-![將 Gmail 加入 Connector](./assets/claude-calendar.png)
+![將 Google Calendar 加入 Connector](./assets/claude-calendar.png)
 
 ![如果想讓 AI 可以編輯行事曆，目前需要全選才能達到目標](./assets/claude-calendar-permissions.png)
 
-#### 讓 AI 統整信件細節、加入行事曆
-
-
-
-人工閱讀需要逐步觀看，但 AI 在彙整資訊的同時也能`建立行事曆`。
+#### Gmail + Google Calendar 讓 AI 統整信件細節、加入行事曆
 
 [flow]
-1. 彙整資訊 — 把ㄒㄧㄣ
-
-把一段 Email／訊息丟給它，自動抽出時間、地點、與會者
+1. 彙整資訊 — 讓 AI 讀取信件討論串
 2. 帶入參考資訊 — 把會議連結、議程、注意事項一起寫進事件說明
-3. 查空檔安排 — 問它哪個時段有空，直接幫你卡位
+3. 加入與會人員 - 取出信件討論人員，設定為 attendees
 [/flow]
 
-```prompt [label="把資訊轉成行事曆事件"]
-這是一封會議邀請信（我貼在下面），請幫我在 Google Calendar 建立事件：
-- 自動抓出日期、時間、地點
-- 在事件說明裡附上會議連結與議程重點
+```prompt [label="把 Mail 討論轉成行事曆事件"]
+從 Gmail 找出[Q3 新品活動｜上線滿月成效初步整理]信件，並在 Google Calendar 建立事件：
+- 抓出最後會議的日期、時間、地點
+- 在事件說明裡附上議程重點
+- 取出信件討論人員，設定為 attendees
 - 如果時間和我現有行程衝突，先提醒我
-
-（在此貼上信件或訊息內容）
+建立事件前，請先提供草稿讓我過目
 ```
 
-[lab-session title="🛠️ 實戰演練 3：把散落資訊變成一個行程" duration="15 分鐘" hint="體會「不用再切視窗複製貼上」的差別"]
+![兩個 Connectors 的綜合運用](./assets/claude-calendar-gmail.png)
+
+![確認行程建立成功](./assets/claude-calendar-create.png)
+
+[warning title="使用提醒"]
+Claude 是真的會`建立行程`，行程也會`出現在參與人日曆`，執行前請確認
+[/warning]
+
+#### Google Calendar 讓 AI 統整訊息加入行事曆
+
+除了透過郵件交辦任務，現實生活可能是透過 `LINE、Zoom、Teams` 討論
+
+可以直接複製對話內容請 AI 分析，討論串亂沒關係，重要是`主旨有跟 AI 講清楚`
+
+```prompt [label="把訊息討論轉成行事曆事件"]
+分析下面訊息討論的主題，並在 Google Calendar 建立事件：
+- 抓出最後會議的日期、時間、地點
+- 在事件說明裡附上議程重點
+- 取出信件討論人員，設定為 attendees(無 Email 請列出並提醒我)
+- 如果時間和我現有行程衝突，先提醒我
+
+2026.08.26 星期一
+10:14 Kirby @Dean 新品上線剛好滿一個月，後台數據先給你看一下
+曝光 1,240 萬，比預期高 18%；CTR 2.3% 也不錯
+但轉換率只有 0.6%，明顯低於我們設定的 1.5% 目標
+10:15 Kirby 曝光點擊都漂亮，卡在最後一哩。你那邊投放端有看到異常嗎？想先確認是素材還是受眾問題
+14:02 Dean 數字我這邊也對得起來，投放端沒有技術性異常
+但補一個你可能沒看到的切角，各渠道轉換落差很大
+14:03 Dean 大型KOL：預算55%，轉換貢獻只有21%
+微網紅：預算15%，轉換貢獻43%
+Meta再行銷：預算20%，轉換28%
+EDM：預算10%，轉換8%
+14:04 Dean 錢花最多的大型KOL，轉換貢獻反而最低。建議先聚焦「渠道配置」往下追，素材可能是次要的
+2026.08.27 星期二
+09:38 Kirby @Dean 你這切角點醒我了，昨晚把轉換路徑再拆細，結論有點不妙但必須講清楚
+09:39 Kirby 我們從年初就假設「大型KOL帶聲量也帶轉換」，把超過一半預算壓上去，這方向從數據看其實是錯的
+09:40 Kirby 1. 大型KOL的流量跳出率71%，多數是看熱鬧型受眾
+2. 真正完成購買的人，78%來自25-34歲既有受眾，主要被微網紅跟再行銷打到
+3. 回去翻Q1、Q2，當時就有同樣訊號，只是目標有達標沒人深究
+09:41 Kirby 換句話說不只這次活動，過去三季的預算邏輯可能都建立在錯誤前提上，這已經不是調素材能解決的層級了
+11:20 Dean 同意你的判斷，而且這件事我們兩個不能自己決定
+11:21 Dean 要修正方向等於把大型KOL預算大幅往微網紅、再行銷搬，但KOL下一季合約業務上週才剛口頭談好續約
+而且預算重分配會直接影響Q4的KPI設定
+11:22 Dean 這兩件都牽涉到 @Vivian 的決策權限，我們自己改下去後面對不齊會很麻煩
+建議整理成一頁決策建議，約Vivian開個短會讓她拍板，你覺得呢？
+15:05 Kirby 好，我把Vivian拉進來
+15:06 Kirby @Vivian 我跟Dean檢視Q3活動，發現過去多數預算放在大型KOL，但數據顯示真正帶來轉換的是微網紅與再行銷受眾
+可能要調整Q4預算配置，牽涉KOL續約跟KPI設定，想請您拍板
+15:07 Kirby 會準備一頁決策摘要（現況／問題／兩個方案／各自風險），約30分鐘做決策即可
+方便的時段麻煩您勾一個：
+・8/29 四 10:00-10:30
+・8/29 四 15:30-16:00
+・8/30 五 11:00-11:30
+都不行的話再回我，我配合
+2026.08.28 星期三
+09:12 Vivian 這發現很重要，謝謝你們主動挖出來
+就約 8/31 15:30，會議室B
+09:13 Vivian 開會前麻煩兩件事：
+1. 那份一頁摘要，前一天下班前先寄給我預讀
+2. 兩個方案各自附「預估轉換提升」跟「對Q4 KPI的影響」，我才好當場決定
+09:14 Vivian KOL續約那邊我先跟業務打招呼請他們暫緩簽約，等會議結論再說。週四見
+```
+
+![就算將混亂的對話貼到 Claude 也能分析](./assets/claude-analysis-session.png)
+
+![確認行程建立成功](./assets/claude-calendar-create2.png)
+
+> **小提醒**
+> 如果透過訊息處理，因為只有姓名，所以會需要自己在行事曆補上對應 Email。
+> 如果這些姓名都有`固定比對的清單`，可以在後續 `Project` 案例中，透過`參考文件`讓 AI 自行比對。
+
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="在 Claude 建立行程"]
 - 授權連接你的 Google Calendar
-- 找一段含時間、地點、連結的 Email 或訊息，貼給 Claude
+- 讓 Claude 讀取 Gmail 討論串 or 直接貼上討論訊息串
 - 讓它建立行事曆事件，並把參考資訊寫進事件說明
-- 再問它「我下週哪天下午有 2 小時空檔可以開會？」
 [/lab-session]
 
-## 主題三：讀取 Notion 知識庫，限定範圍搜尋
+## Notion 知識庫存取、限定搜尋範圍
 
-> **痛點：知識分散，不知道答案藏在哪一頁**
+> **知識分散，不知道答案藏在哪一頁**
 >
 > - 資料寫在 Notion，但跨好幾頁，要找一個答案得翻半天
 > - 不確定哪頁是最新的，怕引用到過期資訊
 > - 希望 AI 只在「指定範圍」內找，而不是亂猜
 
-### 📚 解法：連接 Notion，限定範圍問答並附出處
+### 🗂️ Notion 是什麼？
+
+Notion 是一款整合`筆記、資料庫、Wiki` 的工具，很多團隊用它來保存知識：**產品規格、品牌規範、常見問答、會議決議……**
+
+[flow]
+1. 個人筆記 → 把每天的想法、研究隨手記下來
+2. 團隊 Wiki → 跨部門共用的制度文件、流程說明
+3. 資料庫 → 用表格、看板管理任務、客戶或內容清單
+[/flow]
+
+> **為什麼連 AI 特別有用？**
+> 長期使用 Notion 後，即便架構設計再好，`知識量的龐大也會讓人難以閱讀`。
+> 有了 AI Connector，你不用再自己慢慢找，`直接「問」就能找到答案`，還能標明出處。等於給知識庫裝上了`搜尋引擎 × 摘要機`。
+
+### 🧩 將 Notion 加入 Connector
+
+**操作路徑**: Customize → Connectors → 選擇 Notion 點擊「Connect」
+
+![將 Notion 加入 Connector](./assets/claude-notion.png)
+
+![可透過 Gmail 註冊，一開始會有引導頁面](./assets/notion-guide.png)
+
+![選擇免費版即可](./assets/notion-free.png)
+
+![回到 Claude 完成連結](./assets/claude-notion-connected.png)
+
+### 📚 複製講者 Notion 範例，限定範圍問答並附出處
+
+開啟講者的[範例知識庫](https://kaput-lord-cf7.notion.site/e4f7378f09a346ed8cee5c552b2754d0?v=6a3df2dd2be54086a180d8805ae1c23f&source=copy_link)
+
+![點擊「duplicate」來進行練習](./assets/claude-notion-exmaple-duplicate.png)
+
+![確認範本已經儲存到自己的空間](./assets/claude-notion-self-space.png)
 
 [flow]
 1. 限定範圍 — 指定某個頁面或資料庫，AI 只在這個範圍內搜尋
@@ -255,26 +355,18 @@
 [/flow]
 
 ```prompt [label="在指定 Notion 範圍內查資料"]
-請只在我提供的這個 Notion 頁面範圍內搜尋（不要用其他來源）：
-① 回答我的問題，並附上你引用的頁面標題
+請在 Notion 的[AI 知識庫]幫我尋找「Claude 在法律上的應用」
+① 回答我的問題，並附上你引用的頁面標題與連結
 ② 如果範圍內找不到答案，直接說「範圍內查無資料」，不要自己編
-
-我的問題是：（在此輸入你的問題）
 ```
 
-> **講師會提供一個公開的 Notion 連結**，讓大家在同一個範圍內練習，不需要先有自己的知識庫。
+![驗證是否能找到目標知識](./assets/claude-notion-search-info.png)
 
-[lab-session title="🛠️ 實戰演練 4：在公開 Notion 知識庫裡找答案" duration="15 分鐘" hint="使用講師提供的公開連結，重點在「限定範圍、附出處」"]
-- 連接講師提供的公開 Notion 連結
+[lab-session title="🛠️ 實戰演練" duration="15 分鐘" hint="使用講師提供的範例，體驗 Notion 查詢資料功能"]
+- 開啟並「duplicate」講者的[範例知識庫](https://kaput-lord-cf7.notion.site/e4f7378f09a346ed8cee5c552b2754d0?v=6a3df2dd2be54086a180d8805ae1c23f&source=copy_link)
 - 用 Prompt 問一個問題，要求它「只在這個範圍內」回答並附出處
 - 故意問一個範圍外的問題，看它會不會誠實說「查無資料」
-- 請它把找到的重點，彙整成一張摘要表
 [/lab-session]
-
-[tags]
-- [orange] 授權連接 = 給 AI 讀寫你資料的權限
-- [orange] 守住最小權限原則，刪除／封鎖類操作一定要人工把關
-[/tags]
 
 ---
 
