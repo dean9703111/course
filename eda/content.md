@@ -694,12 +694,12 @@ Notion 是一款整合`筆記、資料庫、Wiki` 的工具，很多團隊用它
 # 📌 課程總結：你帶走的不只是五個功能
 
 [summary]
-- 🧭 **四種武器決策表** | Connector 連工具、Project 給背景、Skill 固流程、Cowork 動手做
-- 📥 **可直接用的 Prompt** | 訊息早晚摘要、Decision Log、SKILL.md 骨架
-- 🗂️ **Project 三層心法** | 重複性放指令／知識庫，單次性留對話
-- 🛡️ **貫穿全課的資安清單** | 關訓練、最小權限、Skill 掃描、人工核准
-- 🔢 **用數字建立共鳴** | 9,847 封未讀、省 10 小時、12,834 張照片
+- 🔌 **Connector** | 透過授權，在 Claude 操作多個線上工具
+- 🗂️ **Project** | 上傳知識庫、設定指令，免每次交代背景、專案分流
+- ⚙️ **Skill** | 把好流程變 SOP，讓 AI 從「通才」變「專才」
+- 🖥️ **Cowork** | 指定電腦資料夾，讓 Claude 接手電腦上的任務
 [/summary]
+
 
 [qa-session title="Q&A 時間"]
 [/qa-session]
