@@ -101,7 +101,7 @@
 > 以前寫信開 Gmail、建立行程去 Google Calendar、搜尋知識到 Notion。
 > 不同工具切換很耗費精神，設定好 Connector 就能`在 Claude 集中管理`。
 
-## Gmail 整理信件、設計回信草稿
+## Gmail 整理信件、建立標籤
 
 > **信箱爆炸，重要的信被淹沒**
 >
@@ -416,6 +416,7 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 > - **專案跑好幾個月**，規格、會議結論、決策`散落各處`，甚至格式不一
 > - **新人接手**要花大量時間閱讀`過去的訊息與文件`
 > - **反覆爭論**早就拍板的事，因為`沒人記得當初討論過`
+> - **關鍵人物不在、太忙**導致`進度卡住`
 
 ### 🧠 建立第一個專案 Project
 
@@ -706,233 +707,185 @@ Skill 建立完成後，有 2 種方式觸發：
 - 在專案（Project）驗證 Skill
 [/lab-session]
 
-## 將對話轉換為 Skill
+## 彙整對話生成 Skill
 
 > **不要急著關閉對話窗**
 > 使用 AI 一段時間後，你會發現`好的結果需要經過多輪對話`才能得到。
 > 而你`引導 AI 的過程`，其實可以把它設計成 Skill，或是拿來優化既有的 Skill。
 
-### 🧠 建立行銷文案 Skill
+### 📝 建立提案企劃
 
-#### STEP 1: 生成初版
+一年前，建立提案企劃草稿需要與 AI 討論`半小時以上`，並`來回執行這麼多的 Prompt`
 
-```prompt [label="先讓 AI 生成一個初步版本的文案"]
-請參考下面的品牌指南後:
-https://docs.google.com/document/d/1YFI0edaVIVhB3YHMCGSGvzBvqkXzFL43XWqYLJIcoPs/edit?usp=sharing
-根據下面的產品資訊:
-https://docs.google.com/document/d/1ohwXN56Im4_amHunCtVLxTRzftJQyDvKdrGMRr__Za8/edit?usp=sharing
-幫我生成[瓜地馬拉安提瓜]的行銷文案，受眾是上班族，我們打算設計周年慶特價活動來促銷
+#### STEP 1: 產生合適的 Prompt（聚焦需求）
+
+```prompt [label="先簡單說明背景"]
+我準備製作一個[給台灣新創行銷公司導入 Claude AI]的提案企劃
+
+以上面的 Prompt 為基礎，我要提供怎麼樣的 Prompt 可以得到較好回答？
+請說明為什麼，並在最後舉出能得到專業回覆的 Prompt 範例。
 ```
 
-#### STEP 2: 持續優化細節
+#### STEP 2: 詢問是否有需要補充的內容
 
-```prompt [label="有期望的方向就直接跟 AI 討論"]
-希望社群貼文中，小編的語氣親切自然、真誠，像是跟朋友分享好物，絕對不要有推銷感
+```prompt [label="看似完善的 Prompt 可能還有可以優化的地方"]
+在用這個 Prompt[撰寫提案企劃前]有任何問題，請先詢問我，不要直接產生。
 ```
 
-#### STEP 3: 給予範例減少 AI 味
+![如果 AI 有自己跳出選項，STEP 3 可以跳過](./assets/claude-skill-plan-check.png)
 
-```prompt [label="給予自己真實的範例讓 AI 參考、模仿"]
-請參考過去發表的內容，重新幫我撰寫文案
-https://docs.google.com/document/d/1mmPAHW1njRtBKOtX4W-YxPz6Q5bR-FKV3B0CK8X3_vY/edit?usp=sharing
+#### STEP 3: 讓 AI 幫我們補齊不足的資訊（也可以自行回答）
+
+```prompt [label="建議自己填寫，AI 僅為參考"]
+請扮演對這個領域非常熟悉的[產業顧問]，針對提出的問題給出具體詳細的回覆、不要逃避問題。
 ```
 
-#### STEP 4: 讓 AI 分析討論的過程，並建立對應的 Skill
+#### STEP 4: 從利害關係人角色來看需求、問題
+
+```prompt [label="一份企劃能不能過，不能只考量到自己"]
+請分析這份企劃最重要的[3]個利害關係人，從他們的角度和利益出發，詳細說明對這份企劃有哪些具體的[意見、建議、憂慮]？
+```
+
+#### STEP 5: 將利害關係人顧慮彙整，重新產生企劃
+
+```prompt [label="優化提案企劃"]
+請扮演[提案企劃]的專家，了解[利害關係人]的想法後，以最專業的角度在企劃補充更完善、可行的方案。
+```
+
+#### STEP 6: 用紅藍隊的概念攻防（競爭者）
+
+```prompt [label="從挑戰者的角度來優化企劃"]
+你是這份提案企劃的[競爭者]，盡可能列出這份企劃的不足之處。
+並說明自己可以做到哪些更完善、可行的方案。
+```
+
+#### STEP 7: 生成完善企劃
+
+```prompt [label="最後要生成完善的企劃"]
+請扮演[提案企劃]的專家，在了解[不足之處、更完善的方案後]後，以最專業的角度，重新完善這份企劃。
+```
+
+### 🛠️ 將對話彙整為 Skill 
+
+這個是講者的[對話紀錄](https://claude.ai/share/522afd9a-5487-45d4-b9c2-871070124945)供大家參考。
 
 ```prompt [label="請 AI 彙整對話後建立 Skill"]
-請根據要求分析上方對話內容後，整理成可重複使用的 Skill：
+請根據以下要求分析上方對話內容後，整理成可重複使用的 Skill，名稱為[Proposal Refiner]
 
 1. 起初怎麼提問
 2. 中間如何引導與調整
 3. 最終是如何得出這個成果的
-4. 參考了哪些資訊
 ```
 
-#### STEP 5: 驗證 Skill 符合預期
+![最珍貴的不是別人的 Prompt，而是你打磨成果的流程](./assets/claude-skill-plan-create.png)
 
-> **個人經驗分享**
-> 
+#### 驗證 Skill 符合預期
 
-## 將 Skill 分享給他人使用
-
-
-
-## 進階 Skill 分享
-
-### 了解 Skill 結構
-
-### 生成課程提案 PDF
-
-### 生成線上講義
-
-
-
-### ✉️ 設計回覆信件的 Skill
-
-- 判斷信件類型
-    - 邀約
-        - 接受
-            - 近一步提供自己已知資訊
-        - 討論
-            - 詢問合作細節
-        - 婉拒
-            - 直接拒絕
-            - 行程衝突
-
-
-## 在 Project 使用 Skill 給流程
-
-### 🔁 在 Project 放知識，Skill 給流程，工作流才完整
-
-> **Project 的指令難以滿足全部需求**
-> 儘管 Project 可以設計指令，但`指令設計太長，會浪費 Token 額度`。許多 Project 可能只有`知識庫不同，但指令都很接近`
-> 因此建議把這些`重複的指令設計為 Skill，可以在不同專案使用，更有靈活性`。
-
-[flow]
-- **Project 讓 AI「知道事實」** — 你扮演的角色、品牌規範、產品資訊、專案細節
-- **Skill 讓 AI「知道步驟」** — 寫行銷文案、月報、信件、資料分析要遵守的 SOP。
-[/flow]
-
-
-
-
-[tags]
-- [purple] 不換題目：直接拿模組三建好的 Project，長出它的專屬 SOP
-- [purple] 流程改善一次，改 Skill 即可，全員受惠
-[/tags]
-
-### 📄 SKILL.md 五個欄位：把流程寫死
-
-一個 Skill 就是一份 `SKILL.md`，固定五個欄位：**觸發時機 / 輸入 / 步驟 / 輸出格式 / 注意事項**。關鍵在「輸入」與「注意事項」都指向 Project 知識庫——讓流程跑在你的事實上，而不是 AI 的想像上。
-
-### 範例一：延續「品牌文案 Project」→ 一鍵出稿 SOP
-
-```prompt [label="SKILL.md：新品到貨貼文"]
-# Skill 名稱：新品到貨 IG 貼文
-
-## 觸發時機
-當我說「幫我寫 ⟨品項⟩ 到貨貼文」時使用。
-
-## 輸入
-只給品項名稱；風味、價格、產地一律從 Project 知識庫取得，不要自己編。
-
-## 步驟
-1. 從知識庫撈出該品項的產品資訊
-2. 依品牌語氣規則寫出三個版本（情境、產品力、限時行動）
-3. 逐字檢查有無誤用禁用詞，違規就重寫
-4. 每版標出建議 hashtag 與發文時段
-
-## 輸出格式
-三個版本並排，每版附「主打點」一句，最後附禁用詞自查結果。
-
-## 注意事項
-價格、產地以知識庫為準；查無資料就停下來問我，不要臆測。
+```prompt [label="用不同主題來驗證 Skill"]
+/proposal-refiner 我要做一份[給連鎖餐飲品牌導入 AI 點餐分析]的提案企劃，幫我做到專業可行的程度。
 ```
 
-### 範例二：延續「專案記憶 Project」→ 自動歸檔 SOP
+![確認 Skill 可以具有重用性](./assets/claude-skill-plan-reuse.png)
 
-```prompt [label="SKILL.md：週會記錄歸檔"]
-# Skill 名稱：週會記錄歸檔
-
-## 觸發時機
-當我貼上會議記錄、說「歸檔這次週會」時使用。
-
-## 輸入
-本次會議的逐字記錄或筆記（我會貼上）。
-
-## 步驟
-1. 抽出待辦事項，每項標出負責人與截止日
-2. 比對知識庫既有決策日誌，標記「沿用」或「推翻舊決策」
-3. 若有新的重大決定，依「決策日誌.md」格式產出一筆 D-xxx 草稿
-4. 列出與既有規格書衝突之處，提醒我確認
-
-## 輸出格式
-① 待辦清單（含負責人／截止日）② 決策變動 ③ 新增決策日誌草稿
-
-## 注意事項
-結論需對齊知識庫；找不到依據就標「待確認」，不要自行裁定。
-```
-
-### 範例三：Connector + Project + Skill 三合一 → 自動歸檔知識庫
-
-> **這是把三個模組串起來的招牌示範**
->
-> 建一個「知識庫管家 Project」，它的**指令層**寫死一條前置規則：看到連結就自動跑歸檔 Skill；Skill 再透過 Notion 連接器把整理好的知識卡寫進指定資料庫。你只要丟連結，剩下全自動。
-
-[flow]
-1. 貼上連結 — 你只丟一個網址，不用多說
-2. Project 觸發 — 指令層的前置規則自動呼叫「連結轉知識卡」Skill
-3. Skill 跑流程 — 讀取內容、摘要、分類、配標籤
-4. Connector 寫入 — 透過 Notion 連接器新增一筆，回報頁面連結
-[/flow]
-
-先在 Project 指令層放這條前置規則，讓「貼連結」本身就是觸發動作：
-
-```prompt [label="知識庫管家 Project：指令層前置規則"]
-你是我的知識庫管家。
-
-只要我貼上任何網址（不用多做說明），就自動執行「連結轉知識卡」Skill：
-讀取內容 → 整理成知識卡 → 寫進我的 Notion 知識庫。
-
-寫入前先把要存的欄位列給我確認，我點頭再寫。
-```
-
-再把這個會呼叫 Notion 的 Skill 寫好：
-
-```prompt [label="SKILL.md：連結轉知識卡並歸檔 Notion"]
-# Skill 名稱：連結轉知識卡
-
-## 觸發時機
-當我貼上一個網址時自動使用（已由 Project 指令層設定）。
-
-## 輸入
-一個網址（文章、影片、貼文皆可）。
-
-## 步驟
-1. 讀取連結內容，抽出標題、三點摘要、關鍵標籤
-2. 對應知識庫既有分類；找不到對應就建議新分類並先問我
-3. 透過 Notion 連接器，在指定資料庫新增一筆：標題／摘要／標籤／原始連結／日期
-4. 回報「已歸檔到 ⟨分類⟩」與該頁連結
-
-## 輸出格式
-一句話確認＋ Notion 頁面連結，附三點摘要供快速回顧。
-
-## 注意事項
-寫入前先顯示欄位讓我確認；同一連結已存在就提醒、不重複建立。
-```
-
-[tags]
-- [purple] Connector 給手、Project 給觸發、Skill 給流程——三者相加才有「丟連結就自動歸檔」
-- [orange] 寫入類動作守住人工把關：先看欄位再核准
-[/tags]
-
-## 資安：Skill 是「可執行的指令」，不能亂裝
-
-> **不經驗證的 Skill，就像把生產環境的鑰匙亂發**
->
-> 從社群或市集下載的 Skill 可能藏有提示注入、資料外洩、權限提升等風險。
-
-### 🛡️ 對策：內部審核 + 外部掃描
-
-- **SkillSpector**（NVIDIA 開源）：掃描 64 種漏洞模式 + LLM 語意分析
-- 能揪出「表裡不一」的指令（聲稱在總結 Log、實際在偷傳資料），給 0–100 風險評分
-- 企業導入原則：內部 Skill 要有審核機制，外部 Skill 先掃描再用
-
-[lab-session title="🛠️ 實戰演練 7：幫你的 Project 長出一個 Skill" duration="20 分鐘" hint="不換題目——直接拿模組三建好的 Project 加上 SOP"]
-- 挑模組三建好的一個 Project（品牌文案 或 專案記憶）
-- 想一件你在這個 Project 裡「每次都重複跑」的事
-- 套用上面的 SKILL.md 骨架，把步驟、輸出、禁用規則寫死
-- 呼叫這個 Skill 跑一次，確認它有去引用知識庫、有跑完每一步
-- 故意給一個知識庫沒有的輸入，看它會不會誠實停下來問
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="將過去與 AI 的對話建立成 Skill，並驗證可重用性"]
+- 找過去自己與 AI 的對話紀錄，哪個問題`常常重問`
+- 讓 AI 彙整對話建立 Skill
+- 驗證 Skill 在不同主題也可應用
 [/lab-session]
 
-[lab-session title="🛠️ 實戰演練 8：丟連結就自動歸檔的知識庫管家" duration="20 分鐘" hint="串起 Connector + Project + Skill，寫入前一定先看欄位再核准"]
-- 連接你的 Notion，並指定一個資料庫當知識庫
-- 新建「知識庫管家 Project」，把上面的前置規則貼進指令層
-- 寫好「連結轉知識卡」Skill
-- 貼一個文章連結，觀察它有沒有自動觸發、整理、並請你確認欄位
-- 核准後到 Notion 看那一筆，再貼第二個連結驗證流程穩定
+## 分享 & 匯入 Skill
+
+> **分享驗證過的 Skill，讓成效拓展**
+> 在 `Project 放知識`，`Skill 設計流程`，兩者是互補的。
+> **Project 讓 AI「知道事實」** — 你扮演的角色、品牌規範、產品資訊、專案細節
+> **Skill 讓 AI「知道步驟」** — 寫行銷文案、月報、信件、會議記錄要遵守的 SOP。
+
+### 💾 將 Skill 下載為壓縮檔
+
+![Customize ⭢ Skills ⭢ 下載要分享的 Skill](./assets/claude-skill-download.png)
+
+### 🤝 匯入別人建立好的 Skill
+
+![Customize ⭢ Skills ⭢ Create Skill ⭢ Upload a skill](./assets/claude-skill-upload.png)
+
+![可接受 Markdown 格式、.zip 壓縮檔、.skill 匯出檔](./assets/claude-skill-upload2.png)
+
+[download file="assets/proposal-refiner.skill" label="下載「.skill」範例包" desc="前面用 AI 彙整對話建立的 Skill(生成提案)"]
+
+```prompt [label="驗證匯入的 Skill 可以運作"]
+/proposal-refiner 我要做一份[給傳統產業導入 AI 提升效率]的提案企劃，幫我做到專業可行的程度。
+```
+
+![匯入後嘗試 Skill 可以運作](./assets/claude-skill-upload3.png)
+
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="嘗試下載 & 匯入 Skill"]
+- 將自己完成的 Skill 下載下來
+- 嘗試匯入 `.skill、.zip` 的 Skill
+- 驗證匯入的 Skill 可以使用
 [/lab-session]
+
+
+## 深入認識 Skill
+
+### 🎒 Skill 的結構
+
+[html src="./html/skill-anatomy.html"]
+
+### 🔍 Skill 的三個執行階段
+
+[flow]
+1. Discovery（發現）：AI 讀取技能名稱與描述，判斷是否與任務相關
+2. Activation（啟動）：匹配成功後，才完整讀取整份 Skill 文件
+3. Execution（執行）：根據文件描述逐步執行任務
+[/flow]
+
+> **Skill 為什麼能節省 Token？**
+> Rule 每次都會讀完整文件；Skill 在匹配需求前`只讀標題與描述（Metadata）`。就像 Google 搜尋時先看標題摘要，確認相關再點進去。
+
+### 📝 生成線上講義
+
+[download file="assets/course-page-generator.zip" label="下載「.zip」範例包" desc="輸入主題生成線上講義"]
+
+![複雜 Skill 匯入結構](./assets/claude-course-page-generator.png)
+
+```prompt [label="輸入主題/草稿生成 HTML 講義"]
+/course-page-generator 幫我做一份「Claude Code 從零開始」的課程網頁
+```
+
+![直接生成網頁](./assets/claude-course-page-generator2.png)
+
+[bonus title="🎁 製作心得"]
+這個課程網頁的製作，走過了一段從「結果不可控」到「完全掌控」的歷程。
+
+1. **遇到痛點** — Vibe Coding 出來的網頁，調整內容都要改 HTML，非常不方便
+2. **逆推結構** — 讓 AI 把現有網頁拆解，對應成一套可用 Markdown 撰寫的格式
+3. **內容與版型分離** — 只需改 Markdown，自動套用對應版型，細節完全可控
+4. **設計 Agent Skill** — 不是讓 AI 生成網頁，而是讓 AI 學會「這份 Markdown 怎麼寫」
+5. **模板生成器思維** — AI 負責生成結構化內容，程式再把內容轉成最終網頁
+[/bonus]
+
+[warning title="使用提醒"]
+原本這個 Skill 是設計在 `Claude Code 使用`，直接在 Chat 雖然也能使用，但 `Token 消耗極快`。
+
+如果真的打算使用，`記得把資訊調整成自己的`，另外這個 Skill 的原理，可以參考我過去[拍攝的影片](https://youtu.be/0pZri5f_tfk)。
+[/warning]
+
+## Skill 使用經驗
+
+### 🧩 Skill 不是越多，AI 就越強
+
+`同一類型的 Skill 裝了兩個以上，當需求命中時，常常會一起觸發`；這不只會增加 Token 消耗，也容易讓 AI 在執行過程中卡住或走偏。
+
+**在提示詞的世界裡，1 + 1 不一定大於 2，甚至可能小於 1。**
+
+> **同類型的 Skill，建議擇優安裝一個**
+> 像撰寫行銷文案這類需求，如果同時安裝多個相近 Skill，AI 反而要花更多成本判斷該遵循哪一套規則，結果未必更好。
+
+### 🤔 網路上很多 Skill 只是看起來有用
+
+- 有些 Skill 描述看起來很厲害，實際使用時`效果卻不穩定`
+- 過多的 Skills 只會`增加上下文負擔`，卻沒有提供足夠的專業價值
+- 安裝`太多沒有用到的 Skills` 甚至會讓 AI 的行為變得更難預測
 
 ---
 
