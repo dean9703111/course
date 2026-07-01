@@ -84,13 +84,42 @@
 ### 🔒 調整隱私權限
 
 **建議下載桌面版**: 到[官網下載桌面 App](https://claude.ai/downloads) 可以讓 AI 有更多發揮的地方，比如 `Cowrok 要桌面版才能使用`。
-**操作路徑**: 左下角頭像 → Privacy → 將「Location metadata、Help improve our AI models」關閉
+**操作路徑**: 左下角頭像 → Settings → Privacy → 將「Location metadata、Help improve our AI models」關閉
 
 ![建議關閉，不讓 AI 用於模型訓練](./assets/claude-privacy.png)
+
+### 🧑‍💻 讓 Claude 更了解你
+
+**操作路徑**: 左下角頭像 → Settings → General
+- **What best describes your work?**: 選擇自己的工作（ex: Consultant 顧問）
+- **Instructions for Claude**: 你希望如何與 AI 協作（如無特別需求，空的也可）
+
+```prompt [label="希望如何與 AI 協作的指令"]
+- 回覆兼顧務實性與創新性
+- 討論時邏輯清晰，層次分明
+- 我提供的資訊不足時，適時提出 1 至 2 個反問，引導使用者反思
+```
+
+![Claude 使用偏好設定](./assets/claude-general-setting.png)
+
+### 🦾 賦予 Claude 能力
+
+**操作路徑**: 左下角頭像 → Settings → Capability
+
+#### Memory
+- **Search and reference chats**:  可以從過往對話中搜尋相關詳情
+- **Generate memory from chat history**: 紀錄聊天的上下文，並儲存到到記憶（Memory）
+- **Import memory from other AI providers**: 可以將 ChatGPT、Gemini 等其他 AI 的記憶匯入
+
+![複製 Claude 提供的指令，在其他 AI 工具貼上](./assets/claude-import-memory.png)
+
+#### General
+- **Connector search**: 允許搜尋可用的 Connector 並在對話中使用
 
 [lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="下載桌面 App & 調整隱私權"]
 - 下載[Claude 桌面 App](https://claude.ai/downloads) 
 - 在設定將「Location metadata、Help improve our AI models」關閉
+- 調整 General 設定
 [/lab-session]
 
 ---
