@@ -1,3 +1,12 @@
+[interactive title="AI 使用調查"]
+
+**Q1｜你多常使用 AI？**
+`A` 每天都在用　`B` 每週用幾次　`C` 偶爾想到才用
+
+**Q2｜你最常使用哪一款 AI？**
+`A` ChatGPT　`B` Claude　`C` Gemini
+[/interactive]
+
 # 起手式：AI 的能力，取決於你給它哪些工具
 
 > **為什麼別人的 AI 比我的強？**
@@ -45,7 +54,7 @@
 
 > **提示詞很重要，但不是全部！**
 > 現在 AI 回答問題時，會參考過去你跟他的`聊天記錄`。
-> **操作路徑**: 左下角頭像 → Capabilities → Memory
+> **操作路徑**: 左下角頭像 → Settings → Capabilities → Memory
 
 ![使用越久，AI 會更像自己](./assets/claude-memory.png)
 
@@ -60,6 +69,14 @@
 > **人類比 AI 更像機器人**
 > 人類的價值在於`決策`，而不是這些`瑣碎、重複`的任務上
 > **如果這些痛點讓你感到共鳴，相信這堂課可以給您帶來幫助。**
+
+[interactive title="AI 付費狀況"]
+**Q1｜目前有付費訂閱 AI 嗎？**
+`A` 有，公司出　`B` 有，自己買　`C` 曾付費但取消了
+
+**Q2｜有付費的話，訂閱了哪些？**
+`A` ChatGPT　`B` Claude　`C` Gemini　`D` 兩個以上
+[/interactive]
 
 ## 了解使用時機、合作方式
 
@@ -115,6 +132,8 @@
 
 ![複製 Claude 提供的指令，在其他 AI 工具貼上](./assets/claude-import-memory.png)
 
+![指令貼到 ChatGPT 範例，但不建議將輸出結果全部採納](./assets/claude-import-memory2.png)
+
 #### General
 - **Connector search**: 允許搜尋可用的 Connector 並在對話中使用
 
@@ -148,7 +167,7 @@
 
 ![將 Gmail 加入 Connector](./assets/claude-gmail.png)
 
-![建議先勾選前兩個，熟悉後再全選](./assets/claude-gmail-permissions.png)
+![建議先勾選前兩個，熟悉後再全選(最下面有丟垃圾桶、標示垃圾郵件的功能)](./assets/claude-gmail-permissions.png)
 
 ![讀取的權限預設為允許，寫入刪除則會詢問](./assets/claude-gmail-permissions-list.png)
 
@@ -260,7 +279,7 @@
 建立事件前，請先提供草稿讓我過目
 ```
 
-![兩個 Connectors 的綜合運用](./assets/claude-calendar-gmail.png)
+![兩個 Connectors 的綜合運用(目前 AI 辨識週幾有時會錯)](./assets/claude-calendar-gmail.png)
 
 ![確認行程建立成功](./assets/claude-calendar-create.png)
 
@@ -365,7 +384,7 @@ Notion 是一款整合`筆記、資料庫、Wiki` 的工具，很多團隊用它
 
 ![將 Notion 加入 Connector](./assets/claude-notion.png)
 
-![可透過 Gmail 註冊，一開始會有引導頁面](./assets/notion-guide.png)
+![可透過 Gmail 註冊，一開始會有引導頁面(下面的協助改善、寄信可以不用勾)](./assets/notion-guide.png)
 
 ![選擇免費版即可](./assets/notion-free.png)
 
@@ -400,6 +419,14 @@ Notion 是一款整合`筆記、資料庫、Wiki` 的工具，很多團隊用它
 [/lab-session]
 
 ---
+
+[interactive title="你都請 AI 幫你做什麼？"]
+**Q1｜你最常請 AI 幫忙做什麼？**
+`A` 寫文案、信件　`B` 整理資料、做摘要　`C` 查資料、學新東西　`D` 寫程式、處理表格
+
+**Q2｜AI 給的結果，通常可以直接用嗎？**
+`A` 幾乎直接用　`B` 小改一下就能用　`C` 要大改才能用　`D` 常常乾脆自己來
+[/interactive]
 
 # 建立專屬知識庫：建立 Project 不必每次重講背景
 
