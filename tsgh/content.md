@@ -746,6 +746,20 @@ AI 時代每天都有新工具、更強的模型。如果目標是「學會工�
 
 ![直接生成圖卡](./assets/claude-ig-card-generator2.png)
 
+### 我是一個很貪心的工程師
+
+> **不同身份讓我更深挖 AI 的潛力**
+> 我這個人很貪心，本業是工程師，副業是講師、作家、YouTuber。
+> 所以我持續嘗試`更有效率的工作方式`。
+> 不是我的時間比別人多，而是把`重複性的任務`都交給 AI 處理，把自己留給`真正需要判斷的事`。
+
+[flow]
+1. 辨識重複任務 — 把工作中`重複性高、做法固定`的部分挑出來
+2. 交給 AI 處理 — 整理成 SOP（Skill），讓 AI 照規則自動完成
+3. 專注親自判斷 — 只做真正有意義、`需要我做決策`的事，並驗證 AI 的成果
+4. 嘗試新工具 — 持續尋找`更有效率的做法`，讓這個循環越轉越快
+[/flow]
+
 ### 🧩 Skill 不是越多，AI 就越強
 
 `同一類型的 Skill 裝了兩個以上，當需求命中時，常常會一起觸發`；這不只會增加 Token 消耗，也容易讓 AI 在執行過程中卡住或走偏。
@@ -896,6 +910,16 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 > **工具有差異，但沒有想像中的大**
 > **三大巨頭你追我趕**：一家出新功能，另外兩家很快跟上，`大部分功能都有對標產品`。
 
+### 🆚 這堂課為什麼選擇 Cowork 而非 Claude Code？
+
+[flow]
+- Cowork — `不需要安裝環境，有內建的 Sandbox`（Linux 環境），打開就能開始做事
+- Claude Code — `需要安裝 Git/nvm/Node.js/Python/IDE(程式碼編輯器)...` 等多個工具，AI 才能順利做事
+[/flow]
+
+> **選擇門檻低的工具，把心力留給解決問題**
+> Claude Code 建議在`終端機下指令`，相對門檻較高，可以作爲未來的學習項目；而 Cowork 打開就能用。
+
 ## 從自己的需求出發
 
 ### 🐛 Vibe Coding 遇到錯誤是很正常的
@@ -972,73 +996,6 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 > 但這些成品不是「靠一句話就能生成」，**中間有方法、有風險、也有失敗**。這些都是`今天要分享的重點`。
 > 另外就算指令相同，`每次生成的結果都會有差異`，因為生成式 AI 的本質是「文字接龍」。
 
-## AI 的能力是全方位的
-
-> **不同身份讓我更深挖 AI 的潛力**
-> 我這個人很貪心，本業是工程師，副業是講師、作家、YouTuber。
-> 所以我持續嘗試`更有效率的工作方式`。
-
-### 📥 可以下載講者 GitHub 範例練習
-
-[下載或 Fork 練習用 Repository](https://github.com/deancourse/tsgh) 後，可以跟著課程進度操作
-
-```terminal [label="下載範例 Repository"]
-git clone git@github.com:deancourse/tsgh.git
-cd tsgh
-```
-
-> **這堂課為什麼選擇 Cowork 而非 Claude Code？**
-> 因為 Cowork `不需要安裝環境，有內建的 Sandbox`（Linux 環境）
-> 而 Claude Code `需要安裝 Git/nvm/Node.js/Python/IDE(程式碼編輯器)...` 等多個工具，AI 才能順利做事；且需要在終端機下指令，門檻較高
-
-### 🤖 可以使用不同的 AI Agent
-
-每個 AI Agent 的路徑稍不同，可以使用 [dotagents](https://github.com/dean9703111/dotagents) 來協助建立 symlinks。
-
-```prompt [label="將 Agent Skills 同步到指定的 AI Agent"]
-npx @dean9703111/dotagents
-```
-
-![選擇要使用的 AI Agent(ex: Claude Code)](./assets/dotagents.png)
-
-### 📝 輸入主題生成線上講義
-
-```prompt [label="觸發 Skill 就會使用對應的 Template"]
-幫我做一份「Claude Cowork 從零開始」的課程網頁
-```
-
-![輸入主題生成的課程網頁](./assets/course-page-generator-topic-web.png)
-
-[bonus title="🎁 製作心得"]
-這個課程網頁的製作，走過了一段從「結果不可控」到「完全掌控」的歷程。
-
-1. **遇到痛點** — Vibe Coding 出來的網頁，調整內容都要改 HTML，非常不方便
-2. **逆推結構** — 讓 AI 把現有網頁拆解，對應成一套可用 Markdown 撰寫的格式
-3. **內容與版型分離** — 只需改 Markdown，自動套用對應版型，細節完全可控
-4. **設計 Agent Skill** — 不是讓 AI 生成網頁，而是讓 AI 學會「這份 Markdown 怎麼寫」
-5. **模板生成器思維** — AI 負責生成結構化內容，程式再把內容轉成最終網頁
-[/bonus]
-
-### 📝 課程提案 PDF
-
-[download file="assets/course-page-generator.zip" label="下載範例包" desc="輸入主題生成線上講義"]
-
-```prompt [label="生成 PDF 格式提案"]
-把 proposal/example.md 這份課綱寫成提案，客戶是「黑寶科技」
-```
-
-![生成的提案 PDF](./assets/proposal-writer-pdf.png)
-
-### 🔉 讀取音訊轉成逐字稿
-
-[download file="assets/course-page-generator.zip" label="下載範例包" desc="輸入主題生成線上講義"]
-
-```prompt [label="比對到關鍵字更容易觸發 Skill"]
-把 audio/audio-example.m4a 轉成 SRT 字幕
-```
-
-![觸發 audio-to-srt 的 Skill](./assets/audio-to-srt.png)
-
 [interactive title="你的『AI 焦慮』指數"]
 **Q1｜看到一堆新工具、新名詞冒出來，你的第一反應是？**
 `A` 興奮，想趕快學　`B` 焦慮，怕跟不上　`C` 無感，先觀望
@@ -1056,7 +1013,7 @@ npx @dean9703111/dotagents
 
 ### 😰 出現新名詞很焦慮
 
-Hermes Agent、Agency Agent、HyperFrames、Guardrails AI...
+Hermes Agent、loop engineering、Agency Agent、HyperFrames、...
 
 [flow]
 1. 先觀察一段時間 - 工具剛推出時往往不完善、沒有教學，上手難度也高
@@ -1073,6 +1030,19 @@ Hermes Agent、Agency Agent、HyperFrames、Guardrails AI...
 - 滑社群覺得人人都是 AI 大神，自己一試卻`處處碰壁`
 - 網路上漂亮的展示，是`精心挑選過`的結果，不是日常
 - 教學看不懂不代表你不行，很多時候只是每個人的`背景與基礎`不一樣
+
+#### 漂亮精美的網頁其實是框架的功勞：[Magic](https://magicui.design/)、[Aceternity](https://ui.aceternity.com/)
+
+![Magic UI 官網](./assets/framework.png)
+
+#### 一堆 AI Agent 同時執行，未必會更好
+
+![問題不一定能解決，但 Token 消耗很快](./assets/terminal.png)
+
+> **導入 AI，不代表全交給 AI**  
+> 把`AI 能做到的事`跟`人必須負責的判斷`分清楚。
+> 讓 AI Agent 執行很久，不一定最強；我不認為對專案毫無掌控度是件好事。
+> **好的結果，不該靠消耗 Token 拼運氣；而是靠清楚的方向、可重複的工作流、以及人類在關鍵節點的決策。**
 
 ### 🔄 經驗不會歸零，只是換了賽道
 
@@ -1253,17 +1223,7 @@ Hermes Agent、Agency Agent、HyperFrames、Guardrails AI...
 > **看起來能動的東西，才是最危險的**
 > AI 的快，不是你的快；AI 的錯，卻全部算在你頭上。所以每一個關鍵節點，都需要人來把關。
 
----
-
-[interactive title="你手上的『瑣事』"]
-**Q1｜下面哪種重複工作，最吃掉你的時間？**
-`A` 報表／數據整理　`B` 排班／人力調配　`C` 交班／紀錄文書　`D` 每種都有
-
-**Q2｜這些事你現在主要靠什麼做？**
-`A` 純手工　`B` Excel 公式　`C` 現成系統（但很難用）
-[/interactive]
-
-# 案例一：月報表自動化，把一個下午變成雙擊一下
+# 報表自動化：把一個下午變成雙擊一下
 
 > 回到開場那份月報表，我用 Cowork 從零做給你看——重點不是程式，是「怎麼跟 AI 協作、怎麼驗證」。
 
@@ -1400,7 +1360,7 @@ Word 部分初步符合預期，但是 Excel 依舊打不開，我希望你可�
 
 ---
 
-# 案例二：護理師排班，從排一整天變成「AI 排、你校準」
+# 護理師排班：從排一整天變成「AI 排、你校準」
 
 > 這題比月報表難得多——它是一個「有很多硬規則要同時滿足」的問題。我要示範的不是「一鍵排出完美班表」，而是「怎麼跟 AI 一起逼近、並且抓出違規」。
 
