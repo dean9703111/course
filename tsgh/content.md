@@ -111,9 +111,10 @@
 
 ### 🦾 賦予 Claude 能力
 
-**操作路徑**: 左下角頭像 → Settings → Capability
-
 #### Memory
+
+**操作路徑**: 左下角頭像 → Settings → Memory
+
 - **Search and reference chats**:  可以從過往對話中搜尋相關詳情
 - **Generate memory from chat history**: 紀錄聊天的上下文，並儲存到到記憶（Memory）
 - **Import memory from other AI providers**: 可以將 ChatGPT、Gemini 等其他 AI 的記憶匯入
@@ -122,7 +123,10 @@
 
 ![指令貼到 ChatGPT 範例，但不建議將輸出結果全部採納](./assets/claude-import-memory2.png)
 
-#### General
+#### Capability
+
+**操作路徑**: 左下角頭像 → Settings → Capability
+
 - **Connector search**: 允許搜尋可用的 Connector 並在對話中使用（ex: Gmail、Google Calendar...）
 
 ## Connector：讓 AI 操作外部工具
@@ -134,12 +138,10 @@
 
 ### 🚀 前往 Connector 加入常用工具
 
-**操作路徑**: Customize → Connectors
+**操作路徑**: 左下角頭像 → Connectors
 **常用工具**: Gmail、Google Calendar、Google Drive、Notion
 
 ![將常用工具加入 Connector](./assets/claude-connector.png)
-
-![根據自身需求調整給予 AI 的權限](./assets/claude-gmail-permissions.png)
 
 ![讀取的權限預設為允許，寫入刪除則會詢問(如果沒有顯示，右上角「...」選擇「Refresh tools list」)](./assets/claude-gmail-permissions-list.png)
 
@@ -392,7 +394,7 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 
 [warning title="上傳前，先過個資這一關"]
 放進 Project 的文件，`等於交給外部 AI 服務處理`。
-會議記錄、規格書若含`病人或員工的可識別資訊`，請先`去識別化`，或依院內規範取得核准後再上傳——這就是指引說的「資料保護評估」精神。
+會議記錄、規格書若含`病人或員工的可識別資訊`，請先`去識別化`，或依院內規範取得核准後再上傳，**這就是指引說的「資料保護評估」精神**。
 [/warning]
 
 ![解壓縮後，可以用拖拉的方式放入專案](./assets/claude-project-files.png)
@@ -442,6 +444,11 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 > 有時 AI 遇到`文件沒寫的事會自己編`，讓你誤信。
 > 在 Project 的`指令`要求他誠實說「目前文件沒有記錄」，可以**大幅減少幻覺**。
 
+## Skill：把好方法變成 SOP
+
+> **Skills 的出現，讓 AI 的價值可以持續累積**
+> 需要重複執行的流程，都值得設計成 Skill
+
 ### 🤯 流程都在某個人腦袋裡
 
 [flow]
@@ -458,16 +465,11 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 - **規則改了，舊版本卻沒跟著改** - 新增一個`禁用詞`、調整了`品牌語氣`，但同樣的 Prompt 已經`被複製到十個 Projects`；漏改一處，錯的版本就`默默繼續產出`。
 [/flow]
 
-## Skill：把好方法變成 SOP
-
-> **Skills 的出現，讓 AI 的價值可以持續累積**
-> 需要重複執行的流程，都值得設計成 Skill
-
 ### 📝 建立工作日誌 Skill
 
 Skill `不需要`全程自己`手動建立`，可以先透過 Claude 內建的 `skill-creator` 來生成。
 
-![Customize → Skills → skill-creator](./assets/claude-skill-creator.png)
+![Skills → skill-creator](./assets/claude-skill-creator.png)
 
 #### 參考資訊來建立 Skill
 
@@ -602,11 +604,11 @@ Skill 建立完成後，有 2 種方式觸發：
 
 #### 將 Skill 下載為壓縮檔
 
-![Customize ⭢ Skills ⭢ 下載要分享的 Skill](./assets/claude-skill-download.png)
+![Skills ⭢ 選擇下載要分享的 Skill](./assets/claude-skill-download.png)
 
 #### 匯入別人建立好的 Skill
 
-![Customize ⭢ Skills ⭢ Create Skill ⭢ Upload a skill](./assets/claude-skill-upload.png)
+![Skills ⭢ Add ⭢ Upload a skill](./assets/claude-skill-upload.png)
 
 ![可接受 Markdown 格式、.zip 壓縮檔、.skill 匯出檔](./assets/claude-skill-upload2.png)
 
@@ -873,6 +875,8 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 
 ### 我過去分享了十幾部教學影片
 
+**系列影片教學**: https://www.youtube.com/playlist?list=PLWWZkn1dW3eAvSZfJv0-02q27JIsfbN2f
+
 [youtube id="2hbYCe_E5aU" title="Vibe Coding 學習地圖"]
 
 ![如果課後想深入研究，這一套體系學習下來，會有更全面的認知喔](./assets/youtube-playlist.png)
@@ -949,7 +953,7 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 [flow]
 - 別再做「記帳軟體、番茄鐘」這類專案了 — 儘管 AI 能幫你輕鬆搞定，`但缺少挫折的練習幫助有限`，因為思考解決問題的步驟最為珍貴。
 - 從「日常工作」的痛點出發 - 你有能力`分辨對錯`，並且在遇到錯誤時`不會輕易放棄、有解決的動力`
-- 陌生領域你不知道 AI 犯錯 - AI 有能力做出`看起來正確的產品`，就像我一開始做月報、排版工具時以為是對的；但`護理長試用後馬上就能點出問題`
+- 陌生領域你不知道 AI 犯錯 - AI 有能力做出`看起來正確的產品`，就像我一開始做月報、排版工具時以為是對的；但`護理長試用後馬上就發現問題`
 [/flow]
 
 > **課前訪談小故事**
@@ -1603,7 +1607,7 @@ Excel 依舊打不開，我希望你可以扮演專業的 JS 工程師來確認�
 4. 拿到網址 — 等 1～2 分鐘，工具就有了專屬網址
 [/flow]
 
-## 上了 GitHub，還能讓 Claude 接手優化
+## 讓 Claude Code 接手優化
 
 ### 💻 Claude App 的「Code」功能
 
@@ -1611,7 +1615,7 @@ Excel 依舊打不開，我希望你可以扮演專業的 JS 工程師來確認�
 
 - 在 Claude App 點選「**Code**」，選擇`要連接的 GitHub 專案`
 - 用文字描述你想要的優化，Claude 會`讀懂專案裡的程式`後給出做法
-- 確認後讓它動工，`改好的版本會直接更新回 GitHub`——Pages 網址不變，`工具自動變成新版`
+- 確認後讓它動工，`改好的版本會直接更新回 GitHub`，網址不變，`工具自動變成新版`
 - 就算改壞了也不怕，`每一版都在 GitHub 留著`，隨時退得回去
 
 ![在 Claude App 的 Code 功能中，選擇要連接的 GitHub 專案](assets/claude-code-github.png)
