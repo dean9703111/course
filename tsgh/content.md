@@ -1642,6 +1642,29 @@ Claude 改好的內容會先放在`另一條草稿分支`上，不會直接動�
 - 未來想完成`更複雜的功能`，還是要回到`終端機（地端）搭配程式碼編輯器`的方式處理，而不是單純靠雲端
 [/warning]
 
+### 🚀 把範例帶回家：Fork ＋ Clone 後用編輯器開啟
+
+- **月報表範例**: https://github.com/dean9703111/nurse-shift-scheduler
+- **排班範例**: https://github.com/dean9703111/hospital-monthly-report
+
+#### STEP 1：先 Fork 複製一份到自己帳號
+
+- 打開範例專案，點右上角的「**Fork**」→「**Create fork**」
+- GitHub 會把整個專案`複製一份到你的帳號底下`
+- Fork 出來的專案，一樣可以照前面的方式`開啟 GitHub Pages、用 Claude App 的 Code 功能連接`
+
+#### STEP 2：把專案 Clone 下載到自己電腦
+
+- 在你 Fork 後的專案頁面，點綠色的「**Code**」按鈕，`複製 HTTPS 網址`
+- 打開免費的程式碼編輯器 **VS Code**（https://code.visualstudio.com），在歡迎頁點「**Clone Git Repository...**」
+- 貼上剛剛複製的網址、`選一個資料夾存放`，VS Code 就會把專案完整下載並直接開啟
+- 如果只是想先看看、不想安裝任何軟體，也可以在「**Code**」按鈕裡選「**Download ZIP**」直接下載壓縮檔
+
+#### STEP 3：接上地端的 Claude Code
+
+- 專案到了自己電腦上，就能`用 VS Code 的終端機`啟動 Claude Code，進行更複雜的功能優化
+- 改完的版本一樣可以`推回 GitHub`，網址不變，工具自動更新成新版
+
 ---
 
 # 📌 課程總結
