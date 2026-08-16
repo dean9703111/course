@@ -1,0 +1,29 @@
+# ===================================================
+# 睿華國際（BiCS）× 中華培訓 — 生成式 AI 應用與實務工作導入（二）
+# 只寫需要覆蓋 global config 的欄位
+# ===================================================
+
+page:
+  title: "生成式 AI 應用與實務工作導入（二）：內容產出與工作應用"
+  badge: "睿華國際 × 中華培訓 - 2"
+  hero_title: "生成式 AI 應用與實務工作導入<br>第二階：內容產出與工作應用"
+  subtitle: "ChatGPT 企劃、Gamma 簡報、Claude Skill、Gemini 視覺素材——把想法變成拿得出手的產出"
+
+seo:
+  title: "生成式 AI 應用與實務工作導入（二）｜睿華國際 × 中華培訓"
+  description: "用 ChatGPT 優化文案與簡報大綱、Gamma 與 Claude Skill 生成簡報、Gemini 製作封面海報與示意圖——AI 行銷內容工作流的第二階"
+  image: "https://deanlin.net/course/bics/lesson2/assets/og-image.jpg"
+  url: "https://deanlin.net/course/bics/lesson2/"
+
+# ---------------------------------------------------
+# 引言
+# ---------------------------------------------------
+quotes:
+  opening:
+    text: "AI 負責把東西做出來，<br>你負責決定什麼值得做。"
+  closing:
+    text: >
+      你現在使用的 AI，將會是歷史上最弱的 AI。<br>
+      與其追最新的工具，不如把一門工具學扎實，讓它真正進入你的工作流。
+
+# nav 預設從 content.md 的 # 章節自動產生
