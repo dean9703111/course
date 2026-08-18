@@ -1,17 +1,17 @@
 # ===================================================
-# 睿華國際（BiCS）× 中華培訓 — 生成式 AI 應用與實務工作導入（一）
+# 睿華國際（BiCS） — 生成式 AI 應用與實務工作導入（一）
 # 只寫需要覆蓋 global config 的欄位
 # ===================================================
 
 page:
-  title: "生成式 AI 應用與實務工作導入（一）：AI 基礎與需求釐清"
-  badge: "睿華國際 × 中華培訓 - 1"
-  hero_title: "生成式 AI 應用與實務工作導入<br>第一階：AI 基礎與需求釐清"
-  subtitle: "認識生成式 AI、用 ChatGPT 釐清需求、透過 NotebookLM 整理資料——先想清楚，再動手做"
+  title: "生成式 AI 應用與實務工作導入（一）"
+  badge: "睿華國際（BiCS）"
+  hero_title: "生成式 AI 應用與實務工作導入"
+  subtitle: "認識生成式 AI、用 ChatGPT 釐清需求、透過 NotebookLM 整理資料"
 
 seo:
-  title: "生成式 AI 應用與實務工作導入（一）｜睿華國際 × 中華培訓"
-  description: "從生成式 AI 應用認識、ChatGPT 需求釐清到 NotebookLM 知識庫——建立 AI 行銷內容工作流的第一階"
+  title: "生成式 AI 應用與實務工作導入（一）｜睿華國際"
+  description: "認識生成式 AI、用 ChatGPT 釐清需求、透過 NotebookLM 整理資料"
   image: "https://deanlin.net/course/bics/lesson1/assets/og-image.jpg"
   url: "https://deanlin.net/course/bics/lesson1/"
 
@@ -23,7 +23,7 @@ quotes:
     text: "工作不會因為 AI 的出現而消失，<br>但會因為 AI 的出現而改變。"
   closing:
     text: >
-      這一堂學會「想清楚」，下一堂學會「做出來」。<br>
+      這一堂學會「想清楚」，下一堂實際「做出來」。<br>
       帶著你的 AI 助手與知識庫，我們第二堂見。
 
 # nav 預設從 content.md 的 # 章節自動產生
