@@ -7,11 +7,11 @@ page:
   title: "生成式 AI 應用與實務工作導入（一）"
   badge: "睿華國際（BiCS）"
   hero_title: "生成式 AI 應用與實務工作導入"
-  subtitle: "認識生成式 AI、用 ChatGPT 釐清需求、透過 NotebookLM 整理資料"
+  subtitle: "認識生成式 AI、用 ChatGPT 釐清需求、透過 Gemini Notebook 整理資料"
 
 seo:
   title: "生成式 AI 應用與實務工作導入（一）｜睿華國際"
-  description: "認識生成式 AI、用 ChatGPT 釐清需求、透過 NotebookLM 整理資料"
+  description: "認識生成式 AI、用 ChatGPT 釐清需求、透過 Gemini Notebook 整理資料"
   image: "https://deanlin.net/course/bics/lesson1/assets/og-image.jpg"
   url: "https://deanlin.net/course/bics/lesson1/"
 
