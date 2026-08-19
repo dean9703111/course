@@ -1100,9 +1100,5 @@ ChatGPT 是真的會`建立行程`，行程也會`出現在參與人日曆`，�
 - **透過 Gemini 製作簡報封面、活動海報與流程示意圖**：Nano Banana 搞定視覺素材
 - **Google Workspace AI 應用方法**：Gemini 在 Docs、Sheets、Notebook 的整合應用
 
-> **未來早就到了，只是還沒平均分配**
-> 同一間辦公室裡，有人用 AI 一天做完一週的事，有人還在手動複製貼上。
-> **差距不在工具，在用法。**
-
 [qa-session title="Q&A 時間"]
 [/qa-session]
