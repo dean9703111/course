@@ -156,12 +156,50 @@
 | 語音功能 | ✅ | ✅ | ✅ 中文辨識較差 |
 | 讓 AI 操作電腦 | Codex | Antigravity | [[orange:付費]]Cowork |
 
+### 🧪 動手比較：同一個需求，三家怎麼做
+
+> **同樣是「打造專屬 AI 助手」，三家的入口和名字都不同**
+> 切換下面的分頁，比較 ChatGPT、Gemini、Claude 各自的操作路徑。
+
+### [ChatGPT] 用 GPTs 打造專屬助手
+
+- 點左側「探索 GPT」→「建立」
+- 在 `Create` 對話框用自然語言描述助手的角色與任務
+- 切到 `Configure` 補上名稱、指令、知識檔案
+- 儲存後從側欄隨時呼叫，或分享連結給同事
+
+![在 GPTs 的 Configure 分頁填寫名稱、指令與知識檔案](assets/chatgpt-gpts-configure.png)
+
+> ChatGPT 的 GPTs 適合把「反覆會用到的角色」固定下來，例如客服回覆、文案潤稿。
+
+### [Gemini] 用 Gems 打造專屬助手
+
+- 打開 Gemini 左下角「Gems 管理員」→「新增 Gem」
+- 填入名稱與指令，描述你希望它扮演的角色
+- 可上傳參考檔案，讓它回答時有依據
+- 儲存後在對話框上方直接選用該 Gem
+
+![在 Gems 管理員新增 Gem 並填寫名稱與指令](assets/gemini-gems-create.png)
+
+> Gems 與 Google Workspace 綁得深，適合本來就重度使用 Gmail、雲端硬碟的人。
+
+### [Claude] 用 Projects 打造專屬助手
+
+- 在左側「Projects」點「Create Project」
+- 於 `Project knowledge` 上傳文件，作為長期參考資料
+- 在 `Custom instructions` 寫下固定的角色與輸出規則
+- 之後在專案內開對話，都會自動帶入上述設定
+
+![在 Claude Projects 設定 Project knowledge 與 Custom instructions](assets/claude-projects-setup.png)
+
+> Claude 的 Projects 以「知識庫＋固定指令」見長，適合需要長期累積資料的專案。
+
 ### 📚 Gemini Notebook：資料彙整的行家
 
 #### 官網：https://notebook.google.com/
 
 [image-text position="right" width="40"]
-![Gemini Notebook 官方網站](assets/site-Gemini Notebook.png)
+![Gemini Notebook 官方網站](assets/site-notebooklm.png)
 - **接受多種資料格式**：網頁連結、音訊、文件（PDF / txt / Markdown）、YouTube 連結、Google 雲端硬碟
 - **快速整合、搜尋大量資料**：會議記錄、人物訪談、員工守則、需求規格都能透過問答取得
 - **有來源不代表答案正確**：答案受來源品質影響，仍可能誤判、回答不全面

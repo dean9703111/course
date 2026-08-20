@@ -307,7 +307,6 @@
       font-weight: 700;
       line-height: 1.35;
       letter-spacing: .1em;
-      text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 1rem;
     }
@@ -395,11 +394,28 @@
       content: '';
       position: absolute;
       left: 0;
-      top: .7em;
-      width: 5px;
-      height: 5px;
+      top: calc((1lh - 7px) / 2);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--accent2)
+    }
+
+    .card ul ul {
+      margin: .4rem 0 .2rem
+    }
+
+    .card ul ul li {
+      font-size: .9rem;
+      margin-bottom: .3rem
+    }
+
+    .card ul ul li::before {
+      top: calc((1lh - 5px) / 2);
+      width: 5px;
+      height: 5px;
+      background: transparent;
+      border: 1px solid var(--accent2)
     }
 
     .card p {
@@ -502,11 +518,28 @@
       content: '';
       position: absolute;
       left: 0;
-      top: .7em;
-      width: 5px;
-      height: 5px;
+      top: calc((1lh - 7px) / 2);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--accent2);
+    }
+
+    .group-body ul ul {
+      margin: .4rem 0 .2rem;
+    }
+
+    .group-body ul ul li {
+      font-size: .9rem;
+      margin-bottom: .3rem;
+    }
+
+    .group-body ul ul li::before {
+      top: calc((1lh - 5px) / 2);
+      width: 5px;
+      height: 5px;
+      background: transparent;
+      border: 1px solid var(--accent2);
     }
 
     /* ===== INLINE CODE ===== */
@@ -545,9 +578,9 @@
       content: '';
       position: absolute;
       left: 0;
-      top: .7em;
-      width: 6px;
-      height: 6px;
+      top: calc((1lh - 7px) / 2);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--accent2)
     }
@@ -776,9 +809,9 @@
       content: '';
       position: absolute;
       left: 0;
-      top: .75em;
-      width: 5px;
-      height: 5px;
+      top: calc((1lh - 7px) / 2);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--accent3)
     }
@@ -824,9 +857,9 @@
       content: '';
       position: absolute;
       left: 0;
-      top: .75em;
-      width: 5px;
-      height: 5px;
+      top: calc((1lh - 7px) / 2);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--accent2);
     }
@@ -923,6 +956,93 @@
       .flow-step:hover {
         transform: none;
       }
+    }
+
+    /* ===== CASE（情境→痛點→方案）：外框沿用 group-block ===== */
+    .case-flow {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-step {
+      --step-rgb: 100 160 240;
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: .9rem;
+      padding: .55rem 0;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .case-step--pain {
+      --step-rgb: 235 150 60;
+    }
+
+    .case-step--solution {
+      --step-rgb: 76 175 80;
+    }
+
+    .case-step__label {
+      box-sizing: border-box;
+      flex-shrink: 0;
+      width: 3.6rem;
+      height: 1.65rem;
+      line-height: 1.13rem;
+      text-align: center;
+      padding: .25rem 0;
+      border-radius: 100px;
+      font-size: .75rem;
+      font-weight: 600;
+      color: rgb(var(--step-rgb));
+      border: 1px solid rgb(var(--step-rgb) / .35);
+      background: rgb(var(--step-rgb) / .08);
+    }
+
+    /* 連接線：從本段膠囊底端一路畫到下一顆膠囊頂端（膠囊高度固定，內文再多行也不斷） */
+    .case-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: calc(1.8rem - 1px);
+      top: 2.2rem;
+      bottom: -0.55rem;
+      width: 2px;
+      background: rgb(var(--step-rgb) / .3);
+    }
+
+    .case-step__body {
+      flex: 1;
+      min-width: 0;
+      padding-top: .25rem;
+      font-size: .95rem;
+      color: var(--text-dim);
+    }
+
+    .case-step__body p {
+      margin: 0 0 .35rem;
+    }
+
+    .case-step__body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .case-step__body li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: .4rem;
+    }
+
+    .case-step__body li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: calc((1lh - 7px) / 2);
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgb(var(--step-rgb));
     }
 
     /* ===== CLASS TIMELINE ===== */
@@ -1293,7 +1413,7 @@
     .image-text {
       display: flex;
       gap: 2rem;
-      align-items: flex-start;
+      align-items: center;
       margin: 1.5rem 0;
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -1311,10 +1431,12 @@
     }
 
     .image-text__img img {
-      width: 100%;
+      display: block;
+      max-width: 100%;
       height: auto;
+      max-height: 600px;
+      margin-inline: auto;
       border-radius: 8px;
-      object-fit: cover
     }
 
     .image-text__body {
@@ -1350,9 +1472,9 @@
       content: '';
       position: absolute;
       left: 0;
-      top: .65em;
-      width: 6px;
-      height: 6px;
+      top: calc((1lh - 7px) / 2);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--accent)
     }
@@ -1367,6 +1489,72 @@
       .image-text__img {
         flex: none;
         max-width: 100%
+      }
+    }
+
+    /* ===== GALLERY（等高相簿：高度統一、寬度依比例自動） ===== */
+    .gallery {
+      --gallery-h: 480px;
+      display: flex;
+      gap: 1rem;
+      margin: 1.5rem 0;
+      align-items: flex-start;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      padding-bottom: .75rem;
+      scrollbar-width: thin;
+    }
+
+    /* 總寬未超出時置中；超出時保持可捲動（margin:auto 不會產生 justify-content:center 的裁切問題） */
+    .gallery__item:first-child {
+      margin-left: auto;
+    }
+
+    .gallery__item:last-child {
+      margin-right: auto;
+    }
+
+    .gallery__item {
+      flex: 0 0 auto;
+      margin: 0;
+      text-align: center;
+      scroll-snap-align: start;
+    }
+
+    .gallery__item img {
+      display: block;
+      height: var(--gallery-h);
+      width: auto;
+      max-width: min(80vw, 640px);
+      object-fit: contain;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .gallery__item figcaption {
+      margin-top: .5rem;
+      font-size: .8rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    @media(max-width:900px) {
+      .gallery {
+        --gallery-h: 380px;
+      }
+    }
+
+    @media(max-width:600px) {
+      .gallery {
+        --gallery-h: 300px;
+      }
+    }
+
+    @media print {
+      .gallery {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        --gallery-h: 300px;
       }
     }
 
@@ -1407,6 +1595,46 @@
       color: rgb(100 160 240)
     }
 
+    /* ===== INLINE TAG（行內標籤 [[color:text]]） ===== */
+    .inline-tag {
+      display: inline-block;
+      padding: .05rem .5rem;
+      margin: 0 .1rem;
+      border-radius: 100px;
+      font-size: .72em;
+      font-weight: 600;
+      line-height: 1.5;
+      vertical-align: .1em;
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      background: rgb(128 128 128 / .08);
+    }
+
+    .inline-tag.green {
+      border-color: rgb(76 175 80 / .35);
+      color: rgb(76 175 80);
+      background: rgb(76 175 80 / .08);
+    }
+
+    .inline-tag.orange {
+      border-color: rgb(235 150 60 / .35);
+      color: rgb(235 150 60);
+      background: rgb(235 150 60 / .08);
+    }
+
+    .inline-tag.purple {
+      border-color: rgb(171 104 210 / .35);
+      color: rgb(171 104 210);
+      background: rgb(171 104 210 / .08);
+    }
+
+    .inline-tag.blue {
+      border-color: rgb(100 160 240 / .35);
+      color: rgb(100 160 240);
+      background: rgb(100 160 240 / .08);
+    }
+
     /* ===== CHECKLIST ===== */
     .checklist {
       list-style: none;
@@ -1414,18 +1642,21 @@
       margin: 1rem 0
     }
 
-    .checklist li {
+    /* double-class 拉高權重，避免被 .card / .group-body 等容器的 ul li 圓點規則蓋過 */
+    .checklist.checklist li {
       display: flex;
       align-items: baseline;
       gap: .6rem;
       padding: .5rem 0;
+      margin: 0;
       font-size: .9rem;
       color: var(--text-dim);
       border-bottom: 1px solid rgba(255, 255, 255, .04)
     }
 
-    .checklist li::before {
+    .checklist.checklist li::before {
       content: '✓';
+      position: static;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -3193,7 +3424,6 @@
       font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: .1em;
-      text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 1.2rem;
       opacity: .5;
@@ -4994,9 +5224,9 @@
       content: '';
       position: absolute;
       left: 0;
-      top: .75em;
-      width: 5px;
-      height: 5px;
+      top: calc((1lh - 7px) / 2);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--accent)
     }
@@ -7363,6 +7593,22 @@
   <li><strong>封裝</strong>：公司版型、字級、配色規範、每頁資訊密度上限</li>
   <li><strong>效果</strong>：全公司的週報與提案<code>長得像同一家公司出品</code></li>
 </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">📮</span> 下一步：讓 Skill 直接連上你的信箱</div>
+      <div class="group-body">
+        <ul>
+  <li>後續規劃讓 Skill 與 <code>Gmail</code> 串接：AI 直接讀信、擬稿，客訴回信與檔期通知不用再複製貼上</li>
+  <li>串上信箱後，前面的<code>客服應對 Skill</code>才算真正落地——從「幫你寫」升級成「幫你回」</li>
+</ul>
+        <div class="warning">
+      <div class="warning-title">⚠️ 使用 Microsoft 365 的公司請注意</div>
+      <p>若公司信箱走 <code>Microsoft 365</code>，想讓 AI 串接 <code>Outlook</code> 與 <code>Calendar</code>，必須先請 IT 人員開啟對應權限——沒開權限是連不通的。</p>
+    </div>
       </div>
     </div>
   </div>

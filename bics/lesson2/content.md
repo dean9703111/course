@@ -405,19 +405,9 @@
 
 ---
 
-# Claude Skill 篇：把工作流變成可重複使用的能力
+# Skill 篇：把工作流變成可重複使用的能力
 
 > 不想每次都重新講一次需求？把「你怎麼做事」寫成 AI 的 SOP 手冊——一次建立、全團隊重複使用，順手還能直接產出可編輯的 PPT。
-
-## 前置設定：關閉 Claude 改善模型選項
-
-### 🔒 三步驟關閉資料訓練
-
-1. 登入 https://claude.ai/
-2. 點擊左下角的個人頭像，選擇「Settings」
-3. 找到「Privacy」分頁，將「Help improve Claude」關閉
-
-![關閉 Help improve Claude 的設定位置](assets/c130-i124.png)
 
 ## 為什麼要建立 Skills？
 
@@ -433,7 +423,17 @@
 > **Skill 就像公司的 SOP 手冊**
 > 新人（AI）照著手冊做，第一次就有八成水準——而且這本手冊寫一次，全公司都能用。
 
-## 建立自己的 Skills
+## [Claude] 前置設定：關閉 Claude 改善模型選項
+
+### 🔒 三步驟關閉資料訓練
+
+1. 登入 https://claude.ai/
+2. 點擊左下角的個人頭像，選擇「Settings」
+3. 找到「Privacy」分頁，將「Help improve Claude」關閉
+
+![關閉 Help improve Claude 的設定位置](assets/c130-i124.png)
+
+## [Claude] 建立自己的 Skills
 
 ### 🛠️ 五步驟從對話生出 Skill
 
@@ -480,7 +480,7 @@
 - STEP 2：驗證 Skill 是否符合預期（是否正確？如果錯誤，是錯在哪裡？）
 [/lab-session]
 
-## 修改 Skills & 注意事項
+## [Claude] 修改 Skills & 注意事項
 
 > 一開始建立的 Skill 不可能完美，會需要根據使用習慣持續優化。
 
@@ -511,7 +511,7 @@
 - 實測中 Skill 說好的「員工發言與社群評價」就沒出現——發生時直接提醒它補充即可
 [/warning]
 
-## 安裝現成的 Skills
+## [Claude] 安裝現成的 Skills
 
 ### 🧰 從 Skill 商店挑現成的用
 
@@ -528,7 +528,7 @@
 - 現成 Skill 很多，但大部分不如預期——安裝前先看評價、裝完先小規模實測
 [/image-text]
 
-## 用 Skills 生成簡報
+## [Claude] 用 Skills 生成簡報
 
 ### 🖥️ 兩步驟產出可編輯簡報
 
@@ -566,14 +566,14 @@
 
 ---
 
-# Gemini 視覺篇：生成圖片與網站
+# 生成圖片：封面、海報、賀卡一站搞定
 
-> 簡報封面、活動海報、節慶賀卡、行程表、EDM 網頁——所有「要美，但不想開設計軟體」的需求，用 Nano Banana 和 Canvas 一站搞定。
+> 簡報封面、活動海報、節慶賀卡、行程表——所有「要美，但不想開設計軟體」的需求，交給 AI 生圖一次搞定。
 
 > **美感可以外包，品味不能**
 > AI 可以一口氣生一百張圖，但哪一張「對」，還是要你來挑——挑選的眼光，才是你的護城河。
 
-## 用 Nano Banana 生成圖片
+## [Gemini] 用 Nano Banana 生成圖片
 
 ### 🖼️ 簡報封面
 
@@ -685,7 +685,13 @@
 - STEP 2：生成後的圖片可以透過對話微調細節
 [/lab-session]
 
-## 透過 Canvas 生成網站（可作為 EDM Email）
+---
+
+# 生成網站：Canvas 做出能寄的 EDM
+
+> 活動頁面、EDM 電子報——用 Canvas 生成 RWD 網頁，程式碼貼進 Gmail，就是一封在電腦和手機上都漂亮的信。
+
+## [Gemini] 透過 Canvas 生成網站（可作為 EDM Email）
 
 ### 💌 四步驟從活動內容到 EDM
 
@@ -944,8 +950,8 @@
 [summary]
 - 📝 **簡報大綱** | 專案上傳背景＋多重角色攻防，AI 打底、人做決策
 - 🖼️ **Gamma** | Markdown 一鍵變簡報，模板、智慧圖表與 ChatGPT 搭配使用
-- 🤝 **Claude Skill** | 把工作流固化成可重複使用的 Skill，順手產出可編輯簡報
-- ✨ **Gemini** | Nano Banana 生圖＋Canvas 生網頁，搞定封面、海報、EDM
+- 🤝 **Skill** | 把工作流固化成可重複使用的 Skill，順手產出可編輯簡報
+- ✨ **生成圖片／網站** | Nano Banana 生圖＋Canvas 生網頁，搞定封面、海報、EDM
 - 📅 **Google Workspace AI** | Docs 生文件、Sheets 整資料，Gemini 掛知識庫、管日曆
 - 🛡️ **資安意識** | 不把機密丟給 AI、關鍵決策再三確認——每一堂都適用
 [/summary]
