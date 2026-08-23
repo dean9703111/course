@@ -61,7 +61,7 @@
 
 ### 🧭 七步驟總覽
 
-> **下面以 ChatGPT 作為示範，大家請根據自己使用的工具調整**
+> **下面以 ChatGPT 作為示範，大家請根據自己使用的工具調整（Gemini/Claude）**
 
 [flow]
 1. 優化提示詞 — 先讓 AI 把一句話需求，改寫成更精確的 Prompt
@@ -241,7 +241,7 @@ AI 未必會採納所有建議，且可能會自動移除有用的內容，你�
 
 ### 🧰 把對話變成技能包
 
-#### STEP 1：在原本的對話中，請 AI 萃取流程
+#### STEP 1：將對話流程轉換成 Skill
 
 ```prompt [label="請 AI 把對話萃取成 Skill"]
 請根據以下要求分析上方對話內容後，整理成可重複使用的 Skill，名稱為[proposal-refiner-exmaple]：
@@ -251,25 +251,29 @@ AI 未必會採納所有建議，且可能會自動移除有用的內容，你�
 3. 最終是如何得出這個成果的
 ```
 
-#### STEP 2：建立 Skill
+![將流程轉換成 Skill](assets/chatgpt-skill-create.png)
 
-- 回到設定裡找到 Skills 相關的入口，把 AI 剛剛萃取出的內容儲存為新的 Skill
+#### STEP 2：確認 Skill有順利儲存
 
-![ChatGPT 建立 Skill 的入口與儲存畫面](assets/chatgpt-skill-create.png)
+- 點擊側邊欄`外掛程式`，選擇`技能`
+
+![確認 proposal-refiner-exmaple 出現在技能](assets/chatgpt-skill-list.png)
 
 #### STEP 3：換個主題驗證
 
+開啟新對話窗來驗證技能
+
 ```prompt [label="用不同主題驗證 Skill"]
-/proposal-refiner 我要做一份[給連鎖餐飲品牌導入 AI 點餐分析]的提案企劃，幫我做到專業可行的程度。
+/proposal-refiner-exmaple 我要做一份[給連鎖餐飲品牌導入 AI 點餐分析]的提案企劃，幫我做到專業可行的程度。
 ```
 
-- 預期 AI 會先反問細節、再走完七步驟流程——要驗證的是兩件事：`會先確認細節才執行`、`換一個主題依然可以使用`
-
-![換主題驗證：ChatGPT 先反問細節，再走完七步驟流程](assets/chatgpt-skill-verify.png)
+![AI 會逐步走完流程，中間有可能會提問](assets/chatgpt-skill-verify.png)
 
 #### STEP 4：下載技能包
 
-- 回到 Skills 列表，把剛剛建立的 Skill 下載下來，會得到一個技能檔——這就是可以交接、可以帶去別的 AI 使用的資產
+- 點擊側邊欄`外掛程式`，選擇`技能`
+- 選擇指定技能後，點擊右側「...」選擇下載
+- 會獲得一個 `ZIP` 格式的檔案，可以分享給別人使用
 
 ![ChatGPT 下載技能包的入口](assets/chatgpt-skill-download.png)
 
@@ -277,7 +281,7 @@ AI 未必會採納所有建議，且可能會自動移除有用的內容，你�
 
 ### 🧰 把對話變成技能包
 
-#### STEP 1：在原本的對話中，請 AI 萃取流程
+#### STEP 1：將對話流程轉換成 Skill
 
 ```prompt [label="請 AI 把對話萃取成 Skill"]
 請根據以下要求分析上方對話內容後，整理成可重複使用的 Skill，名稱為[proposal-refiner-exmaple]：
@@ -287,23 +291,27 @@ AI 未必會採納所有建議，且可能會自動移除有用的內容，你�
 3. 最終是如何得出這個成果的
 ```
 
-#### STEP 2：建立 Skill
+![將流程轉換成 Skill](assets/gemini-skill-create.png)
 
-- 進到設定裡的 Skills 頁面，選擇建立新的 Skill，把 AI 剛剛萃取出的內容儲存起來
+#### STEP 2：確認 Skill有順利儲存
 
-![Gemini 建立 Skill 的入口與儲存畫面](assets/gemini-skill-create.png)
+- 點擊側邊欄`技能`
+
+![確認 proposal-refiner-exmaple 出現在技能](assets/gemini-skill-list.png)
 
 #### STEP 3：換個主題驗證
 
 ```prompt [label="用不同主題驗證 Skill"]
-/proposal-refiner 我要做一份[給服務業導入 AI 客服]的提案企劃，幫我做到專業可行的程度。
+/proposal-refiner-exmaple 我要做一份[給服務業導入 AI 客服]的提案企劃，幫我做到專業可行的程度。
 ```
 
-![換主題驗證：Gemini 一樣先確認細節才執行](assets/gemini-skill-verify.png)
+![AI 會逐步走完流程，中間有可能會提問](assets/gemini-skill-verify.png)
 
 #### STEP 4：下載技能包
 
-- 回到 Skills 列表，把剛剛建立的 Skill 下載下來，之後可以帶到其他平台使用
+- 點擊側邊欄`技能`
+- 選擇指定技能後，點擊右側「...」選擇下載
+- 會獲得一個 `ZIP` 格式的檔案，可以分享給別人使用
 
 ![Gemini 下載技能包的入口](assets/gemini-skill-download.png)
 
@@ -311,7 +319,7 @@ AI 未必會採納所有建議，且可能會自動移除有用的內容，你�
 
 ### 🧰 把對話變成技能包
 
-#### STEP 1：在原本的對話中，請 AI 萃取流程
+#### STEP 1：將對話流程轉換成 Skill
 
 ```prompt [label="請 AI 把對話萃取成 Skill"]
 請根據以下要求分析上方對話內容後，整理成可重複使用的 Skill，名稱為[proposal-refiner-exmaple]：
@@ -321,26 +329,36 @@ AI 未必會採納所有建議，且可能會自動移除有用的內容，你�
 3. 最終是如何得出這個成果的
 ```
 
+![將流程轉換成 Skill](assets/claude-skill-create.png)
+
 #### STEP 2：點擊「Save skill」直接儲存
 
-- Claude 會直接把萃取結果輸出成 `SKILL.md` 檔案——`不用回設定頁`，點擊檔案上的「Save skill」就建立完成
+- 要點擊「Save skill」才會儲存
 
-![Claude 直接產出 SKILL.md，點擊「Save skill」即可儲存](assets/claude-skill-plan-create.png)
+![點擊「Save skill」即可儲存](assets/claude-skill-plan-create.png)
 
-#### STEP 3：換個主題驗證
+#### STEP 3：確認 Skill有順利儲存
+
+- 點擊左下側頭像，選擇`Setting`
+- 點擊側邊欄`Skills`
+
+![確認 proposal-refiner-exmaple 出現在技能](assets/claude-skill-list.png)
+
+#### STEP 4：換個主題驗證
 
 ```prompt [label="用不同主題驗證 Skill"]
-/proposal-refiner 我要做一份[給連鎖餐飲品牌導入 AI 點餐分析]的提案企劃，幫我做到專業可行的程度。
+/proposal-refiner-exmaple 我要做一份[給連鎖餐飲品牌導入 AI 點餐分析]的提案企劃，幫我做到專業可行的程度。
 ```
 
-[gallery]
-![打包前：要手動要求 AI「先詢問我，不要直接產生」](assets/claude-skill-plan-check.png)
-![打包後：一行觸發，AI 自動先反問細節再執行](assets/claude-skill-plan-reuse.png)
-[/gallery]
+![AI 會逐步走完流程，中間有可能會提問](assets/claude-skill-verify.png)
 
 #### STEP 4：下載技能包
 
-- Customize → Skills → 點選剛建立的 Skill → 右上「⋮」→「Download」
+- 點擊左下側頭像，選擇`Setting`
+- 點擊側邊欄`Skills`
+- 選擇`proposal-refiner-exmaple`
+- 點擊右側「...」選擇下載
+- 會獲得一個 `Skill` 格式的檔案，可以分享給別人使用
 
 ![在 Skill 詳情頁下載技能包](assets/claude-skill-download.png)
 
