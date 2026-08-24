@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>創意圖片九宮格</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #eee9e5;
+      --surface: #fffdfa;
+      --surface-hover: #faf6f3;
+      --text: #2a2227;
+      --muted: #8a7e85;
+      --line: rgba(61, 46, 55, .12);
+      --accent: #a844d2;
+      --accent-soft: rgba(168, 68, 210, .075);
+      --shadow: 0 18px 48px rgba(63, 42, 53, .10);
+    }
+    html.dark {
+      color-scheme: dark;
+      --canvas: #292630;
+      --surface: #1c1a21;
+      --surface-hover: #232029;
+      --text: #f5f1f4;
+      --muted: #9f969d;
+      --line: rgba(255, 255, 255, .10);
+      --accent: #c570e9;
+      --accent-soft: rgba(197, 112, 233, .10);
+      --shadow: 0 22px 54px rgba(0, 0, 0, .32);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 4px;
+      color: var(--text);
+      background: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--canvas);
+      box-shadow: var(--shadow);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--canvas);
+    }
+    .card {
+      position: relative;
+      min-height: 184px;
+      padding: 22px 26px;
+      background: var(--surface);
+    }
+    .card:nth-child(5) {
+      background: linear-gradient(var(--accent-soft), var(--accent-soft)), var(--surface);
+    }
+    .card:hover {
+      background: var(--surface-hover);
+    }
+    .meta {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 7px;
+    }
+    .index {
+      color: var(--muted);
+      font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .14em;
+    }
+    h3 {
+      margin: 0 0 15px;
+      color: var(--text);
+      font-size: clamp(24px, 2.5vw, 29px);
+      line-height: 1.15;
+      letter-spacing: .025em;
+    }
+    .card:nth-child(5) h3 { color: var(--accent); }
+    ul {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+    }
+    li + li {
+      border-top: 1px solid var(--line);
+    }
+    li::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+    .card:nth-child(5) li::before {
+      background: var(--accent);
+    }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 500px) {
+      body { padding: 2px; }
+      .frame { border-radius: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      .card { min-height: 0; padding: 20px 22px; }
+    }
+  </style>
+  <script>
+    (function () {
+      var isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      try {
+        if (window.parent !== window) {
+          isDark = window.parent.document.documentElement.getAttribute('data-theme') !== 'light';
+        }
+      } catch (e) { }
+      document.documentElement.classList.toggle('dark', isDark);
+    })();
+  </script>
+</head>
+<body>
+  <main class="frame" aria-label="創意圖片九宮格">
+    <div class="grid">
+      <section class="card"><div class="meta"><span class="index">01</span></div><h3>外觀</h3><ul><li>奢華</li><li>極簡</li><li>古風</li></ul></section>
+      <section class="card"><div class="meta"><span class="index">02</span></div><h3>氛圍</h3><ul><li>浪漫</li><li>嚴肅</li><li>悲傷</li></ul></section>
+      <section class="card"><div class="meta"><span class="index">03</span></div><h3>場景</h3><ul><li>戰場</li><li>辦公室</li><li>森林</li></ul></section>
+      <section class="card"><div class="meta"><span class="index">04</span></div><h3>表情</h3><ul><li>狂笑</li><li>憤怒</li><li>驚訝</li></ul></section>
+      <section class="card"><div class="meta"><span class="index">05</span></div><h3>主角</h3><ul><li>牛頓</li><li>拿破崙</li><li>原始人</li></ul></section>
+      <section class="card"><div class="meta"><span class="index">06</span></div><h3>物品</h3><ul><li>香水</li><li>扇子</li><li>雨傘</li></ul></section>
+      <section class="card"><div class="meta"><span class="index">07</span></div><h3>動作</h3><ul><li>奔跑</li><li>打電動</li><li>自拍</li></ul></section>
+      <section class="card"><div class="meta"><span class="index">08</span></div><h3>鏡頭</h3><ul><li>廣角鏡頭</li><li>特寫鏡頭</li><li>鳥瞰</li></ul></section>
+      <section class="card"><div class="meta"><span class="index">09</span></div><h3>光線</h3><ul><li>電影光線</li><li>柔光</li><li>逆光</li></ul></section>
+    </div>
+  </main>
+  <script>
+    function applyTheme() {
+      var isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      try {
+        if (window.parent !== window) {
+          isDark = window.parent.document.documentElement.getAttribute('data-theme') !== 'light';
+        }
+      } catch (e) { }
+      document.documentElement.classList.toggle('dark', isDark);
+    }
+
+    applyTheme();
+
+    try {
+      if (window.parent === window) throw new Error('standalone');
+      new MutationObserver(applyTheme).observe(
+        window.parent.document.documentElement,
+        { attributes: true, attributeFilter: ['data-theme'] }
+      );
+    } catch (e) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+    }
+  </script>
+</body>
+</html>

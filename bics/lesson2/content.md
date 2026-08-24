@@ -888,121 +888,427 @@ Skill 建立完成後，有 2 種方式觸發：
 
 ---
 
-# AI 直接生成簡報篇：漂亮但不可編輯，還是可編輯但要調？
+# 用 Skill 生成簡報：讓 AI 參考模板設計簡報
 
-> 不經 Gamma，直接請 ChatGPT／Claude 生成簡報——兩種做法的產出本質不同，要先搞清楚拿到的是圖片還是可以編輯的檔案。
+> **這邊不展示結果為「圖片」的簡報**
+> 儘管 ChatGPT 與 Gemini 有能力生成「圖片」類型的簡報；但簡報通常需要頻繁修改，因此`可編輯的 PPT 才是較好的選項`。
+> 另外目前 Gemini 的 Skill 能`接受的檔案類型太少（CSV/PY/TXT/MD）`，因此不做示範。
 
-## [ChatGPT] 直接生成簡報
+## 提供 PPT 模板
 
-### 🎞️ 兩步驟看清楚產出的本質
+### 🗂️ 模板最好涵蓋到大部分情境
 
-#### STEP 1：提供內容，請 AI 設計簡報
+[download file="assets/Corporate_Presentation_Template_20_Layouts.pptx" label="下載簡報範例檔" desc="裡面涵蓋 20 種情境"]
 
-```prompt [label="請 ChatGPT 依內容設計簡報"]
-你擅長資訊表達，根據下面的內容，設計出對應風格的簡報。
+![這邊是有 20 種展示方向的模板範例](./assets/ppt-template.png)
 
-要求：
-- 每頁一個重點，標題＋三個列點
-- 整體風格一致
+## [ChatGPT] 參考模板設計簡報
 
-[貼上內容]
+### ⬇️ 匯入 Skill
+
+#### STEP 1：下載技能包
+
+[download file="assets/enterprise-presentation-designer.zip" label="下載「自由版型簡報設計師」技能包" desc="enterprise-presentation-designer.zip（下載後不用解壓縮，直接匯入）"]
+
+#### STEP 2：進入技能頁面
+
+- 點擊側邊欄`外掛程式`，切換到上方`技能`分頁
+- 點擊「+」，選擇`從電腦上傳`
+
+![進入技能頁面](./assets/chatgpt-use-skill.png)
+
+#### STEP 3：匯入技能包
+
+- 上傳剛剛下載的 `enterprise-presentation-designer.zip`
+- 匯入成功後，`enterprise-presentation-designer`會出現在`已安裝`清單
+
+![匯入成功](./assets/chatgpt-use-skill2.png)
+
+### 🛠️ 用 Skill 生成簡報
+
+- 切換到`工作`的模式，才能使用 Skill
+
+```prompt [label="使用 Skill 設計簡報"]
+@enterprise-presentation-designer 根據提供的產品資訊，使用 PPT 參考模板來設計給[公司內部培訓]的簡報
+
+# UV Shield Daily 防曬乳
+
+- 產品定位：日常通勤、臉部與身體兩用的高係數防曬乳
+- 規格：50 mL
+- 防曬係數：SPF50+ / PA++++
+
+## 成分
+- Uvinul A Plus
+- Uvinul T150
+- Tinosorb S
+- Niacinamide 菸鹼醯胺
+- Vitamin E 維生素 E
+- Hyaluronic Acid 玻尿酸
+- Centella Asiatica 積雪草萃取
+
+## 市售價
+- 建議售價：NT$680 / 50 mL
+
+## 成本
+- 單瓶估算成本：約 NT$170
+- 內容物：約 NT$80
+- 容器包材：約 NT$35
+- 外盒：約 NT$15
+- 加工填充：約 NT$20
+- 品管與物流：約 NT$20
+
+## 銷售通路
+- 品牌官方網站
+- momo
+- 蝦皮
+- 康是美
+- 屈臣氏
+- 寶雅
+- 美妝選物店
+- 美容與皮膚管理通路
+
+## 產品優勢
+- SPF50+ / PA++++ 高係數廣效防曬
+- 清爽、不黏膩
+- 不易泛白
+- 臉部與身體皆可使用
+- 適合作為妝前防曬
+- 添加保濕與舒緩成分
+- 適合日常通勤與戶外活動
+
+## 使用方式
+- 出門前 15–20 分鐘均勻塗抹
+- 臉部建議使用約兩指長的用量
+- 頸部與其他裸露肌膚同步塗抹
+- 一般通勤每 3–4 小時補擦
+- 大量流汗、游泳或戶外活動時，每 2 小時補擦一次
 ```
 
-![ChatGPT 直接生成簡報的過程](assets/chatgpt-slide-generate.png)
+![參考 Skill規則生成 PPT](assets/chatgpt-use-skill3.png)
 
-#### STEP 2：看清楚你拿到的是什麼
+## [Claude] 參考模板設計簡報
 
-[warning title="⚠️ 這樣生成的簡報，本質是一張張圖片"]
-文字改不了、圖表動不了，適合當靈感或一次性展示，不適合要持續修改的正式簡報。
-[/warning]
+### ⬇️ 匯入 Skill
 
-![生成的簡報本質是一張張圖片，文字無法編輯](assets/chatgpt-slide-result.png)
+讓 AI 依照`品牌、受眾、溝通目的`設計簡報，而不是憑感覺自由發揮
 
-## [ChatGPT] 上傳公司模板，讓 AI 照版型填內容
+#### STEP 1：下載技能包
 
-### 🧩 先套版型，穩定後再打包成 Skill
+[download file="assets/enterprise-presentation-designer.zip" label="下載「自由版型簡報設計師」技能包" desc="enterprise-presentation-designer.zip（下載後不用解壓縮，直接匯入）"]
 
-- 情境：公司有固定的 PPT 模板，希望 AI 照版型把內容填進去，而不是重新設計一套風格
+#### STEP 2：進入技能頁面
 
-```prompt [label="上傳模板，請 AI 照版型填入內容"]
-（先上傳公司的 PPT 模板檔）
+- 點擊左側`Customize`
+- 選擇上方的 `Add`，再選擇`Upload a skill`
 
-請分析這份模板的版型規則（封面、章節頁、內容頁的配色、字級、版面），然後把下面的內容依照版型填入，輸出可下載的 PPT 檔：
+![進入技能頁面](./assets/claude-use-skill.png)
 
-[貼上內容]
+#### STEP 3：匯入技能包
+
+- 上傳剛剛下載的 `enterprise-presentation-designer.zip`
+- 匯入成功後，`enterprise-presentation-designer`會出現在`Skill`清單
+
+![技能安裝成功](./assets/claude-use-skill2.png)
+
+### 🛠️ 用 Skill 生成簡報
+
+```prompt [label="使用 Skill 設計簡報"]
+/enterprise-presentation-designer 根據提供的產品資訊，使用 PPT 參考模板來設計給[公司內部培訓]的簡報
+
+# UV Shield Daily 防曬乳
+
+- 產品定位：日常通勤、臉部與身體兩用的高係數防曬乳
+- 規格：50 mL
+- 防曬係數：SPF50+ / PA++++
+
+## 成分
+- Uvinul A Plus
+- Uvinul T150
+- Tinosorb S
+- Niacinamide 菸鹼醯胺
+- Vitamin E 維生素 E
+- Hyaluronic Acid 玻尿酸
+- Centella Asiatica 積雪草萃取
+
+## 市售價
+- 建議售價：NT$680 / 50 mL
+
+## 成本
+- 單瓶估算成本：約 NT$170
+- 內容物：約 NT$80
+- 容器包材：約 NT$35
+- 外盒：約 NT$15
+- 加工填充：約 NT$20
+- 品管與物流：約 NT$20
+
+## 銷售通路
+- 品牌官方網站
+- momo
+- 蝦皮
+- 康是美
+- 屈臣氏
+- 寶雅
+- 美妝選物店
+- 美容與皮膚管理通路
+
+## 產品優勢
+- SPF50+ / PA++++ 高係數廣效防曬
+- 清爽、不黏膩
+- 不易泛白
+- 臉部與身體皆可使用
+- 適合作為妝前防曬
+- 添加保濕與舒緩成分
+- 適合日常通勤與戶外活動
+
+## 使用方式
+- 出門前 15–20 分鐘均勻塗抹
+- 臉部建議使用約兩指長的用量
+- 頸部與其他裸露肌膚同步塗抹
+- 一般通勤每 3–4 小時補擦
+- 大量流汗、游泳或戶外活動時，每 2 小時補擦一次
 ```
 
-- 流程穩定後，同樣可以打包成 Skill——把模板規則寫進 Skill，之後每次只要貼內容
+![Skill 參考規則生成 PPT](assets/claude-use-skill3.png)
 
-```prompt [label="把套模板流程打包成 Skill"]
-請根據以下要求分析上方對話內容後，整理成可重複使用的 Skill，名稱為[pptx-template-filler]：
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+- 下載技能包（assets/enterprise-presentation-designer.zip）
+- 進入技能（Skill）頁面匯入技能包
+- 用 Skill 生成簡報，確認有使用模板
+[/lab-session]
 
-1. 模板的版型規則是如何被分析出來的
-2. 內容如何依照版型填入
-3. 最終如何輸出可下載的 PPT 檔
+## 調整成自己公司的模板
+
+> **為什麼要另外生成一個新的 Skill？**
+> 剛剛匯入的 Skill 綁定的是講義提供的`範例模板`，但實務上每間公司都有自己的`官方模板`。
+> 我們不用從零打造，只要提供`公司的 PPT 模板`，讓 AI 參考`現有 Skill 的架構`另外生成一個新的 Skill；新舊 Skill `各自獨立`，之後想用哪個模板，就呼叫哪個名字。
+
+### 🗂️ 假使為科技業就會用不同風格
+
+[download file="assets/Technology_Corporate_Template_20_Layouts.pptx" label="下載科技業簡報範例檔" desc="裡面涵蓋 20 種情境"]
+
+![這邊是有 20 種展示方向的模板範例](./assets/ppt-template2.png)
+
+### [ChatGPT] 🏢 生成公司模板的新 Skill
+
+#### STEP 1：提供公司模板生成新 Skill
+
+- 切換到`工作`的模式
+- 上傳`公司的 PPT 模板`，再貼上下面的提示詞
+
+```prompt [label="參考公司模板生成新 Skill"]
+我想要建立一個新的 Skill: [company-presentation-designer]
+請參考 @enterprise-presentation-designer 的架構，並遵循下面規則：
+- 將 PPT 參考模板替換成我上傳的[公司模板]
+- 分析新模板每種版型的使用情境，更新對應的設計規則
+- 保留原本的設計流程，也不要動到舊的 Skill
 ```
 
-![ChatGPT 上傳公司模板、照版型輸出 PPT 的過程](assets/chatgpt-pptx-template.png)
+![ChatGPT 參考公司模板生成新 Skill](assets/chatgpt-custom-skill.png)
 
-## [Claude] 用 Skill 生成可編輯的簡報
+#### STEP 2：確認新舊 Skill 並存
 
-### 🖥️ 兩步驟產出可編輯簡報
+- 點擊側邊欄`外掛程式`，切換到上方`技能`分頁
+- 確認`Company Presentation Designer`出現在`已安裝`清單，且舊的`enterprise presentation designer`沒有被覆蓋
 
-#### STEP 1：提供文件、內容，請 AI 製作簡報
+![新舊 Skill 並存於已安裝清單](assets/chatgpt-custom-skill2.png)
 
-```prompt [label="請 Claude 依內容生成簡報"]
-你擅長資訊表達，根據下面的內容，設計出對應風格的簡報
+#### STEP 3：驗證模板已替換
 
-[貼上內容]
+開新對話，指定`新的名稱`生成簡報：
+
+```prompt [label="開新對話驗證模板已替換"]
+@company-presentation-designer 以[掃地機器人新品上市]為主題設計簡報，共 8 頁，模擬相關數據即可
 ```
 
-- 如果他沒有給你下載連結，可以直接說「給我 PPT 下載連結」
+下載產出的 PPT，跟公司模板`並排比對`：`配色、字體、Logo、版型`是否一致；如果長得還是像範例模板，就回頭檢查 Skill 裡的模板檔案`是否真的被替換`。
 
-![Claude 生成簡報的過程](assets/c136-i141.png)
+![產出的簡報已套用公司模板](assets/chatgpt-custom-skill3.png)
 
-#### STEP 2：簡報是可以下載編輯的
+### [Claude] 🏢 生成公司模板的新 Skill
 
-- [參考連結](https://claude.ai/share/788eac26-e952-44b5-a473-f8b6e66ab9b5)
+#### STEP 1：提供公司模板生成新 Skill
 
-![生成的簡報可下載後繼續編輯](assets/c136-i142.png)
+- 上傳`公司的 PPT 模板`，再貼上下面的提示詞
 
-- Claude 一樣可以上傳公司模板，請它照版型輸出——做法與 ChatGPT 相同，上傳模板檔＋描述版型規則即可
+```prompt [label="參考公司模板生成新 Skill"]
+/skill-creator 我想要建立一個新的 Skill: [company-presentation-designer]
+請參考 enterprise-presentation-designer 的架構，並遵循下面規則：
+- 將 PPT 參考模板替換成我上傳的[公司模板]
+- 分析新模板每種版型的使用情境，更新對應的設計規則
+- 保留原本的設計流程，也不要動到舊的 Skill
+```
 
-### 🧰 從 Skill 商店挑現成的用
+![完成後記得點擊「Save skill」](assets/claude-custom-skill.png)
 
-- Customize → Browse skills，直接瀏覽別人做好的 Skill
+#### STEP 2：確認新舊 Skill 並存
 
-[image-text position="right" width="30"]
-![用 canvas-design 生成的公司旅遊海報](assets/c135-i140.png)
-- **canvas-design**：設計海報圖片（[實測範例](https://claude.ai/share/dad80a0b-7010-4a31-a18f-5389be889fe3)）
-- 提供行程資訊（集合出發 → 彩虹眷村 → 審計新村 → 新社園區 → 高美濕地 → 晚餐回程），就能得到右側的成品
-- 現成 Skill 很多，但大部分不如預期——安裝前先看評價、裝完先小規模實測
-[/image-text]
+- 點擊左側`Customize`
+- 確認`company-presentation-designer`出現在`Skill`清單，且舊的`enterprise-presentation-designer`沒有被覆蓋
 
-## 三種生成方式，怎麼選？
+![新舊 Skill 並存於 Skill 清單](assets/claude-custom-skill2.png)
 
-### 🆚 三種生成簡報方式比較
+#### STEP 3：驗證模板已替換
 
-| 方式 | 產出形式 | 可編輯性 | 美觀度 | 成本 | 適合情境 |
-| --- | --- | --- | --- | --- | --- |
-| Gamma | 網頁 | 高（卡片、結構皆可調） | 高 | 消耗 Credits | 要持續修改、要分享連結的正式簡報 |
-| ChatGPT 直接生成 | 圖片 | 幾乎不可編輯 | 高 | 低 | 找靈感、一次性展示 |
-| Claude Skill | PPTX | 可下載後編輯 | 中 | 中 | 需要交出檔案、後續要在 PowerPoint 微調 |
+開新對話，指定`新的名稱`生成簡報：
 
-[bonus title="🎁 Bonus：目前生成簡報最強的 Manus"]
-在生成簡報的領域，目前 Manus 的表現最好，結合了 Nano Banana 的美觀 + Claude 的編輯性。
+```prompt [label="開新對話驗證模板已替換"]
+/company-presentation-designer 以[掃地機器人新品上市]為主題設計簡報，共 8 頁，模擬相關數據即可
+```
 
-- 透過[邀請連結註冊](https://manus.im/invitation/9EZQALE1FISTXZP?utm_source=invitation&utm_medium=social&utm_campaign=copy_link)，會多獲得 **500 點數**
-- 操作方式一樣：「你擅長資訊表達，根據下面的內容，設計出對應風格的簡報 [貼上內容]」
-- 產出的簡報最詳盡、美觀、可編輯（[成果範例](https://manus.im/share/In3zMOYuTs3iYqrFUUVwlg)）
-- 但相對成本最高——範例中的簡報花了 `652 點`
-[/bonus]
+下載產出的 PPT，跟公司模板`並排比對`：`配色、字體、Logo、版型`是否一致；如果長得還是像範例模板，就回頭檢查 Skill 裡的模板檔案`是否真的被替換`。
+
+![產出的簡報已套用公司模板](assets/claude-custom-skill3.png)
+
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+- 上傳公司（或自選）的 PPT 模板，生成新的 Skill
+- 確認新舊 Skill 並存於清單
+- 開新對話用新 Skill 生成簡報，比對模板是否已替換
+[/lab-session]
 
 ---
 
-# 生成圖片篇：相同 Prompt，不同 AI 給你不同答案
+# 生成圖片：AI 生成圖片可以應用在哪些情境
 
-> 簡報封面、活動海報——同一段 Prompt 分別丟給 ChatGPT 與 Gemini，看結果差在哪，再學「給參考圖」讓結果可控。
+## AI 圖片著作權
+
+### ⚖️ 版權歸屬：AI 直出沒有，人類參與才有
+
+- **AI 直出（無版權）**：只輸入 Prompt 讓 AI 自動生成 → `不受著作權法保護`，任何人都能自由使用，你也`無法告別人抄襲`
+- **人類參與（有版權）**：先畫草稿，或進行大量後製、合成與修改，融入`實質創意` → 這張圖才屬於人類著作，享有著作權
+
+### 💼 商用前，先過兩關
+
+- **工具怎麼訓練的**：Adobe Firefly 用正版圖庫訓練，相對安全；其他工具可能有`訓練資料侵權`疑慮
+- **你輸入了什麼**：生成知名動漫角色（ex: 皮卡丘、哆啦A夢）或特定`名人肖像`，容易侵害他人著作權或肖像權，不宜直接商用
+
+[warning title="⚠️ 請注意版權問題"]
+- 印成海報、上架商品、當品牌視覺之前，先確認工具授權，也別拿知名 IP 去生圖
+- 參考：[法律百科〈AI生成圖片，著作權歸誰？〉](https://www.legis-pedia.com/article/Intellectual-property-rights/1368)
+[/warning]
+
+## [ChatGPT] 懶人包、行程表、流程圖
+
+> **這三種圖，職場最常用**
+> 封面很華麗，但真正每週會做的，是把長文變成懶人包、把活動變成行程圖、把流程變成一張圖。
+
+### 📰 懶人包
+
+- 長文、會議紀錄、內部公告——指定`主題＋3 個重點＋一句話總結`，比只說「做成圖」更穩
+- 風格寫清楚（ex: `可愛日系動漫`），產出才不會每次都長不一樣
+
+```prompt [label="把文章變成懶人包圖"]
+將下面的文章總結成懶人包，需要有主題與 3 個重點，並用一句話總結，並以可愛日系動漫的方式呈現
+
+本季導入 AI 助理後，跨部門改走「先產出再開會」：
+1. 會前用 AI 整理爭議點，開會從 90 分鐘降到 40 分鐘
+2. 初稿品質參差，主管仍要當守門員
+3. 省下的時間拿去做客戶與現場，而不是做更多投影片
+```
+
+![以可愛日系動漫風格，把會議重點做成主題＋三個重點＋一句話總結的懶人包](assets/chatgpt-infographic.jpg)
+
+### 🗓️ 行程表
+
+- 員工旅遊、教育訓練、活動當天——每個景點旁邊放`對應圖案`，比純文字更一眼看懂
+- 指定`手繪風格`，適合內部活動、不適合正式對外簡報
+
+```prompt [label="生成手繪風行程流程圖"]
+請生成一張[手繪風格]的行程流程圖，每個景點旁邊需要加入對應的景點圖案示意
+主題：2026 員工旅遊
+活動行程：
+- 08:00 台北車站集合
+- 10:00 九份老街
+- 12:00 黃金博物館
+- 18:00 十分放天燈
+```
+
+![手繪風員工旅遊行程圖，四個景點各配對應圖案](assets/chatgpt-itinerary.jpg)
+
+### 🔀 流程圖
+
+- 從表格或文字流程`提取關鍵資訊`，不要整段貼進去讓 AI 自己猜重點
+- 對外、對主管用`向量插畫與扁平化設計`，看起來才像正式文件
+
+```prompt [label="從表格提取資訊生成流程圖"]
+從下方流程提取出關鍵資訊，用簡單易懂的方式設計為流程圖，讓目標受眾可以快速掌握階段性目標，請使用[向量插畫與扁平化設計]
+流程：
+1. 收到客戶需求
+2. 內部評估可行性
+3. 提出報價與時程
+4. 客戶確認
+5. 交付與驗收
+```
+
+![扁平化向量風格的五階段客戶交付流程圖](assets/chatgpt-flowchart.jpg)
+
+## [ChatGPT] 影片封面圖、藝術圖
+
+### 🎬 影片封面圖
+
+- 內訓影片、YouTube、學習平台縮圖——`16:9`＋`主標題大字`，畫面只留一個視覺焦點
+- 中文標題寫進 Prompt 裡，生成後仍要人工核對有沒有錯字
+
+```prompt [label="生成內訓／課程影片封面"]
+請生成一張 16:9 的影片封面圖，適合放在[內部學習平台／YouTube]
+- 主標題大字清楚，中文不要錯字
+- 畫面只留一個視覺焦點，不要資訊過載
+- 風格：[科技感、專業、有溫度]
+主題：AI 幫你做簡報
+```
+
+![16:9 內訓影片封面，主標題大字清楚、畫面只有一個視覺焦點](assets/chatgpt-video-cover.jpg)
+
+### 🎨 藝術圖
+
+- 簡報點綴、活動氛圍、社群底圖——`不要文字`，之後才好疊上自己的標題
+- 風格寫具體（ex: `水彩、電影光影`），比「漂亮一點」有用
+
+```prompt [label="生成沒有文字的藝術配圖"]
+請生成一張有藝術感的插畫，用來當作[簡報點綴／活動氛圍圖]
+- 風格：[水彩、電影光影]
+- 畫面中不要出現任何文字
+主題：黃昏辦公室，陽光穿過百葉窗
+```
+
+![沒有文字的藝術配圖，黃昏辦公室與電影光影，適合當簡報點綴](assets/chatgpt-art.jpg)
+
+## [ChatGPT] 食物模擬、產品設計
+
+### 🍜 食物模擬
+
+- 菜單、社群、尚未拍實品的提案——用`商業美食攝影`條件鎖畫質
+- 畫面中`不要有文字`，價錢與品名之後自己疊，才不會被 AI 寫錯
+
+```prompt [label="生成超寫實食物攝影"]
+請生成一張超寫實的食物攝影，用來當作[菜單／社群貼文]產品圖
+- 商業美食攝影、對焦清晰、8k、光影自然
+- 畫面中不要有文字
+餐點：台灣牛肉麵，紅燒湯頭、筷子、可見蒸氣
+```
+
+![超寫實牛肉麵美食攝影，可當菜單或社群產品圖](assets/chatgpt-food-mockup.jpg)
+
+### 🧴 產品設計
+
+- 包裝提案、尚未開模的新品——把`規格與材質`寫進 Prompt，效果圖才站得住
+- 延續前面防曬乳案例，同一份產品資訊也能拿來生成包裝圖
+
+```prompt [label="生成產品包裝效果圖"]
+請扮演產品設計師，根據下面資訊生成一張[包裝設計效果圖]
+- 乾淨背景、商業產品攝影
+- 可清楚看出材質、比例與品牌感
+產品：
+- 名稱：UV Shield Daily 防曬乳
+- 規格：50 mL
+- 防曬係數：SPF50+ / PA++++
+- 包裝：霧面乳白軟管，低調金與鼠尾草綠標籤
+```
+
+![UV Shield Daily 防曬乳包裝效果圖，霧面軟管與乾淨商業攝影](assets/chatgpt-product-design.jpg)
+
+## 創意圖片九宮格
+
+[html src="html/creative-image-grid.html"]
 
 ## 同一段 Prompt，兩個 AI 各生一次
 
@@ -1099,32 +1405,6 @@ Skill 建立完成後，有 2 種方式觸發：
 ![端午節黏土風賀卡成果](assets/c143-i165.png)
 ![改寫 Prompt 後的中秋節版本](assets/c143-i166.png)
 [/gallery]
-
-### 📰 懶人包、行程表、流程圖
-
-```prompt [label="把文章變成懶人包圖"]
-將下面的文章總結成懶人包，需要有主題與 3 個重點，並用一句話總結，並以可愛日系動漫的方式呈現
-[貼上文章]
-```
-
-![懶人包圖的生成成果](assets/c142-i164.png)
-
-```prompt [label="生成手繪風行程流程圖"]
-請生成一張[手繪風格]的行程流程圖，每個景點方便需要加入對應的景點圖案示意
-主題：2026 員工旅遊
-活動行程：
-[貼上活動行程]
-```
-
-![手繪風行程圖成果](assets/c144-i167.png)
-
-```prompt [label="從表格提取資訊生成流程圖"]
-從下方流程提取出關鍵資訊，用簡單易懂的方式設計為流程圖，讓目標受眾可以快速掌握階段性目標，請使用[向量插畫與扁平化設計]
-流程：
-[貼上流程]
-```
-
-![流程圖成果](assets/c145-i169.png)
 
 [lab-session title="實戰演練" duration="15 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
 - STEP 1：同一段封面 Prompt，分別在 ChatGPT 與 Gemini 生成，比較差異
@@ -1391,7 +1671,7 @@ Skill 建立完成後，有 2 種方式觸發：
 - 🤝 **Skill** | 打包對話成 Skill，換個主題一鍵重現，還能帶到 Gemini、Claude 跨平台使用，也能匯入別人的 Skill
 - 🖼️ **Gamma** | Markdown 一鍵變簡報，圖片、卡片結構、智慧圖表都能調
 - 🎞️ **AI 直接生成簡報** | ChatGPT 直接生成是圖片、Claude Skill 才可編輯，也能上傳公司模板照版型輸出
-- ✨ **生成圖片** | 同一段 Prompt 丟給 ChatGPT 與 Gemini 比對，給參考圖讓結果更可控
+- ✨ **生成圖片** | 懶人包、行程、封面、產品圖都能生；同一段 Prompt 丟給兩個 AI 比對，給參考圖讓結果更可控
 - 🛡️ **資安意識** | 匯入第三方 Skill 前先看發佈者與 Star 數，機密資訊不上傳給 AI
 [/summary]
 
