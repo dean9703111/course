@@ -456,7 +456,7 @@ Skill 建立完成後，有 2 種方式觸發：
 
 ![用「主動」的方式觸發 Skill，默認生成日報](assets/gemini-skill-work-report-slash.png)
 
-[warning title="⚠️ Gemini 邏輯跟其他 AI Agent 不同"]
+[warning title="Gemini 邏輯跟其他 AI Agent 不同"]
 不管生成日報還是月報，Gemini 是參考 Google Workspace 所能得到的資訊（ex: Gmail、Google Calendar） 
 `目前 Gemini 無法跨對話窗讀取資訊`
 [/warning]
