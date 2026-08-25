@@ -1573,26 +1573,90 @@ AI 時代下，Vibe Coding 的價值不在於生成速度 ──
 5. Google Calendar — 依到職日排定 30 天考核
 [/flow]
 
-## 給新人填寫基礎資料
+## Google Forms：給新人填寫基礎資料
 
-### Google Forms
+### 📁 在 Google Drive 建立資料夾
+
+- 這是為了集中管理後續生成的`Google Forms、Google Sheets、Google Docs、Google Slides`
+- **資料夾名**：星橋科技新人入職
+
+![在 Google Drive 建立練習資料夾](./assets/google-drive-folder.png)
+
+### 📋 生成新人報到表單
+
+#### STEP 1：建立表單
+
+- 在資料夾內，點擊右鍵選擇`Google 表單`
+
+![在 Google Drive 建立 Google 表單](./assets/google-drive-folder-form.png)
+
+#### STEP 2：輸入需求
 
 ```prompt [label="生成新人報到資料表"]
 幫我建立一份給新人填寫的表單，欄位要有「姓名、Email、手機、緊急聯絡人、個人大頭貼」
 ```
 
-## 追蹤新人填寫進度
+![描述 Google 表單需求](./assets/google-drive-folder-form2.png)
 
-### Google Sheet
+![Gemini 會依需求生成表單題目，確認沒問題點擊「製作表單」](./assets/google-drive-folder-form3.png)
+
+#### STEP 3：檢查欄位與題型
+
+- `個人大頭貼`會用「檔案上傳」題型，填寫者需登入 Google 帳號才能上傳
+- 確認沒問題後，點右上角「發布」
+
+![確認沒問題後點擊「發布」](./assets/google-drive-folder-form4.png)
+
+## Google Sheets：追蹤新人填寫進度
+
+### ✅ 進度檢核表與每日提醒信
+
+HR 最花時間的就是`追進度`，這件事可以交給 Gemini 自動化
+
+#### STEP 1：將表單回應連結到試算表
+
+- 到表單的「回覆」分頁，點擊`連結至試算表`
+- 選擇`建立新試算表`
+
+![連結至試算表](./assets/google-drive-folder-sheet1.png)
+
+#### STEP 2：輸入需求
+
+- 在右側與 Gemini 對話視窗中輸入提示詞
 
 ```prompt [label="追蹤進度"]
 這次要報到的新人名單為「陳冠宇、林怡君、黃彥廷、張雅婷、李承翰、王思穎、吳宗翰、劉育萱、蔡明哲、許家瑜」
-我希望建立一個分頁，已經填寫完畢自動打勾；並且每天寄送尚未填寫的名單到我的 Gmail，直到全部都填寫完畢
+我希望建立一個分頁，已經填寫完畢自動打勾；並透過 GAS 每天寄送尚未填寫的名單到我的 Gmail，直到全部都填寫完畢
 ```
 
-```prompt [label="確認程式運行如預期"]
-如何驗證可以觸發？
-```
+![提示詞送出後 Gemini 會先規劃，點擊「核准」才會執行](./assets/google-drive-folder-sheet2.png)
+
+- Gemini 會建立`檢核分頁`
+- 生成 Google Apps Script 程式，會需要`手動處理`
+
+![Gemini 會建立檢核分頁](./assets/google-drive-folder-sheet3.png)
+
+#### STEP 3：手動增加 Google Apps Script
+
+- 點擊上方選單的`擴充功能`→`Apps Script`，開啟指令碼編輯器
+
+![在試算表上方選單點擊「擴充功能 → Apps Script」開啟指令碼編輯器](./assets/google-drive-folder-sheet4.png)
+
+- 把 Gemini 生成的程式碼`完整貼上`（取代原本的預設內容），先`儲存`再點擊`執行`
+- 首次執行會跳出`需要授權`視窗，然後應該會失敗
+
+![如果失敗的話，通常是因為 GCP 專案沒有綁定](./assets/google-drive-folder-sheet5.png)
+
+點擊「審查權限」，選擇你的 Google 帳戶並允許存取試算表與 Gmail
+
+![設定好 GCP 專案後再執行一次，完成首次授權](./assets/google-drive-folder-sheet6.png)
+
+![完成後去 Gmail 信箱看是否收到信](./assets/google-drive-folder-sheet7.png)
+
+- 點擊左側的`觸發條件`（時鐘圖示）→ 右下角`新增觸發條件`
+- 活動來源選`時間驅動`、類型選`日計時器`，再挑一個每天寄信的時段，按下「儲存」就完成了
+
+![新增「時間驅動＋日計時器」的觸發條件，提醒信每天自動寄出](./assets/google-drive-folder-sheet8.png)
 
 ## Google Docs：草擬新人入職須知
 
@@ -1614,7 +1678,21 @@ AI 時代下，Vibe Coding 的價值不在於生成速度 ──
 
 ![在對話面板輸入需求，Gemini 生成入職須知草稿](assets/ws-docs-2.png)
 
-#### STEP 3：生成圖片
+#### STEP 3：將草稿插入文件
+
+- 確認草稿內容後，點擊回覆下方的「插入」，內容直接寫進文件
+
+![確認草稿內容後點擊「插入」，內容直接寫進文件](assets/ws-docs-3.png)
+
+#### STEP 4：重點整理成表格
+
+```prompt [label="重點整理成表格"]
+將摘要以「表格」呈現，讓我可以快速閱覽內容
+```
+
+![請 Gemini 把重點摘要整理成表格，插入文件開頭當快速導覽](assets/ws-docs-4.png)
+
+#### STEP 5：生成圖片
 
 ```prompt [label="生成文件封面圖"]
 幫我生成適合當「新人入職須知」封面的圖片，比例為 16:9，風格溫暖專業，不要有文字
@@ -1640,6 +1718,10 @@ AI 時代下，Vibe Coding 的價值不在於生成速度 ──
 我是 HR，請根據以下資訊幫我生成一份「公司簡介」簡報，讓新人在報到日快速認識公司，內容涵蓋：公司願景、部門與組織架構、主要產品線、企業文化
 https://docs.google.com/document/d/1hqtXJ2dZjWdf1GSYlHd-iNWiSiGi3WWCu2rl5Ka2z9A/edit?usp=sharing
 ```
+
+#### STEP 3：回答追問，生成簡報
+
+- 執行過程中 Gemini 會詢問一些細節（ex: 簡報重點、呈現方式），依需求回覆即可
 
 ![執行過程中會詢問一些細節](assets/ws-slides-2.png)
 
