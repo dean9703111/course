@@ -59,13 +59,25 @@
 - **AI Agent**: 把任務交給 AI 後，他能`直接動手完成並交付成果`。
 [/flow] 
 
-![免費版 ChatGPT 大多以「對話」為主](./assets/free-chatgpt.png)
+#### [網頁版 ChatGPT](https://chatgpt.com)
 
-![付費版 ChatGPT 能做到更多事](./assets/free-chatgpt.png)
+```prompt [label="相同 prompt 不同表現"]
+幫我列出安美諾官網旗下所有產品的規格，並儲存成 Markdown 格式文件
+```
+
+![網頁版即時得到答案，還是要自己複製貼上](./assets/free-chatgpt.png)
+
+#### [桌面版 ChatGPT](https://chatgpt.com/zh-Hant/codex/)
+
+```prompt [label="相同 prompt 不同表現"]
+打開 Chrome 將安美諾 FB 粉專的相片頁面，將前 20 張下載到 image 資料夾
+```
+
+![桌面版 AI Agent 可以直接完成任務](./assets/pro-chatgpt.png)
 
 > **品牌素材搜集**
-> **對話型 AI**：只能做到品牌資訊概覽，受限於爬蟲限制無法取得深度資訊。
-> **AI Agent**：能直接打開並操作瀏覽器，模擬真實人類瀏覽網站、搜集資訊、下載圖片。
+> **對話型 AI**：只能做到品牌資訊概覽，受限於爬蟲限制`無法取得深度資訊`（會被登入 FB、Threads、IG 擋住）。
+> **AI Agent**：能直接`打開並操作瀏覽器`，模擬真實人類瀏覽網站、搜集資訊、下載圖片（因為就是你的帳酪）。
 
 ![這堂課的產品資訊、行銷文案、產品圖片都是 AI 自動下載的](./assets/chatgpt-advanced-condition.png)
 
@@ -130,13 +142,13 @@ AI 生成的數據分析若無法溯源，千萬不可直接作為決策依據�
 | **外掛程式** | 部分免費 | 全都可以使用 |
 | **進階功能（ex: Skill）** | ❌ | ✅（最後一個單元 Demo） |
 
-![免費版停留在對話型 AI](./assets/free-chatgpt-version.png)
+![免費版少了很多功能，且額度不夠](./assets/free-chatgpt-version.png)
 
 ![付費版除了有更多額度，還多了工作、可調模型、技能...等](./assets/pro-chatgpt-version.png)
 
 ## 不要讓 ChatGPT 拿你的資料去訓練
 
-### 🛡️ 上班第一件事：關閉「用我的資料改善模型」
+### 🛡️ 關閉「用我的資料改善模型」
 
 [warning title="真實案例：三星員工把機密貼進 ChatGPT"]
 - 2023 年三星開放員工使用 ChatGPT 後，工程師為了工作方便，`直接把半導體設備程式碼貼上去`，導致內部機密外洩，公司緊急限縮使用
