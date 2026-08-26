@@ -28,14 +28,15 @@
 
 ![AI 幻覺無法避免，我們要對成果負責](assets/c038-i37.png)
 
-### 🧳 這堂課會帶走的五樣成果
+### 🧳 這堂課會帶走的 6 個成果
 
 [flow]
-1. 企劃大綱 — 七步驟打磨出一份能上台的 Markdown 大綱
-2. 技能包 — 把對話打包成 Skill，換個主題一鍵重現
-3. Gamma 簡報 — 貼上大綱，快速生成圖文並茂的線上簡報
-4. 用模板生成簡報 — 請 ChatGPT／Claude 透過簡報模板生成
-5. 封面／流程圖 — 同一段 Prompt，ChatGPT 與 Gemini 的生成結果
+1. 企劃大綱 — 用七步驟打磨出一份考量到各方面的提案企劃
+2. 技能包 — 把對話打包成 Skill，換個主題一鍵重現，並可分享給同事
+3. Gamma 簡報 — 貼上大綱，生成圖文並茂的線上簡報，可匯出並分享連結
+4. 用模板生成簡報 — 匯入 Skill，參考 PPT 模板產出可編輯的簡報
+5. 封面／流程圖 — 生成懶人包、行程表、流程圖、封面、賀卡
+6. Google Workspace - Gemini 在 Forms、Sheets、Docs、Slides 等工具的應用
 [/flow]
 
 ---
@@ -74,7 +75,7 @@
 [/flow]
 
 > **為什麼要這麼多步？**
-> 一句「幫我寫企劃」，AI 給你的是網路上千篇一律的`平均值`；而七步驟走完，你拿到的是**考量過利害關係人、還沒上台就先被競爭者挑過毛病的版本**。
+> 一句「幫我寫企劃」，AI 只會給你`平均值`的結果；而七步驟走完，你拿到的是**考量過利害關係人、還沒上台就先被競爭者挑過毛病的版本**。
 
 #### STEP 1：優化提示詞
 
@@ -125,9 +126,7 @@
 請扮演[提案企劃]的專家，了解[利害關係人]的想法後，以最專業的角度在企劃補充更完善、可行的方案。
 ```
 
-#### STEP 6：扮演對手挑毛病
-
-> **用紅藍隊概念攻防**
+#### STEP 6：扮演高層挑毛病，讓對手給建議
 
 - **主管老闆來挑錯誤**：看似圓滿的企劃往往還有許多細節不夠清晰，讓高層來挑毛病吧！
 - **競爭對手來協助優化**：在優化這一塊，可以嘗試從競爭對手角度思考，可以有更完善的觀點
@@ -199,8 +198,8 @@ AI 未必會採納所有建議，且可能會自動移除有用的內容，你�
 # Skill 技能包：把流程打包成 Skill，換個主題一鍵重現
 
 > **把聊天的成果，轉換成可重複使用的資產**
-> 在 AI 完成任務後把視窗關閉太可惜了，你中間引導他如何優化的部分才是最珍貴的資產。
-> 這些細節都能成為技能的養分，讓我們下次不用從零開始。
+> 在 AI 完成任務後把視窗關閉太可惜了，你中間`引導他如何優化的部分才是最珍貴的資產`。
+> 這些細節都能成為技能的養分，讓我們`下次不用從零開始`。
 
 ## 為什麼要打包成 Skill？
 
@@ -362,6 +361,13 @@ AI 未必會採納所有建議，且可能會自動移除有用的內容，你�
 
 ![在 Skill 詳情頁下載技能包](assets/claude-skill-download.png)
 
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="建立 Skill，並驗證可用性"]
+- 把剛剛的提案對話萃取成 `proposal-refiner-exmaple` Skill
+- 確認 Skill 有順利儲存
+- 開新對話，換一個提案主題呼叫 Skill 驗證流程是否重現
+- 下載技能包，確認拿到可分享的檔案
+[/lab-session]
+
 ## 提出需求建立 Skill
 
 > **不要一開始就想設計完美的 Skill**
@@ -521,6 +527,15 @@ Skill 建立完成後，有 2 種方式觸發：
 
 ## Skill 使用經驗
 
+### 🌐 第三方 Skill
+
+- **[anthropics/skills](https://github.com/anthropics/skills)** - Anthropic 官方維護的 GitHub 倉庫，Claude 內建的文件處理（Word、Excel、PPT、PDF）Skill 都放在這裡，`可信度最高`
+- **[skills.sh](https://skills.sh/)** - Vercel 推出的 Agent Skills 目錄，集合官方與社群發佈的 Skill，有`安裝次數`可以參考熱門程度
+- **[awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills)** - 社群整理的精選清單，收錄上千個來自官方團隊與社群的 Skill，可以用 `Star 數`與發佈者做初步篩選
+
+> **看到喜歡的 Skill，先別急著裝**
+> 先確認`發佈者`是誰、有`多少人在用`，再對照後面提到的`資安風險`，看一眼 SKILL.md 與腳本內容再匯入。
+
 ### 🧩 Skill 不是越多，AI 就越強
 
 `同一類型的 Skill 裝了兩個以上，當需求命中時，常常會一起觸發`；這不只會增加 Token 消耗，也容易讓 AI 在執行過程中卡住或走偏。
@@ -539,9 +554,9 @@ Skill 建立完成後，有 2 種方式觸發：
 ### 🛡️ 匯入第三方 Skill 的資安風險
 
 [flow]
-1. SKILL.md: 可能被寫入危險指令，例如偷偷把個人資訊傳到某個網址，造成隱私外洩
-2. Skill 的程式腳本（Script）:腳本一樣有機會被動手腳、操作你的檔案
-3. 判斷原則：看發佈者是否可信、專案的 Star 數，作為初步篩選
+- SKILL.md - 可能被寫入危險指令，例如偷偷把個人資訊傳到某個網址，造成隱私外洩
+- Skill 的程式腳本（Script） - 腳本一樣有機會被動手腳、操作你的檔案
+- 判斷原則 - 看發佈者是否可信、專案的 Star 數，作為初步篩選
 [/flow]
 
 ### 🎒 Skill 的結構與三個執行階段
@@ -549,13 +564,13 @@ Skill 建立完成後，有 2 種方式觸發：
 [html src="html/skill-anatomy.html"]
 
 [flow]
-1. Discovery（發現）：AI 讀取技能名稱與描述，判斷是否與任務相關
-2. Activation（啟動）：匹配成功後，才完整讀取整份 Skill 文件
-3. Execution（執行）：根據文件描述逐步執行任務
+- Discovery（發現） - AI 讀取技能名稱與描述，判斷是否與任務相關
+- Activation（啟動） - 匹配成功後，才完整讀取整份 Skill 文件
+- Execution（執行） - 根據文件描述逐步執行任務
 [/flow]
 
 > **Skill 為什麼能節省 Token？**
-> Rule 每次都會讀完整文件；Skill 在匹配需求前`只讀標題與描述（Metadata）`。
+> Skill 在匹配需求前`只讀標題與描述（Metadata）`。
 > 就像 Google 搜尋時先看標題摘要，確認相關再點進去。
 
 ---
@@ -986,6 +1001,12 @@ Skill 建立完成後，有 2 種方式觸發：
 
 ![參考 Skill規則生成 PPT](assets/chatgpt-use-skill3.png)
 
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+- 下載技能包（assets/enterprise-presentation-designer.zip）
+- 進入技能頁面匯入技能包
+- 用 Skill 生成簡報，確認有使用模板
+[/lab-session]
+
 ## [Claude] 參考模板設計簡報
 
 ### ⬇️ 匯入 Skill
@@ -1123,6 +1144,12 @@ Skill 建立完成後，有 2 種方式觸發：
 下載產出的 PPT，跟公司模板`並排比對`：`配色、字體、Logo、版型`是否一致；如果長得還是像範例模板，就回頭檢查 Skill 裡的模板檔案`是否真的被替換`。
 
 ![產出的簡報已套用公司模板](assets/chatgpt-custom-skill3.png)
+
+[lab-session title="🛠️ 實戰演練" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
+- 上傳公司（或自選）的 PPT 模板，生成新的 Skill
+- 確認新舊 Skill 並存於清單
+- 開新對話用新 Skill 生成簡報，比對模板是否已替換
+[/lab-session]
 
 ### [Claude] 🏢 生成公司模板的新 Skill
 
@@ -1721,17 +1748,17 @@ https://docs.google.com/document/d/1hqtXJ2dZjWdf1GSYlHd-iNWiSiGi3WWCu2rl5Ka2z9A/
 > 相信未來會變得更好，但目前還是需要針對性地使用對應的 AI 工具。
 
 [lab-session title="實戰演練" duration="10 分鐘" hint="有問題歡迎提出，你的問題可能是大家的問題"]
-- STEP 1：在 Google Form 生成一份新人報到表單
-- STEP 2：在 Google Sheets 生成進度檢核表，若有人尚未填寫會自動寄信
-- STEP 3：在 Google Docs 草擬「新人入職須知」，並插入封面圖
-- STEP 4：在 Google Slides 根據公司素材生成一份「公司簡介」簡報
+- 在 Google Form 生成一份新人報到表單
+- 在 Google Sheets 生成進度檢核表，若有人尚未填寫會自動寄信
+- 在 Google Docs 草擬「新人入職須知」，並插入封面圖
+- 在 Google Slides 根據公司素材生成一份「公司簡介」簡報
 [/lab-session]
 
 ---
 
-# 結語：AI 時代的生存心法
+# 結語：AI 是這個時代的槓桿
 
-## 五個心法
+## 與 AI 協作的 4 個提醒
 
 ### 🧑‍⚖️ 只有專業人士，才有能力判斷對錯
 
@@ -1763,6 +1790,8 @@ https://docs.google.com/document/d/1hqtXJ2dZjWdf1GSYlHd-iNWiSiGi3WWCu2rl5Ka2z9A/
 
 > **現在 AI 解決不了的，都是中高階問題**
 > 擁有專業知識的人，才能夠如臂使指；知道什麼是「好」，才有評斷標準。
+
+## 本堂重點回顧
 
 [summary]
 - 📝 **企劃七步驟** | 反問、補齊資訊、利害關係人、紅藍隊攻防，最後輸出可直接貼進 Gamma 的 Markdown 大綱
