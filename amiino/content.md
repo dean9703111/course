@@ -1435,6 +1435,10 @@ Skill 建立完成後，有 2 種方式觸發：
 
 ![AI 確認每一步的細節後，才生成 PPT](assets/chatgpt-use-skill4.png)
 
+> **小提醒**
+> 用 Skill 生成簡報的方案可行，但`消耗的額度非常多`（以 Plus 付費版來說，大約要消耗 70%）。
+> 因此這邊用[參考對話連結的方式做展示](https://chatgpt.com/share/6a978e3f-ce38-83e8-a0eb-79e297574f47)
+
 ## Skill 使用經驗
 
 ### 🧩 Skill 不是越多，AI 就越強
