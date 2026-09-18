@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Skill 結構解剖</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Light mode (default) */
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --card-alt: #f7f3ed;
+    --text: #1a1a1a;
+    --text-secondary: #5c5c5c;
+    --text-muted: #8a8a8a;
+    --border: #e8e4df;
+    --border-strong: #d5cfc7;
+    --highlight: #fff8e1;
+    --shadow: 0 2px 10px rgba(0,0,0,0.05);
+    --shadow-strong: 0 8px 24px rgba(0,0,0,0.1);
+
+    /* Four component colors */
+    --c-meta: #d35400;        /* Metadata - orange */
+    --c-meta-bg: #fef5ed;
+    --c-prompt: #2c7a7b;      /* Prompt - teal */
+    --c-prompt-bg: #edf7f7;
+    --c-script: #2563eb;      /* Scripts - blue */
+    --c-script-bg: #eef4ff;
+    --c-ref: #8e44ad;         /* Reference - purple */
+    --c-ref-bg: #f5edf9;
+
+    --code-bg: #2d3142;
+    --code-text: #e8e8e8;
+    --code-key: #d4a85a;
+    --code-str: #95c97a;
+    --code-cmt: #7a7d8f;
+  }
+
+  body.dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --card-alt: #252a3d;
+    --text: #e4e4e7;
+    --text-secondary: #a8aab8;
+    --text-muted: #6b6e80;
+    --border: #2d3148;
+    --border-strong: #3a3e57;
+    --highlight: #2a2f45;
+    --shadow: 0 2px 10px rgba(0,0,0,0.3);
+    --shadow-strong: 0 8px 28px rgba(0,0,0,0.45);
+
+    --c-meta: #f0a060;
+    --c-meta-bg: #3a1f0a;
+    --c-prompt: #5cc5c5;
+    --c-prompt-bg: #0e2e30;
+    --c-script: #6b95f5;
+    --c-script-bg: #1a2444;
+    --c-ref: #c290e0;
+    --c-ref-bg: #2a1838;
+
+    --code-bg: #0f111a;
+    --code-text: #d8dae0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    padding: 24px 16px;
+    max-width: 920px;
+    margin: 0 auto;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  .intro {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .intro h2 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  .intro p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+  }
+
+  .intro .skill-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--c-prompt);
+    font-weight: 700;
+  }
+
+  /* ===== Anatomy grid ===== */
+  .anatomy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 640px) {
+    .anatomy { grid-template-columns: 1fr; }
+  }
+
+  .part {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 18px 16px;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .part:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-strong);
+  }
+
+  .part::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--part-color);
+  }
+
+  .part.metadata  { --part-color: var(--c-meta);   --part-bg: var(--c-meta-bg); }
+  .part.prompt    { --part-color: var(--c-prompt); --part-bg: var(--c-prompt-bg); }
+  .part.scripts   { --part-color: var(--c-script); --part-bg: var(--c-script-bg); }
+  .part.reference { --part-color: var(--c-ref);    --part-bg: var(--c-ref-bg); }
+
+  .part:hover { border-color: var(--part-color); }
+
+  .part-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .part-num {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--part-bg);
+    color: var(--part-color);
+    font-weight: 900;
+    font-size: 0.92rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  .part-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--part-color);
+    line-height: 1.3;
+  }
+
+  .part-title .en {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 3px;
+    letter-spacing: 0.4px;
+  }
+
+  .part-desc {
+    font-size: 0.96rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.65;
+  }
+
+  .part-desc code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    background: var(--highlight);
+    color: var(--part-color);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .part-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.84rem;
+    color: var(--part-color);
+    font-weight: 600;
+    user-select: none;
+  }
+
+  .part-toggle .arrow {
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+
+  .part.open .part-toggle .arrow {
+    transform: rotate(90deg);
+  }
+
+  .part-example {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease, margin-top 0.28s ease;
+    margin-top: 0;
+  }
+
+  .part.open .part-example {
+    max-height: 500px;
+    margin-top: 14px;
+  }
+
+  .code {
+    background: var(--code-bg);
+    color: var(--code-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.84rem;
+    line-height: 1.6;
+    padding: 14px 16px;
+    border-radius: 8px;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .code .k { color: var(--code-key); }
+  .code .s { color: var(--code-str); }
+  .code .c { color: var(--code-cmt); font-style: italic; }
+
+  /* ===== Tree summary ===== */
+  .tree-summary {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: var(--shadow);
+  }
+
+  .tree-summary h3 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tree-summary h3::before {
+    content: '📁';
+    font-size: 1.15rem;
+  }
+
+  .tree {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.96rem;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  .tree-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 0;
+  }
+
+  .tree-row .branch {
+    color: var(--border-strong);
+    flex-shrink: 0;
+    white-space: pre;       /* preserve any inner spaces */
+  }
+
+  .tree-row .name { font-weight: 700; }
+
+  .tree-row .folder    { color: var(--c-meta); }
+  .tree-row .file-skill { color: var(--c-prompt); }
+  .tree-row .file-py    { color: var(--c-script); }
+  .tree-row .file-md    { color: var(--c-ref); }
+
+  .tree-row .comment {
+    color: var(--text-muted);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .tree-row .comment::before {
+    content: '← ';
+    opacity: 0.55;
+  }
+
+  /* Indent levels — proportional to monospace branch width */
+  .tree-row.indent-1 { padding-left: 0.2em; }
+  .tree-row.indent-2 { padding-left: 2.4em; }
+
+  @media (max-width: 520px) {
+    .tree-row .comment { white-space: normal; }
+  }
+
+  /* ===== Theme toggle (manual fallback) ===== */
+  .theme-toggle {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;          /* shown only when parent sync fails */
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow);
+  }
+  body.standalone .theme-toggle { display: flex; }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" title="切換主題">🌓</button>
+
+<div class="anatomy">
+
+  <!-- 1. Metadata -->
+  <div class="part metadata" onclick="togglePart(this)">
+    <div class="part-head">
+      <div class="part-num">1</div>
+      <div class="part-title">
+        元數據
+        <span class="en">METADATA</span>
+      </div>
+    </div>
+    <div class="part-desc">
+      告訴 Claude「你是誰、什麼時候該出場」。寫在 <code>SKILL.md</code> 開頭的 YAML frontmatter。
+    </div>
+    <div class="part-toggle"><span class="arrow">▶</span> 點擊查看範例</div>
+    <div class="part-example">
+      <div class="code"><span class="c">--- SKILL.md ---</span>
+<span class="k">---</span>
+<span class="k">name:</span> <span class="s">git-smart-commit</span>
+<span class="k">description:</span> <span class="s">當使用者要 commit
+  程式碼時自動觸發，依據變更內容
+  產生符合慣例的 commit message</span>
+<span class="k">---</span></div>
+    </div>
+  </div>
+
+  <!-- 2. Prompt -->
+  <div class="part prompt" onclick="togglePart(this)">
+    <div class="part-head">
+      <div class="part-num">2</div>
+      <div class="part-title">
+        提示詞
+        <span class="en">PROMPT</span>
+      </div>
+    </div>
+    <div class="part-desc">
+      Skill 的「大腦」與「SOP」。寫在 <code>SKILL.md</code> 主文中，告訴 Claude 步驟、原則、產出格式。
+    </div>
+    <div class="part-toggle"><span class="arrow">▶</span> 點擊查看範例</div>
+    <div class="part-example">
+      <div class="code"><span class="c">--- SKILL.md（接續上面）---</span>
+<span class="k"># Git Smart Commit</span>
+
+<span class="c">## 執行步驟</span>
+1. 執行 <span class="s">`git diff --staged`</span>
+2. 依變更類型分類（feat/fix/...）
+3. 用一行 50 字內的繁中描述
+4. 詢問使用者是否 commit
+
+<span class="c">## 原則</span>
+- 不主動 push
+- 不修改 .env 等敏感檔</div>
+    </div>
+  </div>
+
+  <!-- 3. Scripts -->
+  <div class="part scripts" onclick="togglePart(this)">
+    <div class="part-head">
+      <div class="part-num">3</div>
+      <div class="part-title">
+        程式腳本
+        <span class="en">SCRIPTS</span>
+      </div>
+    </div>
+    <div class="part-desc">
+      把重複、確定性的工作交給程式（Python / Node.js），<code>SKILL.md</code> 只負責「呼叫」，省下大量 token。
+    </div>
+    <div class="part-toggle"><span class="arrow">▶</span> 點擊查看範例</div>
+    <div class="part-example">
+      <div class="code"><span class="c">--- scripts/build.py ---</span>
+<span class="k">import</span> sys, json
+<span class="k">from</span> pathlib <span class="k">import</span> Path
+
+<span class="k">def</span> build(md_path):
+    <span class="c"># 將 markdown 轉成 HTML</span>
+    md = Path(md_path).read_text()
+    html = render(md)
+    out = md_path.replace(<span class="s">'.md'</span>, <span class="s">'.html'</span>)
+    Path(out).write_text(html)
+    <span class="k">print</span>(<span class="s">f"✓ {out}"</span>)</div>
+    </div>
+  </div>
+
+  <!-- 4. Reference -->
+  <div class="part reference" onclick="togglePart(this)">
+    <div class="part-head">
+      <div class="part-num">4</div>
+      <div class="part-title">
+        參考資源
+        <span class="en">REFERENCE</span>
+      </div>
+    </div>
+    <div class="part-desc">
+      補充判斷依據（範例、規則、樣板）。AI 需要時才會載入，避免 <code>SKILL.md</code> 過長。
+    </div>
+    <div class="part-toggle"><span class="arrow">▶</span> 點擊查看範例</div>
+    <div class="part-example">
+      <div class="code"><span class="c">--- reference/components.md ---</span>
+<span class="k"># 元件對照表</span>
+
+| Markdown | HTML |
+|---|---|
+| <span class="s">`# 標題`</span> | <span class="s">`&lt;h1&gt;`</span> |
+| <span class="s">`![圖]()`</span> | <span class="s">`&lt;figure&gt;`</span> |
+| <span class="s">`[flow]`</span> | <span class="s">`.flow`</span> |
+
+<span class="c"># AI 遇到「轉 Markdown」</span>
+<span class="c"># 任務時才會載入此檔</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Tree summary -->
+<div class="tree-summary">
+  <h3>實際的資料夾長這樣</h3>
+  <div class="tree">
+    <div class="tree-row">
+      <span class="name folder">📂 my-skill/</span>
+    </div>
+    <div class="tree-row indent-1">
+      <span class="branch">├─</span>
+      <span class="name file-skill">SKILL.md</span>
+      <span class="comment">1 元數據 + 2 提示詞</span>
+    </div>
+    <div class="tree-row indent-1">
+      <span class="branch">├─</span>
+      <span class="name folder">scripts/</span>
+    </div>
+    <div class="tree-row indent-2">
+      <span class="branch">├─</span>
+      <span class="name file-py">build.py</span>
+      <span class="comment">3 程式腳本</span>
+    </div>
+    <div class="tree-row indent-2">
+      <span class="branch">└─</span>
+      <span class="name file-py">validate.js</span>
+    </div>
+    <div class="tree-row indent-1">
+      <span class="branch">└─</span>
+      <span class="name folder">reference/</span>
+    </div>
+    <div class="tree-row indent-2">
+      <span class="branch">├─</span>
+      <span class="name file-md">components.md</span>
+      <span class="comment">4 參考資源</span>
+    </div>
+    <div class="tree-row indent-2">
+      <span class="branch">└─</span>
+      <span class="name file-md">examples.md</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== Card toggle =====
+  function togglePart(el) {
+    el.classList.toggle('open');
+  }
+
+  // ===== Theme sync with parent course page =====
+  function applyTheme() {
+    try {
+      var parentTheme = window.parent.document.documentElement.getAttribute('data-theme');
+      // course base.html: no attribute = dark, 'light' = light
+      document.body.classList.toggle('dark', parentTheme !== 'light');
+      document.body.classList.remove('standalone');
+    } catch (e) {
+      // Cross-origin or standalone — fall back to OS preference + manual toggle
+      document.body.classList.add('standalone');
+      document.body.classList.toggle(
+        'dark',
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      );
+    }
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+  }
+
+  applyTheme();
+
+  try {
+    new MutationObserver(applyTheme).observe(
+      window.parent.document.documentElement,
+      { attributes: true, attributeFilter: ['data-theme'] }
+    );
+  } catch (e) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+  }
+</script>
+</body>
+</html>

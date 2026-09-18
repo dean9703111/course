@@ -1,0 +1,29 @@
+# ===================================================
+# 達和環保課程 — 頁面專屬設定
+# 只寫需要覆蓋 global config 的欄位
+# ===================================================
+
+page:
+  title: "Claude 企業級自動化實戰"
+  badge: "達和環保企業內訓"
+  hero_title: "從工作雜務到系統化 SOP"
+  subtitle: "掌握 Connector / Project / Skill / Cowork 的使用技巧，讓 AI 替你動手做事"
+
+seo:
+  title: "Claude 企業級自動化實戰｜達和環保企業內訓"
+  description: "串接日常工具、建立知識庫、把流程固化成 Skill、讓 Cowork 動手整理檔案"
+  image: "https://deanlin.net/course/tahoho/assets/og-image.jpg"
+  url: "https://deanlin.net/course/tahoho/"
+
+# ---------------------------------------------------
+# 引言
+# ---------------------------------------------------
+quotes:
+  opening:
+    text: "現在的 AI 就像是什麼都會，<br>但需要你給他方向的「新人」。"
+  closing:
+    text: >
+      學 AI 最重要的不是掌握最新資訊，<br>
+      而是「動手嘗試」哪些環節導入後能帶來幫助
+
+# nav 預設從 content.md 的 # 章節自動產生
