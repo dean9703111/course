@@ -1,0 +1,28 @@
+# config/global.yaml — 組織層設定（放在 deck 目錄的任一祖層，build 自動向上搜尋 ≤ 4 層）
+brand:
+  label: "內部知識分享"          # 每張卡底部的標示（部門／系列名）；留空字串就不顯示
+  theme: both                   # 預設出圖模式：dark | light | both
+  accent:                       # 強調色
+    dark: "#FFC24D"             # 深色模式：亮 amber（深底上 ≈ 11:1）
+    light: "#7E570F"            # 淺色模式：深金（米底上 ≈ 5.7:1）——不是同色反轉，是重新映射
+  hot:                          # 衝擊色（關鍵數字、!!記號!!）
+    dark: "#FF6B4A"
+    light: "#A93B22"
+  background: halo              # 背景風格：minimal | grid | gradient | halo
+  layout:
+    mode: tutorial
+    cover_visual: none
+    cover_steps: []
+    rhythm: steady
+
+export:
+  ratio: "4:5"                  # 4:5（1080×1350）| 1:1（1080×1080）
+  scale: 2                      # deviceScaleFactor，2 = 出 2160 寬 PNG，投影或列印更銳利
+
+criteria:                       # Define：這副牌「點先算對」的尺（lint 逐項檢查）
+  cards: { min: 5, max: 10 }
+  chars: { cover: 60, point: 160, summary: 100 }   # 計字不含 badge 與程式碼
+  forbidden: ["作為一個 AI", "以下是", "總而言之", "綜上所述"]
+  require_recap: true                         # 結尾卡必含重點回顧（條列／tip／引言 擇一）
+  require_source: false                       # 結尾卡必含「依據：」出處；規範、制度類建議開
+  allow_unverified_numbers: false             # %／N 倍 類數字一律警告，防捏造
