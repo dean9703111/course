@@ -77,7 +77,7 @@ info-card-generator/
 | `[ok] 文字` / `[no] 文字` | ✅／❌ 對照盒 | 對比型必備 |
 | `[warn] 文字` | ⚠️ 警示條 | 例外、紅線 |
 | `[tip] 文字` | 💡 重點框 | 每卡的記憶點 |
-| `[flow] A -> *B -> C` | 自適應流程卡，只給有先後順序的事；短流程橫向，長流程自動轉 stepper。`*` 開頭＝強調節點，**只標這張卡在講的那一步**（門檻、決策點、最常漏的一步），沒有就不加；不要習慣性標最後一個 | `[flow] 送件 -> *三家比價 -> 核決`（本卡在講比價）<br>`[flow] 頭像 -> Settings -> Privacy`（導覽路徑，不加 `*`） |
+| `[flow] A -> *B -> C` | 自適應流程卡，只給有先後順序的事；依估算視覺寬度決定：放得進一行就橫排（格間有 › 箭頭），放不下自動轉兩欄 stepper（Z 字閱讀，順序由編號承載，不畫連接線）。`*` 開頭＝強調節點，**只標這張卡在講的那一步**（門檻、決策點、最常漏的一步），沒有就不加；不要習慣性標最後一個 | `[flow] 送件 -> *三家比價 -> 核決`（本卡在講比價）<br>`[flow] 頭像 -> Settings -> Privacy`（導覽路徑，不加 `*`） |
 | `> 引言` | 引言框（可多行） | 規範原文、決議原句 |
 | ` ```lang 檔名 ` | 程式碼視窗（窗控＋檔名列＋語法上色） | ` ```yaml SKILL.md ` |
 | `***` | 裝飾分隔線 | — |
@@ -105,7 +105,17 @@ node scripts/build.mjs <deck-dir> --theme both # 深淺各出一套
 
 Build 會自動：跑 lint → 注入 token → 產 `index.html` → Puppeteer **溢版檢查**（任何一張內容超出畫布即中止並指出卡號）→ 逐卡截 1080×1350 PNG（× `export.scale`）。溢版就回 Step 2 精簡文字或拆卡，不要用 `--force` 交差。
 
-出圖後告訴使用者 PNG 位置，並提醒：要改內容就改 `content.md` 重跑，不要直接修圖。
+Build 同時會固定產出 `assets/preview-<theme>.png`（整副牌 5 欄總覽圖），並在最後印出「交付清單」。
+
+### Step 5：交付（固定，每次一樣）
+
+使用者在對話裡只需要「看得到整副牌」，要用檔案時再下載整包。所以交付固定兩項，用 present_files 一次呈現：
+
+1. `assets/preview-dark.png`、`assets/preview-light.png`（有出的主題才附）——一張圖看完整副牌
+2. deck 目錄打包成一個 zip（含 `content.md`、`config/`、`assets/cards/`、`index.html`）——要用檔案就下載這包
+
+回覆內容：提煉摘要（Step 1 的六項）＋「為了塞進畫布做的取捨」，並提醒要改內容就改 `content.md` 重跑，不要直接修圖。
+**不要**逐張 present 單卡 PNG，也不要另外 present `content.md`（都在 zip 裡）；使用者點名要看哪張再單獨給。
 
 ## 內容鐵律
 
@@ -150,3 +160,7 @@ Build 會自動：跑 lint → 注入 token → 產 `index.html` → Puppeteer *
 - DSL 完整範例：[content-example.md](reference/content-example.md)
 - Config 範例：[config-example.yaml](reference/config-example.yaml)
 - 渲染模板：[base.html](reference/base.html)
+
+## 更新紀錄
+
+- 2026-09-21：固定交付（總覽圖＋zip）；`[flow]` 兩欄 stepper 移除誤導的連接線、橫排改用 › 箭頭、橫排／兩欄改依視覺寬度判斷；引言框取消合成斜體；淺色 `==標記==` 改實色塊＋深字；頁尾 t3 對比提升至 AA、進度點放大。舊 deck 重 build 會有這些差異。

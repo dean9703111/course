@@ -74,7 +74,10 @@ const tokenBlock = (theme) => {
   const onAcc = luminance(acc) > 0.42
     ? (theme === 'dark' ? '#231602' : '#2C2318')   // 亮 accent → 深色字
     : '#FFF6E3';                                    // 深 accent → 米白字
-  return `html[data-theme="${theme}"]{--acc:${acc};--acc-soft:${hexRgba(acc, 0.14)};--hot:${hot};--hot-soft:${hexRgba(hot, 0.12)};--on-acc:${onAcc};}`;
+  // ==標記== 的螢光筆色塊：深色沿用 acc-soft；淺色用較實的 accent 色塊＋深字，不然米底上看不見
+  const markBg = theme === 'dark' ? hexRgba(acc, 0.14) : hexRgba(acc, 0.20);
+  const markT = theme === 'dark' ? acc : '#2C2318';
+  return `html[data-theme="${theme}"]{--acc:${acc};--acc-soft:${hexRgba(acc, 0.14)};--hot:${hot};--hot-soft:${hexRgba(hot, 0.12)};--on-acc:${onAcc};--mark-bg:${markBg};--mark-t:${markT};}`;
 };
 const tokens = tokenBlock('dark') + '\n' + tokenBlock('light');
 
@@ -168,6 +171,7 @@ async function launchBrowser() {
 }
 
 const browser = await launchBrowser();
+const sheets = [];
 try {
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: ch + 200, deviceScaleFactor: cfg.export.scale });
@@ -194,15 +198,55 @@ try {
     const outDir = path.join(deckDir, 'assets', 'cards', theme);
     fs.mkdirSync(outDir, { recursive: true });
     const els = await page.$$('.card');
+    const shots = [];
     for (let i = 0; i < els.length; i++) {
       const p = path.join(outDir, String(i + 1).padStart(2, '0') + '.png');
       await els[i].screenshot({ path: p });
+      shots.push(p);
       console.log(`  ✔ [${theme}] ${path.relative(process.cwd(), p)}`);
     }
+
+    /* ── Step 5：整副牌總覽圖（固定產出，交付時一定附上）── */
+    const sheetPath = await contactSheet(browser, theme, shots, deckDir);
+    console.log(`  ✔ [${theme}] ${path.relative(process.cwd(), sheetPath)}（總覽）`);
+    sheets.push(sheetPath);
   }
 } finally {
   await browser.close();
 }
 
+/**
+ * contactSheet — 把一個主題的所有卡片排成 5 欄總覽圖 assets/preview-<theme>.png
+ * 目的：交付時用一張圖讓使用者看到整副牌，不必逐張點開；也是 build 的固定產物，避免每次交付內容不一致。
+ */
+async function contactSheet(browser, theme, shots, deckDir) {
+  const cols = 5, cell = 400, gap = 20, pad = 24;
+  const rows = Math.ceil(shots.length / cols);
+  const cellH = Math.round(cell * ch / 1080);
+  const w = pad * 2 + cols * cell + (cols - 1) * gap;
+  const h = pad * 2 + rows * cellH + (rows - 1) * gap;
+  const bg = theme === 'dark' ? '#0B0F17' : '#EBE2D2';
+  const imgs = shots.map((p) => `<img src="file://${p}">`).join('');
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+    body{margin:0;background:${bg};width:${w}px;height:${h}px}
+    .g{display:grid;grid-template-columns:repeat(${cols},${cell}px);gap:${gap}px;padding:${pad}px}
+    img{width:${cell}px;height:${cellH}px;border-radius:12px;display:block}
+  </style></head><body><div class="g">${imgs}</div></body></html>`;
+  const htmlPath = path.join(deckDir, 'assets', `preview-${theme}.html`);
+  fs.writeFileSync(htmlPath, html);
+  const pg = await browser.newPage();
+  await pg.setViewport({ width: w, height: h, deviceScaleFactor: 1 });
+  await pg.goto('file://' + htmlPath, { waitUntil: 'networkidle0' });
+  const out = path.join(deckDir, 'assets', `preview-${theme}.png`);
+  await pg.screenshot({ path: out });
+  await pg.close();
+  fs.unlinkSync(htmlPath);
+  return out;
+}
+
 console.log(`\n完成：${deck.cards.length} 張 × ${themes.length} 主題（${cfg.export.ratio}，@${cfg.export.scale}x）`);
 console.log('PNG 可直接放進簡報、公告或群組；要改內容就改 content.md 重跑。');
+console.log('\n── 交付清單（固定）──');
+for (const sp of sheets) console.log(`  總覽：${path.relative(process.cwd(), sp)}`);
+console.log(`  卡片：${path.relative(process.cwd(), path.join(deckDir, 'assets', 'cards'))}/<theme>/NN.png`);
+console.log(`  來源：${path.relative(process.cwd(), mdPath)}`);

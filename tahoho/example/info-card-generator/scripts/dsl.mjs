@@ -167,8 +167,12 @@ function renderBlock(b) {
     case 'tip': return `<div class="note tip"><span class="em">💡</span><div>${inline(b.raw)}</div></div>`;
     case 'flow': {
       const parts = b.raw.split(/->/).map((s) => s.trim()).filter(Boolean);
-      const long = parts.some((p) => p.replace(/^\*/, '').trim().length >= 7);
-      const layout = parts.length >= 4 || long ? 'stack' : 'rail';
+      // 依「視覺寬度」決定橫排（rail）或兩欄 stepper（stack）：
+      // CJK 一字 ≈ 29px、拉丁／數字 ≈ 16px；每格固定開銷（內距＋編號圓）≈ 120px；格與格之間箭頭區 36px。
+      // 內容區寬 1080 − 92×2 = 896px；估算總寬放得下就橫排，否則轉 stepper。
+      const estW = (label) => [...label].reduce((w, ch) => w + (/[\u2E80-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF]/.test(ch) ? 29 : 16), 0) + 120;
+      const total = parts.reduce((w, p) => w + estW(p.replace(/^\*/, '').trim()), 0) + (parts.length - 1) * 36;
+      const layout = total <= 896 ? 'rail' : 'stack';
       return `<div class="flow flow-${layout}">` + parts.map((p, k) => {
         const hot = p.startsWith('*');
         const label = esc(hot ? p.slice(1).trim() : p);

@@ -28,7 +28,7 @@ html[data-theme="dark"]{
   --grid:rgba(148,163,184,.07);
   --surface:#131B2C; --surface-2:#0F1626;
   --line:#28334E;
-  --t1:#F1F5FF; --t2:#9AA7BF; --t3:#5D6C88;
+  --t1:#F1F5FF; --t2:#9AA7BF; --t3:#7A89A6;
   --acc:#FFC24D; --acc-soft:rgba(255,194,77,.14); --on-acc:#231602;
   --hot:#FF6B4A; --hot-soft:rgba(255,107,74,.12);
   --ok:#4FD98B;  --ok-soft:rgba(79,217,139,.13);
@@ -46,8 +46,9 @@ html[data-theme="light"]{
   --grid:rgba(166,132,90,.11);
   --surface:#FFFDF8; --surface-2:#F2EADB;
   --line:#DBCBB1;
-  --t1:#2C2318; --t2:#6E5E4B; --t3:#A08B6F;
+  --t1:#2C2318; --t2:#6E5E4B; --t3:#8A7659;
   --acc:#7E570F; --acc-soft:rgba(126,87,15,.10); --on-acc:#FFF6E3;
+  --mark-bg:rgba(126,87,15,.20); --mark-t:#2C2318;   /* 淺色：螢光筆感，深字壓在色塊上 */
   --hot:#A93B22; --hot-soft:rgba(169,59,34,.09);
   --ok:#2E7D4F;  --ok-soft:rgba(46,125,79,.10);
   --no:#A93B22;  --no-soft:rgba(169,59,34,.10);
@@ -214,8 +215,8 @@ p{margin:0;font:500 calc(var(--body) * var(--s))/1.68 var(--font-body);color:var
 
 strong{color:var(--acc);font-weight:800}
 mark{
-  background:var(--acc-soft);color:var(--acc);
-  padding:2px 16px;border-radius:14px;
+  background:var(--mark-bg,var(--acc-soft));color:var(--mark-t,var(--acc));
+  padding:2px 16px;border-radius:14px;white-space:nowrap;
   -webkit-box-decoration-break:clone;box-decoration-break:clone;
 }
 .hot{color:var(--hot);font-weight:900}
@@ -246,7 +247,8 @@ blockquote{
   margin:0;width:100%;
   border-left:8px solid var(--acc);background:var(--surface-2);
   padding:calc(32px * var(--s)) calc(44px * var(--s));border-radius:0 22px 22px 0;
-  font:italic 500 calc(var(--box) * var(--s))/1.66 var(--font-serif);color:var(--t2);text-align:left;
+  font:500 calc(var(--box) * var(--s))/1.66 var(--font-serif);color:var(--t2);text-align:left;
+  font-style:normal;   /* CJK 沒有真正的斜體，瀏覽器合成斜體會歪掉 */
 }
 
 .call{
@@ -287,7 +289,7 @@ blockquote{
 }
 .flow-rail{
   display:flex;align-items:center;justify-content:center;
-  gap:calc(22px * var(--s));
+  gap:calc(36px * var(--s));
 }
 .flow-stack{
   display:grid;grid-template-columns:1fr 1fr;
@@ -301,17 +303,13 @@ blockquote{
   border-radius:22px;padding:calc(20px * var(--s)) calc(24px * var(--s));
 }
 .flow-rail .step:not(:last-child)::after{
-  content:"";position:absolute;left:calc(100% + 2px);top:50%;
-  width:calc(22px * var(--s));height:2.5px;background:var(--line);
+  /* 橫向短流程：用箭頭指方向，不用只有 2px 的髮絲線 */
+  content:"›";position:absolute;left:100%;top:50%;
+  width:calc(36px * var(--s));transform:translateY(-52%);
+  text-align:center;font:900 calc(44px * var(--s))/1 var(--font-sans);color:var(--t3);
 }
-.flow-stack .step:not(:last-child)::after{
-  content:"";position:absolute;left:calc(28px * var(--s));top:100%;
-  width:2.5px;height:calc(22px * var(--s));background:var(--line);
-}
-.flow-stack .step:nth-child(odd):not(:last-child)::after{
-  left:auto;right:calc(-15px * var(--s));top:50%;
-  width:calc(24px * var(--s));height:2.5px;
-}
+/* 長流程（stepper）：兩欄 Z 字閱讀，順序由編號圓點承載，不畫連接線
+   （原本的連接線會從第 2 步指向第 4 步，方向誤導） */
 .flow .num{
   flex:0 0 auto;width:calc(40px * var(--s));height:calc(40px * var(--s));
   border-radius:50%;display:flex;align-items:center;justify-content:center;
@@ -359,10 +357,10 @@ blockquote{
   position:absolute;left:84px;right:84px;bottom:58px;
   display:flex;align-items:center;justify-content:space-between;
 }
-.foot .hd{font:600 28px/1 var(--mono);color:var(--t3);letter-spacing:1px}
+.foot .hd{font:600 28px/1 var(--font-sans);color:var(--t3);letter-spacing:1px}
 .dots{display:flex;gap:12px;align-items:center}
-.dots i{width:14px;height:14px;border-radius:50%;background:var(--t3);opacity:.35}
-.dots i.on{background:var(--acc);opacity:1;width:36px;border-radius:8px}
+.dots i{width:18px;height:18px;border-radius:50%;background:var(--t3);opacity:.4}
+.dots i.on{background:var(--acc);opacity:1;width:48px;border-radius:9px}
 
 /* ═══════════ 5. 預覽外殼（?shot=1 時全部關閉） ═══════════ */
 body{margin:0;background:var(--bg);font-family:var(--font-sans);transition:background .25s}
