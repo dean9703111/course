@@ -3,3 +3,7 @@ README.md
 code
 github-upload
 月報表產生器-webapp
+# ERP 去識別化對照表含真名，不進 git
+tahoho/_scripts/erp_name_map.csv
+tahoho/_scripts/erp_extra_terms.csv
+tahoho/_scripts/__pycache__/
