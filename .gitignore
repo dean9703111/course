@@ -7,3 +7,6 @@ github-upload
 tahoho/_scripts/erp_name_map.csv
 tahoho/_scripts/erp_extra_terms.csv
 tahoho/_scripts/__pycache__/
+
+# Office 開檔時產生的鎖定暫存檔（~$xxx.docx / .xlsx / .pptx）
+~$*
