@@ -1,0 +1,29 @@
+# ===================================================
+# PPA 課程試看 — 頁面專屬設定
+# 只寫需要覆蓋 global config 的欄位
+# ===================================================
+
+page:
+  title: "Claude AI Agent 實戰"
+  badge: "初探 Claude"
+  hero_title: "不是選哪個 AI<br>而是熟悉一套"
+  subtitle: "網頁版、桌面版 App、Claude Code 三種情境，帶你走過所有 AI Agent 共通的底層邏輯"
+
+seo:
+  title: "Claude AI Agent 實戰"
+  description: "連接器、專案、Chrome 外掛、桌面版 App、Skill、Claude Code 與 Git：依情境選對工具，讓 AI 成為你的分身"
+  image: "https://deanlin.net/course/ppa/example/assets/og-image.jpg"
+  url: "https://deanlin.net/course/ppa/example/"
+
+# ---------------------------------------------------
+# 引言
+# ---------------------------------------------------
+quotes:
+  opening:
+    text: "熟悉一套 AI Agent，<br>比追任何流行的名詞都更重要。"
+  closing:
+    text: >
+      工具會一直更新，<br>
+      但你已經掌握底層邏輯。
+
+# nav 預設從 content.md 的 # 章節自動產生
