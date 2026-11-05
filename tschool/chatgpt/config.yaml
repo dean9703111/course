@@ -1,0 +1,16 @@
+page:
+  title: "ChatGPT｜釐清需求，建立專屬的教學助理"
+  badge: "Tschool｜第 1 堂"
+  hero_title: "釐清需求，建立專屬的教學助理"
+  subtitle: "從資料底線、Prompt 到記憶與 Projects，讓備課與行政初稿有依據"
+seo:
+  title: "ChatGPT 教學與行政助理｜Tschool 第 1 堂"
+  description: "為學校老師與行政設計的 ChatGPT 講義：需求釐清、去識別化、Prompt、個人化與專案。"
+  image: "https://deanlin.net/course/tschool/chatgpt/assets/og-image.jpg"
+  default_image: "https://deanlin.net/course/tschool/chatgpt/assets/og-image.jpg"
+  url: "https://deanlin.net/course/tschool/chatgpt/"
+quotes:
+  opening:
+    text: "先把需求說清楚，<br>再讓 AI 幫你動手。"
+  closing:
+    text: "AI 是初稿引擎，<br>老師是品質守門員。"
