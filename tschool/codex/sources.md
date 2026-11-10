@@ -1,53 +1,151 @@
 # 第 2 堂素材來源與改編紀錄
 
-本檔供講師備課與追溯；不作為學員頁章節。講義章節與概念沿用作者過去的 Cowork（EDA）與生成圖片（BiCS）講義，只把工具換成 Codex App、範例換成校園情境。所有校園資料均為虛構。
+本檔供講師備課與追溯，不作為學員頁章節。所有學校、教師、學生與家長資料均為虛構，練習包裡的網址也都是 `example.com`／`example.org` 示範網址。
 
 ## 章節對照
 
-| 講義章節 | 底稿檔案與原段落 | 範例怎麼改 |
+| 講義章節（約略時間） | 底稿檔案與原段落 | 範例怎麼改 |
 |---|---|---|
-| 課前回顧 | [BiCS 第 2 堂](../../bics/lesson2/content.md) 第 1～43 行「課前回顧：上一堂學了什麼？」 | 回顧第 1 堂 ChatGPT 的 Prompt 六個技巧（沿用底稿「Prompt 技巧應用」寫法，對應第 1 堂技巧 1～6）、記憶與自訂、Project；「6 個成果」改為本堂 4 個成果 |
-| 初探 Codex（章；原「讓 AI 動手處理檔案」開場與初探 Codex App） | [EDA](../../eda/content.md) 約 1053～1082 行「初探 Cowork」 | Cowork 換 Codex 桌面版；選資料夾沿用，改用 `reading-delivery` 素材包；Claude 付費方案說明刪除 |
-| 多格式資料彙整（章） | EDA 約 1084～1116 行「多格式資料彙整」 | 凌亂專案資料夾改為閱讀探索日（活動條件、教學目標、工作分配、物資、異動紀錄、通知格式、含錯通知）；彙整成活動摘要與待辦清單，並用通知格式檢查含錯通知 |
-| 照片與表單（章）：照片批量轉存 Excel | EDA 約 1118～1162 行「照片批量轉存 Excel」 | 發票收據改為手寫虛構回條照片（座號、參加與否、陪同家長人數、備註）→ 回條名單；素材包附可列印的 `回條範本.html`；與第 4 堂 Cowork 的收據範例區隔；Skill 段沿用底稿 Insight 原文並改為預告 |
-| 照片與表單（章）：自動填入不同格式的表單 | EDA 約 1164～1197 行「自動填入不同格式的表單」 | 專案管理表改為活動申請表（空白表與填寫規則放在素材包 `input/活動申請表_空白.csv`，沿用底稿「先讀懂表單規則再填入」的做法；講義附預期結果對照表）與簽辦公文草稿；缺值標「待確認」 |
-| 圖片起手式（章）：AI 圖片的著作權 | [BiCS 第 2 堂](../../bics/lesson2/content.md) 約 1199～1214 行 | 沿用兩點確認；法律判斷改為「依一般說法」並提醒個案確認 |
-| 圖片起手式（章）：在 Codex 建立圖像 | BiCS 約 1216～1252 行「建立圖像」 | ChatGPT／Gemini 介面步驟刪除，改為 Codex 對話描述；沿用「後面不重複步驟」 |
-| 教材與活動配圖（章）：懶人包、活動流程、流程圖 | BiCS 約 1254～1443 行「懶人包、行程表、流程圖」 | 懶人包→家長通知懶人包；員工旅遊行程→校外教學流程；新人訓練流程→事實與意見學習流程 |
-| 教材與活動配圖（章）：活動海報、教材示意圖 | BiCS 約 1445～1524 行「影片封面、圖片加文字」「食物模擬」 | 影片封面→活動海報底圖（標題留白自己排）；食物模擬→水的三態教材示意圖 |
-| 課程總結、下一堂預告 | EDA 約 1201～1208 行總結；[Claude 講義](../claude/content.md) | 預告第 3 堂 Claude（Connector、Project、Skill） |
+| 課前回顧（5 分） | 本堂舊版回顧；[BiCS 第 2 堂](../../bics/lesson2/content.md)「課前回顧」 | 改成「第 1 堂學了 → 今天怎麼用」對照表，納入第 1 堂改寫後的新內容（網頁版 vs 桌面版、三家 AI 對標、圖片生成）；成果 flow 改為工作資料夾、三個 Skill、備課包、報名名單 |
+| 初探 Codex（15 分） | [EDA](../../eda/content.md)「初探 Cowork」；本堂舊版 | 入口改為「安裝 ChatGPT 桌面版 → 切換到 Codex」，與第 1 堂一致；保留只選練習資料夾、使用提醒、先盤點不改檔；新增權限選 Ask for approval |
+| Skill 起手式（40 分，新章節） | [安美諾](../../amiino/content.md) 第 901～975 行「簡報加速」、第 1416～1502 行「📊 簡報設計」；[第 3 堂 Claude](../claude/content.md)「把好方法變成 SOP」的 SOP 比喻 | Skill 定義、安裝與呼叫依官方文件；三個老師版技能包（見下方）；簡報四步驟沿用安美諾，模板與 Prompt 換成班親會、研習分享、學生活動說明；安美諾「Plus 約 70%」改寫為講者實測經驗並附官方額度說明 |
+| 備課資源彙整（25 分） | EDA「多格式資料彙整」；本堂舊版「多格式資料彙整」 | 閱讀探索日活動資料換成一個單元的混合格式備課資源；保留先盤點、先當偵探、故意含衝突、每筆標來源、CSV 存 UTF-8（含 BOM）、對照預期結果 |
+| 報名表照片轉 Excel（20 分） | EDA「照片批量轉存 Excel」；本堂舊版回條照片 | 回條改為「親子共讀夜報名表」（A4 一頁 3 份）；新增「先放 3 張試跑、補規則再加量」；結尾銜接第 3 堂 Skill |
+| 課程總結（10 分） | 本堂舊版總結 | summary、交付檢查、Q&A 依新內容更新；bonus 改為「🎁 幕後製作心得」；預告第 3 堂 Connector、Project、自己做 Skill |
 
-## 官方核對
+已刪除：「自動填入不同格式的表單」（申請表與簽辦草稿）、「圖片起手式」「教材與活動配圖」兩章（圖片生成已移到第 1 堂）。
 
-以下頁面已於 2026-11-05 使用 web open 實際讀取。
+## 講師專訪內容放在哪裡
 
-- [Projects and chats](https://learn.chatgpt.com/docs/projects)：桌面專案包含連接電腦資料夾的 local projects；與 ChatGPT Project 區別。
-- [Local environments](https://learn.chatgpt.com/docs/environments/local-environment)：Codex 的本機環境與桌面工作方式；未向零基礎學員要求編輯 `.codex` 設定。
-- [Image generation](https://learn.chatgpt.com/docs/image-generation)：在互動對話描述圖片、生成及修改圖片；使用相關額度。講義未固定模型、價格或保證所有帳號可用，並有 ChatGPT 圖片替代流程。
-- 照片轉 Excel 段：官方文件未保證 Codex 可讀手寫照片或直接寫 `.xlsx`，講義已加上「讀不清先標黃」與「改存 CSV（UTF-8 含 BOM，不確定處寫在備註）」的替代說法；授課前請實測。
-- Codex 桌面版的官方下載連結尚未核對，講義未放連結；授課前確認後補上。
+來源：`video/ppa/專訪邀約/回覆草稿.md`，改寫成「我」的現身說法，未整段貼上。
+
+| 專訪段落 | 放在講義哪裡 | 形式 |
+|---|---|---|
+| Q3 備課故事（PPT 20 小時 → Markdown＋Skill 3 小時） | Skill 起手式 → 技能二「🧑‍🏫 你現在看的這份講義，就是這樣做出來的」 | 卡片條列 |
+| Q3 技巧一（Markdown 結構化，過去講座變素材） | 備課資源彙整 →「為什麼要把備課資源整理成結構化文件？」 | Insight |
+| Q3 技巧三（最多時間花在驗證，責任自己承擔） | 備課資源彙整 → 對照預期結果之後「把最多時間花在驗證」 | Insight |
+| Q5 前半到中段（圖片辨識、例外規則、少量試跑、人工驗證） | 報名表照片轉 Excel →「📷 過去只能人工判讀」卡片、「先用 3～5 張試跑」「AI 完成後，還是要人工驗證」兩個 Insight、lab-session 先放 3 張 | 卡片＋Insight＋lab 設計 |
+
+未使用：Q3 技巧二（選擇題發想，留給第 1 堂）、Q5 開頭「先找重複、格式固定、你能判斷對錯的任務」（留給第 4 堂系列收尾）。
+
+## 講師影片
+
+| 影片 | 位置 | 形式 |
+|---|---|---|
+| [【ChatGPT Codex 實戰】將 Vibe Coding 成果從「用完就丟」，變成「可持續優化」的 Agent Skills](https://youtu.be/0pZri5f_tfk) | Skill 起手式 → 認識 Skill | `[youtube]` 嵌入（本堂唯一嵌入） |
+| [【Antigravity Agent Skills 教學】當別人還在複製貼上，你的 AI 已經自動搞定](https://youtu.be/xe00zJEtuMo) | Skill 起手式 →「🌐 不同 AI Agent 都有 Skill」 | 連結 |
+| [【Manus Skill 技能教學】教會 AI 一次，他永遠記得！](https://youtu.be/lKiwb381mfU) | 同上 | 連結 |
+| [【Manus 桌面版教學】讓 AI 操作電腦，從資料夾彙整報告、辨識圖片寫 Excel、自動填表單](https://youtu.be/WGHQuCI3iJk) | 報名表照片轉 Excel →「🔁 同樣的事，換一個 Agent 也做得到」 | 連結 |
+
+## 官方核對（2026-11-10 讀取）
+
+`developers.openai.com/codex/*` 目前會轉址到 `learn.chatgpt.com`。help.openai.com 直接讀取被擋（403），以閱讀代理讀取 OpenAI 原文。
+
+### 入口與安裝
+
+- [ChatGPT 下載頁](https://chatgpt.com/download)：「Existing Codex app users can update to ChatGPT and open Codex.」「ChatGPT Work is available on Plus, Pro, Business, and Enterprise plans.」
+- [ChatGPT desktop app](https://learn.chatgpt.com/codex/app)：「Download ChatGPT for macOS, Windows, or Linux.」「Choose ChatGPT or Codex.」「In ChatGPT, use the toggle above the composer to select Chat or Work.」「ChatGPT can use the files and context in the location you choose.」
+- [Changelog](https://learn.chatgpt.com/docs/changelog)：2026-07-09「Codex is now part of the ChatGPT desktop app on macOS and Windows.」；Linux 預覽版 2026-08-11 起提供。
+- [App 系統需求](https://learn.chatgpt.com/docs/app)：macOS 需 14 版以上，Apple Silicon 或 Intel 皆可。
+- [Windows app](https://learn.chatgpt.com/codex/windows/windows-app)：從 Microsoft Store 安裝（或 `winget install --id 9PLM9XGG6VKS -s msstore`）；支援 skills；建議先裝 Git、Node.js、Python 等開發工具（非必要）；要有沙盒保護需選 Ask for approval。未寫 Windows 最低版本。
+- [Computer use](https://learn.chatgpt.com/codex/computer-use)：macOS 與 Windows 可讓 ChatGPT 操作桌面 App，用 App 前會先徵求同意（本堂未示範，只在回顧提到桌面版能操作 App）。
+- 方案：[Codex 方案說明](https://help.openai.com/en/articles/11369540)「Codex is included across ChatGPT plans, including Free and Go」；[定價頁](https://chatgpt.com/pricing) 對 Free／Go 標示 Codex「Limited」。實際額度沒有公開 → 講義用講師備註標「授課前確認」，正文提醒學員先確認帳號。
+- 工作模式 vs Codex：[ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex)（2026-11-10 以瀏覽器讀取）——Work 是「finished deliverables」的 Agent（文件、試算表、簡報、報告），Codex 專做軟體開發與技術工作，兩者額度共用。本堂練習屬文件類，照分工付費版用 Work 也可；選 Codex 示範是因為 Free／Go 也能用，講義「初探 Codex」加了一則 Insight 說明。
+- 專案與權限：[Projects and chats](https://learn.chatgpt.com/docs/projects)、[Glossary](https://learn.chatgpt.com/docs/glossary)（Project 也指「a local folder used for file-based work」）、[Permission modes](https://learn.chatgpt.com/docs/permission-modes)（Ask for approval：「Always ask to edit external files and use the internet」，官方建議多數工作從這個模式開始）、[Sandboxing](https://learn.chatgpt.com/docs/sandboxing)（預設不開網路）。
+- 舊版引用的 `learn.chatgpt.com/docs/environments/local-environment` 內容是 worktree 設定腳本，與選資料夾無關，本版不再引用。
+
+### Skill
+
+- [Build skills](https://learn.chatgpt.com/docs/build-skills)：
+  - 定義：「A skill is a directory with a `SKILL.md` file plus optional scripts and references.」
+  - 位置：個人 `$HOME/.agents/skills`；專案 `.agents/skills`
+  - 呼叫：「In ChatGPT, type `@` to select a skill. In Codex CLI or the IDE extension, run `/skills` or type `$` to mention a skill.」
+  - 被動：「ChatGPT or Codex can choose a skill when your task matches the skill description.」
+  - 偵測：「Codex detects skill changes automatically. If an update doesn't appear, restart Codex.」
+  - 安裝：內建 `$skill-installer`；桌面版側邊欄 Skills 頁面「view and explore skills」
+- Changelog：2026-03-19「Added skills to the @ menu」；2026-09-11「Use @ to add context and $ to choose a skill」（出自 Quick chat 段落）。
+- **講義寫法**：正文寫「打 `@` 選技能（Codex 也支援 `$`）」；安裝交給 Codex 把資料夾複製到 `~/.agents/skills`（官方記載的位置；「請 Codex 代為複製」是合理做法但不是官方列出的步驟）。技能頁能否直接上傳 zip 官方未說明 → 講師備註「授課前確認」。
+- [openai/skills](https://github.com/openai/skills) 已標示 deprecated；curated 的 slides、spreadsheet、doc 技能已移除，所以本堂不依賴官方簡報技能。
+
+### PPTX 與 xlsx 怎麼產生
+
+- [Help 20001278](https://help.openai.com/en/articles/20001278)：網頁或桌面版 Codex 可用 `@Documents`、`@Spreadsheets`、`@Presentations` 開啟範本庫，`@Template-Creator` 可依使用者的 .pptx 建立範本；「ChatGPT Work can create or edit spreadsheet files」；各方案可用範圍未列出。
+- 官方沒有說明桌面版內建 Python／Node。第三方資料：
+  - [Simon Willison 2026-09-01](https://simonwillison.net/2026/Sep/1/codex-libreoffice/)：在 `~/.cache/codex-runtimes/` 發現約 1.7 GB 的執行環境（Python、Node、LibreOffice 等）
+  - GitHub issue [openai/codex#57473](https://github.com/openai/codex/issues/57473)（macOS，執行環境下載逾時、xlsx 產生失敗，2026-10-27 仍未關閉）、[#22038](https://github.com/openai/codex/issues/22038)（Windows 簡報函式庫錯誤）、[#24195](https://github.com/openai/codex/issues/24195)（內建 Python 缺套件）
+- **設計結論**：
+  1. `teacher-slides` 附 `scripts/build_deck.py`，只用 Python 3 內建模組（zipfile、xml），不需要 python-pptx；Codex 的執行環境或任何 Python 3 都能跑
+  2. 跑不動時，技能改交「逐頁文字稿」，不自行安裝軟體
+  3. 備案一：同一個 zip 上傳到 ChatGPT 網頁版「技能」在雲端產出（安美諾做法）。[Help 20001066](https://help.openai.com/en/articles/20001066) 上傳路徑為 Plugins → Skills → Create → Upload from your computer；該文寫個人技能適用 Business／Enterprise／Edu，定價頁卻顯示 Free～Pro 都有 Skills；安美諾 2026 年的截圖是 Plus 帳號可上傳 → 授課前確認
+  4. 備案二：講師分享示範對話連結
+- 圖片：[Image inputs](https://learn.chatgpt.com/docs/image-inputs)「You can also ask ChatGPT to inspect an image on your system」。xlsx 本機產生沒有官方保證 → 講義保留 CSV 備案與授課前實測。
+
+### 額度
+
+- [Pricing](https://learn.chatgpt.com/docs/pricing)：Plus 以「每 5 小時本機訊息數」估算，依模型不同；「Local messages and cloud chats share your plan's usage allowance. Weekly limits may also apply.」
+- [Help 11369540](https://help.openai.com/en/articles/11369540)：Codex、ChatGPT Work 等共用額度；「A long-running task can use substantially more than a short request.」用量在 `chatgpt.com/codex/settings/usage` 查看。
+- 「Plus 約 70%」：查無官方數字，官方也說相似任務的消耗會不同。講義改寫為講者在 ChatGPT Plus 的實測經驗，並並列官方說明。
 
 ## 練習素材
 
-- `example/reading-delivery/`（build 時自動打包為 `assets/reading-delivery.zip`）：第 1 堂「閱讀探索日」延伸材料，Markdown／CSV／TXT 已可直接使用，故意含錯通知供核對。
-- `input/活動申請表_空白.csv`：填表練習用的空白表，每列一個欄位並附填寫規則；預期答案列在講義「對照預期結果」卡片。
-- `回條範本.html`：可列印的回條範本（A4 一張 4 份，欄位：座號、是否參加、陪同家長人數、備註），學員手寫 3～5 張虛構回條後拍照，放進 `回條照片/`。
-- `使用說明.md`：只說明各資料夾用途，不寫核對答案。
+### `example/codex-practice/`（打包為 `assets/codex-practice.zip`）
+
+| 位置 | 內容 | 練習用途 |
+|---|---|---|
+| `技能包/` | 放三個技能包的空資料夾（附說明 txt） | 請 Codex 從這裡安裝 |
+| `技能練習/家長通知_親子共讀夜.md` | 虛構活動通知（12/11 親子共讀夜） | 技能一：資訊卡 |
+| `技能練習/上課筆記_事實與意見第一節.md` | 王老師的上課筆記（口語、條列混雜） | 技能二：線上講義 |
+| `技能練習/班親會資料.md` | 下學期班親會資料（含「待確認」的學校分機） | 技能三：簡報 |
+| `備課資源/單元重點與教學目標.md` | 今年版：3 節、新版第 48～55 頁 | 今年的標準 |
+| `備課資源/過往教案_去年版.docx` | 4 節、舊版第 52～59 頁、海洋塑膠短文、檢核表附件遺失 | 過期內容 |
+| `備課資源/教學進度表_五上.xlsx` | 「國語進度」「學校行事」兩個工作表 | 多工作表讀取 |
+| `備課資源/共備會議紀錄.txt` | 決議與提議混在一起、負責人與期限有缺 | 決議 vs 提議 |
+| `備課資源/影音與網站連結.csv` | 失效、重複、缺網址、需登入（UTF-8 含 BOM） | 資源索引狀態 |
+| `備課資源/學習單_事實或意見_掃描.jpg` | 掃描風格圖片；第 7 題同時含事實與意見、頁尾舊頁碼 | 圖片讀取與學習單修訂 |
+| `備課資源/補充閱讀_午餐剩食短文.txt` | 今年決議改用的短文 | 與教案對照 |
+| `報名表範本.html` | 可列印的親子共讀夜報名表，A4 一頁 3 份 | 照片轉 Excel |
+| `報名表照片/`、`output/` | 空資料夾（附說明 txt） | 放照片／放成品 |
+
+預期答案列在講義「對照預期結果」表，素材包本身不附答案。docx、xlsx、jpg 由講師以 python-docx、openpyxl 與瀏覽器截圖產生。
+
+### 三個老師版技能包
+
+參考講師既有技能 `info-card-generator`、`course-page-generator`、`enterprise-presentation-designer` 的流程設計，改成不需安裝 Node.js 或 Python 套件。
+
+| 技能包 | 內容 | 輸出 | 需要安裝 |
+|---|---|---|---|
+| `example/teacher-info-cards/` | `SKILL.md`、`assets/cards-template.html`、`references/card-rules.md` | 一個 HTML（4:5 卡片，可下載 1080×1350 PNG、列印成 PDF） | 不需要；下載 PNG 會從 cdnjs 載入 html2canvas，需要網路 |
+| `example/teacher-class-handout/` | `SKILL.md`、`assets/handout-template.html`、`references/components.md` | 一個自含 HTML（自動目錄、字級、深色、列印展開答案） | 不需要 |
+| `example/teacher-slides/` | `SKILL.md`、`assets/School_Slides_Template.pptx`（15 頁：封面、使用說明、版型 02～14）、`references/layouts.md`、`scripts/build_deck.py` | 可編輯的 PPTX | 需要 Python 3（只用內建模組） |
+
+- 模板由講師在暫存 venv 用 python-pptx 產生，每個文字框都有名稱（`title`、`point-1-title`…），`build_deck.py --list` 可列出
+- 已在本機實測：`build_deck.py` 用班親會資料產出 8 頁 PPTX，python-pptx 可開啟、macOS Quick Look 可正常渲染；尚未在 PowerPoint、Google 簡報與 Windows 上實測
+- `assets/skill-slides-template.jpg` 是模板 15 頁的 Quick Look 渲染拼圖；`assets/skill-info-cards-preview.jpg`、`assets/skill-class-handout-preview.jpg` 是講師把練習素材手動套進模板後的瀏覽器截圖，講義圖說已註明「實際成品以 Codex 產出為準」
 
 ## 待補圖片
 
-content.md 已在對應位置放 `<!-- 待補圖片：檔名｜說明 -->` 註解；底稿的 EDA 截圖為 Cowork 介面、BiCS 截圖為 ChatGPT／Gemini 介面，不適用於 Codex，故未搬入。
+content.md 已在對應位置放 `<!-- 待補圖片：檔名｜說明 -->`。其他課程的 ChatGPT 技能頁截圖（`amiino/assets/chatgpt-use-skill*.png`、`bics/lesson2/assets/chatgpt-use-skill*.png`）側邊欄有安美諾等客戶專案名稱，未複製。
 
 | 建議檔名 | 對應位置／截圖要求 |
 |---|---|
-| `assets/codex-app-entry.png` | 初探 Codex App：桌面版入口與登入後主畫面 |
-| `assets/codex-folder.png` | 選資料夾：選取「閱讀活動練習」後的畫面，虛線紅框標工作位置 |
-| `assets/receipt-photos.png` | 照片轉 Excel：3 張用回條範本手寫的虛構回條照片，其中 1 張有潦草字跡 |
-| `assets/receipt-excel-result.png` | 辨識結果寫進 Excel，不確定格標黃 |
-| `assets/form-fill-result.png` | 活動申請表填入結果，預定日期標「待確認」、擬議場地寫在備註 |
-| `assets/codex-image-first.png` | 在 Codex 對話描述並生成第一張圖 |
-| `assets/flowchart-result.png` | 學習流程圖生成結果，註明 AI 生成示意圖 |
-| `assets/poster-background-result.png` | 活動海報底圖生成結果，註明 AI 生成示意圖 |
+| `assets/chatgpt-desktop-modes.png` | 初探 Codex：ChatGPT 桌面版主畫面，紅框標 ChatGPT／Codex 選單；可沿用第 1 堂同名截圖 |
+| `assets/codex-folder.png` | 開啟 `codex-practice` 後的畫面，紅框標目前資料夾與權限選項 |
+| `assets/codex-skill-install.png` | 安裝技能包時的核准提示，紅框標寫入位置 |
+| `assets/codex-skill-list.png` | 輸入框打 `@` 的技能清單，紅框標三個 `teacher-` 技能 |
+| `assets/codex-slides-outline.png` | 班親會簡報大綱表格 |
+| `assets/codex-slides-result.png` | 用 PowerPoint 打開產出的簡報 |
+| `assets/prep-pack-result.png` | 備課總覽.md 與用 Excel 打開的資源索引.csv，紅框標來源檔名欄 |
+| `assets/signup-photos.png` | 3 張手寫虛構報名表照片，其中 1 張字跡潦草 |
+| `assets/signup-excel-result.png` | 報名名單 Excel，來源檔名欄、不確定格標黃 |
+
+## 授課前確認
+
+- 免費版／Go 帳號實際能用多少 Codex；授課帳號的方案與額度
+- 桌面版 Codex 輸入框打 `@` 或 `$` 何者列出技能；技能頁能否直接上傳 zip
+- 請 Codex 把技能複製到 `~/.agents/skills` 的流程與核准提示畫面（Mac、Windows 各一次）
+- `teacher-slides` 在授課電腦能否執行 `python3` 產出 PPTX；產出的檔案用 PowerPoint、Google 簡報開啟是否跑版
+- ChatGPT 網頁版技能上傳在授課帳號方案是否可用；準備示範對話分享連結
+- Codex 讀 `.docx`、`.xlsx`（第二個工作表）、掃描圖的實際結果；手寫報名表辨識與 `.xlsx` 輸出（CSV 為備案）
 
 ## 教學限制
 

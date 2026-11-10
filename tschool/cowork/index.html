@@ -3,14 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="generator" content="course-page-generator b49529f">
+  <meta name="generator" content="course-page-generator b49529f-dirty">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Cowork｜讓 AI 交付成品，替自己做班級小工具</title>
   <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Cowork 成品交付與班級小工具｜生成式 AI 研習第 4 堂">
-  <meta property="og:description" content="從簽收表轉 Excel、閱讀日輪值、排程到班級分組器，練習交付與驗收">
+  <meta property="og:description" content="從簽收表轉 Excel、閱讀日輪值、排程到班級抽籤工具，練習交付、驗收與 Git 存檔點">
   <meta property="og:image" content="https://deanlin.net/course/tschool/cowork/assets/og-image.jpg">
   <meta property="og:url" content="https://deanlin.net/course/tschool/cowork/">
   <meta property="og:site_name" content="林鼎淵 Dean Lin">
@@ -6821,6 +6821,7 @@
         <li><a href="#sub-vibe-coding">Vibe Coding 是什麼？</a></li>
         <li><a href="#sub-section-10">了解風險與邊界</a></li>
         <li><a href="#sub-section-11">從自己的需求出發</a></li>
+        <li><a href="#sub-section-12">班級小工具，原來可以自己做</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-5">
@@ -6828,17 +6829,26 @@
         <span class="toc-num">5</span> 動手實作
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-12">把班級分組器做成網頁</a></li>
-        <li><a href="#sub-section-13">純前端減少資安疑慮</a></li>
-        <li><a href="#sub-section-14">案例回顧</a></li>
+        <li><a href="#sub-section-13">第一版：輸入名單，抽出一個人</a></li>
+        <li><a href="#sub-section-14">第二版：同一個工具，加上分組</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="section-6">
-      <a href="#section-6" class="toc-group-title">
+    <li class="toc-group" data-section="ai-2">
+      <a href="#ai-2" class="toc-group-title">
         <span class="toc-num">6</span> 版本控制
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-git">建立 Git 版本控制</a></li>
+        <li><a href="#sub-git">認識 Git：替工具加上存檔點</a></li>
+        <li><a href="#sub-code">換到 Code 分頁，建立第一個存檔點</a></li>
+        <li><a href="#sub-section-17">第三版：一次抽出多個人，走完一次存檔循環</a></li>
+        <li><a href="#sub-section-18">案例回顧</a></li>
+      </ul>
+    </li>
+    <li class="toc-group" data-section="section-7">
+      <a href="#section-7" class="toc-group-title">
+        <span class="toc-num">7</span> 規格驅動開發
+      </a>
+      <ul class="toc-sub">
       </ul>
     </li>
     <li class="toc-group" data-section="summary">
@@ -6846,9 +6856,9 @@
         <span class="toc-num">📌</span> 課程總結
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-16">技術更新好快，我好焦慮</a></li>
+        <li><a href="#sub-section-19">技術更新好快，我好焦慮</a></li>
         <li><a href="#sub-work-smart-dont-work-hard">Work Smart, Don't Work Hard</a></li>
-        <li><a href="#sub-section-18">回顧：這個系列走過的路</a></li>
+        <li><a href="#sub-section-21">回顧：這個系列走過的路</a></li>
       </ul>
     </li>
 
@@ -6862,7 +6872,9 @@
   </nav>
 
     <div class="branch-line" id="branch-line">
-    
+    <div class="branch-seg branch-seg--default" data-anchor="sub-section-13" data-end="sub-section-14" data-endkind="branch" data-branch="v1-抽一人"></div>
+      <div class="branch-seg branch-seg--default" data-anchor="sub-section-14" data-end="ai-2" data-endkind="none" data-branch="v2-分組"></div>
+      <div class="branch-seg branch-seg--default" data-anchor="sub-section-17" data-end="sub-section-18" data-endkind="none" data-branch="v3-抽多人"></div>
   </div>
   <div class="branch-tip" id="branch-tip"></div>
 
@@ -6880,7 +6892,7 @@
     <header class="hero">
     <div class="hero-badge"><span class="dot"></span>生成式 AI 研習｜第 4 堂</div>
     <h1>讓 AI 交付成品，替自己做班級小工具</h1>
-    <p class="hero-sub">從簽收表轉 Excel、閱讀日輪值、排程到班級分組器，練習交付與驗收</p>
+    <p class="hero-sub">從簽收表轉 Excel、閱讀日輪值、排程到班級抽籤工具，練習交付、驗收與 Git 存檔點</p>
     <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
     <nav class="hero-nav">
       <a href="#section-x">課前回顧</a>
@@ -6889,7 +6901,8 @@
     <a href="#ai">排程</a>
     <a href="#section-4">工具思維</a>
     <a href="#section-5">動手實作</a>
-    <a href="#section-6">版本控制</a>
+    <a href="#ai-2">版本控制</a>
+    <a href="#section-7">規格驅動開發</a>
     <a href="#summary">課程總結</a>
           </nav>
   </header>
@@ -6946,7 +6959,7 @@
             <span class="class-timeline__status-tag is-past">已完成</span>
           </div>
           <div class="class-timeline__time">19:00~21:00</div>
-          <div class="class-timeline__des"><strong>釐清需求，建立專屬的教學助理</strong>：認識 AI 的能力與限制，學會資料去識別化，練習 Prompt、記憶與自訂，連接外部工具，再用專案保存活動背景。</div>
+          <div class="class-timeline__des"><strong>釐清需求，建立專屬的教學助理</strong>：認識網頁版與桌面版、三家 AI 功能對標，學會去識別化與 Prompt，生成教材圖片，再用記憶、外掛程式與專案打造教學助理。</div>
           <a class="class-timeline__link" href="../chatgpt/index.html" target="_blank" rel="noopener">查看講義<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
@@ -6961,7 +6974,7 @@
             <span class="class-timeline__status-tag is-past">已完成</span>
           </div>
           <div class="class-timeline__time">19:00~21:00</div>
-          <div class="class-timeline__des"><strong>讓 AI 動手處理檔案，為教材生成圖片</strong>：指定資料夾彙整活動資料、回條照片轉 Excel、自動填表，並生成學習單與海報圖片。</div>
+          <div class="class-timeline__des"><strong>讓 AI 動手處理檔案，用 Skill 交付教材</strong>：在 ChatGPT 桌面版切到 Codex，裝上資訊卡、線上講義、校園簡報三個老師版 Skill，彙整單元備課包，再把手寫報名表照片轉成 Excel。</div>
           <a class="class-timeline__link" href="../codex/index.html" target="_blank" rel="noopener">查看講義<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
@@ -6991,7 +7004,7 @@
             <span class="class-timeline__status-tag is-current">進行中</span>
           </div>
           <div class="class-timeline__time">19:00~21:00</div>
-          <div class="class-timeline__des"><strong>讓 AI 交付成品，替自己做班級小工具</strong>：用 Cowork 把簽收表照片轉 Excel、整理活動資料並設定排程，再用 Vibe Coding 做出班級分組器。</div>
+          <div class="class-timeline__des"><strong>讓 AI 交付成品，替自己做班級小工具</strong>：用 Cowork 把簽收表照片轉 Excel、整理活動資料並設定排程，再用 Vibe Coding 做出班級抽籤分組工具，搭配 Git 存檔點，改壞了也能回到上一版。</div>
           <a class="class-timeline__link" href="../cowork/index.html" target="_blank" rel="noopener">查看講義<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
@@ -7087,15 +7100,15 @@
       <div class="flow-step">
         <div class="step-num">4</div>
         <div class="step-content">
-          <div class="step-title">班級分組器</div>
-          <div class="step-desc">不用寫程式，做出雙擊就能用的網頁小工具</div>
+          <div class="step-title">班級抽籤工具</div>
+          <div class="step-desc">不用寫程式，從抽一人、分組到一次抽多人，做出雙擊就能用的網頁小工具</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">5</div>
         <div class="step-content">
-          <div class="step-title">保存點</div>
-          <div class="step-desc">放上 GitHub，改壞了也有回頭路</div>
+          <div class="step-title">存檔點</div>
+          <div class="step-desc">用 Git 存下每一版，AI 改壞了也能回到上一版</div>
         </div>
       </div>
     </div>
@@ -7144,6 +7157,18 @@
       <p style="margin-top:.5rem">能力越大風險越大，你可以想想<code>如果事情做到一半，但額度沒了會發生什麼事</code>。</p>
       <p style="margin-top:.5rem">練習資料夾只放自己確認過的虛構資料，不要授權整個桌面或下載資料夾。</p>
     </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🎬</span> 延伸參考：同一類的桌面 Agent</div>
+      <div class="group-body">
+        <ul>
+  <li>我有錄一支影片完整示範 Manus 桌面版，從資料夾彙整報告、辨識圖片寫 Excel 到自動填表單：<a href="https://youtu.be/WGHQuCI3iJk" target="_blank" rel="noopener">【Manus 桌面版教學】讓 AI 操作電腦，從資料夾彙整報告、辨識圖片寫 Excel、自動填表單</a></li>
+  <li>換成 Claude 就是今天的 Cowork：<code>工具不同，能力是同一類</code>，熟悉一個最重要</li>
+</ul>
       </div>
     </div>
   </div>
@@ -7352,7 +7377,7 @@
         <ul class="loose-list">
       <li>解壓縮後，在桌面建立 <code>school-ai-demo</code> 資料夾，裡面再建 <code>input</code>（放原始資料）與 <code>output</code>（放 AI 交付的成品）</li>
       <li>把 <code>01</code>〜<code>05</code> 與 <code>07</code> 共六份檔案放進 <code>input</code>，不要混入真實校務文件</li>
-      <li><code>00</code> 是使用說明、<code>06</code> 是後面測試分組器用的紀錄表，這兩份留在原本的資料夾就好</li>
+      <li><code>00</code> 是使用說明、<code>06</code> 是後面做抽籤工具用的練習名單與測試紀錄表，這兩份留在原本的資料夾就好</li>
       <li>在 Cowork 開新對話，用「Add folder」選取 <code>school-ai-demo</code></li>
     </ul>
         <p class="loose-text"><!-- 待補圖片：cowork-choose-folder-one.png｜Cowork 選取「school-ai-demo」單一資料夾，標出已勾選的資料夾（需重拍） --></p>
@@ -7557,22 +7582,22 @@
         </thead>
         <tbody>
           <tr>
-            <td class="align-left col-w">想讓 Claude 做什麼</td>
+            <td class="align-left col-w"><strong>想讓 Claude 做什麼</strong></td>
             <td class="align-left">去哪裡找、用什麼條件找、結果長什麼樣、哪些留給人判斷</td>
             <td class="align-left">搜尋教育部官網最近 7 天新增的公告，整理成表格：發布日期、標題、三句話重點、可能與哪個處室有關、來源連結。沒有新資料就回覆「本週無新增」，不要拿舊資料湊數</td>
           </tr>
           <tr>
-            <td class="align-left col-w">希望它多久跑一次、什麼時間？</td>
+            <td class="align-left col-w"><strong>希望它多久跑一次、什麼時間？</strong></td>
             <td class="align-left">頻率與時間點，配合你看結果的習慣</td>
             <td class="align-left">每週一早上 8 點</td>
           </tr>
           <tr>
-            <td class="align-left col-w">跑完之後，結果要送到哪裡？</td>
+            <td class="align-left col-w"><strong>跑完之後，結果要送到哪裡？</strong></td>
             <td class="align-left">留在 Cowork 看，還是寄信、寫進其他系統</td>
             <td class="align-left">留在該次任務中</td>
           </tr>
           <tr>
-            <td class="align-left col-w">執行時的核准模式要設成哪一種？</td>
+            <td class="align-left col-w"><strong>執行時的核准模式要設成哪一種？</strong></td>
             <td class="align-left">只讀不改的任務可以全自動；會寄信、改檔案的要逐步確認</td>
             <td class="align-left">自動核准</td>
           </tr>
@@ -7667,6 +7692,10 @@
   </div>
 
   <div class="reveal">
+    <p class="loose-text"><!-- 講師備註：Vibe Coding 單元（本章到「規格驅動開發」）合計約 48 分鐘：工具思維 8、第一版抽籤 9、第二版分組 11、Git 觀念與第一個存檔點 7、第三版多人抽籤的存檔循環 11、規格驅動開發 2。本章 8 分鐘：Vibe Coding 概念與畢業時機 2、風險與邊界 2、排班故事與班級小工具清單 4。時間不夠時先縮短概念與風險，保留三次實作與「故意改壞」練習。 --></p>
+  </div>
+
+  <div class="reveal">
     <div class="insight">
       <div class="insight-title">學 Vibe Coding 不是為了成為工程師</div>
       <p>是為了解決<code>你目前遇到的痛點</code>，這個痛點可能存在於<code>班級、處室、學年團隊、個人</code>，但一直沒有解決。<br>而這個單元，就是讓大家了解，在 AI 時代<code>我們能靠自己</code>踏出第一步。</p>
@@ -7684,14 +7713,7 @@
         <li><strong>優點</strong>：可以快速完成初版</li>
         <li><strong>缺點</strong>：結果較不可控、未來較難維護</li>
       </ul>
-      <p>若沒有程式背景，<code>把想做的事、期待的結果講清楚</code>是最重要的事<br>這個單元全程在 <code>Cowork</code> 裡做：AI 直接在你指定的資料夾寫程式，<code>雙擊 html（網頁檔）就能用</code>，不用安裝任何東西</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">工程師的角色，也在改變</div>
-      <p>當「把功能寫出來」越來越容易，工程師真正的價值，就從「會不會寫程式」移到<code>懂不懂這個產業、能判斷出最適合的方案、知道為什麼要這樣做</code>。<br>大家在教學與行政現場累積的 know-how，就屬於這類<code>最難被取代的價值</code>。</p>
+      <p>若沒有程式背景，<code>把想做的事、期待的結果講清楚</code>是最重要的事<br>先在 <code>Cowork</code> 做出工具：AI 直接在你指定的資料夾寫程式，<code>雙擊 html（網頁檔）就能用</code>；要替工具留存檔點時，再交給 <code>Claude Code</code></p>
     </div>
   </div>
 
@@ -7710,22 +7732,22 @@
         </thead>
         <tbody>
           <tr>
-            <td class="align-left">每次執行</td>
+            <td class="align-left"><strong>每次執行</strong></td>
             <td class="align-left">重新讀檔、重新推理，<code>Token 每次都燒</code></td>
             <td class="align-left">開啟網頁就好，<code>零 Token</code></td>
           </tr>
           <tr>
-            <td class="align-left">結果</td>
+            <td class="align-left"><strong>結果</strong></td>
             <td class="align-left">每次可能<code>略有不同</code></td>
             <td class="align-left">固定、可驗證</td>
           </tr>
           <tr>
-            <td class="align-left">誰能用</td>
+            <td class="align-left"><strong>誰能用</strong></td>
             <td class="align-left">要有 Claude 帳號、要會下 prompt</td>
             <td class="align-left">同事<code>雙擊 html</code> 就能用</td>
           </tr>
           <tr>
-            <td class="align-left">適合</td>
+            <td class="align-left"><strong>適合</strong></td>
             <td class="align-left">一次性、規則還在摸索</td>
             <td class="align-left">規則固定、每學期重複、多人要用</td>
           </tr>
@@ -7734,7 +7756,7 @@
     </div>
         <div class="insight">
       <div class="insight-title">什麼時候該從 Cowork 畢業，改做工具？</div>
-      <p>像「課堂分組」這種<code>每堂課、每個班都要做</code>的事，就是該做成工具的訊號。<br>判斷標準只有一條：<code>同一件事你會做第三次嗎？</code></p>
+      <p>像「抽籤、分組」這種<code>每堂課、每個班都要做</code>的事，就是該做成工具的訊號。<br>判斷標準只有一條：<code>同一件事你會做第三次嗎？</code></p>
     </div>
       </div>
     </div>
@@ -7766,7 +7788,7 @@
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">等一下生成的<code>班級分組器</code></div>
+          <div class="step-title">等一下做的<code>班級抽籤工具</code></div>
           <div class="step-desc">重點並不是做出來好開心，而是<code>審視 AI 犯了哪些錯誤</code></div>
         </div>
       </div>
@@ -7785,74 +7807,105 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🐛</span> Vibe Coding 遇到錯誤是很正常的</div>
+      <div class="group-header"><span class="icon">🏥</span> 我做的排班工具，護理長一試就找出問題</div>
       <div class="group-body">
         <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <div class="step-title">遇到錯誤</div>
-          <div class="step-desc">Vibe Coding 過程<code>一定會遇到錯誤</code></div>
+          <div class="step-title">第一版很快</div>
+          <div class="step-desc">幫醫院的 Vibe Coding 課準備教材時，我用 Claude Code 很快就做出「排班工具」第一版</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title">解決錯誤</div>
-          <div class="step-desc">如果沒有開發背景，能不能解決錯誤，是看<code>這個痛點對你來說夠不夠痛</code></div>
+          <div class="step-title">試用才浮現</div>
+          <div class="step-desc">哪些班別不能接在一起、包班人員怎麼安排、跨月的夜班接白班怎麼檢查，這些細節我<code>完全沒想到</code></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">讓自己多嘗試一點</div>
-          <div class="step-desc">如果成功解決問題，這個<code>成就感與經驗</code>是非常寶貴的。</div>
+          <div class="step-title">現場最懂規則</div>
+          <div class="step-desc">護理長卻能明確說出<code>調整方向與背後的規則</code></div>
         </div>
       </div>
     </div>
         <div class="insight">
-      <div class="insight-title">可以有野心，但先從 MVP（最小可行產品）開始</div>
-      <p>在做出改變世界的產品前，先嘗試把<code>手邊麻煩的任務</code>交給 AI 做自動化。</p>
+      <div class="insight-title">為什麼班級工具，由老師自己做最合適？</div>
+      <p>過去要會寫程式才能做工具，<code>做工具的人往往不是真正的使用者</code>；就像一位主管在課前訪談跟我說的：「<strong>開發的人不用系統，用系統的人不會開發。</strong>」<br>現在懂現場的人，也能用 Vibe Coding 做出幫助自己的工具，並<code>根據使用細節持續優化</code>。<br>班級也有隱性規則：哪些學生<code>不適合同組</code>、哪些條件要<code>平均分配</code>，最清楚的就是老師。</p>
     </div>
       </div>
     </div>
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-12" data-seg="0"><span class="bar"></span>班級小工具，原來可以自己做</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🎯</span> 用日常工作開始嘗試，因為你有分辨對錯的能力</div>
+      <div class="group-header"><span class="icon">🧰</span> 你的班級，可能用得到這些小工具</div>
       <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">別再做「記帳軟體、番茄鐘」這類專案了</div>
-          <div class="step-desc">儘管 AI 能幫你輕鬆搞定，<code>但缺少挫折的練習幫助有限</code>，因為思考解決問題的步驟最為珍貴。</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">從「日常工作」的痛點出發</div>
-          <div class="step-desc">你有能力<code>分辨對錯</code>，並且在遇到錯誤時<code>不會輕易放棄、有解決的動力</code></div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">陌生領域你不知道 AI 犯錯</div>
-          <div class="step-desc">AI 有能力做出<code>看起來正確的產品</code>，就像我幫醫院做排班工具時以為是對的；但<code>護理長試用後馬上就發現問題</code></div>
-        </div>
-      </div>
+        <div class="table-wrap">
+      <table class="content-table">
+        <colgroup>
+          <col style="width:110px">
+          <col>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="align-left col-w">小工具</th>
+            <th class="align-left">用在哪裡</th>
+            <th class="align-left">只有你知道的隱性規則（ex）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left col-w"><strong>🎲 抽籤</strong></td>
+            <td class="align-left">點人回答、決定上台順序</td>
+            <td class="align-left">剛被抽過的人，這節先跳過</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>👥 分組</strong></td>
+            <td class="align-left">小組討論、分組競賽</td>
+            <td class="align-left">哪些學生不適合同組、男女要平均</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>⏱️ 計時器</strong></td>
+            <td class="align-left">小組討論、考試倒數</td>
+            <td class="align-left">最後 1 分鐘要提醒</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>🪑 座位表</strong></td>
+            <td class="align-left">排座位、換座位</td>
+            <td class="align-left">視力、身高、需要坐在老師附近的學生</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>🧹 輪值表</strong></td>
+            <td class="align-left">值日生、打掃區域</td>
+            <td class="align-left">每個人輪到的次數要平均</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>🏆 計分板</strong></td>
+            <td class="align-left">小組加分、課堂競賽</td>
+            <td class="align-left">加減分要留紀錄，避免爭議</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>✅ 點名</strong></td>
+            <td class="align-left">出缺席、作業繳交</td>
+            <td class="align-left">公假、病假要分開標記</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-        <div class="insight">
-      <div class="insight-title">課前訪談小故事</div>
-      <p>教學前為了讓<code>內容更符合單位需求</code>，我會先跟窗口做需求訪談。<br>有次一位主管說會安排這堂課是因為：「<strong>開發的人不用系統，用系統的人不會開發。</strong>」</p>
-      <ul>
-        <li><strong>原因</strong>: 內部系統年代久遠，很難操作；但提出需求後，基本上要<code>等數週甚至幾個月才修正</code></li>
-        <li><strong>方案</strong>: 讓用系統的人也能自己做出雛形，並了解開發團隊<code>使用的技術</code>，這樣未來才能銜接、維護</li>
-      </ul>
-    </div>
+        <ul class="loose-list">
+      <li>別再拿「記帳軟體、番茄鐘」當練習題，<code>缺少挫折的練習幫助有限</code>；從班上真的用得到的開始，你才<code>分辨得出對錯</code>，遇到錯誤也<code>有動力解決</code></li>
+      <li>這些工具網路上都找得到，但<code>你班上的規則</code>只有你清楚，這正是自己做的價值</li>
+      <li>今天先挑<code>抽籤</code>開始，再一步步長出<code>分組</code>與<code>一次抽多人</code></li>
+    </ul>
       </div>
     </div>
   </div>
@@ -7877,95 +7930,84 @@
   <div class="reveal">
     
     <span class="section-label" id="section-5" data-seg="0"><span class="num">5</span> 動手實作</span>
-    <h2>用白話文做出班級分組器</h2>
+    <h2>用白話文做出班級抽籤工具</h2>
     
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-12" data-seg="0"><span class="bar"></span>把班級分組器做成網頁</div>
+    <p class="loose-text"><!-- 講師備註：本章約 20 分鐘：第一版抽籤 9（講解 3、實作 6）、第二版分組 11（講解 4、實作 7）。兩版都在 Cowork 操作；「不能同組」是本堂唯一實作的隱性規則，其他規則只舉例。 --></p>
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🛠️</span> 先設計網頁 MVP</div>
-      <div class="group-body">
-        <div class="insight">
+    <div class="insight">
       <div class="insight-title">為什麼要先做 MVP？</div>
-      <p><code>先求有、再求好</code>。MVP（Minimum Viable Product）是<code>最小可行產品</code>：先做出一個「能動的最簡版本」，再逐步優化。</p>
-    </div>
-      </div>
+      <p><code>先求有、再求好</code>。MVP（Minimum Viable Product）是<code>最小可行產品</code>：先做出一個「能動的最簡版本」，再一次加一個功能。<br>今天的範例會跨三個版本延續：<code>抽一人 → 分組 → 一次抽多人</code>，每一版都要親手驗收。</p>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📋</span> 把「做分組器」說具體</div>
+    <span class="branch-flag branch-flag--default" data-anchor="sub-section-13" data-branch="v1-抽一人" role="button" tabindex="0" title="點擊複製分支名稱">v1-抽一人</span><div class="sub-title" id="sub-section-13" data-seg="1"><span class="bar"></span>第一版：輸入名單，抽出一個人</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="1">
+      <div class="group-header"><span class="icon">📋</span> 把「抽籤工具」說具體</div>
       <div class="group-body">
         <div class="table-wrap">
       <table class="content-table">
         <thead>
           <tr>
             <th class="align-left">項目</th>
-            <th class="align-left">這次的範圍</th>
+            <th class="align-left">第一版的範圍</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="align-left">使用者</td>
-            <td class="align-left">老師在課堂操作，學生可看投影</td>
+            <td class="align-left"><strong>使用者</strong></td>
+            <td class="align-left">老師在課堂操作，學生看投影</td>
           </tr>
           <tr>
-            <td class="align-left">輸入</td>
-            <td class="align-left">參加人數與組數，不輸入姓名或學號</td>
+            <td class="align-left"><strong>輸入</strong></td>
+            <td class="align-left">名單，一行一個；練習時只用座號（ex: 1號〜10號）</td>
           </tr>
           <tr>
-            <td class="align-left">輸出</td>
-            <td class="align-left">臨時編號 1 至 N 的分組清單</td>
+            <td class="align-left"><strong>輸出</strong></td>
+            <td class="align-left">隨機抽出一個人，字放大、適合投影</td>
           </tr>
           <tr>
-            <td class="align-left">條件</td>
-            <td class="align-left">每個編號恰好出現一次，各組人數差距最多 1</td>
+            <td class="align-left"><strong>例外</strong></td>
+            <td class="align-left">空白行不算一個人；名單是空的就顯示提醒</td>
           </tr>
           <tr>
-            <td class="align-left">例外</td>
-            <td class="align-left">空白、非整數、負數、組數大於人數都顯示清楚提醒</td>
-          </tr>
-          <tr>
-            <td class="align-left">邊界</td>
-            <td class="align-left">隨機分組不保證符合教學上的異質分組需求</td>
+            <td class="align-left"><strong>邊界</strong></td>
+            <td class="align-left">不連網、不儲存名單，關掉網頁就清空</td>
           </tr>
         </tbody>
       </table>
     </div>
         <ul class="loose-list">
-      <li>在桌面新建 <code>class-group-tool</code> 資料夾，專門放這個工具</li>
-      <li>在 Cowork 開新對話，用「Add folder」選取 <code>class-group-tool</code>，再貼上下面的 prompt</li>
+      <li>在桌面新建 <code>class-tool</code> 資料夾，專門放這個工具</li>
+      <li>在 Cowork 開新對話，用「Add folder」選取 <code>class-tool</code>，再貼上下面的 prompt</li>
+      <li>練習名單與驗收紀錄表都在「閱讀日」資料包的 <code>06-測試紀錄空白表.md</code>，用記事本開啟就能複製</li>
     </ul>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">做出可以開啟的課堂分組器</span>
+        <span class="label">第一版：輸入名單，抽出一個人</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">請在資料夾內新增 group-tool.html，製作單一 HTML 的課堂分組器。
-目標：老師用瀏覽器開啟，輸入人數 N 與組數 K，按按鈕後分組。
-只使用臨時數字編號 1 至 N，不提供姓名或學號輸入。
-每個編號恰好出現一次，每組人數差距最多 1，結果清楚適合投影。
-人數限 1 到 100 的整數；組數限 1 到 N 的整數。
-空白、小數、負數、超出範圍時顯示明確中文提醒。
-只用內嵌 HTML/CSS/JavaScript，不用外部套件、API 或網路請求，不保留輸入與結果。
+      <div class="prompt-body">請在資料夾內新增 class-tool.html，做一個單一 HTML 的班級抽籤工具。
+老師用瀏覽器開啟，在文字框貼上名單（一行一個），按「抽籤」隨機抽出一個人，結果放大顯示、適合投影。
+空白行不算一個人；名單是空的時，顯示清楚的中文提醒。
+只用內嵌 HTML/CSS/JavaScript，不用外部套件、API 或網路請求，不保存名單與結果。
 請實際建立檔案，並告訴我怎麼開啟、你做了哪些檢查。</div>
     </div>
-        <div class="insight">
-      <div class="insight-title">補充說明</div>
-      <p>網頁版使用 <code>HTML、CSS、JS</code> 處理，不用終端機，雙擊網頁即可。如果看不懂 AI 的建議，也可以詢問它。</p>
-    </div>
-        <p class="loose-text"><!-- 待補圖片：分組器人數／組數輸入、正常分組結果與錯誤提醒三個狀態；建議檔名 assets/cowork-group-tool-states.png --></p>
-        <h4 class="minor-title">驗證是否可以運作</h4>
-        <p class="loose-text">到 <code>class-group-tool</code> 資料夾找到 <code>group-tool.html</code>，雙擊用瀏覽器開啟（不是只看 Claude 對話裡的預覽），這樣我們就完成了<code>工具雛形</code>。先照下表逐項按按看：</p>
+        <p class="loose-text"><!-- 待補圖片：cowork-class-tool-v1.png｜Cowork 做出的 class-tool.html 第一版：貼上 1號〜10號的名單、按「抽籤」後放大顯示抽中的座號（用 Cowork 實際產出的畫面拍攝） --></p>
+        <h4 class="minor-title">親手驗收第一版</h4>
+        <p class="loose-text">到 <code>class-tool</code> 資料夾雙擊 <code>class-tool.html</code>，用瀏覽器開啟（不是只看 Claude 對話裡的預覽），照下表逐項按按看，實際結果記在 <code>06-測試紀錄空白表.md</code>：</p>
         <div class="table-wrap">
       <table class="content-table">
         <thead>
@@ -7976,42 +8018,23 @@
         </thead>
         <tbody>
           <tr>
-            <td class="align-left">10 人分 3 組</td>
-            <td class="align-left">人數為 4、3、3，各編號只出現一次</td>
+            <td class="align-left"><strong>貼上 1號〜10號，按抽籤</strong></td>
+            <td class="align-left">抽出名單裡的一個人</td>
           </tr>
           <tr>
-            <td class="align-left">8 人分 8 組</td>
-            <td class="align-left">每組一人，沒有空組</td>
+            <td class="align-left"><strong>連按 5 次</strong></td>
+            <td class="align-left">結果會變，而且都在名單裡</td>
           </tr>
           <tr>
-            <td class="align-left">10 人分 11 組</td>
-            <td class="align-left">提醒組數不能大於人數，不產生新結果</td>
+            <td class="align-left"><strong>名單中間夾一行空白</strong></td>
+            <td class="align-left">不會抽出空白</td>
           </tr>
           <tr>
-            <td class="align-left">空白、0、負數、小數</td>
-            <td class="align-left">顯示錯誤，不自行四捨五入</td>
+            <td class="align-left"><strong>名單全部清空再按</strong></td>
+            <td class="align-left">顯示提醒，不產生結果</td>
           </tr>
         </tbody>
       </table>
-    </div>
-        <p class="loose-text">每一項的實際結果，記在「閱讀日」資料包的 <code>06-測試紀錄空白表.md</code>（用記事本開啟填寫，或照表格抄在紙上），之後每次修改都照同一張表重測。</p>
-        <p class="loose-text">全部通過就不用修；發現錯誤時，用「輸入、實際結果、預期結果」這個格式回報，請 AI 只修那一處（ex: 輸入 10 人、3 組 → 實際有編號出現兩次 → 預期每個編號恰好一次）：</p>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">用可重現的錯誤回報請 AI 修正</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">group-tool.html 有一個錯誤：
-輸入：[你輸入的人數與組數]
-實際結果：[畫面上實際看到什麼]
-預期結果：[依測試表應該看到什麼]
-請先找原因，再只修正這一處，維持原本介面與無外部連線的要求。
-修改前另存目前檔案的備份，修完請用這幾組輸入重新檢查並回報結果：
-10 人 3 組、8 人 8 組、10 人 11 組、空白、0、負數、小數。</div>
     </div>
       </div>
     </div>
@@ -8024,25 +8047,21 @@
     <div class="lab-session__deco" aria-hidden="true">⚙</div>
     <div class="lab-session__inner">
       <h3 class="lab-session__title">實戰演練</h3>
-      <p class="lab-session__hint">從需求到可驗收的班級工具</p>
-      <div class="lab-session__duration">⏱ 20 分鐘</div>
+      <p class="lab-session__hint">做出第一版抽籤工具，親手驗收</p>
+      <div class="lab-session__duration">⏱ 6 分鐘</div>
     </div>
     <div class="lab-task-list">
       <div class="lab-task-item">
         <span class="lab-task-num">1</span>
-        <span class="lab-task-text">請 Cowork 建立分組器，確認檔案真的出現在資料夾</span>
+        <span class="lab-task-text">請 Cowork 建立 <code>class-tool.html</code>，確認檔案真的出現在資料夾</span>
       </div>
       <div class="lab-task-item">
         <span class="lab-task-num">2</span>
-        <span class="lab-task-text">雙擊開啟，依測試表逐項檢查，把實際結果記在 <code>06-測試紀錄空白表.md</code></span>
+        <span class="lab-task-text">雙擊開啟，貼上練習名單，依驗收表逐項檢查</span>
       </div>
       <div class="lab-task-item">
         <span class="lab-task-num">3</span>
-        <span class="lab-task-text">找到一項缺陷或操作不便（ex: 最後一排看不清楚結果），用輸入、實際結果、預期結果回報</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">4</span>
-        <span class="lab-task-text">修改後重測所有案例；如果卡住，換個問法、附上錯誤截圖，或開一個新對話重來</span>
+        <span class="lab-task-text">把實際結果記在 <code>06-測試紀錄空白表.md</code></span>
       </div>
     </div>
   </div>
@@ -8051,19 +8070,132 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="sub-title" id="sub-section-13" data-seg="0"><span class="bar"></span>純前端減少資安疑慮</div>
+    <span class="branch-flag branch-flag--default" data-anchor="sub-section-14" data-branch="v2-分組" role="button" tabindex="0" title="點擊複製分支名稱">v2-分組</span><div class="sub-title" id="sub-section-14" data-seg="2"><span class="bar"></span>第二版：同一個工具，加上分組</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="insight">
+      <div class="insight-title">分組，才是隱性規則最多的地方</div>
+      <p>隨機分組很容易，難的是老師心裡那些規則：哪些學生<code>不適合同組</code>、<code>男女要平均</code>、<code>能力高低要搭配</code>、<code>特殊需求的學生要分散</code>。<br>這些規則 AI 不會知道，只有你說得出來；先挑<code>最常用的一條</code>加進去，用順了再加下一條。今天示範「不能同組」。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="2">
+      <div class="group-header"><span class="icon">👥</span> 在同一個工具加上分組</div>
+      <div class="group-body">
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">第二版：同一個工具加上分組</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">請在 class-tool.html 加上「分組」功能，原本的抽籤功能不能改變：
+- 使用同一份名單，輸入組數後按「分組」，每個人恰好出現一次，各組人數差距最多 1
+- 可以設定「不能同組」：一行一組、用逗號分隔（全形、半形都要接受），同一行的人都要分在不同組（ex: 1號,2號）
+- 組數必須是 1 到名單人數之間的整數；條件排不出來時，顯示中文提醒，不要硬排
+完成後告訴我改了哪些地方、你做了哪些檢查。</div>
+    </div>
+        <p class="loose-text"><!-- 待補圖片：cowork-class-tool-v2.png｜第二版 class-tool.html：10 人分 3 組的結果，以虛線紅框標出「不能同組」設定欄（填 1號,2號）與分組結果 --></p>
+        <h4 class="minor-title">親手驗收第二版</h4>
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left">測試輸入</th>
+            <th class="align-left">應有結果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>10 人分 3 組</strong></td>
+            <td class="align-left">各組 4、3、3 人，每個人只出現一次</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>10 人分 11 組</strong></td>
+            <td class="align-left">提醒組數不能大於人數，不產生結果</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>設定「1號,2號」不能同組，連分 5 次</strong></td>
+            <td class="align-left">1 號和 2 號每次都在不同組</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>設定「1號,2號,3號」不能同組，只分 2 組</strong></td>
+            <td class="align-left">提醒條件排不出來，不硬排</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>回到抽籤，按一次</strong></td>
+            <td class="align-left">抽一人照常運作</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <p class="loose-text">發現錯誤時，用「輸入、實際結果、預期結果」回報，請 AI 只修那一處：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">用可重現的錯誤回報請 AI 修正</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">class-tool.html 有一個錯誤：
+輸入：[你輸入的名單、組數與不能同組的設定]
+實際結果：[畫面上實際看到什麼]
+預期結果：[依驗收表應該看到什麼]
+請先找原因，再只修正這一處，維持原本介面與無外部連線的要求。
+修改前先另存目前檔案的備份，修完請用驗收表的每一項重新檢查並回報結果。</div>
+    </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="lab-page" id="section-5-lab-2">
+  <div class="lab-session">
+    <div class="lab-session__deco" aria-hidden="true">⚙</div>
+    <div class="lab-session__inner">
+      <h3 class="lab-session__title">實戰演練</h3>
+      <p class="lab-session__hint">在同一個工具加上分組與一條隱性規則</p>
+      <div class="lab-session__duration">⏱ 7 分鐘</div>
+    </div>
+    <div class="lab-task-list">
+      <div class="lab-task-item">
+        <span class="lab-task-num">1</span>
+        <span class="lab-task-text">在同一個 Cowork 對話貼上第二版的 prompt</span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">2</span>
+        <span class="lab-task-text">依驗收表逐項檢查，特別確認<code>不能同組</code>的人每次都被分開</span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">3</span>
+        <span class="lab-task-text">回頭按一次抽籤，確認<code>舊功能沒被改壞</code></span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">4</span>
+        <span class="lab-task-text">找到問題，就用輸入、實際結果、預期結果回報</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <div class="group-block" data-seg="2">
       <div class="group-header"><span class="icon">🔒</span> 純前端＝資料不出你的電腦</div>
       <div class="group-body">
-        <p>今天的班級分組器是<code>純前端網頁</code>：只靠瀏覽器就能運作，<code>沒有後端伺服器、也沒有資料庫</code>。</p>
+        <p>今天的抽籤工具是<code>純前端網頁</code>：只靠瀏覽器就能運作，<code>沒有後端伺服器、也沒有資料庫</code>。</p>
         <ul class="loose-list">
-      <li>所有運算都在<code>你自己的瀏覽器</code>裡跑，不上傳任何伺服器</li>
-      <li>不需要安裝任何軟體，<code>雙擊 html 就能用</code>，離線也能開</li>
-      <li>這也是我們在 prompt 裡要求「不用外部套件、不用網路請求、不保留資料」的原因</li>
-      <li>但開發過程中貼給 AI 的內容，仍會送到雲端，所以練習不放真實的學生資料</li>
+      <li>名單只在<code>你自己的瀏覽器</code>裡運算，不上傳任何伺服器，<code>關掉網頁就清空</code></li>
+      <li>這也是我們在 prompt 裡要求「不用外部套件、不用網路請求、不保存資料」的原因</li>
+      <li>但開發過程中貼給 AI 的內容，仍會送到雲端，所以練習只用座號，不放真實的學生資料</li>
     </ul>
         <div class="insight">
       <div class="insight-title">想存資料、分權限、串校務帳號，就是另一個世界了</div>
@@ -8072,13 +8204,341 @@
       </div>
     </div>
   </div>
+</section>
 
+<hr class="divider">
+<section class="section">
   <div class="reveal">
-    <div class="sub-title" id="sub-section-14" data-seg="0"><span class="bar"></span>案例回顧</div>
+    
+    <span class="section-label" id="ai-2" data-seg="3"><span class="num">6</span> 版本控制</span>
+    <h2>存檔點，就是 AI 時代的後悔藥</h2>
+    
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <p class="loose-text"><!-- 講師備註：本章約 18 分鐘：Git 觀念 3、換到 Code 分頁並建立第一個存檔點 4、第三版多人抽籤的存檔循環 11（講解 3、實作 8）。存檔點在 Code 分頁（Claude Code 本機工作階段）操作，不在 Cowork 做：社群已有多則回報，Cowork 掛載的資料夾執行 Git 會留下清不掉的鎖定檔（見 sources.md）。授課前確認：① 學員電腦能否自行安裝軟體，Windows 學員請課前裝好 Git；② 用授課帳號在 Mac、Windows 各跑一次「建立第一個存檔點」與「回到上一個存檔點」；③ Code 分頁的權限模式名稱與位置（官方說明目前是 Manual／Accept edits，舊版叫 Ask permissions／Auto accept edits）。今天不實作 branch、PR、GitHub，只在章末帶過。 --></p>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-git" data-seg="3"><span class="bar"></span>認識 Git：替工具加上存檔點</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="3">
+      <div class="group-header"><span class="icon">🎮</span> Git 就像遊戲的存檔點</div>
+      <div class="group-body">
+        <ul>
+  <li>打 Boss 前先存檔，打輸了就<code>讀檔重來</code>；Git 就是替資料夾裡的檔案<code>存檔</code>的工具</li>
+  <li>AI 改程式很快，改壞也很快；有了存檔點，<code>改壞了就回到上一版</code></li>
+  <li>第二版時我們「修改前先另存備份」，有了 Git，就<code>不用再手動複製檔案</code></li>
+</ul>
+        <div class="table-wrap">
+      <table class="content-table">
+        <colgroup>
+          <col style="width:180px">
+          <col>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="align-left col-w">你想做的事</th>
+            <th class="align-left">跟 Claude 這樣說</th>
+            <th class="align-left">Git 的說法</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left col-w"><strong>把目前的版本存起來</strong></td>
+            <td class="align-left">「幫我存檔，說明寫…」</td>
+            <td class="align-left">commit（提交）</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>看過去存了哪些版本</strong></td>
+            <td class="align-left">「列出所有存檔點」</td>
+            <td class="align-left">log（紀錄）</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>這次改壞了，不要了</strong></td>
+            <td class="align-left">「回到上一個存檔點」</td>
+            <td class="align-left">restore（還原）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <div class="insight">
+      <div class="insight-title">你不用背指令，但要掌握三個時機</div>
+      <p><code>驗收通過才存檔</code>、<code>動手改之前確認有存檔</code>、<code>驗收沒過就回到上一版</code>。<br>指令交給 Claude，判斷留給你。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-code" data-seg="3"><span class="bar"></span>換到 Code 分頁，建立第一個存檔點</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="3">
+      <div class="group-header"><span class="icon">💻</span> 為什麼換到 Code 分頁？</div>
+      <div class="group-body">
+        <ul>
+  <li>Cowork 擅長整理文件與檔案；要替程式留存檔點，交給專門寫程式的 <code>Claude Code</code>，也就是 Claude App 的「Code」分頁</li>
+  <li>App 已經內建 Claude Code，<code>不用另外安裝</code>；和 Cowork 一樣需要付費方案</li>
+  <li>它直接在你選的資料夾裡工作，剛剛做好的 <code>class-tool.html</code> 就在那裡</li>
+</ul>
+        <p class="loose-text"><strong>操作路徑</strong>: 左側欄上方「Code」→ 輸入框下方的環境選「Local」→ 旁邊的資料夾選「Open folder…」→ 選桌面的 <code>class-tool</code></p>
+        <ul class="loose-list">
+      <li>權限模式選「Accept edits」：改檔案會直接進行，但執行 Git 這類指令前<code>還是會先問你</code>，看清楚再允許</li>
+    </ul>
+        <p class="loose-text"><!-- 待補圖片：claude-code-open-folder.png｜Claude App 的 Code 分頁，以虛線紅框標出輸入框下方的環境「Local」、資料夾「class-tool」與權限模式（用乾淨帳號拍攝，側欄不要出現其他專案） --></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="3">
+      <div class="group-header"><span class="icon">🔧</span> 先確認電腦有 Git</div>
+      <div class="group-body">
+        <ul>
+  <li><strong>Mac</strong>：多數已經內建；沒有的話，依 <a href="https://git-scm.com/install/mac" target="_blank" rel="noopener">Git 官網</a>安裝 Xcode Command Line Tools（在「終端機」輸入 <code>xcode-select --install</code>）</li>
+  <li><strong>Windows</strong>：到 <a href="https://git-scm.com/install/windows" target="_blank" rel="noopener">Git 官網</a>下載 Git for Windows 安裝檔，照預設選項安裝，裝好後重新開啟 Claude App</li>
+  <li>不確定有沒有裝，直接請 Claude 檢查就好（下面 prompt 的第 1 步）</li>
+  <li>我有錄一支影片完整示範 Git 的安裝與操作：<a href="https://www.youtube.com/watch?v=5DEV_K0JauQ&t=836s" target="_blank" rel="noopener">【Cursor 教學】安裝 3 款讓 Vibe Coding 效率翻倍的工具（13:56 起）</a>，影片用的是 Cursor，Git 的觀念相同</li>
+</ul>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">建立第一個存檔點</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">這個資料夾是我的班級抽籤工具，請幫我用 Git 替它建立存檔點：
+1. 先確認這台電腦有沒有安裝 Git；沒有的話，告訴我怎麼安裝，先不要做其他事
+2. 在這個資料夾啟用 Git，把目前的檔案存成第一個存檔點，說明寫「v2：抽一人＋分組」
+3. 需要設定名稱與信箱時，只設定在這個資料夾，名稱用 class-tool、信箱用 teacher@example.com
+4. 完成後，用白話列出目前所有的存檔點</div>
+    </div>
+        <p class="loose-text"><!-- 待補圖片：claude-code-first-save.png｜Code 分頁中 Claude 回報已建立第一個存檔點「v2：抽一人＋分組」並列出存檔紀錄（虛線紅框標出存檔說明） --></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="lab-page" id="ai-2-lab">
+  <div class="lab-session">
+    <div class="lab-session__deco" aria-hidden="true">⚙</div>
+    <div class="lab-session__inner">
+      <h3 class="lab-session__title">實戰演練</h3>
+      <p class="lab-session__hint">換到 Code 分頁，替抽籤工具存下第一個存檔點</p>
+      <div class="lab-session__duration">⏱ 4 分鐘</div>
+    </div>
+    <div class="lab-task-list">
+      <div class="lab-task-item">
+        <span class="lab-task-num">1</span>
+        <span class="lab-task-text">打開 Code 分頁，環境選 Local、資料夾選 <code>class-tool</code></span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">2</span>
+        <span class="lab-task-text">貼上「建立第一個存檔點」的 prompt，跳出確認時看清楚再允許</span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">3</span>
+        <span class="lab-task-text">確認 Claude 列出的存檔點裡，有「v2：抽一人＋分組」</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <span class="branch-flag branch-flag--default" data-anchor="sub-section-17" data-branch="v3-抽多人" role="button" tabindex="0" title="點擊複製分支名稱">v3-抽多人</span><div class="sub-title" id="sub-section-17" data-seg="4"><span class="bar"></span>第三版：一次抽出多個人，走完一次存檔循環</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="4">
+      <div class="group-header"><span class="icon">🔁</span> 改之前先存檔，驗收後再決定</div>
+      <div class="group-body">
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">確認有存檔</div>
+          <div class="step-desc">動手前，先確認目前的版本已經存檔</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">請 AI 加功能</div>
+          <div class="step-desc">一次只加<code>一個功能</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">親手驗收</div>
+          <div class="step-desc">新功能要測，<code>舊功能也要再測一次</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">通過就存檔</div>
+          <div class="step-desc">存成新的存檔點，寫清楚這一版做了什麼</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">沒過就回到上一版</div>
+          <div class="step-desc">不用跟 AI 拉扯，<code>讀檔重來</code></div>
+        </div>
+      </div>
+    </div>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">第三版：加上「一次抽出多個人」</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">請在 class-tool.html 的抽籤功能加上「一次抽出多個人」：
+- 新增「抽出人數」欄位，預設 1；同一次抽出的人不能重複
+- 抽出人數必須是 1 到名單人數之間的整數，超出範圍時顯示中文提醒
+- 原本的抽一人與分組功能、介面與無外部連線的要求都不能改變
+完成後告訴我改了哪些地方；先不要存檔，等我驗收後再決定。</div>
+    </div>
+        <h4 class="minor-title">親手驗收第三版</h4>
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left">測試輸入</th>
+            <th class="align-left">應有結果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>10 人抽 3 人</strong></td>
+            <td class="align-left">出現 3 個不重複的人</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>10 人抽 11 人</strong></td>
+            <td class="align-left">提醒人數超過名單，不產生結果</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>抽出人數填 1</strong></td>
+            <td class="align-left">和第二版一樣只抽一人</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>第二版的五項驗收</strong></td>
+            <td class="align-left">分組與不能同組照常，<code>全部再通過一次</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <p class="loose-text">驗收通過，就存成新的存檔點；沒通過，就回到上一個存檔點：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">驗收通過：存成新的存檔點</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">驗收通過了，請把目前的檔案存成新的存檔點，說明寫「v3：一次抽多人」，再列出所有存檔點。</div>
+    </div>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">驗收沒過：回到上一個存檔點</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">這次的修改我不要了，請把資料夾還原成最近一個存檔點的樣子。
+還原後告訴我目前是哪一個存檔點，不要刪除任何存檔紀錄。</div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">為什麼不直接請 AI 修好就好？</div>
+      <p>小錯誤可以請它修；但改了兩三輪還越修越亂，就該<code>回到上一版重新交代</code>，比在壞掉的版本上縫縫補補更快。<br>有存檔點，你才<code>敢放手讓 AI 試</code>。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="4">
+      <div class="group-header"><span class="icon">💊</span> 故意改壞一次，體驗後悔藥</div>
+      <div class="group-body">
+        <p>就算第三版一次就過，也要親手體驗一次「回到上一版」：先請 AI 做一個你不想要的修改，打開網頁確認畫面真的變了，再用上面的「回到上一個存檔點」還原。</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">故意改壞：練習回到上一版</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">請把 class-tool.html 的畫面改成黑底紅字，按鈕文字全部改成英文。</div>
+    </div>
+        <p class="loose-text"><!-- 待補圖片：claude-code-restore.png｜故意改成黑底紅字的抽籤工具，與「回到上一個存檔點」後恢復原樣的畫面左右對照 --></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="lab-page" id="ai-2-lab-2">
+  <div class="lab-session">
+    <div class="lab-session__deco" aria-hidden="true">⚙</div>
+    <div class="lab-session__inner">
+      <h3 class="lab-session__title">實戰演練</h3>
+      <p class="lab-session__hint">存檔 → 加功能 → 驗收 → 存檔或回到上一版</p>
+      <div class="lab-session__duration">⏱ 8 分鐘</div>
+    </div>
+    <div class="lab-task-list">
+      <div class="lab-task-item">
+        <span class="lab-task-num">1</span>
+        <span class="lab-task-text">在 Code 分頁貼上第三版的 prompt，加上「一次抽出多個人」</span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">2</span>
+        <span class="lab-task-text">依驗收表逐項檢查，<code>第二版的分組也要再測一次</code></span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">3</span>
+        <span class="lab-task-text">通過就存成「v3：一次抽多人」；沒過就回到上一個存檔點</span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">4</span>
+        <span class="lab-task-text">故意改壞一次，再回到上一個存檔點，打開網頁確認恢復原樣</span>
+      </div>
+      <div class="lab-task-item">
+        <span class="lab-task-num">5</span>
+        <span class="lab-task-text">最後請 Claude「列出所有存檔點」，看看你的工具長了幾版</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+<section class="section">
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-18" data-seg="5"><span class="bar"></span>案例回顧</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">🧭</span> 我們到底做了什麼</div>
       <div class="group-body">
         <div class="flow">
@@ -8092,29 +8552,29 @@
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title">指定交付形式</div>
-          <div class="step-desc">指定<code>單一 html、不用外部套件</code>，同事<code>雙擊就能用</code>，讓 AI 先做出初版</div>
+          <div class="step-title">先做最小版本</div>
+          <div class="step-desc">第一版只抽一人，<code>能動再說</code></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">親手按測試案例</div>
-          <div class="step-desc">不看 AI 說「完成」，<code>自己輸入 10 人 3 組</code>確認真的能跑</div>
+          <div class="step-title">一次加一個功能</div>
+          <div class="step-desc">分組、一次抽多人，<code>每次只改一件事</code></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
         <div class="step-content">
-          <div class="step-title">留下測試紀錄</div>
-          <div class="step-desc">每一項的實際結果<code>寫進測試紀錄表</code>，下次修改照同一張表重測</div>
+          <div class="step-title">親手驗收</div>
+          <div class="step-desc">不看 AI 說「完成」，新功能、舊功能<code>自己按一遍</code></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">5</div>
         <div class="step-content">
-          <div class="step-title">修了再測一次</div>
-          <div class="step-desc">回報錯誤用<code>輸入、實際結果、預期結果</code>，修完重跑所有案例</div>
+          <div class="step-title">存檔點當後悔藥</div>
+          <div class="step-desc"><code>驗收通過才存檔</code>，改壞了就回到上一版</div>
         </div>
       </div>
       <div class="flow-step">
@@ -8130,17 +8590,21 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">💡</span> Vibe Coding 重要心法</div>
       <div class="group-body">
         <ul>
   <li><strong>驗收要在真實環境</strong>：AI 的「驗證通過」是用它自己的工具量的，<code>成品一定要親手打開</code></li>
   <li><strong>修 Bug 靠方法，不靠運氣</strong>：描述不出技術細節沒關係，<code>換個問法、附上證據、調高 Model 與 Effort、或是開一個新對話</code></li>
-  <li><strong>專業是最後一哩路</strong>：你對教學現場的熟悉度，正是把工具<code>從 80 分推到 100 分的關鍵</code></li>
+  <li><strong>專業是最後一哩路</strong>：你對教學現場的熟悉度（ex: 哪些學生不適合同組），正是把工具<code>從 80 分推到 100 分的關鍵</code></li>
 </ul>
         <div class="insight">
       <div class="insight-title">你不需要會寫程式，但一定要驗收</div>
       <p>整個過程我們<code>沒有寫一行程式</code>；但結果需要<code>親自驗收</code>，並在遇到問題時<code>引導 AI</code>。</p>
+    </div>
+        <div class="insight">
+      <div class="insight-title">進階：放上 GitHub、分支與 PR</div>
+      <p>今天的存檔點只存在<code>你的電腦</code>；想讓同事用網址開啟、換電腦也找得回來，可以再把專案放上 <code>GitHub</code>。<br>多人一起改同一個工具時，才需要<code>分支（branch）</code>與 <code>PR（Pull Request）</code>：先在草稿分支改，確認沒問題再合併回正式版。個人的班級小工具，<code>存檔點就夠用了</code>。</p>
     </div>
       </div>
     </div>
@@ -8151,121 +8615,51 @@
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="section-6" data-seg="0"><span class="num">6</span> 版本控制</span>
-    <h2>給成品一個家，還附贈後悔藥</h2>
+    <span class="section-label" id="section-7" data-seg="5"><span class="num">7</span> 規格驅動開發</span>
+    <h2>複雜的工具，先畫設計圖再蓋房子</h2>
     
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-git" data-seg="0"><span class="bar"></span>建立 Git 版本控制</div>
+    <p class="loose-text"><!-- 講師備註：約 2 分鐘，只分享觀念、不實作；兩支影片是課後延伸，課堂不播放。 --></p>
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🗂️</span> 給成品一個「家」，還附贈後悔藥</div>
+    <div class="insight">
+      <div class="insight-title">蓋小木屋可以邊做邊改，蓋大樓一定要先有設計圖</div>
+      <p>抽籤工具很小，用白話文一次加一個功能就夠了。<br>但功能一多、規則一複雜，就適合先寫好<code>規格</code>（要做什麼、規則是什麼、怎麼驗收），再請 AI 照規格開工，這就是<code>規格驅動開發（SDD，Spec-Driven Development）</code>。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="5">
+      <div class="group-header"><span class="icon">📐</span> 其實你今天已經寫過迷你規格</div>
       <div class="group-body">
         <ul>
-  <li>今天做出來的 html 若只放在桌面，<code>換電腦、重灌就找不回來</code>，也不知道哪一版才是對的</li>
-  <li>放上 <strong>GitHub</strong>（存放檔案每一版紀錄的網站）之後，<code>每次上傳都是一個「還原點」</code>，哪天 AI 改壞了，隨時可以<code>退回上一版</code>，這正好治「不知道被改壞」的痛</li>
-  <li>再開啟 <strong>GitHub Pages</strong>，工具就會<code>變成一個網址</code>，傳給同事就能直接用，不用再傳 html 檔</li>
+  <li>第一版前的那張需求表（輸入、輸出、例外、邊界），就是<code>最小的規格</code></li>
+  <li>每一版的驗收表，就是規格裡的<code>驗收標準</code></li>
+  <li>SDD 把這些寫成文件，讓 AI <code>每次迭代都有依據</code>，換了對話也不會走偏</li>
 </ul>
-        <div class="insight">
-      <div class="insight-title">不用打指令，也能用 GitHub</div>
-      <p><code>Git</code> 是替檔案記下每一版的工具，可以想成<code>後悔藥</code>；<code>GitHub</code> 則是存放這些版本的網站。<br>GitHub 並非工程師專用，只要跟著下面步驟操作，就能建立專案的第一個保存點。</p>
-    </div>
-        <p class="loose-text">把 <code>group-tool.html</code> 複製一份並改名為 <code>index.html</code>，它就是要上傳的檔案（Pages 會把 <code>index.html</code> 當成首頁）。沒跟到前面實作的話，先請 Cowork 照上面的 prompt 做出 <code>group-tool.html</code>。</p>
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">建立專案</div>
-          <div class="step-desc">到 <a href="https://github.com" target="_blank" rel="noopener">github.com</a> 註冊，點右上角「＋」→「New repository」（repository 就是專案，常簡稱 repo），取英文名稱（ex: <code>class-group-tool</code>）、選 Public（公開）後，點擊「Create repository」</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">拖拉上傳</div>
-          <div class="step-desc">點「uploading an existing file」，把 <code>index.html</code> 拖進去，按「Commit changes」，這就是<code>第一個還原點</code></div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">開啟 Pages</div>
-          <div class="step-desc">Settings → Pages → Source 選「Deploy from a branch」→ Branch 選清單裡的預設分支（<code>main</code> 或 <code>master</code>，新專案通常只有這一個）→ Save</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <div class="step-title">拿到網址</div>
-          <div class="step-desc">等 1 到 2 分鐘，工具就有了專屬網址 <code>https://你的帳號.github.io/專案名稱/</code></div>
-        </div>
-      </div>
-    </div>
-        <p class="loose-text"><!-- 待換圖：github-new-repo.png｜頁面露出三總課程範例 repo「nurse-shift-scheduler」；重拍時捲到不顯示其他 repo 的位置，或裁掉下方列表 --></p>
-        <figure class="content-image">
-      <img src="assets/github-new-repo.png" width="1904" height="934" alt="右上角「＋」→「New repository」建立新專案" loading="lazy">
-      <figcaption>右上角「＋」→「New repository」建立新專案</figcaption>
-    </figure>
-        <p class="loose-text"><!-- 待換圖：github-pages-setting.png｜repo 名稱是三總課程的「monthly-report-tool」，和講義的 class-group-tool 不同，圖中分支顯示 master；用 class-group-tool 重拍後可拿掉圖說的「僅為示範」 --></p>
-        <figure class="content-image">
-      <img src="assets/github-pages-setting.png" width="1904" height="962" alt="Settings → Pages，選擇預設分支（main 或 master）後按「Save」（圖中的專案與分支名稱僅為示範，以你畫面上的為準）" loading="lazy">
-      <figcaption>Settings → Pages，選擇預設分支（main 或 master）後按「Save」（圖中的專案與分支名稱僅為示範，以你畫面上的為準）</figcaption>
-    </figure>
-        <div class="insight">
-      <div class="insight-title">注意：程式碼公開，但資料還不會公開</div>
-      <p>免費版的 Pages <code>需要公開專案</code>，但公開的只有程式碼；工具依然是純前端，<code>所有資料還是只在使用者自己的瀏覽器裡運算</code>。<br><strong>但如果運算的邏輯是機密，就不適合公開</strong>；也不要把學生名冊上傳到公開專案。</p>
-    </div>
       </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">💻</span> 之後想優化，讓 Claude Code 接手</div>
+    <div class="group-block" data-seg="5">
+      <div class="group-header"><span class="icon">🎬</span> 延伸學習：用 Claude Code 實作規格驅動開發</div>
       <div class="group-body">
-        <p>程式放上 GitHub 還有一個好處：Claude App 裡的「<strong>Code</strong>」功能可以<code>直接連接你的 GitHub 專案</code>，之後想優化工具，用說的就好。</p>
-        <ul class="loose-list">
-      <li>在 Claude App 點選「<strong>Code</strong>」，選擇要連接的 GitHub 專案，用文字描述想要的優化</li>
-      <li>Claude 會<code>讀懂專案裡的程式</code>後動工，改好的版本<code>直接更新回 GitHub</code>，網址不變，<code>工具自動變成新版</code></li>
-      <li>就算改壞了也不怕，<code>每一版都在 GitHub 留著</code>，隨時退得回去</li>
-    </ul>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">提出想優化的細節</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
+        <ul>
+  <li>我有錄一支影片完整示範：用 Claude Code 搭配 Spec-Kit，從寫規格開始做出全端專案</li>
+  <li>想看另一套規格工具 OpenSpec，可以看這支：<a href="https://youtu.be/FeQv7mngg6Q" target="_blank" rel="noopener">【Claude Code 實戰】一次搞懂 OpenSpec，讓專案每次迭代都有依據</a></li>
+</ul>
+        <div class="youtube-embed">
+      <div class="youtube-wrapper" data-id="16IIi5uNx_M">
+        <iframe src="https://www.youtube.com/embed/16IIi5uNx_M" title="【Claude Code × Spec-Kit 教學】用規格驅動開發全端專案" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        <div class="youtube-local-notice">
+          <p>本機直接開啟 HTML 時，YouTube 可能因缺少 HTTP referrer 而拒絕播放。請改用本機伺服器預覽，或直接前往 <a href="https://www.youtube.com/watch?v=16IIi5uNx_M" target="_blank" rel="noopener">YouTube 觀看影片</a>。</p>
+        </div>
       </div>
-      <div class="prompt-body">請加一個「投影模式」按鈕：切換時收起輸入區、結果編號放大，可以按返回恢復。
-原本的分組邏輯與測試案例的結果不能改變。</div>
-    </div>
-        <p class="loose-text"><!-- 待補圖片：claude-code-optimize.png、claude-code-merge.png｜Claude Code 讀取分組器專案並完成優化、確認執行完畢（需用分組器專案重拍） --></p>
-        <p class="loose-text">Claude 改好的內容會先放在<code>另一條草稿分支</code>上，不會直接動到正式版；要<code>合併（merge）回主線</code>，Pages 上的工具才會更新成新版。<code>PR（Pull Request）</code>就是「請把這份草稿合併進正式版」的申請：</p>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">請 Claude 建立 PR 並完成合併</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">幫我 create PR 並完成 merge</div>
-    </div>
-        <p class="loose-text"><!-- 待補圖片：claude-code-merge2.png、claude-code-result.png｜建立 PR 並合併到主線（main 或 master），優化完成後的分組器投影畫面（需重拍） --></p>
-        <div class="warning">
-      <div class="warning-title">⚠️ 雲端改程式很方便，但有它的缺陷</div>
-      <ul>
-        <li>透過雲端變更程式，<code>消耗 Token 的速度較快、執行速度也較慢</code>，適合小幅度的優化</li>
-        <li>如果是對外的服務，<code>錯了後其他使用者會受到影響</code></li>
-        <li>這裡主要是讓大家<code>初步了解版本控制與迭代的方向</code></li>
-        <li>未來想完成<code>更複雜的功能</code>，還是要回到<code>終端機（地端）搭配程式碼編輯器</code>的方式處理，那是另一堂課的範圍</li>
-      </ul>
+      <p class="youtube-caption">【Claude Code × Spec-Kit 教學】用規格驅動開發全端專案</p>
     </div>
       </div>
     </div>
@@ -8273,7 +8667,7 @@
 </section>
 
 <hr class="divider">
-<section class="interactive-page" id="section-6-interactive">
+<section class="interactive-page" id="section-7-interactive">
   <div class="interactive-session">
     <div class="interactive-session__deco" aria-hidden="true">💬</div>
     <div class="interactive-session__inner">
@@ -8290,13 +8684,13 @@
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="summary" data-seg="0"><span class="num">📌</span> 課程總結</span>
+    <span class="section-label" id="summary" data-seg="5"><span class="num">📌</span> 課程總結</span>
     <h2>Work Smart, Don't Work Hard</h2>
     
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-16" data-seg="0"><span class="bar"></span>技術更新好快，我好焦慮</div>
+    <div class="sub-title" id="sub-section-19" data-seg="5"><span class="bar"></span>技術更新好快，我好焦慮</div>
   </div>
 
   <div class="reveal">
@@ -8307,7 +8701,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">😰</span> 出現新名詞很焦慮</div>
       <div class="group-body">
         <p>Hermes Agent、loop engineering、Agency Agent、HyperFrames...</p>
@@ -8343,7 +8737,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">🪞</span> 「是我太爛嗎？」不，Demo 都是挑過的</div>
       <div class="group-body">
         <ul>
@@ -8370,7 +8764,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">🔄</span> 經驗不會歸零，只是換了賽道</div>
       <div class="group-body">
         <div class="insight">
@@ -8412,7 +8806,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">🔧</span> AI 降低「踏出第一步」的成本</div>
       <div class="group-body">
         <ul>
@@ -8429,16 +8823,15 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-work-smart-dont-work-hard" data-seg="0"><span class="bar"></span>Work Smart, Don't Work Hard</div>
+    <div class="sub-title" id="sub-work-smart-dont-work-hard" data-seg="5"><span class="bar"></span>Work Smart, Don't Work Hard</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">⚡</span> 把該省的力氣省下來</div>
       <div class="group-body">
         <ul>
   <li>在 AI 時代，做<code>只有人才能辦到的事</code>更有價值</li>
-  <li>嘗試把工作的某個環節變順，讓自己<code>少踩坑、少重工、少在無聊</code>的事情上浪費時間</li>
   <li>不要讓你對教學的熱情，被那些<code>不難但很煩的瑣事</code>一點點消耗掉</li>
 </ul>
       </div>
@@ -8446,7 +8839,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">🙌</span> 不要有預設立場，先讓 AI 試試看</div>
       <div class="group-body">
         <div class="flow">
@@ -8470,11 +8863,11 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-18" data-seg="0"><span class="bar"></span>回顧：這個系列走過的路</div>
+    <div class="sub-title" id="sub-section-21" data-seg="5"><span class="bar"></span>回顧：這個系列走過的路</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">🧭</span> 從聊天工具，升級成工作幫手</div>
       <div class="group-body">
         <div class="flow">
@@ -8482,14 +8875,14 @@
         <div class="step-num">1</div>
         <div class="step-content">
           <div class="step-title">第 1 堂 ChatGPT</div>
-          <div class="step-desc">認識 AI 的能力與限制，練習 Prompt、記憶與自訂，連接外部工具，再用專案保存活動背景</div>
+          <div class="step-desc">認識網頁版與桌面版、三家 AI 功能對標，練習 Prompt 與圖片生成，再用記憶、外掛程式與專案建立教學助理</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
           <div class="step-title">第 2 堂 Codex</div>
-          <div class="step-desc">讓 AI 動手處理資料夾裡的檔案（活動摘要與待辦、回條照片轉 Excel、自動填表），再生成學習單與海報圖片</div>
+          <div class="step-desc">用現成 Skill 交付資訊卡、線上講義與校園簡報，再讓 AI 彙整備課資源、把手寫報名表照片轉成 Excel</div>
         </div>
       </div>
       <div class="flow-step">
@@ -8516,8 +8909,8 @@
       <div class="flow-step">
         <div class="step-num">6</div>
         <div class="step-content">
-          <div class="step-title">保留還原點</div>
-          <div class="step-desc">放上 GitHub，改壞了也有回頭路</div>
+          <div class="step-title">保留存檔點</div>
+          <div class="step-desc">用 Git 存下每一版，AI 改壞了也能回到上一版</div>
         </div>
       </div>
     </div>
@@ -8525,12 +8918,12 @@
       <div class="summary-card">
         <div class="sc-icon">💬</div>
         <h4>ChatGPT</h4>
-        <p>把需求說清楚，用 Prompt、記憶、自訂、外部工具與專案建立專屬教學助理</p>
+        <p>把需求說清楚，用 Prompt、圖片生成、記憶、外部工具與專案建立專屬教學助理</p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🖥️</div>
         <h4>Codex</h4>
-        <p>讓 AI 動手處理資料夾裡的檔案，並生成學習單與海報圖片</p>
+        <p>用現成 Skill 交付教材，讓 AI 動手處理資料夾裡的檔案</p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🔌</div>
@@ -8549,8 +8942,8 @@
       </div>
       <div class="summary-card">
         <div class="sc-icon">💾</div>
-        <h4>Git 版控</h4>
-        <p>放上 GitHub 留還原點、變成網址傳給同事，之後的迭代交給 Claude Code</p>
+        <h4>Git 存檔點</h4>
+        <p>驗收通過才存檔，AI 改壞了就回到上一版；複雜的工具再搭配規格驅動開發</p>
       </div>
     </div>
       </div>
@@ -8558,7 +8951,7 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
+    <div class="group-block" data-seg="5">
       <div class="group-header"><span class="icon">🪞</span> AI 就像是一面鏡子：讓它回頭看看「你」</div>
       <div class="group-body">
         <p>這個系列都在分享<code>AI 的技巧</code>，但如果你已經使用了一段時間，過去<code>問過的問題、踩過的坑、在意的細節</code>都已經默默被 AI 記錄了。</p>
@@ -8591,6 +8984,41 @@
 把以上的復盤，寫成 6 份不同的 .md 報告，並且裡面會需要把對話紀錄分門別類。</div>
     </div>
         <p class="loose-text"><!-- 待補圖片：ai-summary.png｜Claude 產出 6 份復盤報告的畫面（要用有一個月以上對話紀錄的帳號重拍，全新帳號沒有歷史、跑不出結果；原圖含講師個人工作內容，重拍後遮蔽客戶名稱與個資再放） --></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="5">
+      <div class="group-header"><span class="icon">🚀</span> 下課後的第一步：先把一件小事跑順</div>
+      <div class="group-body">
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">挑一件事</div>
+          <div class="step-desc">經常重複、格式固定，而且<code>你有能力判斷對錯</code>的任務（ex: 行政週報、作業繳交登記、家長通知）</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">跑順第一個流程</div>
+          <div class="step-desc">跑順一次，就會知道<code>怎麼跟 AI 交代任務、怎麼驗證結果</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">套用到其他情境</div>
+          <div class="step-desc">把這套方法帶到下一件事，好用的流程存成 Skill 或做成工具</div>
+        </div>
+      </div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">最後要為結果負責的，是你自己</div>
+      <p>AI 完成任務後，還是要<code>親自驗證</code>資訊是否正確；這是四堂課一路提醒的事，也是我最想留給你的一句話。</p>
+    </div>
       </div>
     </div>
   </div>
@@ -8934,8 +9362,8 @@
     });
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
-    var sectionIds = ["instructor","section-x","excel-ai","section-2","ai","section-4","section-5","section-6","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","section-x","sub-section-1","excel-ai","sub-cowork","sub-excel","section-2","sub-section-4","sub-section-5","ai","sub-section-6","sub-section-7","sub-section-8","section-4","sub-vibe-coding","sub-section-10","sub-section-11","section-5","sub-section-12","sub-section-13","sub-section-14","section-6","sub-git","summary","sub-section-16","sub-work-smart-dont-work-hard","sub-section-18"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var sectionIds = ["instructor","section-x","excel-ai","section-2","ai","section-4","section-5","ai-2","section-7","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+    var allAnchorIds = ["instructor","section-x","sub-section-1","excel-ai","sub-cowork","sub-excel","section-2","sub-section-4","sub-section-5","ai","sub-section-6","sub-section-7","sub-section-8","section-4","sub-vibe-coding","sub-section-10","sub-section-11","sub-section-12","section-5","sub-section-13","sub-section-14","ai-2","sub-git","sub-code","sub-section-17","sub-section-18","section-7","summary","sub-section-19","sub-work-smart-dont-work-hard","sub-section-21"];   // e.g. ['instructor','new-project','sub-create-project',...]
     // 兩張對照表由 toc 段填入；updateToc 在任何時機呼叫都讀得到（未填時退回第一個章節）
     var sectionForAnchor = {};
     var subForAnchor = {};

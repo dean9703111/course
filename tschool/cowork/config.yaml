@@ -2,11 +2,11 @@ page:
   title: "Cowork｜讓 AI 交付成品，替自己做班級小工具"
   badge: "生成式 AI 研習｜第 4 堂"
   hero_title: "讓 AI 交付成品，替自己做班級小工具"
-  subtitle: "從簽收表轉 Excel、閱讀日輪值、排程到班級分組器，練習交付與驗收"
+  subtitle: "從簽收表轉 Excel、閱讀日輪值、排程到班級抽籤工具，練習交付、驗收與 Git 存檔點"
 seo:
   default_image: "https://deanlin.net/course/tschool/cowork/assets/og-image.jpg"
   title: "Cowork 成品交付與班級小工具｜生成式 AI 研習第 4 堂"
-  description: "從簽收表轉 Excel、閱讀日輪值、排程到班級分組器，練習交付與驗收"
+  description: "從簽收表轉 Excel、閱讀日輪值、排程到班級抽籤工具，練習交付、驗收與 Git 存檔點"
   url: "https://deanlin.net/course/tschool/cowork/"
   image: "https://deanlin.net/course/tschool/cowork/assets/og-image.jpg"
 quotes:

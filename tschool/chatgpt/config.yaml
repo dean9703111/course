@@ -2,10 +2,10 @@ page:
   title: "ChatGPT｜釐清需求，建立專屬的教學助理"
   badge: "生成式 AI 研習｜第 1 堂"
   hero_title: "釐清需求，建立專屬的教學助理"
-  subtitle: "從 Prompt、記憶、自訂到 Projects，讓備課與行政初稿有依據"
+  subtitle: "認識網頁版與桌面版，從 Prompt、圖片生成到專案，讓備課與行政初稿有依據"
 seo:
   title: "ChatGPT 教學與行政助理｜生成式 AI 研習第 1 堂"
-  description: "為學校老師與行政設計的 ChatGPT 講義：資安觀念、Prompt 技巧、記憶與自訂、外掛程式與專案。"
+  description: "為學校老師與行政設計的 ChatGPT 講義：網頁版與桌面版、三大 AI 功能對標、資安與去識別化、Prompt 技巧、教材圖片生成、記憶與自訂、外掛程式與專案。"
   image: "https://deanlin.net/course/tschool/chatgpt/assets/og-image.jpg"
   default_image: "https://deanlin.net/course/tschool/chatgpt/assets/og-image.jpg"
   url: "https://deanlin.net/course/tschool/chatgpt/"
