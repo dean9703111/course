@@ -23,7 +23,7 @@
 | 圖片生成 | `course/tschool/codex/content.md` 改版前快照（308–474 行「圖片起手式」「教材與活動配圖」），更早出處為 `course/bics/lesson2/content.md` 1197–1585 行「生成圖片」 | 操作改為 ChatGPT「+」→「創作圖像」、下載圖片（不存 `output/`）；保留著作權、第一張閱讀情境圖、家長懶人包、學習流程圖、海報底圖、一句回饋修改；刪去校外教學活動流程圖與水的三態教材示意圖（後者「精確內容對照課本」併入檢查卡）；修改步驟加入官方說明的「選取區域」 |
 | 個人化：記憶與自訂 | BICS 第 1 堂 613–735 行 | 兩個實戰演練合併成一個；「工具都是類似的」卡片（Gemini／Claude 設定圖）與第二個互動投票刪除，改在自訂結尾一句帶到第 3 堂 |
 | 連接外部工具：Gmail 與行事曆 | BICS 第 1 堂 745–816 行 | 改為講師示範；刪除「資訊散落」insight 與兩個外掛綜合運用的待補圖 |
-| 建立專案 | BICS 第 1 堂 818–954 行 | 「閱讀探索日」專案沿用；實戰演練 15 → 10 分鐘；分享專案兩個 STEP 併成一張卡 |
+| 建立專案 | BICS 第 1 堂 818–954 行 | 專案情境改為「高年級閱讀理解行動研究（教師社群）」，素材包 `example/reading-research`（研究計畫書、分工與共備記錄、文獻與背景資料、評量規準與學習單格式），不放信件與行事曆；實戰演練 15 → 10 分鐘；分享專案兩個 STEP 併成一張卡 |
 | 結語 | BICS 第 1 堂 1120–1142 行 | 重點回顧加入工具對標與圖片生成；新增「熟悉一個」insight；下一堂預告改為第 2 堂新內容（現成 Skill 做資訊卡、講義、簡報 → 彙整備課資源資料夾 → 手寫報名表照片轉 Excel） |
 
 ## 講師專訪內容放在哪裡
@@ -110,7 +110,7 @@ content.md 已在對應位置留 HTML 註解，不建立失效的圖片連結。
 | `chatgpt-gmail-permissions.png`、`chatgpt-calendar-permissions.png` | Gmail、Calendar 授權權限勾選 |
 | `gmail-summary.png` | 閱讀探索日四封籌備信的脈絡整理結果（測試信箱） |
 | `calendar-confirm.png`、`calendar-created.png` | 建立前提供草稿並提醒與「高年級學年會議」衝突、建立成功 |
-| `project-new.png`、`project-files.png`、`project-setting.png`、`project-instructions.png` | 建立專案、上傳五個素材檔（不含使用說明.md）、專案設定與指令 |
+| `project-new.png`、`project-files.png`、`project-setting.png`、`project-instructions.png` | 建立專案、上傳四個素材檔、專案設定與指令 |
 | `project-verify-source.png`、`project-verify-decision.png`、`project-verify-nothing.png`、`project-verify-notice.png` | 四個驗證問題的回覆（出處、決策、沒有記錄、依範本寫通知初稿） |
 | `project-share-invite.png` | 分享邀請與權限設定 |
 
@@ -121,8 +121,8 @@ content.md 已在對應位置留 HTML 註解，不建立失效的圖片連結。
 「連接外部工具」兩個範例讀的是測試帳號，素材包的文字檔不會自動變成信件或行程。
 
 1. 準備一個只放練習資料的 Google 測試帳號，在 ChatGPT 連接 Gmail 與 Google Calendar。
-2. 照 `example/reading-assistant/虛構郵件.txt` 的順序，把四封信寄進測試信箱：主旨與內文照抄，寄件者用自己的另一個測試帳號或別名；與會者只會是這些測試帳號，不要填真實同事的信箱（建立事件會真的寄出邀請）。
-3. 照 `虛構行事曆.txt` 在測試行事曆建立兩筆現有行程（12/2 圖書室書籍盤點、12/3 高年級學年會議）。
+2. 照 `example/reading-assistant/往來信件.txt` 的順序，把四封信寄進測試信箱：主旨與內文照抄，寄件者用自己的另一個測試帳號或別名；與會者只會是這些測試帳號，不要填真實同事的信箱（建立事件會真的寄出邀請）。
+3. 照 `行事曆.txt` 在測試行事曆建立兩筆現有行程（12/2 圖書室書籍盤點、12/3 高年級學年會議）。
 4. 素材的日期以 2026/11/23 上課為基準（信件 11/16–11/19、會議 12/3）；改期開課時，三組日期一起往後移，星期也要重對。
 5. 信件裡寫的日期是內文；Gmail 顯示的收信時間會是實際寄出的時間，不影響兩個範例。
 
