@@ -5,7 +5,7 @@ page:
   subtitle: "指定工作範圍、彙整教學資料、生成有用途的圖片，並開啟成品驗收"
 seo:
   title: "Codex 教學檔案與圖片實作｜Tschool 第 2 堂"
-  description: "為學校老師與行政設計的 Codex 講義：指定資料夾、多格式彙整、附來源摘要與教材圖片生成。"
+  description: "為學校老師與行政設計的 Codex 講義：指定資料夾、多格式彙整、回條照片轉 Excel、自動填表與教材圖片生成。"
   image: "https://deanlin.net/course/tschool/codex/assets/og-image.jpg"
   default_image: "https://deanlin.net/course/tschool/codex/assets/og-image.jpg"
   url: "https://deanlin.net/course/tschool/codex/"

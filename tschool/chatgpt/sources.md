@@ -1,72 +1,98 @@
 # 第 1 堂素材來源與改編紀錄
 
-本檔供講師備課與追溯；不作為學員頁章節。校園例子均為教學改編，沒有宣稱是真實學生案例。未移植醫療法規、業配產品承諾與其他工具的介面。補充安美諾既有實作與影片中的方法，產品功能另以官方文件核對。官方頁面已於 2026-11-05 以 web open 實際讀取；操作入口仍應於授課前以當時介面確認。
+本檔供講師備課與追溯；不作為學員頁章節。章節與說明沿用 BICS 第 1 堂講義，只把範例換成學校老師與行政的日常情境；學生資料一律虛構。未搬入 BICS「Gemini Notebook」整章。
 
-| 講義位置 | 既有素材與原段落 | 本次改編 |
+## 講義章節對照
+
+| 講義章節 | 底稿（`course/bics/lesson1/content.md`） | 範例怎麼改 |
 |---|---|---|
-| 前導 | [GSK 講義](../../gsk/content.md)「前導：生成式 AI 跟你想的一樣嗎？」及「了解 AI 的能力範圍」（約 32、254 行） | 行政瑣事與幻覺，換成教案、通知、會議摘要；保留人工判斷 |
-| 帳號安全 | [GSK 講義](../../gsk/content.md)「帳號安全與基本設定」（約 365 行） | 資料控制入口依官方文件更正，不沿用原稿「個人化」入口；MFA 不限定單一驗證方式 |
-| 資料底線 | [三總講義](../../tsgh/content.md)「四條底線」「今天所有練習，都使用去識別化的虛擬範例」（約 42–54 行） | 病人資料改為校園資料；保留虛構材料與機構規範，未沿用醫療法規 |
-| 去識別化 | [去識別化影片稿](../../../video/surfshark_esim/surfshark/講稿.md)「手動去識別化的問題」、結語（約 229–258、420–435 行） | Excel 多工作表、PDF 白框、自動偵測人工複核、CSV 編碼表分開保存；工廠稀有特徵改為校園朗讀冠軍與轉學生 |
-| Prompt | [GSK 講義](../../gsk/content.md)「Prompt 撰寫要點」（約 385–510 行） | 六要點改為角色、任務、受眾、材料限制、格式與驗收；國貿分析換為閱讀活動與家長通知 |
-| 記憶、自訂 | [GSK 講義](../../gsk/content.md)「ChatGPT 記憶功能」「自訂 ChatGPT」（約 540–637 行） | 長期偏好與單次材料分開；不使用作者個人成就或學生個資測試 |
-| Projects | [GSK 講義](../../gsk/content.md)「新增專案上傳背景資訊」（約 892 行）；[三總講義](../../tsgh/content.md)「Project 基礎架構／設計專案指令」（約 342–435 行）；[Project 影片原稿](../../../video/manus/ep4-專案（Project）/origin.md)「用指令＋文件建立專案記憶助理」（約 140 行） | 沿用指令＋材料＋引用出處＋缺漏留白；企業競爭分析改為閱讀活動專案。不沿用 Manus 的記憶、方案與操作介面 |
+| 認識生成式 AI：如果不會，問 AI 不香嗎？ | 12–38 行 | 痛點括號補上備課、家長通知、會議記錄 |
+| 認識生成式 AI：初探生成式 AI | 40–103 行 | 「各行各業案例」改為導師／授課教師／行政／學務；Prompt 重要性改為教學 know-how；書籍案例與工具比較圖沿用 |
+| 認識生成式 AI：生成式 AI 應用場景 | 105–138 行 | 三張案例卡改為家長通知／公文、歷年活動與校務會議記錄、備課與命題 |
+| 選擇工具：不同工具的核心特色 | 140–195 行 | 功能對照表沿用；三家分頁實作（缺截圖）、Notebook／Gamma 介紹卡略去 |
+| 選擇工具：資訊安全、免費 VS 付費；能力與風險：AI 的能力範圍 | 219–347 行 | 警告框加一條學生資料不貼；幻覺清單改為出考題、引用課綱法規；駭客與最新資訊卡略去 |
+| 能力與風險：AI 的逆向工程 | 349–409 行 | 合約改為虛構「校外教學廠商企劃書」，內容放在講義可直接複製，不需要先備檔案；YouTube 影片略去 |
+| 資料安全：帳號安全與基本設定 | 427–454 行 | 設定步驟與截圖沿用，不同主題開新對話的例子改為教案／通知／會議記錄 |
+| 資料安全：上傳敏感資料前，先做去識別化 | 非 BICS 底稿；來源為 `video/surfshark_esim/surfshark/講稿.md`「痛點：去識別化很繁瑣」「多重驗證＋去識別化」「去識別化工具分享」「① 為什麼需要去識別化」「② 去識別化工具實戰 Demo」STEP 1–6 與結語提醒 | 企業合約改為虛構「學生個別輔導紀錄」（`example/student-deid`）；STEP 5 的 Prompt 改為整理給輔導室的摘要；STEP 7 自訂規則只留一句預告（第 3 堂 Claude 講）；「③ 打造客製化的工具」、廣告段、駭客釣魚段不搬；按鈕與分頁名稱對過工具原始碼（`~/Documents/external_project/data-deidentification`） |
+| Prompt 撰寫：Prompt 撰寫要點 | 456–611 行 | 合約翻譯改為家長通知三階段；六技巧共用「國小高年級晨間閱讀」例子；技巧 4、5 的佔位字換成晨間閱讀的具體 Prompt（餐飲案例略去），內層分隔符號由三個反引號改為三個引號；專有名詞改教學設計與評量術語 |
+| 個人化：記憶功能 | 613–672 行 | 作者簡歷測試改為「閱讀暖身活動」＋練習用記憶，流程不變 |
+| 個人化：自訂 | 674–735 行 | 自訂指令與「關於你」改為教師情境，暱稱／職業補範例值；STEP 4 測試題改為導師／授課／行政，且故意不交代背景，才看得出自訂指令的效果 |
+| 連接外部工具：Gmail 與行事曆 | 745–816 行 | 信件脈絡與行事曆兩個範例都改為「閱讀探索日籌備會議」，對應素材包的四封虛構信與兩筆現有行程；補上沒有連接權限時改用貼上文字的練習方式 |
+| 建立專案：建立團隊專案 | 818–954 行 | 會員 App 專案改為「閱讀探索日」，沿用 `example/reading-assistant` 虛構素材；專案指令保留四條規則並改成活動情境；驗證多一題「依照範本產出初稿」，用到通知格式與教學目標；雲端檔案補充略去 |
+| 結語 | 1120–1142 行 | 重點回顧去掉 Notebook；下一堂預告改為 Codex（處理資料夾檔案、生成教材圖片） |
 
-## 官方核對
+## 已複製的圖片（來自 `course/bics/lesson1/assets/`，皆為通用介面或概念圖）
 
-- [Data controls in ChatGPT](https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt)：設定中的 Data controls 與 Improve the model for everyone；校務上傳許可另依校方判斷。
-- [Managing MFA](https://help.openai.com/en/articles/7967234-managing-multi-factor-authentication-mfa)：Security and login、方法可用性依帳號等條件不同。
-- [Personalize ChatGPT](https://learn.chatgpt.com/docs/personalize)：已讀取頁面，自訂指令用於跨對話偏好。
-- [Projects and chats](https://learn.chatgpt.com/docs/projects)：已讀取頁面，專案共用文件與指令，ChatGPT Project 不直接提供電腦資料夾存取權。
-- [Memory in ChatGPT](https://help.openai.com/en/articles/8590148-memory-in-chatgpt)：作為授課前覆核記憶選項的延伸入口；本次未逐段引用其操作細節。
+c012-i5、c015-i14、c030-i25、c031-i27、c037-i36、c038-i37、c043-i41、c049-i46、c050-i47、c066-i59、c068-i62、c069-i64、c069-i66、c072-i69、chatgpt-gmail、chatgpt-calendar、chatgpt-plus-only、chatgpt-project-create、illust-info-overload、illust-find-key-info。
 
 ## 待補圖片
 
-Markdown 已在對應段落留 HTML 註解，不建立不存在的圖片連結。
+content.md 已在對應位置留 HTML 註解，不建立失效的圖片連結。截圖請使用練習帳號，遮住信箱與姓名。
 
-| 建議檔名 | 對應位置／截圖要求 |
+| 建議檔名 | 要拍什麼 |
 |---|---|
-| `assets/data-controls.png` | 第 2 章資料控制；不露帳號信箱，虛線紅框標開關 |
-| `assets/mfa.png` | 第 2 章 MFA 入口；不露驗證碼、QR Code 或恢復碼 |
-| `assets/deidentify-comparison.png` | 第 2 章虛構紀錄前後對照，標示只換姓名的不足 |
-| `assets/personalization.png` | 第 4 章自訂與記憶管理入口，使用非敏感背景 |
-| `assets/project-setup.png` | 第 5 章建立 Project、指令與三份虛構文件，可拆多張實截 |
+| `hidden-inject-doc.png` | Google 文件貼上虛構企劃書 |
+| `hidden-inject-result.png` | Gemini 被隱藏指令影響的回覆 |
+| `new-chat-per-topic.png` | 左側欄「新對話」位置（紅框） |
+| `ai-response-example.png` | 依自訂格式回覆的晨間閱讀做法與比較表 |
+| `memory-first-ask.png`、`memory-save.png`、`memory-new-chat.png`、`memory-self-summary.png` | 記憶測試四步驟畫面 |
+| `custom-about-you.png`、`custom-test.png` | 「關於你」填寫、新對話不交代背景提問（回覆帶入暱稱、任教年級並在結尾反問） |
+| `claude-personalization.png` | Claude 的 General／Memory 設定 |
+| `deid-upload.png` | 去識別化工具首頁，把「學生個別輔導紀錄.docx」拖進虛線上傳區（紅框：上傳區、貼上文字框） |
+| `deid-preview.png` | 輔導紀錄的預覽畫面，敏感資料換成方括號類別（紅框：「輸出設定」的「全部隱藏」） |
+| `deid-manual-add.png`、`deid-cancel.png` | 圈選學號後的浮動視窗（類別「識別碼」、紅框「新增為去識別化項目」）；點「易分心」標記後的確認視窗（紅框「取消去識別化」） |
+| `deid-download.png` | 上方工具列（紅框「下載（文件＋編碼表）」）與下載到的 `.deid.docx`、`.mapping.csv` |
+| `deid-chatgpt.png` | ChatGPT 讀取去識別化輔導紀錄後產出的摘要，方括號代號原樣保留，並提供 Word 檔 |
+| `deid-restore.png` | 「還原」分頁上傳兩個檔案後顯示已還原筆數（紅框「下載還原文件」） |
+| `chatgpt-gmail-permissions.png`、`chatgpt-calendar-permissions.png` | Gmail、Calendar 授權權限勾選 |
+| `gmail-summary.png` | 閱讀探索日四封籌備信的脈絡整理結果（測試信箱） |
+| `calendar-gmail-result.png`、`calendar-confirm.png`、`calendar-created.png` | 兩個外掛綜合運用、建立前提供草稿並提醒與「高年級學年會議」衝突、建立成功 |
+| `project-new.png`、`project-init.png`、`project-files.png`、`project-setting.png`、`project-instructions.png` | 建立專案、上傳五個素材檔（不含使用說明.md）、專案設定與指令 |
+| `project-verify-source.png`、`project-verify-decision.png`、`project-verify-nothing.png`、`project-verify-notice.png` | 四個驗證問題的回覆（出處、決策、沒有記錄、依範本寫通知初稿） |
+| `project-share-invite.png`、`project-share-member-view.png` | 分享邀請、成員視角 |
 
-## 100 分鐘擴充與新增素材依據
+## 課前準備：Gmail 與 Google Calendar 示範
 
-講師節奏已放在 content.md 開頭的 HTML 註解，不含休息及 QA：前導 10＋安全 18＋Prompt／三角色挑錯 25＋記憶自訂 12＋Projects 與延伸 30（Project 12／Skill 8／Google 6／排程 4）＋保存成果 5＝100 分鐘。主線只做自己選的一個教學或行政成果；Skill、Google、排程以講師預跑過的測試帳號示範，可用帳號跟做、課後再做。
+「連接外部工具」兩個範例讀的是測試帳號，素材包的文字檔不會自動變成信件或行程。
 
-| 新增段落 | 既有依據 | 本次改編與限制 |
-|---|---|---|
-| 快速成功、三讀者挑錯 | [安美諾講義](../../amiino/content.md)「提示詞四要素」「扮演目標客群」「紅藍隊攻防」（約196、519、567行） | 產品多切角換成同概念不同年齡、同活動不同讀者；紅隊改為家長／新同事／審稿老師，不把角色模擬稱為真實訪談 |
-| 去識別化小示範 | [安美諾講義](../../amiino/content.md)「去識別化工具：三步驟上手」（約1168行）；[工具網站](https://deanlin.net/data-deidentification/) | 本次已讀取工具頁的操作說明；只用虛構校園文字，不沿用「無任何資安問題」「所有校務資料皆可用」等推論 |
-| 三份材料各自用途 | [安美諾講義](../../amiino/content.md)「用Projects建立工作資料夾」（約385–480行） | 品牌語氣／規格／範例，換為通知格式／活動條件／教學目標，明確區分格式與事實 |
-| Skill保存與跨情境測試 | [安美諾講義](../../amiino/content.md)「技能封裝」（約1250–1332行）；[Skill影片稿](../../../video/manus/ep3-技能（Skill）/origin.md)「最珍貴的是打磨成果的流程」 | 沿用先做好再保存SOP，換閱讀交流會驗證；不沿用「第二次零成本」或一次成功就保證穩定；不將Manus技能入口套給ChatGPT |
-| Google應用與籌備摘要 | [安美諾講義](../../amiino/content.md)「生成週報」（約1094行）；[Connector影片稿](../../../video/manus/ep2-連結器（Connector／MCP）/origin.md) Gmail／Calendar案例 | 只借從來源整理摘要的工作方法，改為虛構籌備會；帳號授權、可用動作及定時執行另查OpenAI官方，不假設全校可用 |
-| Project／Skill／排程的分工 | [Project影片稿](../../../video/manus/ep4-專案（Project）/origin.md)「技能＋連接器＋定時任務」（約333行） | 借用規則、事實、方法、時間各自分工的觀念；ChatGPT實際功能由官方核對，未照搬Manus排程與專案介面 |
+1. 準備一個只放練習資料的 Google 測試帳號，在 ChatGPT 連接 Gmail 與 Google Calendar。
+2. 照 `example/reading-assistant/虛構郵件.txt` 的順序，把四封信寄進測試信箱：主旨與內文照抄，寄件者用自己的另一個測試帳號或別名；與會者只會是這些測試帳號，不要填真實同事的信箱（建立事件會真的寄出邀請）。
+3. 照 `虛構行事曆.txt` 在測試行事曆建立兩筆現有行程（12/2 圖書室書籍盤點、12/3 高年級學年會議）。
+4. 素材的日期以 2026/11/23 上課為基準（信件 11/16–11/19、會議 12/3）；改期開課時，三組日期一起往後移，星期也要重對。
+5. 信件裡寫的日期是內文；Gmail 顯示的收信時間會是實際寄出的時間，不影響兩個範例。
 
-### 新增官方核對（2026-11-05 實際 web open／find）
+## 去識別化範例檔：自動偵測結果
 
-- [Build skills](https://learn.chatgpt.com/docs/build-skills)：Skills側欄、ChatGPT Work使用 `@skill-creator`、Codex使用 `$skill-creator`、明確及意圖觸發、Skill檔案構成。`/docs/skills` 本次404，未當成來源。
-- [Plugins and skills 官方訓練](https://developers.openai.com/training/walkthroughs/plugins-and-skills)：連接Gmail與Calendar、先做成功brief再保存方法與新情境重跑。講義的角色與通知內容是教學改編。
-- [Google Drive app and setup](https://help.openai.com/en/articles/10929079-google-drive-app-and-setup-in-chatgpt)：Plugins／Apps入口、Google帳號權限與管理員限制、找到檔名不等於讀到全文、Docs／Sheets／Slides經Drive應用提供。
-- [Scheduled tasks](https://learn.chatgpt.com/docs/automations)：網頁任務可用該對話可取得的上傳檔案／工具／技能／外掛，不保留本機資料夾；先跑通再排程、檢查實際結果。
-- [Set up scheduled tasks 官方訓練](https://developers.openai.com/training/walkthroughs/scheduled-tasks)：Gmail＋Calendar先手動生成來源brief，再在同一流程要求定時更新；依來源位置可能需要電腦與桌面程式保持可用。
-- [Scheduled tasks Help](https://help.openai.com/en/articles/10291617-scheduled-tasks-in-chatgpt)：任務卡、Scheduled／通知管理、可用性與核准暫停。本次Help對「專案上傳檔」有較窄敘述，故不概括保證任務能讀全部專案材料；講義依Learn詳述可達來源，並要求先跑通。
+`example/student-deid/學生個別輔導紀錄.docx` 全為虛構，以工具的 `scripts/lib/render-docx.ts` 產生。2026-11-10 用工具原始碼的 `parseDocx` → `detect(BUILTIN_PATTERNS)` 實跑：自動偵測 24 筆（編碼表 12 列），去識別化後再還原與原文完全一致。
 
-### 可下載的真實虛構素材包
+| 內容 | 結果 |
+|---|---|
+| 林宥辰、陳美華、林建宏、張雅婷、黃志明（姓名） | 自動隱藏 |
+| A135792469（身分證，檢核碼正確）、民國 103 年 5 月 12 日（「出生日期」標籤後） | 自動隱藏 |
+| 0912-345-678（手機）、(02)2765-4321（市話）、meihua.chen@example.com、台北市信義區松仁路100號5樓 | 自動隱藏 |
+| 學號 1140317、班級座號「六年三班 17 號」 | 不會隱藏，STEP 3 練習圈選新增（類別選「識別碼」） |
+| 「上課容易分心」的「易分心」 | 誤判為姓名，STEP 3 練習「取消去識別化」 |
 
-- 原始目錄：[example/reading-assistant](example/reading-assistant/使用說明.md)，build會打成 `assets/reading-assistant.zip`，content已用 `[download dir="reading-assistant"]` 接好。
-- 內含活動條件、教學目標、通知格式、虛構郵件與行事曆，均為本次新寫的練習材料，不是產品已實測成果。
-- 郵件與行事曆文字需由講師放進可使用的測試帳號，才可示範實際Google連接；單純下載或上傳文字檔不等於連接服務。
-- 與第2堂共用「閱讀探索日」v1事實：高年級、免費、鉛筆水壺、活動日期未定、原訂圖書室；多功能教室為待確認提議。
+改動範例文字後要重跑偵測：姓名規則靠姓氏＋前後文，換一個詞就可能多出或少掉誤判。工具改版後，講義裡的按鈕名稱（開始去識別化、輸出設定、調整 ▾、全部隱藏、新增為去識別化項目、取消去識別化、展開偵測清單、下載（文件＋編碼表）、下載還原文件）也要重對。
 
-### 新增待補圖片
+## 驗收答案（不放進素材包，避免被 AI 當成知識庫）
 
-- `assets/chatgpt-school-notice-skill.png`：桌面Skills入口、建立及新對話觸發；用實際帳號功能截圖。
-- `assets/google-school-brief.png`：已連接測試帳號與虛構籌備摘要，引用連結可查回來源。
-- `assets/scheduled-school-check.png`：任務確認卡、時區、下一次執行、暫停入口，不能只截聊天文字當已建立。
+| 範例 | 預期看到 |
+|---|---|
+| 彙整信件脈絡 | 會議由 12/2（三）15:00 改到 12/3（四）14:00–14:30；場地原訂圖書室，改用多功能教室只是提議、尚待確認；30 份閱讀單可能不夠，會議上確認；活動日期未定 |
+| Gmail＋行事曆 | 事件：2026/12/3（四）14:00–14:30、教務處會議室；議程三項（場地、閱讀單份數、活動日期候選時段）；與會者為教學組、行政組、高年級導師三個角色；提醒與「高年級學年會議」13:30–14:30 重疊；先給草稿再建立 |
+| 專案：出處 | 帶鉛筆、水壺；免費；出處為活動條件.md |
+| 專案：決策 | 原訂圖書室；郵件提議改多功能教室、尚待確認，12/3 籌備會議才討論；不能說已改地點 |
+| 專案：沒有記錄 | 報名截止日期「目前文件沒有記錄」；12/3 是籌備會議，不能當成活動日期或截止日 |
+| 專案：依範本寫初稿 | 順序為標題 → 活動目的 → 對象與已知條件 → 攜帶物品 → 待確認事項；不超過 300 字；日期、地點、報名方式標「待確認」；活動目的來自教學目標.md（區分事實與意見）；不出現「校長已核准」等宣稱 |
 
-### 金句來源
+## 待換圖片
 
-「技能是把最好的一次，變成每一次」沿用安美諾講義約1272行。文中接續新情境驗收與人工檢查，沒有把這句當品質保證。未新增作者親身經驗或聲稱已跑過新的校園案例。
+已放進講義、但畫面露出其他客戶或課程內容的截圖；`content.md` 對應位置有 `<!-- 待換圖：… -->` 註解。
+
+| 檔名 | 問題與重拍要點 |
+|---|---|
+| `assets/c068-i62.png` | 側欄「專案」露出「安美諾行銷文案」（下一列「GSK競爭對手分析」也露出一半）；重拍時側欄只留練習專案，或裁掉側欄 |
+| `assets/c072-i69.png` | Gemini 側欄「近期對話」露出個人與其他課程的對話標題（林鼎淵採訪報導彙整、合約合理性專業分析報告等）；裁掉側欄或用乾淨帳號重拍 |
+| `assets/chatgpt-gmail.png` | 側欄「專案」露出「安美諾行銷文案」「GSK競爭對手分析」「青農專題簡報」；重拍時側欄只留練習專案，或裁掉側欄 |
+| `assets/chatgpt-calendar.png` | 側欄「專案」露出「安美諾行銷文案」；重拍時側欄只留練習專案，或裁掉側欄 |

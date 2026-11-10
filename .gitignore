@@ -10,3 +10,4 @@ tahoho/_scripts/__pycache__/
 
 # Office 開檔時產生的鎖定暫存檔（~$xxx.docx / .xlsx / .pptx）
 ~$*
+.visual-check/

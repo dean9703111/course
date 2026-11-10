@@ -1,64 +1,72 @@
-# 素材來源與改編紀錄
+# 素材來源與改編對照
 
-本檔供講師備課核對，不是學員操作講義。核對日：2026-11-05。課堂範例均為教學改編；沒有校方提供的政策、日期或正式資料，因此不代填這些資訊。
+本檔供講師備課核對，不是學員操作講義。所有學生、活動資料均為虛構。
 
-## 既有素材 → 本堂改編
+## 講義章節對照
 
-| 來源 | 原有內容／可回查小節 | 本堂使用方式 |
+| 講義章節 | 底稿（`course/tahoho/content.md`） | 範例怎麼改 |
 | --- | --- | --- |
-| [EDA 講義](../../eda/content.md) | 「讓 AI 動手處理檔案」「初探 Cowork」「多格式資料彙整」 | 延續指定資料夾、成品交付；改為閱讀日摘要、input/output 分離，增加來源與讀取失敗驗收。 |
-| [TSGH 講義](../../tsgh/content.md) | 「Vibe Coding」相關單元、「把範例帶回家：Fork ＋ Clone 後用編輯器開啟」與版控段落 | 保留需求先行、測試迭代、版控回頭路；以分組器取代醫療工具，Git 只作選配。 |
-| [桌面版影片](../../../video/manus/ep5-my-computer/origin.md) | 「讓 AI 操作前，先知道三件事」「多格式資料彙整成指定報告」 | 只借用縮小授權、新增檔案代替覆蓋、保留原始檔等方法；不把 Manus 介面與額度套給 Cowork。 |
-| [去識別化影片](../../../video/surfshark_esim/surfshark/講稿.md) | 「手動去識別化的問題」約 229 行、「人工調整」約 286 行、「結語」約 420 行 | Excel 多工作表漏遮、PDF 白框可複製、對照表不能一起給 AI、自動偵測人工複核；改為學生資料教學案例。 |
-| [去識別化影片](../../../video/surfshark_esim/surfshark/講稿.md) | 「在 AI 時代，打造客製化的工具」「從自己的需求出發」約 335–395 行 | 小工具先縮小範圍、不先加資料庫、做第一版後持續迭代。沒有把純前端一概等同零外送。 |
-| [原影片備份稿](../../../video/surfshark_esim/esim_backup/講稿.md) | 約 517–529 行：講者為內訓做去識別化工具，分享後收到校園用途回饋 | 這是講者原有經驗，講義明確分開「原經驗」與「校園改編」。不延伸宣稱已替學校部署／經校方核准。 |
+| 課前回顧 | 參考 `course/bics/lesson2/content.md` 第 1～43 行寫法 | 回顧第 3 堂 Connector／Project／Skill，列出本堂 5 個成果 |
+| 照片轉 Excel：讓 AI 直接操作你電腦上的檔案（初探 Cowork） | 第 856～871 行 | 沿用 Chat vs Cowork 比較與使用提醒；授權視窗圖用通用截圖 |
+| （同章）照片批量轉存 Excel | 第 873～920 行 | 發票報銷 → 手寫「作業繳交登記」簽收表（座號、日期、狀態）；學員用空白簽收表（`example/homework-sheet/`，講師課前印好發下）手寫 3 張虛構表拍照 |
+| 檔案分析與排班：讀取多格式檔案分析資訊 | 第 922～948 行 | 同仁問題＋附檔 → 閱讀日虛構資料包（`example/reading-day/`）整理已確認／待確認摘要 |
+| （同章）案例：閱讀日的老師輪值安排 | 第 950～974 行（訓練安排） | 八人二帳號十堂課 → 8 位老師、3 站點、3 節輪值；條件寫在 `example/reading-day/07-輪值條件.md`（對應底稿的訓練安排.xlsx）；Email 通知改為通知草稿；保留「先釐清再排」與「這個結果讓人滿意嗎？」 |
+| 排程：固定要做的事，讓 AI 時間到自己跑 | 第 1058～1111 行 | 環保法規追蹤 → 教育部公告追蹤；流程、表格欄位、提醒維持原文；表格後另附可複製的 prompt。底稿在排程前的「Skill 並非最佳選項」洞察移到本章結尾，當作進入「工具思維」章的過場 |
+| 工具思維：Vibe Coding 是什麼／風險與邊界／從自己的需求出發 | 第 1115～1190 行 | 維護績效 → 班級分組器；醫院排班與課前訪談故事為講師自己的經驗，保留 |
+| 動手實作：把班級分組器做成網頁 | 第 1192～1222 行（ERP Skill 做成網頁） | 改為不需名冊的純前端分組器，附規格表、測試表、錯誤回報 prompt |
+| （同章）純前端減少資安疑慮、案例回顧 | 第 1224～1258 行 | 去掉 SheetJS／Excel 說明，補一句「貼給 AI 的內容仍會送雲端」 |
+| 版本控制：建立 Git 版本控制 | 第 1260～1323 行 | ERP 網頁 → 分組器；Claude Code 優化改為加「投影模式」 |
+| 課程總結 | 第 1337～1462 行 | 回顧改成四堂系列；刪去諮詢時段（第 1466 行起） |
 
-## 官方功能核對
+## 練習素材（build 時自動打包成 `assets/<資料夾名>.zip`）
 
-- [Get started with Claude Cowork](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)：確認可承接多步驟任務、專業文件成品、桌面本機讀寫能力。官方目前亦有雲端任務及 web/mobile 支援，Chat/Cowork 正整合；不照抄舊 EDA 的「僅桌面可用」或「Project 永遠分開」。
-- 上述文件明確描述雲端任務；講義據此提醒本機檔案入口並不代表模型全在本機。成品是否外送則需另外檢查該 HTML 程式、外部資源與請求。
-
-## 案例邊界與授課前準備
-
-- 本堂是請學員用 AI 生成並驗收分組器的操作講義，不附已完成工具，也不假稱已實測特定 AI 生成結果。
-- 先準備兩份上一堂閱讀日虛構文件（草案：圖書室；明確取代場地的決議：多功能教室；報名方式未定）。
-- 上課不開真實學生名冊，分組僅使用 1 至 N 臨時數字編號；教師自行判斷教學適用性。
-- 無外部請求、無儲存為這次工具的需求與驗收目標，不能因 AI 聲稱遵守便當作已驗證。
-- 去識別化補充保留重要判斷，不將技術處理寫成法律核准或保證匿名。
-
-## 待補圖片
-
-| 講義位置 | 建議檔名 | 畫面要求 |
+| 資料夾 | 內容 | 用在哪 |
 | --- | --- | --- |
-| 初探 Cowork | assets/cowork-folder-scope.png | 當前桌面資料夾授權入口、input/output；虛線框出實際授權範圍。 |
-| 分組器實作 | assets/cowork-group-tool-states.png | 正常輸入、結果與錯誤輸入三狀態；生成後實測再截。 |
-| 去識別化補充 | assets/school-deidentification-example.png | 全虛構資料，遮姓名後仍可辨識的敘述線索對照。 |
-| 選配版控 | assets/group-tool-version-history.png | 假資料專案的 Commit 與 Diff，無帳號敏感資訊。 |
+| `example/homework-sheet/` | 可列印的空白「作業繳交登記」簽收表（html）與使用說明 | 照片批量轉存 Excel |
+| `example/reading-day/` | `01`〜`05` 閱讀日資料、`07` 輪值條件放進 `school-ai-demo/input`；`00` 使用說明與 `06` 測試紀錄表留在外面 | 閱讀日摘要、輪值安排；`06` 用在分組器驗證 |
 
-圖片尚未拍攝，content.md 各處以 HTML 註解提醒，沒有引用不存在的圖片。
+`example/reading-day/` 的 `00`、`06` 已依本堂內容改寫並新增 `07`，和第 3 堂（`claude/example/reading-day/`）的複本不再相同。
 
-## 100分鐘擴充版：情境、金句與產出對照
+輪值條件有解，備課核對用的一組排法（休息：第 1 節 C、H；第 2 節 A、G；第 3 節 B、D）：
 
-| 來源 | 原情境／觀念 | 本次校園改編與交付 |
+| 節次 | 入場報到 | 共讀區 | 書籤製作 |
+| --- | --- | --- | --- |
+| 第 1 節 | A、G | B、D | E、F |
+| 第 2 節 | C、H | B、E | D、F |
+| 第 3 節 | A、F | C、G | E、H |
+
+## 刪掉的底稿範例
+
+- 「案例：ERP 維護績效」整段（分析工作表、逆向工程設計程式、ERP Skill、erp-raw 下載包）：企業內容，且與老師情境無關。
+- 「讀收據寫 Excel」範例包（cowork-excel）與費用報銷單據。
+- 「同仁問題範例.xlsx」課前需求包（cowork-needs-folder）。
+- ERP 網頁工具下載包與 GitHub Pages 範例網址。
+
+## 待補圖片清單（content.md 中以 HTML 註解標示）
+
+| 講義位置 | 建議檔名 | 要拍什麼 |
 | --- | --- | --- |
-| [Manus ep1](../../../video/manus/ep1-introduction/origin.md) | 「讓AI把事情做完，跟讓AI把事情做好，其實是兩件事」；先優化需求、反問、確認大綱才生成 | 轉成先訂完成標準、讓AI問3個關鍵問題；主線一個完整工具，先規格再動手。 |
-| [Manus ep2](../../../video/manus/ep2-連結器（Connector／MCP）/origin.md) | 多封郵件脈絡→Calendar事件；把瑣碎交給AI，把決策留給自己 | 閱讀日三封模擬郵件→變更摘要→時區與衝突提案；Calendar寫入僅講師測試事件，不直接寄邀請。 |
-| [Manus ep3](../../../video/manus/ep3-技能（Skill）/origin.md) | 七步提案優化（反問→利害關係人→挑錯→改稿）；最珍貴是打磨過程 | 改為家長/導師/行政三方挑錯，再封裝通知SOP；測第二活動是否保留未知欄位。 |
-| [Manus ep4](../../../video/manus/ep4-專案（Project）/origin.md) | 新人培訓與交接；同樣背景說第三次就值得開Project；排程讓AI準時來找你 | 共用活動事實生成三對象版本，提供承辦接手問題；排程概念移到第4堂課後示範，依Claude官方能力重新核對。 |
-| [Manus ep5](../../../video/manus/ep5-my-computer/origin.md) | 多格式彙整、照片進Excel、不確定留空標黃、先讀表單規則 | 活動摘要/追蹤表/檢核三件套示範；假物資CSV210元已知小計與1筆未知分開，不假稱完成照片OCR。 |
-| [Amiino講義](../../amiino/content.md) | 567–606紅藍隊；1255–1332先做對流程再Skill；903起先大綱/預覽/格式/成品 | 通知加入無來源100元費用的挑錯互動，Skill含反問與驗收；分組工具先規格、再改善投影與黑白列印。 |
+| 初探 Cowork | claude-cowork-ui.png | Cowork 分頁與「Manually approve」；需用乾淨帳號重拍（底稿原圖側欄有企業專案名稱） |
+| 照片轉 Excel | cowork-choose-folder.png | 「Add folder」選取「簽收表照片」資料夾 |
+| 照片轉 Excel | claude-cowork-photo-excel.png | 辨識結果寫進 Excel，不確定格標黃（用虛構簽收表） |
+| 照片轉 Excel | claude-cowork-photo-excel-skill.png | 設計成 Skill 並標出「Save」 |
+| 閱讀日摘要 | cowork-choose-folder-one.png | 選取 `school-ai-demo` 單一資料夾 |
+| 輪值案例 | cowork-discuss.png、cowork-not-ok-result.png | AI 反問條件、AI 初步排出的輪值表 |
+| 排程 | claude-scheduled-task.png | Scheduled → New task → Create with Claude |
+| 排程 | claude-scheduled-test.png、claude-scheduled-test-result.png | Run now 與執行結果（教育部公告追蹤） |
+| 分組器 | cowork-group-tool-states.png | 輸入、正常結果、錯誤提醒三個狀態 |
+| Claude Code 優化 | claude-code-optimize.png、claude-code-merge.png、claude-code-merge2.png、claude-code-result.png | 以分組器專案重拍 |
+| 復盤 | ai-summary.png | 6 份復盤報告畫面；要用有一個月以上對話紀錄的帳號重拍（全新帳號沒有歷史、跑不出結果），原圖含講師個人工作內容，重拍後遮蔽客戶名稱與個資再放 |
 
-### 新增官方核對
+## 已搬入 assets/ 的通用截圖
 
-- [Google Workspace connectors](https://support.claude.com/en/articles/10166901-use-google-workspace-connectors)：Gmail查信/草稿、Calendar讀寫事件、Drive搜尋與讀檔等功能；附件metadata不代表附件內容已讀。講義只用測試帳號，主線可貼文字完成。
-- [Schedule recurring tasks in Claude Cowork](https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork)：確認Scheduled入口、排程管理、可手動試跑與暫停；官方有雲端排程，也保留特定本機任務的例外。講義只示範可用雲端假資料，不承諾離線電腦檔案永遠可讀。
+claude-cowork-permissions.png、github-new-repo.png、github-pages-setting.png、framework.png、terminal.png（均已確認無企業內容；GitHub 圖中的專案名稱僅為示範）。
 
-### 可下載材料
+## 待換圖片
 
-`example/reading-day/`含00使用說明、01活動草案、02活動決議、03三封郵件、04模擬行事曆、05假物資CSV、06空白測試紀錄。content.md的`[download dir="reading-day"]`由build打包到assets/reading-day.zip。
-兩堂各自附同包，可獨立上課，毋須先取得ChatGPT/Codex資料。分組器仍是課堂請AI生成的目標，素材包沒有假裝已完成的工具。
+已放進講義、但畫面露出其他客戶或課程內容的截圖；`content.md` 對應位置有 `<!-- 待換圖：… -->` 註解。
 
-### 課程節奏
-
-回顧8＋Cowork交付20＋需求邊界12＋分組器45＋版控8＋總結7＝100分鐘，不含QA/休息。主線：摘要、一個完整分組器、投影/列印與驗收紀錄；成品包/假物資表由講師示範，行政抽籤與排程為課後加碼，不另派全班實作。
-新增待補圖片：assets/cowork-deliverable-pack.png（三件套）、assets/group-tool-projector.png（投影）、assets/group-tool-print-delivery.png（黑白列印/說明/紀錄）。原有四張仍保留。
+| 檔名 | 問題與重拍要點 |
+|---|---|
+| `assets/github-new-repo.png` | 頁面露出三總課程範例 repo「nurse-shift-scheduler」；重拍時捲到不顯示其他 repo 的位置，或裁掉下方列表 |
+| `assets/github-pages-setting.png` | repo 名稱是三總課程的「monthly-report-tool」，和講義的 class-group-tool 不同，圖中分支顯示 master；用 class-group-tool 重拍後可拿掉圖說的「僅為示範」 |
