@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="generator" content="course-page-generator b49529f-dirty">
+  <meta name="generator" content="course-page-generator 91bbd7c">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Claude｜串接工具、建立知識庫、把好方法變 SOP</title>
@@ -1727,26 +1727,36 @@
     }
 
     /* ===== SUMMARY GRID ===== */
+    /* 一塊面板、細線分列：圖示｜標題｜說明三欄對齊，由上往下讀。
+       不用一格一卡，避免條目多時邊框與底色重複堆疊。 */
     .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
       margin: 2rem 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .summary-grid::before {
+      content: '';
+      display: block;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
     }
 
     .summary-card {
       display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-rows: auto auto;
-      column-gap: 1rem;
-      row-gap: .15rem;
-      background: linear-gradient(135deg, rgb(var(--accent-rgb) / .05), rgb(var(--accent2-rgb) / .03));
-      border: 1px solid rgb(var(--accent-rgb) / .12);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      transition: all .3s ease;
+      grid-template-columns: 2.5rem minmax(7rem, 11rem) 1fr;
+      align-items: center;
+      column-gap: 1.25rem;
+      padding: 1.05rem 1.75rem;
       position: relative;
-      overflow: hidden;
+      transition: background .25s ease;
+    }
+
+    .summary-card + .summary-card {
+      border-top: 1px solid var(--border);
     }
 
     .summary-card::before {
@@ -1756,44 +1766,81 @@
       top: 0;
       bottom: 0;
       width: 3px;
-      background: linear-gradient(180deg, var(--accent), var(--accent2));
-      border-radius: 3px 0 0 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform .25s ease;
     }
 
     .summary-card:hover {
-      transform: translateY(-2px);
-      border-color: rgb(var(--accent-rgb) / .3);
-      box-shadow: 0 8px 24px rgb(var(--accent-rgb) / .08);
+      background: rgb(var(--accent-rgb) / .05);
+    }
+
+    .summary-card:hover::before {
+      transform: scaleY(1);
     }
 
     .summary-card .sc-icon {
-      grid-row: 1 / -1;
-      align-self: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
-      flex-shrink: 0;
-      border-radius: 10px;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
       background: rgb(var(--accent-rgb) / .1);
-      border: 1px solid rgb(var(--accent-rgb) / .15);
-      font-size: 1.25rem;
+      font-size: 1.15rem;
+      line-height: 1;
     }
 
     .summary-card h4 {
       font-family: 'Noto Serif TC', serif;
-      font-size: 1rem;
+      font-size: 1.02rem;
       font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: .02em;
       margin-bottom: 0;
-      align-self: end;
     }
 
     .summary-card p {
-      font-size: .82rem;
+      font-size: .9rem;
       color: var(--text-dim);
-      line-height: 1.6;
-      align-self: start;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* 窄螢幕：圖示與標題同一列、說明橫跨整列，避免文字被擠成窄欄 */
+    @media (max-width: 720px) {
+      .summary-card {
+        grid-template-columns: 2.25rem 1fr;
+        column-gap: .85rem;
+        row-gap: .5rem;
+        padding: 1rem 1.15rem;
+      }
+
+      .summary-card .sc-icon {
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 1.05rem;
+      }
+
+      .summary-card p {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* 簡報模式：列高收緊，9 條回顧不用捲動就能一頁看完 */
+    #pres-deck .summary-grid {
+      margin: 1rem 0;
+    }
+
+    #pres-deck .summary-card {
+      grid-template-columns: 2rem minmax(7rem, 11rem) 1fr;
+      padding: .5rem 1.75rem;
+    }
+
+    #pres-deck .summary-card .sc-icon {
+      width: 2rem;
+      height: 2rem;
+      font-size: 1rem;
     }
 
     /* ===== TABLE ===== */
@@ -4501,48 +4548,39 @@
       page-break-inside: avoid;
     }
 
+    /* 列印／PDF：沿用面板式清單，一列一行（圖示｜標題｜說明），9 條也放得進一頁 */
     #print-slides .summary-grid {
-      display: flex;
-      flex-direction: column;
-      gap: .45rem;
       margin: .55rem 0;
-    }
-
-    #print-slides .summary-card {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-rows: auto auto;
-      column-gap: .6rem;
-      row-gap: .1rem;
-      padding: .65rem .9rem .65rem 1rem;
       border-radius: 10px;
     }
 
+    #print-slides .summary-card {
+      grid-template-columns: 28px minmax(6rem, 9.5rem) 1fr;
+      column-gap: .8rem;
+      padding: .48rem 1rem;
+    }
+
     #print-slides .summary-card::before {
-      width: 2px;
+      display: none;
     }
 
     #print-slides .summary-card .sc-icon {
-      grid-row: 1 / -1;
-      align-self: center;
-      width: 30px;
-      height: 30px;
-      font-size: .9rem;
-      border-radius: 7px;
+      width: 28px;
+      height: 28px;
+      font-size: .85rem;
     }
 
     #print-slides .summary-card h4 {
       font-size: .85rem;
-      margin-bottom: 0;
       line-height: 1.35;
-      align-self: end;
+      margin-bottom: 0;
     }
 
     #print-slides .summary-card p {
-      font-size: .74rem;
+      font-size: .76rem;
       line-height: 1.45;
       margin: 0;
-      align-self: start;
+      grid-column: auto;
     }
 
     #print-slides .youtube-wrapper iframe {
@@ -6969,7 +7007,7 @@
             <span class="class-timeline__status-tag is-past">已完成</span>
           </div>
           <div class="class-timeline__time">19:00~21:00</div>
-          <div class="class-timeline__des"><strong>讓 AI 動手處理檔案，用 Skill 交付教材</strong>：在 ChatGPT 桌面版切到 Codex，裝上資訊卡、線上講義、校園簡報三個老師版 Skill，彙整單元備課包，再把手寫報名表照片轉成 Excel。</div>
+          <div class="class-timeline__des"><strong>讓 AI 動手處理檔案，用 Skill 交付教材</strong>：安裝 ChatGPT 桌面版，讓 AI 直接讀資料夾、把手寫報名表照片轉成 Excel；再用 Skill 固定寫信風格與教材配圖，最後切到 Codex，用資訊卡、線上講義、校園簡報 Skill 交出成品。</div>
           <a class="class-timeline__link" href="../codex/index.html" target="_blank" rel="noopener">查看講義<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
@@ -7049,8 +7087,8 @@
       <div class="group-header"><span class="icon">📂</span> 第 2 堂：Codex 學了什麼？</div>
       <div class="group-body">
         <ul>
-  <li><strong>用現成的 Skill 交付教材</strong>：裝上別人寫好的 Skill，做出資訊卡、線上講義與校園簡報</li>
-  <li><strong>讓 AI 處理資料夾裡的檔案</strong>：彙整單元備課包、把手寫報名表照片轉成 Excel</li>
+  <li><strong>讓 AI 直接讀資料夾</strong>：安裝桌面版，文件不用上傳就能問答，還把手寫報名表照片轉成 Excel</li>
+  <li><strong>用現成的 Skill 交付教材</strong>：寫信風格、教材配圖在 ChatGPT 用；資訊卡、線上講義與校園簡報用到程式，交給 Codex</li>
   <li><strong>人要驗收</strong>：AI 說做完了，要自己打開檔案核對</li>
   <li>上一堂是<code>用別人的 Skill</code>，今天換你<code>把自己的好方法做成 Skill</code></li>
 </ul>
@@ -7863,36 +7901,6 @@
 </section>
 
 <hr class="divider">
-<section class="lab-page" id="section-3-lab">
-  <div class="lab-session">
-    <div class="lab-session__deco" aria-hidden="true">⚙</div>
-    <div class="lab-session__inner">
-      <h3 class="lab-session__title">🛠️ 實戰演練</h3>
-      <p class="lab-session__hint">用虛構的學生名冊走一次：去識別化 → 交給 Claude → 還原</p>
-      <div class="lab-session__duration">⏱ 10 分鐘</div>
-    </div>
-    <div class="lab-task-list">
-      <div class="lab-task-item">
-        <span class="lab-task-num">1</span>
-        <span class="lab-task-text">下載「學生名冊」練習檔，上傳到去識別化工具，確認三個工作表都有處理</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">2</span>
-        <span class="lab-task-text">新增「學號」自訂規則，確認兩個工作表的學號都被隱藏</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">3</span>
-        <span class="lab-task-text">下載後只把 <code>.deid.xlsx</code> 交給 Claude，完成統計與缺漏名單</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">4</span>
-        <span class="lab-task-text">用編碼表還原 Claude 產出的檔案，核對缺漏名單是不是那三位學生</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
 <section class="section">
   <div class="reveal">
     
@@ -8161,36 +8169,7 @@
       </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-<section class="lab-page" id="connector-ai-lab">
-  <div class="lab-session">
-    <div class="lab-session__deco" aria-hidden="true">⚙</div>
-    <div class="lab-session__inner">
-      <h3 class="lab-session__title">🛠️ 實戰演練</h3>
-      <p class="lab-session__hint">整理分類信箱；還沒連接信箱的人，把素材包的 08-分類練習信件 貼進對話，練習同一套分類</p>
-      <div class="lab-session__duration">⏱ 10 分鐘</div>
-    </div>
-    <div class="lab-task-list">
-      <div class="lab-task-item">
-        <span class="lab-task-num">1</span>
-        <span class="lab-task-text">在 Connector 授權連接你的信箱</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">2</span>
-        <span class="lab-task-text">貼上「分類學校信件並建立標籤」的 Prompt</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">3</span>
-        <span class="lab-task-text">確認 AI 分類是否合適、哪些要調整</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
   <div class="reveal">
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🔎</span> 彙整特定主題信件脈絡</div>
@@ -8244,36 +8223,7 @@
       </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-<section class="lab-page" id="connector-ai-lab-2">
-  <div class="lab-session">
-    <div class="lab-session__deco" aria-hidden="true">⚙</div>
-    <div class="lab-session__inner">
-      <h3 class="lab-session__title">🛠️ 實戰演練</h3>
-      <p class="lab-session__hint">嘗試整理複雜脈絡的信件；沒有連接信箱的人，把素材包的 03-活動郵件串 貼進對話即可</p>
-      <div class="lab-session__duration">⏱ 10 分鐘</div>
-    </div>
-    <div class="lab-task-list">
-      <div class="lab-task-item">
-        <span class="lab-task-num">1</span>
-        <span class="lab-task-text">提供<code>信箱主旨</code>的方式，讓 AI 可以搜尋到討論串</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">2</span>
-        <span class="lab-task-text">將內容彙整成自己期待的<code>格式、結論</code></span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">3</span>
-        <span class="lab-task-text">也可以讓 AI 根據討論脈絡撰寫<code>回覆草稿</code></span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
   <div class="reveal">
     <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>寫入日曆與參考資訊</div>
   </div>
@@ -8366,40 +8316,7 @@
       </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-<section class="lab-page" id="connector-ai-lab-3">
-  <div class="lab-session">
-    <div class="lab-session__deco" aria-hidden="true">⚙</div>
-    <div class="lab-session__inner">
-      <h3 class="lab-session__title">🛠️ 實戰演練</h3>
-      <p class="lab-session__hint">只要提供來源 AI 就能彙整成行事曆；沒有連接日曆的人，貼上素材包的 03-活動郵件串 與 04-模擬行事曆 練習衝突判斷</p>
-      <div class="lab-session__duration">⏱ 10 分鐘</div>
-    </div>
-    <div class="lab-task-list">
-      <div class="lab-task-item">
-        <span class="lab-task-num">1</span>
-        <span class="lab-task-text">授權連接你的<code>行事曆</code></span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">2</span>
-        <span class="lab-task-text">將<code>信箱討論串</code>或貼上的文字提供給 AI</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">3</span>
-        <span class="lab-task-text">請 AI 協助彙整<code>時間、備選時段、注意事項</code>，先看草稿再建立事件</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">4</span>
-        <span class="lab-task-text">也可以換成自己的情境，ex: 把<code>段考時程、校外教學日期</code>整理進行事曆</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
   <div class="reveal">
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎬</span> 延伸學習：Manus 也有連接器</div>
@@ -8670,40 +8587,7 @@
       </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-<section class="lab-page" id="project-lab">
-  <div class="lab-session">
-    <div class="lab-session__deco" aria-hidden="true">⚙</div>
-    <div class="lab-session__inner">
-      <h3 class="lab-session__title">🛠️ 實戰演練（一）</h3>
-      <p class="lab-session__hint">建立專案，上傳草案與決議，驗證「找得到出處、看得出被取代、沒寫的會誠實說沒有」</p>
-      <div class="lab-session__duration">⏱ 10 分鐘</div>
-    </div>
-    <div class="lab-task-list">
-      <div class="lab-task-item">
-        <span class="lab-task-num">1</span>
-        <span class="lab-task-text">新建一個 Project，貼上講義範例標題與描述</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">2</span>
-        <span class="lab-task-text">貼上專案指令（Instructions）</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">3</span>
-        <span class="lab-task-text">下載範例包，把草案與決議兩份文件上傳到知識庫（Context）</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">4</span>
-        <span class="lab-task-text">用上面兩個問題驗證：<code>出處有沒有附、被取代的有沒有說明、沒寫的會不會誠實說沒有</code></span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
   <div class="reveal">
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">☁️</span> 第二步：會變動的文件放雲端，用連結參考</div>
@@ -8758,44 +8642,7 @@
       </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-<section class="lab-page" id="project-lab-2">
-  <div class="lab-session">
-    <div class="lab-session__deco" aria-hidden="true">⚙</div>
-    <div class="lab-session__inner">
-      <h3 class="lab-session__title">🛠️ 實戰演練（二）</h3>
-      <p class="lab-session__hint">把會變動的表格用連結加入知識庫</p>
-      <div class="lab-session__duration">⏱ 10 分鐘</div>
-    </div>
-    <div class="lab-task-list">
-      <div class="lab-task-item">
-        <span class="lab-task-num">1</span>
-        <span class="lab-task-text">在 Connectors 授權連接 Google Drive</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">2</span>
-        <span class="lab-task-text">把範例包的<code>05-假物資收據.csv</code>上傳到雲端硬碟</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">3</span>
-        <span class="lab-task-text">在 Files 選擇 Drive，貼上這份試算表的連結</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">4</span>
-        <span class="lab-task-text">問「物資收據合計多少」，確認 AI 有點出「需要人工補查」的那一筆</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">5</span>
-        <span class="lab-task-text">到 Google 試算表改一格，再問一次，確認 AI 讀到的是新的</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
   <div class="reveal">
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎬</span> 延伸學習：Manus 也有專案</div>
@@ -9070,40 +8917,6 @@
 </section>
 
 <hr class="divider">
-<section class="lab-page" id="sop-skill-lab">
-  <div class="lab-session">
-    <div class="lab-session__deco" aria-hidden="true">⚙</div>
-    <div class="lab-session__inner">
-      <h3 class="lab-session__title">🛠️ 實戰演練</h3>
-      <p class="lab-session__hint">用白話建立 Skill，在 Chat、Project 各驗證一次</p>
-      <div class="lab-session__duration">⏱ 10 分鐘</div>
-    </div>
-    <div class="lab-task-list">
-      <div class="lab-task-item">
-        <span class="lab-task-num">1</span>
-        <span class="lab-task-text">貼上講義提示詞，用 <code>/skill-creator</code> 建立初版 Skill</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">2</span>
-        <span class="lab-task-text">完成後記得點擊「Save skill」</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">3</span>
-        <span class="lab-task-text">在一般對話（Chat）開新對話觸發，確認沒提供的資訊會標「待確認」</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">4</span>
-        <span class="lab-task-text">在專案（Project）觸發，確認它帶出專案裡的最新決議</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">5</span>
-        <span class="lab-task-text">也可以換成自己想固定的流程，ex: <code>行政週報、出題格式、段考後的家長聯絡信</code></span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
 <section class="section">
   <div class="reveal">
     
@@ -9149,36 +8962,7 @@
       </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-<section class="lab-page" id="skill-lab">
-  <div class="lab-session">
-    <div class="lab-session__deco" aria-hidden="true">⚙</div>
-    <div class="lab-session__inner">
-      <h3 class="lab-session__title">🛠️ 實戰演練</h3>
-      <p class="lab-session__hint">嘗試下載 &amp; 匯入 Skill</p>
-      <div class="lab-session__duration">⏱ 10 分鐘</div>
-    </div>
-    <div class="lab-task-list">
-      <div class="lab-task-item">
-        <span class="lab-task-num">1</span>
-        <span class="lab-task-text">將自己完成的 Skill 下載下來</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">2</span>
-        <span class="lab-task-text">和旁邊的人交換，嘗試匯入 <code>.skill、.zip</code> 的 Skill</span>
-      </div>
-      <div class="lab-task-item">
-        <span class="lab-task-num">3</span>
-        <span class="lab-task-text">驗證匯入的 Skill 可以使用</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
   <div class="reveal">
     <div class="sub-title" id="sub-skill-4" data-seg="0"><span class="bar"></span>深入認識 Skill</div>
   </div>
