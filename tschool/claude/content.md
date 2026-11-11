@@ -283,6 +283,7 @@
 | 班級、座號、性別、關係 | 不處理 | 原樣保留 |
 
 <!-- 待補圖片：deid-roster-sheets.png｜去識別化工具載入「學生名冊-虛構.xlsx」後的預覽，以虛線紅框標出上方三個工作表頁籤與輸出設定的「部分保留」，畫面可見學號欄仍是原文 -->
+<!-- ![三個工作表都讀進來了，但學號欄還是原文](assets/deid-roster-sheets.png) -->
 
 #### STEP 2：學號沒被隱藏，新增自訂規則
 
@@ -304,8 +305,10 @@
 - 回到`去識別化`分頁，兩個工作表的學號都變成 `S[識別碼]`；沒有變化就按`重新偵測`
 
 <!-- 待補圖片：deid-roster-rule-form.png｜「偵測規則」分頁的新增自訂規則表單，已填入名稱「學號」、類別「識別碼」、規則與測試文字並顯示命中結果，以虛線紅框標出「複製 AI 提示詞」與「新增規則」 -->
+<!-- ![填好名稱、類別與規則，先用測試文字確認有命中再新增](assets/deid-roster-rule-form.png) -->
 
 <!-- 待補圖片：deid-roster-rule-result.png｜回到「去識別化」分頁的「家長聯絡」工作表，整欄學號都換成 S[識別碼] 標記 -->
+<!-- ![新增規則後，整欄學號都換成了標記](assets/deid-roster-rule-result.png) -->
 
 > **規則看不懂怎麼辦？**
 > 不用看懂，你要確認的是`結果`：測試文字有沒有命中、預覽裡整欄有沒有被隱藏。
@@ -328,6 +331,7 @@
 ```
 
 <!-- 待補圖片：deid-roster-claude.png｜Claude 讀取「學生名冊-虛構.deid.xlsx」後的回覆：各行政區人數與三筆缺漏，標記原樣保留，並提供 Excel 檔下載 -->
+<!-- ![Claude 只看得到標記，照樣能統計人數、找出缺漏](assets/deid-roster-claude.png) -->
 
 > **怎麼知道 Claude 算對了？**
 > 參考答案：板橋區 4 人、中和區 3 人、永和區 2 人、土城區 2 人、萬華區 1 人；缺漏 3 筆（2 筆缺 Email、1 筆缺手機）。
@@ -339,6 +343,7 @@
 - 畫面顯示已還原的筆數後，按`下載還原文件`：缺漏名單變回張語彤、蔡睿恩、許博鈞，可以直接拿去聯絡家長
 
 <!-- 待補圖片：deid-roster-restore.png｜「還原」分頁放入 Claude 產出的 Excel 與編碼表後的還原預覽，以虛線紅框標出已還原筆數與「下載還原文件」 -->
+<!-- ![放入 Claude 產出的檔案與編碼表，標記就能還原成原本的資料](assets/deid-roster-restore.png) -->
 
 [warning title="去識別化不等於匿名"]
 - 班級、座號、性別、特殊事件這些沒被隱藏的資訊組合起來，還是可能`認得出是誰`（ex: 全班只有一位由祖母照顧的學生）
@@ -451,6 +456,7 @@
 Claude 執行完成後，前往 Gmail 確認結果是否符合預期。
 
 <!-- 待補圖片：claude-gmail-result-check-school.png｜Claude 完成後，回到 Gmail 看到「重要／封存／刪除候選」標籤的畫面（用 08-分類練習信件 寄進測試信箱的虛構信件，遮住真實寄件人與主旨） -->
+<!-- ![回到 Gmail 檢查：信件已貼上「重要／封存／刪除候選」標籤](assets/claude-gmail-result-check-school.png) -->
 
 > **使用提醒**
 > 建立與 Gmail 的連結後，Claude 可以`閱讀信件、建立草稿、建立標籤`
@@ -488,12 +494,14 @@ Claude 執行完成後，前往 Gmail 確認結果是否符合預期。
 幫我整理信箱中主旨有 [教學示範-閱讀日] 的信件，依時間列出活動安排改了哪些地方，以及還有哪些事情沒確認
 ```
 <!-- 待補圖片：claude-gmail-integration-school.png｜Claude 依三封虛構「閱讀日」信件整理出的時間線（初稿→場地調整→會議提案）與「待確認」清單 -->
+<!-- ![三封信整理成一條時間線，還沒定案的事項另外列成「待確認」](assets/claude-gmail-integration-school.png) -->
 
 ```prompt [label="撰寫回覆草稿"]
 幫我擬一封信給籌備 B，請教報名方式與截止日預計什麼時候確認；只寫草稿，不要寄出
 ```
 
 <!-- 待補圖片：claude-gmail-res-school.png｜AI 根據信件脈絡擬出的回覆草稿（只出現在對話中、未寄出） -->
+<!-- ![回覆草稿只出現在對話裡，不會自動寄出](assets/claude-gmail-res-school.png) -->
 
 > **草稿的收件人怎麼辦？**
 > 「籌備 B」是虛構代號、沒有 Email，寄進信箱的三封信寄件人也都是你自己；草稿的收件人留空或填自己就好。
@@ -522,6 +530,7 @@ Claude 執行完成後，前往 Gmail 確認結果是否符合預期。
 **操作路徑**: Customize → Connectors → 選擇 Google Calendar 點擊「Connect」
 
 <!-- 待補圖片：claude-calendar-school.png｜Customize → Connectors 頁面中 Google Calendar 的「Connect」按鈕（虛線紅框；側欄不要出現真實專案或對話名稱） -->
+<!-- ![在 Connectors 找到 Google Calendar，點「Connect」](assets/claude-calendar-school.png) -->
 
 #### Gmail + Google Calendar 讓 AI 統整信件細節、加入行事曆
 
@@ -543,6 +552,7 @@ Claude 執行完成後，前往 Gmail 確認結果是否符合預期。
 ```
 
 <!-- 待補圖片：claude-calendar-gmail-school.png｜Claude 讀完虛構信件後提出的事件草稿，並指出 14:00–14:30 與模擬教研會重疊、建議改 15:00–15:30 -->
+<!-- ![建立事件前，Claude 先指出時間衝突並建議改期](assets/claude-calendar-gmail-school.png) -->
 
 > **預期會看到什麼？**
 > 信中提議的 `14:00–14:30` 和「模擬教研會」`13:45–14:15` 重疊 15 分鐘，AI 應該先提醒，再建議備選的 `15:00–15:30`。
@@ -629,11 +639,13 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 **操作路徑**: Projects → 點擊「New project」
 
 <!-- 待補圖片：claude-projects-school.png｜Projects 頁面點擊「New project」（虛線紅框；專案清單要空白或只有虛構專案） -->
+<!-- ![在 Projects 頁面點「New project」](assets/claude-projects-school.png) -->
 
 - **What are you working on**: `閱讀日活動籌備`（也可以改成自己的`班級經營`或`學年課務`）
 - **What are you trying to achieve**: `把活動草案與決議集中在一個地方；寫通知前先比對最新決議；文件沒寫的就老實說沒有`
 
 <!-- 待補圖片：claude-project-create-school.png｜Create a project 視窗，已填入「閱讀日活動籌備」標題與描述（虛線紅框標出兩個欄位與 Create project 按鈕） -->
+<!-- ![填入專案名稱與描述，再點「Create project」](assets/claude-project-create-school.png) -->
 
 - **指令（Instructions）** — 設定成「活動籌備記憶助理」：回答以文件為準、要附出處、找不到就說沒有、新版決議優先
 - **知識庫（Context）** — 分兩步放：`定版的文件直接上傳`（活動草案、活動決議），`會變動的表格放 Google Drive 用連結參考`（物資收據）
@@ -672,6 +684,7 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 ```
 
 <!-- 待補圖片：claude-project-instructions-school.png｜專案 Instructions 視窗貼入上面指令後的畫面 -->
+<!-- ![把指令貼進 Instructions，這個專案的每次對話都會遵守](assets/claude-project-instructions-school.png) -->
 
 ### 📄 第一步：定版的文件直接上傳
 
@@ -695,6 +708,7 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 ```
 
 <!-- 待補圖片：claude-project-source-school.png｜AI 回答「多功能教室，原本是圖書室，決議版本 2 取代」並附出處 -->
+<!-- ![回答附上出處，還會說明新版決議取代了舊版](assets/claude-project-source-school.png) -->
 
 > **不要再依靠大腦記憶了**
 > 過去追溯幾週前的東西，得自己翻信件與文件才知道「誰說的、哪時候改的」。
@@ -709,6 +723,7 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 這兩題在文件裡的狀況不一樣：`報名截止日`決議寫的是「待確認」，`校外作家`則是完全沒提到；AI 應該分別照實回答，兩題都不能自己編。
 
 <!-- 待補圖片：claude-project-nothing-school.png｜AI 回答報名截止日「決議寫待確認」、校外作家「目前文件沒有記錄」，兩題都沒有自行編造 -->
+<!-- ![文件沒寫的事，它會說「沒有記錄」，不會自己編](assets/claude-project-nothing-school.png) -->
 
 > **AI 時代很少有人看過全文，所以要盡可能減少幻覺**
 > 有時 AI 遇到`文件沒寫的事會自己編`，讓你誤信。
@@ -726,6 +741,7 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 **操作路徑**: Customize → Connectors → 選擇 Google Drive 點擊「Connect」
 
 <!-- 待補圖片：claude-project-connect-drive-school.png｜Customize → Connectors 中 Google Drive 的連接按鈕（虛線紅框；側欄不要出現真實專案名稱） -->
+<!-- ![在 Connectors 連接 Google Drive](assets/claude-project-connect-drive-school.png) -->
 
 #### 把表格放到雲端硬碟
 
@@ -737,6 +753,7 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 - 在專案 Files 點「+」→ Drive，貼上這份試算表的連結
 
 <!-- 待補圖片：claude-project-drive-school.png｜專案 Files「+」選單中的 Drive 選項（虛線紅框），已貼上虛構物資收據試算表 -->
+<!-- ![在專案 Files 點「+」，選 Drive 加入雲端試算表](assets/claude-project-drive-school.png) -->
 
 #### 雲端改完，AI 馬上讀到新的
 
@@ -753,6 +770,7 @@ Project 目前`無法分享`給其他人，主要針對個人使用設計
 ```
 
 <!-- 待補圖片：claude-project-drive-update-school.png｜補完試算表後，AI 的合計從 210 元（C 待補）變成 250 元，並說明差異 -->
+<!-- ![試算表補完後不用重新上傳，合計就從 210 元變成 250 元](assets/claude-project-drive-update-school.png) -->
 
 > **這就是兩種放法的差別**
 > 第一步上傳的文件，改了要`回來重傳`；第二步連結的雲端文件，`改完就生效`。
@@ -824,6 +842,7 @@ Skill `不需要`全程自己`手動建立`，先用`一段白話`描述需求�
 **操作路徑**: Customize → Skills → skill-creator
 
 <!-- 待補圖片：claude-skill-creator-school.png｜Customize → Skills 中的 skill-creator（虛線紅框；側欄不要出現真實專案名稱） -->
+<!-- ![在 Customize → Skills 找到 skill-creator](assets/claude-skill-creator-school.png) -->
 
 #### 參考資訊來建立 Skill
 
@@ -842,6 +861,7 @@ Skill `不需要`全程自己`手動建立`，先用`一段白話`描述需求�
 完成後記得點擊「Save skill」。
 
 <!-- 待補圖片：claude-skill-parent-notice.png｜skill-creator 產生 parent-notice 後的畫面，虛線紅框標出「Save skill」按鈕 -->
+<!-- ![Skill 設計完成，點「Save skill」存起來](assets/claude-skill-parent-notice.png) -->
 
 #### 驗證一：資訊不完整時，它會標「待確認」
 
@@ -856,6 +876,7 @@ Skill 建立完成後，有 2 種方式觸發：
 在全新的對話中，AI 沒有 Project 的資料，要看它`有沒有把報名方式、聯絡方式標成「待確認」`，而不是自己編一個。
 
 <!-- 待補圖片：claude-skill-parent-notice-chat.png｜新對話中被動觸發 parent-notice，通知中報名方式與聯絡方式標「待確認」 -->
+<!-- ![沒有特別呼叫也會自動觸發，缺的資訊標成「待確認」](assets/claude-skill-parent-notice-chat.png) -->
 
 #### 驗證二：放進 Project，它會讀專案的知識
 
@@ -871,6 +892,7 @@ Skill 建立完成後，有 2 種方式觸發：
 通知應該帶出決議裡的`多功能教室`（不是草案的圖書室）；決議沒確認的`報名方式、聯絡方式`，仍然標「待確認」。
 
 <!-- 待補圖片：claude-skill-parent-notice-project.png｜在閱讀日 Project 內用 /parent-notice，通知帶出「多功能教室」，報名方式與聯絡方式仍標「待確認」 -->
+<!-- ![放進 Project 後，通知自動帶出專案文件裡的「多功能教室」](assets/claude-skill-parent-notice-project.png) -->
 
 [case title="📝 案例：AI 寫的週報，為什麼還要改半小時？"]
 情境：每週要交行政週報、教學工作週誌，或向主任、校長回報活動進度；AI 寫完，自己還得再改半小時
@@ -902,6 +924,7 @@ Skill 建立完成後，有 2 種方式觸發：
 **操作路徑**: Customize → Skills → 選擇要分享的 Skill（ex: `parent-notice`）→ 右上角「⋮」→ Download
 
 <!-- 待補圖片：claude-skill-download-school.png｜Customize → Skills → parent-notice 右上角「⋮」→ Download（虛線紅框；側欄不要出現真實專案名稱） -->
+<!-- ![點右上角「⋮」→ Download，把 Skill 下載成檔案分享](assets/claude-skill-download-school.png) -->
 
 ### 🤝 匯入別人建立好的 Skill
 
@@ -909,6 +932,7 @@ Skill 建立完成後，有 2 種方式觸發：
 - 可接受 Markdown 格式、`.zip` 壓縮檔、`.skill` 匯出檔
 
 <!-- 待補圖片：claude-skill-upload2-school.png｜Upload skill 視窗，提示可接受 Markdown、.zip、.skill 檔（虛線紅框標出拖放區） -->
+<!-- ![把同事給的 Skill 檔拖進來就能匯入](assets/claude-skill-upload2-school.png) -->
 
 > **同事做好的 Skill，可以直接拿來用**
 > 同學年的老師共用同一套`通知格式`，比各自摸索更穩定；匯入前先看一眼內容，`不明來源的 Skill 不要匯入`。

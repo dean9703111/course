@@ -146,6 +146,7 @@
 <!-- 講師備註：官方入口說法已於 2026-11-10 核對（chatgpt.com/download、learn.chatgpt.com/codex/app）。定位依 OpenAI Help〈ChatGPT Work and Codex〉：Work 是 "an agent designed for longer, multi-step work and finished deliverables"、Codex "remains dedicated to software development and technical work"、"Work follows the same usage structure as Codex"。免費版／Go 實際能用多少 Codex 額度官方沒有公開，授課前確認；工作模式在桌面版選資料夾的入口名稱與位置，授課前以授課帳號確認。 -->
 
 <!-- 待補圖片：chatgpt-desktop-modes.png｜ChatGPT 桌面版主畫面，虛線紅框標出輸入框上方的對話／工作切換，以及選單裡的 Codex 入口；可沿用第 1 堂同名截圖 -->
+<!-- ![輸入框上方切換「對話／工作」，選單裡還有 Codex](assets/chatgpt-desktop-modes.png) -->
 
 ### 📁 選一個資料夾，就是 AI 的工作範圍
 
@@ -157,6 +158,7 @@
 [download dir="codex-practice" label="下載「第 2 堂練習包」虛構素材" desc="上一堂的行動研究文件、技能練習素材、混合格式的單元備課資源與可列印的報名表範本"]
 
 <!-- 待補圖片：codex-folder.png｜在桌面版選擇 codex-practice 資料夾後的畫面，虛線紅框標出目前資料夾與權限選項 -->
+<!-- ![選好資料夾，AI 的工作範圍就只在這裡](assets/codex-folder.png) -->
 
 [warning title="使用提醒"]
 桌面版是有能力`新增、修改、刪除`電腦檔案的。
@@ -222,6 +224,7 @@
 ```
 
 <!-- 待補圖片：folder-qa-result.png｜桌面版依「行動研究」資料夾回答三個問題的畫面，虛線紅框標出每個答案後面的出處檔名 -->
+<!-- ![沒有上傳任何檔案，每個答案後面都附上出處檔名](assets/folder-qa-result.png) -->
 
 > **為什麼要從上一堂的專案開始？**
 > 同樣的文件、同樣的問題，你只要感受一個差別：`這次沒有上傳任何東西`。
@@ -282,6 +285,7 @@ CSV 請存成 UTF-8（含 BOM）編碼，用 Excel 開啟時中文才不會變�
 ```
 
 <!-- 待補圖片：prep-pack-result.png｜output 裡的備課總覽.md 與用 Excel 打開的資源索引.csv，虛線紅框標出「來源檔名」欄 -->
+<!-- ![五種格式的資料彙整成一份總覽，每一列都能回頭找到來源檔](assets/prep-pack-result.png) -->
 
 ### ✅ 對照預期結果，看它有沒有說得太確定
 
@@ -339,6 +343,7 @@ CSV 請存成 UTF-8（含 BOM）編碼，用 Excel 開啟時中文才不會變�
 - 用手機一張一張拍照，傳到電腦（ex: 用 LINE 傳給自己、雲端硬碟或傳輸線），放進 `報名表照片`；真實學生資料不要放進來
 
 <!-- 待補圖片：signup-photos.png｜3 張用報名表範本手寫的虛構報名表手機照片，其中 1 張的人數寫得潦草 -->
+<!-- ![3 張手寫報名表照片，其中一張的人數寫得比較潦草](assets/signup-photos.png) -->
 
 ```prompt [label="把報名表照片批量寫入 Excel"]
 請讀取「報名表照片」資料夾裡的所有照片，整理成一份報名名單：
@@ -352,6 +357,7 @@ CSV 請存成 UTF-8（含 BOM）編碼，用 Excel 開啟時中文才不會變�
 <!-- 講師備註：官方文件確認可以請它檢視電腦上的圖片、能建立試算表檔案；但有使用者回報本機產生 xlsx 的執行環境下載失敗（見 sources.md）。授課前用手寫照片在「工作」與 Codex 各實測一次辨識與 xlsx 輸出，CSV 是備案。 -->
 
 <!-- 待補圖片：signup-excel-result.png｜辨識結果寫進 Excel，最後一欄是來源檔名，辨識不確定的格子標黃 -->
+<!-- ![每一列都有來源檔名，不確定的格子標成黃色等你核對](assets/signup-excel-result.png) -->
 
 > **先用 3～5 張試跑，再逐步加量**
 > 剛開始先用少量資料試試看，確認它`會漏什麼、哪裡需要補規則`（ex: 勾在兩格中間算哪一個？），把規則補進 Prompt，再逐步增加數量。
@@ -430,6 +436,7 @@ CSV 請存成 UTF-8（含 BOM）編碼，用 Excel 開啟時中文才不會變�
 - 匯入成功後，技能會出現在`已安裝`清單
 
 <!-- 待補圖片：chatgpt-skill-upload.png｜ChatGPT「外掛程式 → 技能」頁面，虛線紅框標出「+」與「從電腦上傳」；需用授課帳號重拍（其他課程的截圖側邊欄有客戶專案名稱） -->
+<!-- ![外掛程式 → 技能 → 點「+」→ 從電腦上傳](assets/chatgpt-skill-upload.png) -->
 
 ### ▶️ 呼叫：輸入 @ 選技能，或直接說需求
 
@@ -437,6 +444,7 @@ CSV 請存成 UTF-8（含 BOM）編碼，用 Excel 開啟時中文才不會變�
 - **被動觸發**：直接描述需求，符合技能描述時，AI 會自己選用；技能越來越多，要記住每個名稱並不現實
 
 <!-- 待補圖片：chatgpt-skill-at.png｜在 ChatGPT 輸入框打 @ 後出現的技能清單，虛線紅框標出 teacher-letter-style 與 teacher-image-style -->
+<!-- ![輸入 @，剛匯入的兩個技能就會出現在清單裡](assets/chatgpt-skill-at.png) -->
 
 ---
 
@@ -494,6 +502,7 @@ Dean 您好，我們是一款 AI 簡報工具的行銷團隊，很喜歡您頻�
 | 最後 | 交出一封信 | 等我決定後才寫草稿，決定還會`回寫進紀錄` |
 
 <!-- 待補圖片：skill-sponsorship-compare.png｜同一封虛構邀約信，左邊是通用寫信 Skill 的回覆、右邊是講者 Skill 先給「建議回應類型＋理由」的畫面；金額與品牌名稱需遮蔽 -->
+<!-- ![同一封邀約信：通用 Skill 直接寫信，我的 Skill 會先判斷該接受、婉拒還是討論](assets/skill-sponsorship-compare.png) -->
 
 ### 🔄 最好的 Skill，是從自己的工作流長出來的
 
@@ -528,6 +537,7 @@ ex: 任教年級與職務、平常怎麼稱呼家長與署名、最常回覆的�
 ```
 
 <!-- 待補圖片：skill-letter-result.png｜ChatGPT 用 teacher-letter-style 產出的回覆信，以及補上「我的寫信背景」後重寫的版本，虛線紅框標出兩版的差異 -->
+<!-- ![補上自己的寫信背景後，同一封信變得更像你寫的](assets/skill-letter-result.png) -->
 
 ### ✅ 驗收重點
 
@@ -563,6 +573,7 @@ ex: 任教年級與職務、平常怎麼稱呼家長與署名、最常回覆的�
 ```
 
 <!-- 待補圖片：skill-image-result.png｜ChatGPT 用 teacher-image-style 產出的懶人包圖與行程表，兩張風格一致；下方可見「📝 使用的 Prompt」 -->
+<!-- ![懶人包與行程表用同一套風格，下方附上使用的 Prompt 方便微調](assets/skill-image-result.png) -->
 
 ### ✅ 驗收重點
 
@@ -589,6 +600,7 @@ ex: 任教年級與職務、平常怎麼稱呼家長與署名、最常回覆的�
 ```
 
 <!-- 待補圖片：skill-info-cards-chatgpt.png｜ChatGPT 產出資訊卡 HTML 檔的對話畫面，虛線紅框標出下載連結 -->
+<!-- ![ChatGPT 產出資訊卡 HTML 檔，點連結就能下載](assets/skill-info-cards-chatgpt.png) -->
 
 ### 🧑‍💻 這份成品，其實是 AI 寫的程式
 
@@ -638,6 +650,7 @@ ex: 任教年級與職務、平常怎麼稱呼家長與署名、最常回覆的�
 - 以前裝過獨立 Codex App 的人，更新成 ChatGPT 後，在裡面開啟 Codex 即可
 
 <!-- 待補圖片：codex-open-folder.png｜切換到 Codex 並開啟 codex-practice 資料夾的畫面，虛線紅框標出選單的 Codex 與目前資料夾 -->
+<!-- ![從選單切換到 Codex，開啟同一個 codex-practice 資料夾](assets/codex-open-folder.png) -->
 
 ### 🎬 我錄了一支 Codex 搭配 Skill 的完整示範
 
@@ -667,6 +680,7 @@ ex: 任教年級與職務、平常怎麼稱呼家長與署名、最常回覆的�
 ```
 
 <!-- 待補圖片：codex-skill-install.png｜Codex 安裝技能包時跳出的核准提示，虛線紅框標出要寫入的資料夾位置 -->
+<!-- ![安裝前會先跳出核准提示，確認寫入的位置再同意](assets/codex-skill-install.png) -->
 
 ### 🧰 缺工具時，先請它用白話說明再安裝
 
@@ -698,6 +712,7 @@ ex: 任教年級與職務、平常怎麼稱呼家長與署名、最常回覆的�
 <!-- 講師備註：官方文件寫「In ChatGPT, type @ to select a skill」「Codex supports $ mentions for skills」；桌面版 Codex 輸入框打 @ 或 $ 何者列出技能、技能頁能否直接上傳 zip，官方未說明，授課前用授課帳號確認。 -->
 
 <!-- 待補圖片：codex-skill-list.png｜在 Codex 輸入框打 @ 後出現的技能清單，虛線紅框標出 teacher-info-cards、teacher-class-handout、teacher-slides -->
+<!-- ![輸入 @，看到三個技能就代表安裝成功](assets/codex-skill-list.png) -->
 
 ### 🖼️ 同一個資訊卡 Skill，在 Codex 再做一次
 
@@ -773,6 +788,7 @@ ex: 任教年級與職務、平常怎麼稱呼家長與署名、最常回覆的�
 ```
 
 <!-- 待補圖片：codex-slides-outline.png｜Codex 依技能列出的班親會簡報大綱表格（頁碼、標題、任務、版型） -->
+<!-- ![先確認每一頁的大綱，再讓它動手做簡報](assets/codex-slides-outline.png) -->
 
 ### 🧰 PPTX 是怎麼做出來的？
 
@@ -786,6 +802,7 @@ ex: 任教年級與職務、平常怎麼稱呼家長與署名、最常回覆的�
 <!-- 講師備註：授課前確認三件事。1. 以授課帳號在 Codex 實跑 teacher-slides，確認能執行 python3 產出 PPTX（第三方回報桌面版會下載自己的執行環境，也有下載失敗的案例，見 sources.md）。2. ChatGPT 技能上傳：官方文件把個人技能列在 Business／Enterprise／Edu，定價頁卻顯示 Plus 也有，以授課帳號確認。3. 準備一個示範對話分享連結，補在備案二。 -->
 
 <!-- 待補圖片：codex-slides-result.png｜用 PowerPoint 打開 Codex 產出的班親會簡報，可直接編輯文字 -->
+<!-- ![產出的是真正的 PPTX，用 PowerPoint 打開就能直接改字](assets/codex-slides-result.png) -->
 
 > **小提醒：簡報很耗額度**
 > - 用 Skill 生成簡報可行，但`消耗的額度非常多`：我之前在 ChatGPT Plus 實測，一份簡報大約用掉 70% 的額度（個人經驗，不是官方數字）

@@ -69,6 +69,7 @@
 ### 📁 可以直接選資料夾，不用一個個上傳
 
 <!-- 待補圖片：claude-cowork-ui.png｜Cowork 對話框，標出「Cowork」分頁與「Manually approve」選項（需用乾淨帳號重拍，原圖側欄含企業專案名稱） -->
+<!-- ![選「Cowork」分頁，權限先用「Manually approve」](assets/claude-cowork-ui.png) -->
 
 - 打開上一堂安裝的 Claude 桌面 App（還沒安裝的話，到[官網下載](https://claude.ai/downloads)）
 - 在新對話選「Cowork」，再用「Add folder」選擇要處理的資料夾
@@ -122,6 +123,7 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 [/warning]
 
 <!-- 待補圖片：cowork-choose-folder.png｜新對話選「Add folder」，選取「簽收表照片」資料夾（需重拍，原圖側欄含企業專案名稱） -->
+<!-- ![用「Add folder」選取「簽收表照片」資料夾](assets/cowork-choose-folder.png) -->
 
 ```prompt [label="把一疊簽收表照片批量寫入 Excel"]
 逐張辨識「簽收表照片」資料夾內的照片，整理成 Excel：
@@ -132,6 +134,7 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 ```
 
 <!-- 待補圖片：claude-cowork-photo-excel.png｜辨識結果寫進「作業繳交登記.xlsx」，辨識不準的格子標黃（用虛構簽收表重拍） -->
+<!-- ![辨識結果寫進 Excel，不確定的格子標成黃色](assets/claude-cowork-photo-excel.png) -->
 
 > **將驗證有效的 SOP 轉換 Skill**
 > `如果流程會重複使用，就可以把它設計為 Skill`，這樣 AI 日後遇到類似問題時，不需要從頭再來。
@@ -141,6 +144,7 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 ```
 
 <!-- 待補圖片：claude-cowork-photo-excel-skill.png｜Skill 設計完成，標出「Save」按鈕（用簽收表流程重拍） -->
+<!-- ![Skill 設計完成，點「Save」存起來](assets/claude-cowork-photo-excel-skill.png) -->
 
 > **血淚紀錄**
 > Skill 設計完建議還看一眼結構，因為有時 AI 只生成了`SKILL.md`；而這份文件只管流程，不包含程式腳本。
@@ -172,6 +176,7 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 - 在 Cowork 開新對話，用「Add folder」選取 `school-ai-demo`
 
 <!-- 待補圖片：cowork-choose-folder-one.png｜Cowork 選取「school-ai-demo」單一資料夾，標出已勾選的資料夾（需重拍） -->
+<!-- ![只勾選這次要處理的那一個資料夾](assets/cowork-choose-folder-one.png) -->
 
 ```prompt [label="先看檔案清單，再交付閱讀日籌備摘要"]
 只處理 school-ai-demo 的 input 資料夾，不讀其他位置。
@@ -204,8 +209,10 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 ```
 
 <!-- 待補圖片：cowork-discuss.png｜Cowork 主動反問條件的畫面（用輪值需求重拍） -->
+<!-- ![條件說得不夠清楚時，Cowork 會主動反問](assets/cowork-discuss.png) -->
 
 <!-- 待補圖片：cowork-not-ok-result.png｜AI 初步排出的輪值表（用輪值需求重拍） -->
+<!-- ![第一版輪值表排出來了，但還不能直接用](assets/cowork-not-ok-result.png) -->
 
 > **這個結果讓人滿意嗎？**
 > - 每節 3 站 × 2 人是 6 人，8 位老師有 2 位休息，輪到誰休息公平嗎？
@@ -240,6 +247,7 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 3. 確認內容後按「Schedule」— 之後可以在同一頁`暫停、修改、刪除`，或手動立即執行
 
 <!-- 待補圖片：claude-scheduled-task.png｜左側欄「Scheduled」→「New task」→「Create with Claude」（需重拍，原圖側欄含企業專案名稱） -->
+<!-- ![左側欄「Scheduled」→「New task」→「Create with Claude」](assets/claude-scheduled-task.png) -->
 
 ## 建立排程前，先想好四個答案
 
@@ -272,6 +280,8 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 ### 🖐️ 手動觸發排程來測試
 
 <!-- 待補圖片：claude-scheduled-test.png、claude-scheduled-test-result.png｜點擊排程後選「Run now」，並確認結果是否符合需求（用教育部公告追蹤任務重拍） -->
+<!-- ![排程建立後，先點「Run now」手動跑一次](assets/claude-scheduled-test.png) -->
+<!-- ![確認結果符合需求，再放心交給排程](assets/claude-scheduled-test-result.png) -->
 
 > **先手動跑順，再交給排程**
 > 排程只會把流程`重複執行`，不會幫你把流程`變正確`。
@@ -399,6 +409,7 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 ```
 
 <!-- 待補圖片：cowork-class-tool-v1.png｜Cowork 做出的 class-tool.html 第一版：貼上 1號〜10號的名單、按「抽籤」後放大顯示抽中的座號（用 Cowork 實際產出的畫面拍攝） -->
+<!-- ![第一版：貼上名單、按「抽籤」，抽中的座號放大顯示](assets/cowork-class-tool-v1.png) -->
 
 #### 親手驗收第一版
 
@@ -428,6 +439,7 @@ Cowork 是有能力`新增/修改/刪除`電腦檔案的。
 ```
 
 <!-- 待補圖片：cowork-class-tool-v2.png｜第二版 class-tool.html：10 人分 3 組的結果，以虛線紅框標出「不能同組」設定欄（填 1號,2號）與分組結果 -->
+<!-- ![第二版：10 人分 3 組，設定為不能同組的兩人確實被分開](assets/cowork-class-tool-v2.png) -->
 
 #### 親手驗收第二版
 
@@ -498,6 +510,7 @@ class-tool.html 有一個錯誤：
 - 權限模式選「Accept edits」：改檔案會直接進行，但執行 Git 這類指令前`還是會先問你`，看清楚再允許
 
 <!-- 待補圖片：claude-code-open-folder.png｜Claude App 的 Code 分頁，以虛線紅框標出輸入框下方的環境「Local」、資料夾「class-tool」與權限模式（用乾淨帳號拍攝，側欄不要出現其他專案） -->
+<!-- ![Code 分頁：環境選「Local」、資料夾選「class-tool」](assets/claude-code-open-folder.png) -->
 
 ### 🔧 先確認電腦有 Git
 
@@ -515,6 +528,7 @@ class-tool.html 有一個錯誤：
 ```
 
 <!-- 待補圖片：claude-code-first-save.png｜Code 分頁中 Claude 回報已建立第一個存檔點「v2：抽一人＋分組」並列出存檔紀錄（虛線紅框標出存檔說明） -->
+<!-- ![第一個存檔點建立完成，之後改壞了都能回到這裡](assets/claude-code-first-save.png) -->
 
 ## 第三版：一次抽出多個人，走完一次存檔循環 | branch:v3-抽多人
 
@@ -569,6 +583,7 @@ class-tool.html 有一個錯誤：
 ```
 
 <!-- 待補圖片：claude-code-restore.png｜故意改成黑底紅字的抽籤工具，與「回到上一個存檔點」後恢復原樣的畫面左右對照 -->
+<!-- ![故意改壞成黑底紅字，一句話就回到上一個存檔點](assets/claude-code-restore.png) -->
 
 ## 案例回顧 | branch:none
 
@@ -758,6 +773,7 @@ Hermes Agent、loop engineering、Agency Agent、HyperFrames...
 ```
 
 <!-- 待補圖片：ai-summary.png｜Claude 產出 6 份復盤報告的畫面（要用有一個月以上對話紀錄的帳號重拍，全新帳號沒有歷史、跑不出結果；原圖含講師個人工作內容，重拍後遮蔽客戶名稱與個資再放） -->
+<!-- ![請 AI 回顧這段時間的對話，整理成 6 份復盤報告](assets/ai-summary.png) -->
 
 ### 🚀 下課後的第一步：先把一件小事跑順
 
