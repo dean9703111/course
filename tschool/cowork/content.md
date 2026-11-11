@@ -7,7 +7,7 @@
 - label: 第 2 堂｜Codex
   date: 11/24
   time: 19:00~21:00
-  des: **讓 AI 動手處理檔案，用 Skill 交付教材**：安裝 ChatGPT 桌面版，讓 AI 直接讀資料夾、把手寫報名表照片轉成 Excel；再用 Skill 固定寫信風格與教材配圖，最後切到 Codex，用資訊卡、線上講義、校園簡報 Skill 交出成品。
+  des: **讓 AI 動手處理檔案，用 Skill 交付教材**：安裝 ChatGPT 桌面版，讓 AI 直接讀資料夾、把手寫報名表照片轉成 Excel；再用白話生成報名表登記、每週回顧與寫信風格的 Skill，最後切到 Codex，用資訊卡、線上講義、校園簡報 Skill 交出成品。
   link: [查看講義](../codex/index.html)
 - label: 第 3 堂｜Claude
   date: 11/26

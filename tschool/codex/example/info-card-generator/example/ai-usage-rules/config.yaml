@@ -1,0 +1,12 @@
+# deck 專屬設定：只寫要覆蓋 global 的欄位
+page:
+  title: "用 AI 前先記住這 5 件事"
+
+criteria:
+  require_source: true          # 守則、規範類知識卡：結尾卡一定要寫「依據：」
+
+# 也可在此微調本副牌的 label / accent / theme / ratio，例如：
+# brand:
+#   label: "資訊部 · AI 使用守則"
+#   accent: { dark: "#7CE0FF", light: "#0E5E7A" }
+#   background: gradient

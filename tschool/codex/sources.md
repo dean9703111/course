@@ -89,24 +89,28 @@
 
 ## 練習素材
 
-### `example/codex-practice/`（打包為 `assets/codex-practice.zip`）
+### 練習素材包（每段練習一包，做到那一段才下載）
 
-| 位置 | 內容 | 練習用途 |
+2026-11-11 改版：原本的 `example/codex-practice/` 一大包拆成四包（備課那一包同日改成「王老師今年再教一次」的情境，資料夾改名 `國語五上_事實與意見`，新增作答統計、教案重做），各自打包成 `assets/<名稱>.zip`，下載按鈕放在對應練習的位置；成品由 AI 寫進該資料夾的 `output` 子資料夾（沒有就新增），素材包不再附空資料夾與使用說明。
+
+| 素材包／檔案 | 內容 | 練習用途 |
 |---|---|---|
-| `行動研究/` | 第 1 堂 `reading-research` 的 4 份文件（複本） | 桌面版起手式：資料夾問答 |
-| `技能包/` | 放三個技能包的空資料夾（附說明 txt） | 請 Codex 從這裡安裝 |
-| `技能練習/家長通知_親子共讀夜.md` | 虛構活動通知（12/11 親子共讀夜） | 技能一：資訊卡 |
-| `技能練習/上課筆記_事實與意見第一節.md` | 王老師的上課筆記（口語、條列混雜） | 技能二：線上講義 |
-| `技能練習/班親會資料.md` | 下學期班親會資料（含「待確認」的學校分機） | 技能三：簡報 |
-| `備課資源/單元重點與教學目標.md` | 今年版：3 節、新版第 48～55 頁 | 今年的標準 |
-| `備課資源/過往教案_去年版.docx` | 4 節、舊版第 52～59 頁、海洋塑膠短文、檢核表附件遺失 | 過期內容 |
-| `備課資源/教學進度表_五上.xlsx` | 「國語進度」「學校行事」兩個工作表 | 多工作表讀取 |
-| `備課資源/共備會議紀錄.txt` | 決議與提議混在一起、負責人與期限有缺 | 決議 vs 提議 |
-| `備課資源/影音與網站連結.csv` | 失效、重複、缺網址、需登入（UTF-8 含 BOM） | 資源索引狀態 |
-| `備課資源/學習單_事實或意見_掃描.jpg` | 掃描風格圖片；第 7 題同時含事實與意見、頁尾舊頁碼 | 圖片讀取與學習單修訂 |
-| `備課資源/補充閱讀_午餐剩食短文.txt` | 今年決議改用的短文 | 與教案對照 |
-| `報名表範本.html` | 可列印的親子共讀夜報名表，A4 一頁 3 份 | 照片轉 Excel |
-| `報名表照片/`、`output/` | 空資料夾（附說明 txt） | 放照片／放成品 |
+| `行動研究/`（4 份 .md） | 第 1 堂 `reading-research` 的 4 份文件（複本） | 桌面版起手式：資料夾問答 |
+| `國語五上_事實與意見/114教案_分辨事實與意見.docx` | 去年林老師的學年共用教案：4 節、舊版第 52～59 頁、海洋塑膠短文、檢核表附件遺失、5 點課後省思 | 去年怎麼上、哪裡卡住 |
+| `國語五上_事實與意見/114學習單_事實或意見_掃描.jpg` | 掃描風格圖片；第 7 題同時含事實與意見、頁尾舊頁碼 | 圖片讀取與學習單修訂 |
+| `國語五上_事實與意見/114學習單作答統計.xlsx` | 「各題答對率」「座號作答」兩個工作表，26 人；第 7 題 8 人答對、第 8 題 12 人、延伸題 12 人完成 | 用去年的學生表現決定今年的重點 |
+| `國語五上_事實與意見/115教師手冊重點_分辨事實與意見.md` | 今年版：3 節、新版第 48～55 頁、新增「改寫意見」目標 | 今年的標準 |
+| `國語五上_事實與意見/115教學進度表_五上國語.xlsx` | 「國語進度」「學校行事」兩個工作表；第 15 週 3 節 | 多工作表讀取 |
+| `國語五上_事實與意見/115共備會議紀錄_1117.txt` | 決議與提議混在一起、負責人與期限有缺 | 決議 vs 提議 |
+| `國語五上_事實與意見/115補充閱讀_吃不完的營養午餐.txt` | 今年決議改用的短文 | 與教案對照 |
+| `國語五上_事實與意見/影音與網站連結.csv` | 失效、重複、缺網址、需登入（UTF-8 含 BOM） | 資源能不能用 |
+| `報名表照片/`（6 張 jpg＋名單 xlsx） | 程式產生的虛構手寫報名表「手機照片」（IMG_4821～4829）；另附只有欄位、內容空白的 `報名名單範例.xlsx` | 照範例欄位建立新的名單 |
+| `報名表照片_第二批/`（4 張 jpg） | 第二批照片（IMG_4840、4841、4843、S__58327041），拖進第一批的資料夾 | 驗證剛用白話建立的報名表登記 Skill |
+| `技能練習/家長通知_親子共讀夜.md` | 虛構活動通知（12/11 親子共讀夜） | Codex：資訊卡 |
+| `技能練習/上課筆記_事實與意見第一節.md` | 王老師的上課筆記（口語、條列混雜） | Codex：線上講義 |
+| `技能練習/班親會資料.md` | 下學期班親會資料（含「待確認」的學校分機） | Codex：簡報 |
+
+三個要請 Codex 安裝的技能包，由學員直接放進 `技能練習` 資料夾。
 
 預期答案列在講義「對照預期結果」表，素材包本身不附答案。docx、xlsx、jpg 由講師以 python-docx、openpyxl 與瀏覽器截圖產生。
 
@@ -116,8 +120,6 @@
 
 | 技能包 | 內容 | 輸出 | 需要安裝 |
 |---|---|---|---|
-| `example/teacher-letter-style/` | `SKILL.md`、`references/語氣指南.md`、`references/信件範例.md` | 一封信或一則訊息＋「請老師確認」清單 | 不需要；純文字技能，在 ChatGPT 匯入使用 |
-| `example/teacher-image-style/` | `SKILL.md`、`references/圖片模板.md`（懶人包、行程表、流程圖、海報四種模板＋固定風格） | 一張圖片＋使用的 Prompt | 不需要；使用 ChatGPT 內建圖片生成 |
 | `example/teacher-info-cards/` | `SKILL.md`、`assets/cards-template.html`、`references/card-rules.md` | 一個 HTML（4:5 卡片，可下載 1080×1350 PNG、列印成 PDF） | 不需要；下載 PNG 會從 cdnjs 載入 html2canvas，需要網路 |
 | `example/teacher-class-handout/` | `SKILL.md`、`assets/handout-template.html`、`references/components.md` | 一個自含 HTML（自動目錄、字級、深色、列印展開答案） | 不需要 |
 | `example/teacher-slides/` | `SKILL.md`、`assets/School_Slides_Template.pptx`（15 頁：封面、使用說明、版型 02～14）、`references/layouts.md`、`scripts/build_deck.py` | 可編輯的 PPTX | 需要 Python 3（只用內建模組） |
@@ -136,17 +138,16 @@ content.md 已在對應位置放 `<!-- 待補圖片：檔名｜說明 -->`。其
 | `assets/folder-qa-result.png` | 桌面版依 `行動研究` 回答三個問題，紅框標出處檔名 |
 | `assets/chatgpt-skill-upload.png` | ChatGPT「外掛程式 → 技能」頁，紅框標「+」與「從電腦上傳」（授課帳號重拍） |
 | `assets/chatgpt-skill-at.png` | ChatGPT 輸入框打 `@` 的技能清單，紅框標兩個非程式技能 |
-| `assets/skill-sponsorship-compare.png` | 同一封虛構邀約信，通用寫信 Skill 與講者 Skill 的回覆對照；金額與品牌名稱遮蔽 |
-| `assets/skill-letter-result.png` | `teacher-letter-style` 的第一版回覆信，與補上「我的寫信背景」後的重寫版，紅框標差異 |
-| `assets/skill-image-result.png` | `teacher-image-style` 產出的懶人包圖與行程表，可見使用的 Prompt |
+| `assets/skill-sponsorship-demo.png` | 用 `@sponsorship-negotiator` 從 Gmail 找出虛構的 DeckCube 邀約信，Skill 給出「建議回應類型＋理由」；金額遮蔽 |
+| `assets/skill-letter-result.png` | AI 整理出的「回信習慣」清單，以及用新建立的寫信 Skill 回覆家長的信 |
 | `assets/skill-info-cards-chatgpt.png` | ChatGPT 產出資訊卡 HTML 的對話，紅框標下載連結 |
-| `assets/codex-open-folder.png` | 切到 Codex 並開啟 `codex-practice`，紅框標選單與資料夾 |
-| `assets/codex-folder.png` | 開啟 `codex-practice` 後的畫面，紅框標目前資料夾與權限選項 |
+| `assets/codex-open-folder.png` | 切到 Codex 並開啟 `技能練習`，紅框標選單與資料夾 |
+| `assets/codex-folder.png` | 選擇 `行動研究` 資料夾後的畫面，紅框標目前資料夾與權限選項 |
 | `assets/codex-skill-install.png` | 安裝技能包時的核准提示，紅框標寫入位置 |
 | `assets/codex-skill-list.png` | 輸入框打 `@` 的技能清單，紅框標三個 `teacher-` 技能 |
 | `assets/codex-slides-outline.png` | 班親會簡報大綱表格 |
 | `assets/codex-slides-result.png` | 用 PowerPoint 打開產出的簡報 |
-| `assets/prep-pack-result.png` | 備課總覽.md 與用 Excel 打開的資源索引.csv，紅框標來源檔名欄 |
+| `assets/prep-pack-result.png` | 用瀏覽器打開 AI 產出的備課總覽網頁，紅框標「互相矛盾／待確認」的區塊 |
 | `assets/signup-photos.png` | 3 張手寫虛構報名表照片，其中 1 張字跡潦草 |
 | `assets/signup-excel-result.png` | 報名名單 Excel，來源檔名欄、不確定格標黃 |
 
@@ -160,10 +161,24 @@ content.md 已在對應位置放 `<!-- 待補圖片：檔名｜說明 -->`。其
 - Codex 讀 `.docx`、`.xlsx`（第二個工作表）、掃描圖的實際結果；手寫報名表辨識與 `.xlsx` 輸出（CSV 為備案）
 
 - 「工作」模式在桌面版選資料夾的入口與權限選項名稱；免費帳號切到 Codex 能否完成資料夾問答與照片轉 Excel
-- ChatGPT「技能」頁在授課帳號（Plus）與免費帳號是否可用；`teacher-letter-style`、`teacher-image-style`、`teacher-info-cards` 三個 zip 匯入後各實跑一次
+- ChatGPT「技能」頁在授課帳號（Plus）與免費帳號是否可用；`teacher-info-cards` 的 zip 匯入後實跑一次；用白話建立 Skill（報名表、週報、寫信）各實跑一次
 - 「用到程式的 Skill 在 Codex 更有效率」是講者使用經驗，不是官方說法；授課前用資訊卡在 ChatGPT 與 Codex 各跑一次，確認對照表的描述與實際相符
 
 ## 教學限制
 
 - 真實學生資料的上傳、校務系統寫入、寄送通知、對外發布與使用付費 API，均非本練習要求。
 - `seo.url` 等網址是沿用站台目錄慣例的預定路徑，不表示已發布。
+
+### 報名表照片怎麼產生的
+
+`tools/signup-photos/`：`render.mjs`（Puppeteer 把 `entries.json` 的每一筆排成手寫填好的報名表）→ `photo.py`（加上桌面、透視、光線、模糊、雜訊與 JPEG 壓縮）。手寫字型用開源的清松手寫體 1／4／6、辰宇落雁體、芫荽（字型檔不放進 repo，執行時用第二個參數指定字型資料夾）。`entries.json` 同時是正確答案：第 04 張人數像 1 也像 7、第 05 張勾在兩格中間、第 06 張書名塗改、第 07 張人數 3 超過上限、第 08 張書名未填、第 09 張模糊。
+
+### 2026-11-11「如何使用 Skill」章改版
+
+順序改成：① 報名表登記（做完一次後用一句白話變成 Skill）→ ② 週報（只用一段描述生成，Prompt 改寫自安美諾 work-report）→ ③ 寫信風格（講者的邀約信案例不變，練習改成讓 AI 讀最近寄出的信整理成 Skill）→ ④ 匯入別人做好的 Skill（教材配圖、資訊卡）。`teacher-form-to-excel`、`teacher-letter-style` 兩個技能包保留在 `example/` 當講師備案，講義不再放下載按鈕。
+
+同日再調整：四種做法定調為「把既有流程變成 Skill（報名表）→ 用白話生成 Skill（週報）→ 建立自己的 Skill（寫信）→ 匯入別人做好的 Skill（資訊卡）」；教材配圖不再示範，`teacher-image-style` 也只留在 `example/`，講義沒有下載按鈕。
+
+2026-11-11 再調整：`teacher-form-to-excel`、`teacher-letter-style`、`teacher-image-style` 三個技能包取消，講義不再使用。
+
+2026-11-12：資訊卡改用其他課程分享過的 `info-card-generator`（複製自 `course/tahoho/example/info-card-generator`，內容未改；Markdown DSL → lint → build 以 Puppeteer 產出 1080×1350 PNG，需要 Node.js）。原本免安裝的 `teacher-info-cards` 與示意圖 `skill-info-cards-preview.jpg` 取消。授課前在 ChatGPT 與 Codex 各實跑一次產圖。
