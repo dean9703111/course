@@ -1,0 +1,3 @@
+fig7-cups exit=0
+fig5-dilute exit=0
+fig6-evaporate exit=0

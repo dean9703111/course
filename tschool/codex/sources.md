@@ -106,11 +106,9 @@
 | `國語五上_事實與意見/影音與網站連結.csv` | 失效、重複、缺網址、需登入（UTF-8 含 BOM） | 資源能不能用 |
 | `報名表照片/`（6 張 jpg＋名單 xlsx） | 程式產生的虛構手寫報名表「手機照片」（IMG_4821～4829）；另附只有欄位、內容空白的 `報名名單範例.xlsx` | 照範例欄位建立新的名單 |
 | `報名表照片_第二批/`（4 張 jpg） | 第二批照片（IMG_4840、4841、4843、S__58327041），拖進第一批的資料夾 | 驗證剛用白話建立的報名表登記 Skill |
-| `技能練習/家長通知_親子共讀夜.md` | 虛構活動通知（12/11 親子共讀夜） | Codex：資訊卡 |
-| `技能練習/上課筆記_事實與意見第一節.md` | 王老師的上課筆記（口語、條列混雜） | Codex：線上講義 |
-| `技能練習/班親會資料.md` | 下學期班親會資料（含「待確認」的學校分機） | Codex：簡報 |
+| `化學課教材/`（4 份 .docx） | 虛構的星光國中陳老師 114 學年度下學期理化講義（教師版，紅字為答案）：3-2 常見的酸與鹼、3-3 酸鹼的濃度與 pH 值、3-4 酸鹼中和、紫甘藍指示劑實驗活動單；含表格、上下標化學式、圖說與 9 張圖 | Codex：Word 圖文教材轉成模板簡報 |
 
-三個要請 Codex 安裝的技能包，由學員直接放進 `技能練習` 資料夾。
+2026-11-12：`技能練習/`（家長通知、上課筆記、班親會資料）取消。資訊卡改成學員自己新增空的 `資訊卡` 資料夾、通知直接貼在 Prompt；線上講義改成只給受眾與主題；簡報改用 `化學課教材`。
 
 預期答案列在講義「對照預期結果」表，素材包本身不附答案。docx、xlsx、jpg 由講師以 python-docx、openpyxl 與瀏覽器截圖產生。
 
@@ -121,12 +119,17 @@
 | 技能包 | 內容 | 輸出 | 需要安裝 |
 |---|---|---|---|
 | `example/teacher-info-cards/` | `SKILL.md`、`assets/cards-template.html`、`references/card-rules.md` | 一個 HTML（4:5 卡片，可下載 1080×1350 PNG、列印成 PDF） | 不需要；下載 PNG 會從 cdnjs 載入 html2canvas，需要網路 |
-| `example/teacher-class-handout/` | `SKILL.md`、`assets/handout-template.html`、`references/components.md` | 一個自含 HTML（自動目錄、字級、深色、列印展開答案） | 不需要 |
+| `example/teacher-class-handout/`（2026-11-12 取消，改發 `course-page-generator` 預設版） | `SKILL.md`、`assets/handout-template.html`、`references/components.md` | 一個自含 HTML（自動目錄、字級、深色、列印展開答案） | 不需要 |
 | `example/teacher-slides/` | `SKILL.md`、`assets/School_Slides_Template.pptx`（15 頁：封面、使用說明、版型 02～14）、`references/layouts.md`、`scripts/build_deck.py` | 可編輯的 PPTX | 需要 Python 3（只用內建模組） |
 
 - 模板由講師在暫存 venv 用 python-pptx 產生，每個文字框都有名稱（`title`、`point-1-title`…），`build_deck.py --list` 可列出
 - 已在本機實測：`build_deck.py` 用班親會資料產出 8 頁 PPTX，python-pptx 可開啟、macOS Quick Look 可正常渲染；尚未在 PowerPoint、Google 簡報與 Windows 上實測
-- `assets/skill-slides-template.jpg` 是模板 15 頁的 Quick Look 渲染拼圖；`assets/skill-info-cards-preview.jpg`、`assets/skill-class-handout-preview.jpg` 是講師把練習素材手動套進模板後的瀏覽器截圖，講義圖說已註明「實際成品以 Codex 產出為準」
+- `assets/skill-slides-template.jpg` 是模板 15 頁的 Quick Look 渲染拼圖
+- 2026-11-12 `teacher-slides` 新增「讀 Word＋自動放圖」：`scripts/extract_docx.py`（.docx → `內容.md`＋`圖片/圖NN.*`，上下標轉成 Unicode，列出每張圖的尺寸、所在段落與圖說）；`build_deck.py` 的簡報計畫多了 `image`／`image-fit`／`image-alt`，圖片放進版型 01、06、14 的照片框（預設完整顯示不裁切，照片框變成襯底卡片）。兩支都只用 Python 3 內建模組。SKILL.md 與 layouts.md 增加「上課簡報」場合、教師版答案不外流的規則，用語從「老師」改成「使用者」
+- 2026-11-12 `teacher-class-handout`（單一 HTML 模板的簡化版）取消，改發講師自己在用的 `course-page-generator` 預設版（見下方「course-page-generator 預設版」）
+- 2026-11-12 模板置中修正：圓圈與圓角標籤的文字在 Keynote／macOS 預覽會偏右下。原因是這些文字框帶 `lIns/rIns=45720`（上下用預設值），PowerPoint 的規格下是置中的，但 Keynote 與 Quick Look 的匯入引擎會把文字往右下推。`tools/slides-template/fix_centered_insets.py` 把「垂直置中且每段水平置中」的 128 個文字框內距歸零（靠左的文字不動）；以 Quick Look 2560px 渲染量測，「VS」圓圈的文字偏移從右 6.5／下 6.0 px 降到 1.5／2.0 px 以內、封面場合標籤從右 9.5／下 7.5 px 降到 1.5／0.5 px 以內。`assets/skill-slides-template.jpg`、`assets/skill-slides-word-to-deck.jpg` 已用修正後的模板重產。**尚未**在 PowerPoint 實際開啟確認
+- 已在本機實測（2026-11-12）：用 `化學課教材` 的 4 份 .docx 跑 `extract_docx.py`（共 9 張圖、化學式上下標正確），再用 3-2 講義寫簡報計畫產出 10 頁 PPTX（3 張圖自動放入、無警告），python-pptx 可開啟、macOS Quick Look 逐頁渲染正常；**尚未**用 PowerPoint、Google 簡報與 Windows 開啟，也還沒在 Codex 實跑
+- `assets/skill-course-page-preview.jpg`：用 `course-page-generator` 預設版 build 內附範例「ChatGPT 桌面版入門」（內容取自本堂「桌面版起手式」）後的瀏覽器截圖，左邊是講義模式、右邊是按 P 之後的簡報模式；`assets/skill-slides-word-to-deck.jpg`：左邊是 3-2 講義第 1 頁、右邊是上述 10 頁簡報其中 6 頁的 Quick Look 渲染。兩張圖說都註明「實際成品以 Codex 產出為準」
 
 ## 待補圖片
 
@@ -141,12 +144,12 @@ content.md 已在對應位置放 `<!-- 待補圖片：檔名｜說明 -->`。其
 | `assets/skill-sponsorship-demo.png` | 用 `@sponsorship-negotiator` 從 Gmail 找出虛構的 DeckCube 邀約信，Skill 給出「建議回應類型＋理由」；金額遮蔽 |
 | `assets/skill-letter-result.png` | AI 整理出的「回信習慣」清單，以及用新建立的寫信 Skill 回覆家長的信 |
 | `assets/skill-info-cards-chatgpt.png` | ChatGPT 產出資訊卡 HTML 的對話，紅框標下載連結 |
-| `assets/codex-open-folder.png` | 切到 Codex 並開啟 `技能練習`，紅框標選單與資料夾 |
+| `assets/codex-open-folder.png` | 切到 Codex 並開啟學員自己新增的 `資訊卡` 資料夾，紅框標選單與資料夾 |
 | `assets/codex-folder.png` | 選擇 `行動研究` 資料夾後的畫面，紅框標目前資料夾與權限選項 |
-| `assets/codex-skill-install.png` | 安裝技能包時的核准提示，紅框標寫入位置 |
-| `assets/codex-skill-list.png` | 輸入框打 `@` 的技能清單，紅框標三個 `teacher-` 技能 |
-| `assets/codex-slides-outline.png` | 班親會簡報大綱表格 |
-| `assets/codex-slides-result.png` | 用 PowerPoint 打開產出的簡報 |
+| `assets/codex-skill-list.png` | Codex 輸入框打 `@` 的技能清單，紅框標 `info-card-generator` |
+| `assets/codex-info-cards-folder.png` | Codex 完成後，`資訊卡` 資料夾裡的一組 PNG 圖卡（縮圖檢視） |
+| `assets/codex-slides-outline.png` | 化學課簡報的大綱表格（頁碼、標題、任務、版型、用到的圖） |
+| `assets/codex-slides-result.png` | 用 PowerPoint 打開 Codex 產出的化學課簡報 |
 | `assets/prep-pack-result.png` | 用瀏覽器打開 AI 產出的備課總覽網頁，紅框標「互相矛盾／待確認」的區塊 |
 | `assets/signup-photos.png` | 3 張手寫虛構報名表照片，其中 1 張字跡潦草 |
 | `assets/signup-excel-result.png` | 報名名單 Excel，來源檔名欄、不確定格標黃 |
@@ -155,8 +158,10 @@ content.md 已在對應位置放 `<!-- 待補圖片：檔名｜說明 -->`。其
 
 - 免費版／Go 帳號實際能用多少 Codex；授課帳號的方案與額度
 - 桌面版 Codex 輸入框打 `@` 或 `$` 何者列出技能；技能頁能否直接上傳 zip
-- 請 Codex 把技能複製到 `~/.agents/skills` 的流程與核准提示畫面（Mac、Windows 各一次）
-- `teacher-slides` 在授課電腦能否執行 `python3` 產出 PPTX；產出的檔案用 PowerPoint、Google 簡報開啟是否跑版
+- 在 ChatGPT 匯入的技能，切到 Codex 是否直接出現在清單；免費帳號在 Codex 怎麼匯入技能包（講義只寫「把技能包交給 Codex 請它安裝」，官方記載的位置是 `~/.agents/skills`）
+- `teacher-slides` 在授課電腦能否執行 `python3`（`extract_docx.py`、`build_deck.py`）；用 `化學課教材` 實跑一次，產出的 PPTX 用 PowerPoint、Google 簡報開啟是否跑版、有沒有修復提示
+- `course-page-generator` 預設版在 Codex 實跑一次：只給受眾與主題時是否先給大綱、沒把握的內容是否標「待確認」、是否會先建立 `config/global.yaml`；授課電腦有沒有 Node.js
+- `info-card-generator` 在空資料夾實跑一次（需要 Node.js，第一次會安裝相依套件）
 - ChatGPT 網頁版技能上傳在授課帳號方案是否可用；準備示範對話分享連結
 - Codex 讀 `.docx`、`.xlsx`（第二個工作表）、掃描圖的實際結果；手寫報名表辨識與 `.xlsx` 輸出（CSV 為備案）
 
@@ -182,3 +187,26 @@ content.md 已在對應位置放 `<!-- 待補圖片：檔名｜說明 -->`。其
 2026-11-11 再調整：`teacher-form-to-excel`、`teacher-letter-style`、`teacher-image-style` 三個技能包取消，講義不再使用。
 
 2026-11-12：資訊卡改用其他課程分享過的 `info-card-generator`（複製自 `course/tahoho/example/info-card-generator`，內容未改；Markdown DSL → lint → build 以 Puppeteer 產出 1080×1350 PNG，需要 Node.js）。原本免安裝的 `teacher-info-cards` 與示意圖 `skill-info-cards-preview.jpg` 取消。授課前在 ChatGPT 與 Codex 各實跑一次產圖。
+
+### 2026-11-12「Codex」章改版
+
+- 三個小節的角度與標題（同日第二次調整）：「前面的 Skill，在 Codex 可以直接使用」→「用程式碼生成線上簡報」→「提供簡報模板，讓 AI 照著生成」；原本的「Codex 使用時機」小節取消，雲端 vs 本機對照表、開資料夾的說明與示範影片併入第一節
+- 第一節重點是「前面建立、匯入的 Skill 切到 Codex 直接能用」，資訊卡只是驗證用的例子：新增空的 `資訊卡` 資料夾、不經摘要確認直接產圖
+- 「線上簡報」指的是用程式碼生成、瀏覽器打開的網頁：技能包改成 `course-page-generator` 預設版，同一份內容平常是講義、按 `P` 進簡報模式
+- 刪除「請 Codex 把技能包搬進 Skill 資料夾」「在 Codex 呼叫 Skill」兩張卡（匯入方式前一章已說明）；「缺工具先說明再安裝」的 Prompt 與安裝提醒保留，移到資訊卡小節
+- 線上講義、模板簡報不再標「老師版」，改用講者自身經歷說明，每段結構是「遇到的挑戰 → Skill 解決了什麼 → 示範 → 可能遇到的挑戰」；線上講義示範改成「給老師的 ChatGPT 桌面版教學」（Prompt 給受眾、主題、目標、情境）；簡報示範改成把 Word 圖文講義轉成上課簡報
+
+### 化學課教材怎麼產生的
+
+`tools/chem-handouts/`：`build_docx.py`（python-docx，內容都寫在腳本裡；`{{…}}` 是教師版紅字、`~x~`／`^x^` 是 Word 的下標與上標）→ `example/化學課教材/` 的 4 份 .docx。`images/` 的 7 張 JPG 插圖用 Codex CLI 內建的 image_gen 產生（`codex exec -m gpt-6.1-sol --enable image_generation`，Prompt 在 `prompts/`，要求不含任何文字，生成後逐張核對顏色與順序是否符合科學事實，再用 `sips` 縮成 1200 寬的 JPG）；有文字的 pH 色帶與中和粒子示意圖是 `diagrams/*.html` 用 Puppeteer 截圖（`shot.cjs`），字是真的字。酸鹼內容是一般國中理化程度，pH 值都寫「大約」；授課前請自然科老師或講師再核對一次。
+
+### course-page-generator 預設版（2026-11-12）
+
+`example/course-page-generator/` 是從講師自己的 `.agents/skills/course-page-generator` 複製後改成的發放版本，build 時打包成 `assets/course-page-generator.zip`（26 個檔、約 222 KB）。原版之後有更新，這一份要手動同步。
+
+- **拿掉的**：`test/`（含 golden）、`README.md`、`reference/visual-qa-notes.md`、`scripts/gen-docs.mjs`、`scripts/visual-check.mjs`
+- **個人資料**：`reference/config-example.yaml` 的講者姓名、簡介、著作與社群連結、favicon、站台網址全部換成示範文字（example.com）；新增 `example/config/global.yaml`（「你的名字」等示範值）與 `example/demo/`（ChatGPT 桌面版入門，可直接 build）
+- **SKILL.md 重寫**：指令改用 `<SKILL_DIR>/scripts/…`（不再假設在 repo 根目錄）；主題生成流程新增「先確認受眾、目標、情境、重點，先給大綱」與「沒把握的內容標待確認」；沒有 `config/global.yaml` 時從範例複製並詢問名字；OG 縮圖、PDF、WebP 改成選用（原版規定 build 後必跑 OG）；拿掉對其他 skill（live-capture、screenshot-annotator、visual-qa、content-restructurer）、客戶課程名稱與維護規範的引用；寫作風格保留為「預設值」
+- **程式只改三類**：訊息與註解裡的 repo 路徑、`npm run`、客戶課程資料夾名稱；`browser.mjs` 的 puppeteer 安裝提示；`build.mjs` 的主程式判斷改成比對真實路徑（技能資料夾是 symlink 時原本會沒有任何輸出就結束）。固定錨點對照表 `STABLE_ANCHOR_MAP` 內容沒有改（與 components.md 的文件一致）
+- **已實測**：把打包後的 zip 解到 repo 外、路徑含空白的資料夾，在另一個工作資料夾 build 範例成功（只需要 Node.js，不用 `npm install`；lint 0 error／0 warn）；經由 symlink 路徑執行也成功；沒有 puppeteer 時 `generate-og.mjs` 會印出安裝說明；簡報模式（`?present=1`）15 頁逐頁截圖正常；zip 內全文搜尋講師姓名、網域、社群帳號與客戶名稱為 0 筆。**尚未**在 Windows 與 Codex／ChatGPT 的技能環境實跑
+

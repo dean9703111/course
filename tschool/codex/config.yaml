@@ -2,10 +2,10 @@ page:
   title: "Codex｜讓 AI 動手處理檔案，用 Skill 交付教材"
   badge: "生成式 AI 研習｜第 2 堂"
   hero_title: "讓 AI 動手處理檔案，<br>用 Skill 交付教材"
-  subtitle: "從資料夾問答、照片轉 Excel 到老師版 Skill，交出信件、配圖、資訊卡、講義與簡報"
+  subtitle: "從資料夾問答、照片轉 Excel 到 Skill，交出信件、資訊卡、講義與簡報"
 seo:
   title: "Codex 檔案與 Skill 實作｜生成式 AI 研習第 2 堂"
-  description: "為學校老師與行政設計的 Codex 講義：安裝 ChatGPT 桌面版讓 AI 直接讀資料夾、把手寫報名表照片轉成 Excel，用 Skill 固定寫信風格與教材配圖，再切到 Codex 用資訊卡、線上講義、校園簡報 Skill 交出成品。"
+  description: "為學校老師與行政設計的 Codex 講義：安裝 ChatGPT 桌面版讓 AI 直接讀資料夾、把手寫報名表照片轉成 Excel，用白話生成報名表登記、每週回顧與寫信風格的 Skill，再切到 Codex 用資訊卡、線上講義、模板簡報 Skill 交出成品。"
   image: "https://deanlin.net/course/tschool/codex/assets/og-image.jpg"
   default_image: "https://deanlin.net/course/tschool/codex/assets/og-image.jpg"
   url: "https://deanlin.net/course/tschool/codex/"

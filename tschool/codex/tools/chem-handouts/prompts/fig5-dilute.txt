@@ -1,0 +1,5 @@
+Use the built-in image generation tool to generate exactly ONE image, then save it as a PNG file at ./img/fig5-dilute.png (relative to the current working directory). Do not create any other files. After saving, reply with the saved path only.
+
+Scene: Safe dilution of concentrated acid in a school lab: a large glass beaker about half full of clear water sits on the bench with a glass stirring rod standing in it. A small glass reagent bottle is tilted above it, and a thin stream of clear liquid runs slowly down along the glass rod into the water. Beside the beaker lie a pair of safety goggles and a pair of blue protective gloves. No people, no hands. Bottles are blank with no writing.
+
+Style: flat vector-style educational illustration for a junior high school science handout. Clean simple shapes, soft pastel colors, thin dark-gray outlines, plain off-white background (#FBF7EE), generous margins. Absolutely NO text, NO letters, NO numbers, NO labels, NO chemical formulas, NO watermark anywhere in the image. Landscape 4:3 aspect ratio.

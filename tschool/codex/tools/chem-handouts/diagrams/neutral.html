@@ -1,0 +1,34 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1500px;height:730px;background:#fff;font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;color:#2b2b2b;padding:40px 46px}
+.row{display:grid;grid-template-columns:1fr 70px 1fr 90px 1.25fr;align-items:center;gap:10px}
+.beaker{border:5px solid #555;border-top:none;border-radius:0 0 26px 26px;height:420px;position:relative;background:linear-gradient(#fff 0 26%,var(--c) 26%)}
+.cap{font-size:32px;font-weight:800;text-align:center;margin-bottom:16px}
+.sub{font-size:25px;color:#555;text-align:center;margin-top:14px;line-height:1.5}
+.op{font-size:70px;font-weight:800;text-align:center;color:#555}
+.ion{position:absolute;width:86px;height:86px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:#fff;border:3px solid rgba(0,0,0,.25)}
+.h{background:#e05252}.oh{background:#3f7fd1}.na{background:#8e8e8e}.cl{background:#58a55c}
+.w{background:#bfe3f7;color:#1f4e79;border-radius:44px;width:118px}
+sup,sub{font-size:.62em}
+.eq{margin-top:26px;font-size:34px;font-weight:800;text-align:center;letter-spacing:1px}
+.eq em{font-style:normal;color:#c0392b}
+.legend{margin-top:12px;font-size:24px;color:#555;text-align:center}
+</style><body>
+<div class="row">
+ <div><div class="cap">鹽酸</div><div class="beaker" style="--c:#fdecec">
+  <div class="ion h" style="left:12%;top:36%"><span>H<sup>+</sup></span></div><div class="ion cl" style="left:56%;top:34%"><span>Cl<sup>−</sup></span></div>
+  <div class="ion cl" style="left:16%;top:66%"><span>Cl<sup>−</sup></span></div><div class="ion h" style="left:58%;top:68%"><span>H<sup>+</sup></span></div></div>
+  <div class="sub">酸性<br>含有氫離子 H<sup>+</sup></div></div>
+ <div class="op">＋</div>
+ <div><div class="cap">氫氧化鈉水溶液</div><div class="beaker" style="--c:#e9f1fc">
+  <div class="ion na" style="left:12%;top:36%"><span>Na<sup>+</sup></span></div><div class="ion oh" style="left:56%;top:34%"><span>OH<sup>−</sup></span></div>
+  <div class="ion oh" style="left:16%;top:66%"><span>OH<sup>−</sup></span></div><div class="ion na" style="left:58%;top:68%"><span>Na<sup>+</sup></span></div></div>
+  <div class="sub">鹼性<br>含有氫氧根離子 OH<sup>−</sup></div></div>
+ <div class="op">→</div>
+ <div><div class="cap">中和後：食鹽水</div><div class="beaker" style="--c:#f3f6ee">
+  <div class="ion na" style="left:8%;top:34%"><span>Na<sup>+</sup></span></div><div class="ion cl" style="left:40%;top:32%"><span>Cl<sup>−</sup></span></div><div class="ion w" style="left:68%;top:36%"><span>H<sub>2</sub>O</span></div>
+  <div class="ion w" style="left:8%;top:68%"><span>H<sub>2</sub>O</span></div><div class="ion cl" style="left:44%;top:66%"><span>Cl<sup>−</sup></span></div><div class="ion na" style="left:72%;top:68%"><span>Na<sup>+</sup></span></div></div>
+  <div class="sub">中性<br>H<sup>+</sup> 與 OH<sup>−</sup> 結合成水</div></div>
+</div>
+<div class="eq">H<sup>+</sup> ＋ OH<sup>−</sup> → <em>H<sub>2</sub>O</em>　（鈉離子與氯離子沒有參與反應）</div>
+</body></html>

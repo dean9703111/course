@@ -1,0 +1,5 @@
+Use the built-in image generation tool to generate exactly ONE image, then save it as a PNG file at ./img/fig7-cups.png (relative to the current working directory). Do not create any other files. After saving, reply with the saved path only.
+
+Scene: A home kitchen science experiment: FIVE clear transparent plastic cups standing in a single row on a table, each holding a liquid of a different color. From LEFT to RIGHT the liquid colors are: red, pink, purple, blue, green. Behind the cups: a glass bowl with chopped purple cabbage soaking in purple water, and a small dropper. In front of the cups, a blank notebook and a pencil. No people, no hands.
+
+Style: flat vector-style educational illustration for a junior high school science handout. Clean simple shapes, soft pastel colors, thin dark-gray outlines, plain off-white background (#FBF7EE), generous margins. Absolutely NO text, NO letters, NO numbers, NO labels, NO chemical formulas, NO watermark anywhere in the image. Landscape 4:3 aspect ratio.

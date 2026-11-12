@@ -1,0 +1,5 @@
+Use the built-in image generation tool to generate exactly ONE image, then save it as a PNG file at ./img/fig2-litmus.png (relative to the current working directory). Do not create any other files. After saving, reply with the saved path only.
+
+Scene: Two glass beakers side by side on a simple lab bench, each about half full of clear, almost colorless liquid. In the LEFT beaker, a paper strip that is BLUE at the top is dipped into the liquid, and the lower dipped part of that strip has turned RED. In the RIGHT beaker, a paper strip that is RED at the top is dipped into the liquid, and the lower dipped part of that strip has turned BLUE. Each strip is held by small metal tweezers. Nothing else on the bench.
+
+Style: flat vector-style educational illustration for a junior high school science handout. Clean simple shapes, soft pastel colors, thin dark-gray outlines, plain off-white background (#FBF7EE), generous margins. Absolutely NO text, NO letters, NO numbers, NO labels, NO chemical formulas, NO watermark anywhere in the image. Landscape 4:3 aspect ratio.

@@ -1,0 +1,332 @@
+<!--
+  Base HTML Template for Course Page Generator
+  - CSS 和 JS 是完整的，直接複製使用
+  - HTML body 區塊用 {{PLACEHOLDER}} 標記，需由 Skill 根據 config + content 填入
+  - 產出時移除所有註解和 placeholder 說明
+-->
+<!DOCTYPE html>
+<html lang="{{PAGE_LANG}}" {{PAGE_MODE}}>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>{{PAGE_TITLE}}</title>
+  <link rel="icon" type="image/png" href="{{FAVICON}}">
+  <meta property="og:type" content="{{OG_TYPE}}">
+  <meta property="og:title" content="{{OG_TITLE}}">
+  <meta property="og:description" content="{{OG_DESCRIPTION}}">
+  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:url" content="{{OG_URL}}">
+  <meta property="og:site_name" content="{{OG_SITE_NAME}}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.documentElement.setAttribute('data-local-preview', 'true');
+    }
+  </script>
+  <style>{{THEME_CSS}}</style>
+  <style>
+    .qr-overlay { position: fixed; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.55); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+    .qr-overlay.open { opacity: 1; pointer-events: auto; }
+    .qr-modal { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; width: auto; height: 80vh; max-width: 92vw; padding: 36px 40px 32px; border-radius: 22px; text-align: center; background: var(--card, var(--bg, #fff)); color: var(--text, #1a1a1a); box-shadow: 0 24px 64px rgba(0,0,0,.34); transform: translateY(14px) scale(.98); transition: transform .25s ease; box-sizing: border-box; }
+    .qr-overlay.open .qr-modal { transform: none; }
+    .qr-modal h3 { margin: 0; font-size: 1.875rem; font-weight: 700; }
+    .qr-modal-close { position: absolute; top: 10px; right: 12px; width: 30px; height: 30px; border: 0; border-radius: 50%; background: transparent; color: inherit; font-size: 1rem; cursor: pointer; opacity: .55; transition: opacity .2s, background .2s; }
+    .qr-modal-close:hover { opacity: 1; background: rgba(128,128,128,.16); }
+    .qr-panes { display: flex; align-items: stretch; min-height: 0; }
+    .qr-pane { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; min-height: 0; }
+    .qr-pane[hidden] { display: none; }
+    .qr-pane + .qr-pane { margin-left: 36px; padding-left: 36px; border-left: 1px solid var(--border, rgba(128,128,128,.28)); }
+    /* QR 方塊只定高度、寬度由 aspect-ratio 跟隨；允許在彈窗放不下時縮小，標題／網址才不會擠到彈窗邊緣 */
+    .qr-code-box { flex: 0 1 auto; min-height: 0; height: min(54vh, 78vw); aspect-ratio: 1 / 1; margin: 22px auto; padding: 14px; box-sizing: border-box; background: #fff; border-radius: 16px; }
+    .qr-code-box svg { display: block; width: 100%; height: 100%; }
+    .qr-url { display: inline-block; max-width: 100%; font-size: 1.15rem; font-weight: 600; line-height: 1.4; word-break: break-all; color: var(--accent, #e8845a); text-decoration: none; }
+    .qr-url:hover { text-decoration: underline; }
+    /* WiFi 資訊：不放 QR，名稱／密碼直接大字顯示（投影後排也要能照著打） */
+    .qr-wifi-ssid { max-width: 100%; overflow-wrap: anywhere; margin-top: 30px; font-size: 2.1rem; line-height: 1.3; font-weight: 700; }
+    .qr-wifi-pass { max-width: 100%; overflow-wrap: anywhere; margin-top: 16px; font-family: 'JetBrains Mono', monospace; font-size: 1.9rem; line-height: 1.3; letter-spacing: .06em; }
+    /* 設定面板：WiFi 輸入（僅存 localStorage，不進公開 HTML） */
+    .wifi-fields { display: flex; flex-direction: column; gap: .45rem; margin-top: .6rem; }
+    .wifi-fields .settings-label { margin: .15rem 0 0; }
+    .wifi-fields input { width: 100%; box-sizing: border-box; padding: .4rem .55rem; border: 1px solid var(--border, #ccc); border-radius: 8px; background: transparent; color: inherit; font-size: .78rem; font-family: inherit; }
+    .wifi-fields input:focus { outline: none; border-color: var(--accent, #e8845a); }
+    .wifi-actions { display: flex; gap: .45rem; }
+    .wifi-actions button { flex: 1; padding: .35rem 0; border: 1px solid var(--border, #ccc); border-radius: 8px; background: transparent; color: inherit; font-size: .75rem; font-weight: 600; cursor: pointer; font-family: 'Noto Sans TC', sans-serif; transition: border-color .2s, opacity .2s; }
+    .wifi-actions button:hover { border-color: var(--accent, #e8845a); }
+    /* 螢幕放大（視窗矮於 800px）：WiFi 欄改雙欄——左欄兩個輸入框、右欄儲存／清除上下排，高度省一列（面板其餘緊湊規則在 theme.css） */
+    @media (max-height: 800px) {
+      .wifi-fields { display: grid; grid-template-columns: 1fr auto; gap: .45rem; }
+      .wifi-fields .settings-label { grid-column: 1 / -1; }
+      .wifi-actions { grid-area: 2 / 2 / 4 / 3; flex-direction: column; }
+      .wifi-actions button { padding: .35rem .7rem; }
+    }
+    /* ≤900px：雙欄擠不下，WiFi 欄改上下堆疊 */
+    @media (max-width: 900px) { .qr-modal.has-wifi { height: auto; max-height: 92vh; overflow-y: auto; justify-content: flex-start; } .qr-panes { flex-direction: column; } .qr-pane + .qr-pane { margin: 18px 0 0; padding: 18px 0 0; border-left: 0; border-top: 1px solid var(--border, rgba(128,128,128,.28)); } .qr-modal.has-wifi .qr-code-box { height: min(80vw, 44vh); } .qr-modal h3 { font-size: 1.625rem; } .qr-wifi-ssid { margin-top: 14px; font-size: 1.7rem; } .qr-wifi-pass { font-size: 1.55rem; } }
+    @media (max-width: 700px) { .qr-modal { width: 100vw; height: 100vh; height: 100dvh; max-width: none; border-radius: 0; overflow-y: auto; } .qr-modal.has-wifi { height: 100vh; height: 100dvh; max-height: none; } .qr-code-box { height: min(88vw, 70vh); } .qr-modal.has-wifi .qr-code-box { height: min(80vw, 44vh); } }
+    @media print { .qr-overlay { display: none !important; } }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hamburger -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="sidebar-overlay" id="overlay"></div>
+
+  <!-- Sidebar TOC -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-title">{{SIDEBAR_BRAND}}</div>
+      <div class="sidebar-brand-controls"><button class="fontsize-toggle" id="fontsize-toggle"
+          aria-label="字體大小">A2</button><button class="theme-toggle" id="theme-toggle"
+          aria-label="Toggle theme">🌙</button><button class="settings-toggle" id="settings-toggle"
+          aria-label="設定">⚙</button></div>
+    </div>
+    <ul class="toc">
+      {{TOC_ITEMS}}
+      <!--
+      每個主章節：
+      <li class="toc-group" data-section="SECTION_ID">
+        <a href="#SECTION_ID" class="toc-group-title">
+          <span class="toc-num">NUM</span> TITLE
+        </a>
+        <ul class="toc-sub">
+          <li><a href="#SUB_ID">SUB_TITLE</a></li>
+        </ul>
+      </li>
+    -->
+    </ul>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress-label"><span>閱讀進度</span><span id="progress-pct">0%</span></div>
+      <div class="sidebar-progress-track">
+        <div class="sidebar-progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Branch rail（內容區左側 git graph；absolute 隨內容捲動，無 branch 時由 JS 隱藏） -->
+  <div class="branch-line" id="branch-line">
+    {{BRANCH_TAGS}}
+  </div>
+  <div class="branch-tip" id="branch-tip"></div>
+
+  <button class="sidebar-collapse-btn" id="sidebar-collapse" aria-label="收合側邊欄">
+    <svg width="10" height="14" viewBox="0 0 10 14" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 1L2 7l6 6" />
+    </svg>
+  </button>
+
+  <div class="collapsed-progress">
+    <div class="collapsed-progress-fill" id="collapsed-progress-fill"></div>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-badge"><span class="dot"></span>{{HERO_BADGE}}</div>
+    <h1>{{HERO_TITLE}}</h1>
+    <p class="hero-sub">{{HERO_SUBTITLE}}</p>
+    <p class="hero-author">{{HERO_AUTHOR}}</p>
+    <nav class="hero-nav">
+      {{HERO_NAV_ITEMS}}
+      <!-- <a href="#id">First</a> <a href="#id">Others</a> -->
+    </nav>
+  </header>
+
+  {{OPENING_QUOTE}}
+  <!--
+<section class="quote-page"><div class="reveal">
+  <div class="quote-mark">"</div>
+  <blockquote>QUOTE_TEXT</blockquote>
+  <div class="quote-line"></div>
+</div></section>
+-->
+
+  {{INSTRUCTOR_SECTION}}
+  <!--
+<section class="section" id="instructor">...</section>
+-->
+
+  {{CONTENT_SECTIONS}}
+  <!--
+<hr class="divider">
+<section class="section" id="...">
+  <div class="reveal">
+    <span class="section-label"><span class="num">N</span> LABEL</span>
+    <h2>TITLE</h2>
+    <p class="lead">LEAD</p>
+  </div>
+  ... components ...
+</section>
+-->
+
+  {{CLOSING_QUOTE}}
+
+  <!-- Footer -->
+  <footer class="footer">
+    {{FOOTER_SOCIAL_LINKS}}
+    <p>{{FOOTER_COPYRIGHT}}</p>
+  </footer>
+
+  <!-- Settings Panel -->
+  <div class="settings-panel" id="settings-panel">
+    <div class="settings-section">
+      <div class="settings-label">主題色彩</div>
+      <div class="color-swatches" id="color-swatches">
+        <button class="color-swatch" data-theme-id="coral" title="暖陽珊瑚" data-accent="#e8845a"
+          data-accent-light="#ac5123" data-accent2="#e8b878" data-accent2-light="#846022" data-accent3="#e08898"
+          data-accent3-light="#b04860"
+          style="background:linear-gradient(135deg,#e8845a 40%,#e8b878 70%,#e08898)"></button>
+        <button class="color-swatch" data-theme-id="ocean" title="深海藍" data-accent="#60a5fa" data-accent-light="#2563eb"
+          data-accent2="#5eead4" data-accent2-light="#0b7e74" data-accent3="#a5b4fc" data-accent3-light="#6366f1"
+          style="background:linear-gradient(135deg,#60a5fa 40%,#5eead4 70%,#a5b4fc)"></button>
+        <button class="color-swatch" data-theme-id="forest" title="翡翠森林" data-accent="#50d890"
+          data-accent-light="#15803d" data-accent2="#c8d858" data-accent2-light="#687717" data-accent3="#50c0a8"
+          data-accent3-light="#0d7060"
+          style="background:linear-gradient(135deg,#50d890 40%,#c8d858 70%,#50c0a8)"></button>
+        <button class="color-swatch" data-theme-id="galaxy" title="星河紫" data-accent="#a78bfa"
+          data-accent-light="#7c3aed" data-accent2="#e8a8e0" data-accent2-light="#a21caf" data-accent3="#7db8f8"
+          data-accent3-light="#2563eb"
+          style="background:linear-gradient(135deg,#a78bfa 40%,#e8a8e0 70%,#7db8f8)"></button>
+        <button class="color-swatch" data-theme-id="sakura" title="花見櫻" data-accent="#f472b6"
+          data-accent-light="#d22572" data-accent2="#b0a8f0" data-accent2-light="#6d28d9" data-accent3="#f0a8a0"
+          data-accent3-light="#c05050"
+          style="background:linear-gradient(135deg,#f472b6 40%,#b0a8f0 70%,#f0a8a0)"></button>
+        <button class="color-swatch" data-theme-id="amber" title="琥珀" data-accent="#f0b840" data-accent-light="#946907"
+          data-accent2="#e09870" data-accent2-light="#a86040" data-accent3="#c8b080" data-accent3-light="#887048"
+          style="background:linear-gradient(135deg,#f0b840 40%,#e09870 70%,#c8b080)"></button>
+      </div>
+    </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <label class="settings-switch-row">
+        <span>簡報模式按鈕</span>
+        <span class="settings-switch">
+          <input type="checkbox" id="pres-btn-toggle" checked>
+          <span class="settings-switch-track"></span>
+        </span>
+      </label>
+    </div>
+    <div class="settings-divider"></div>
+    <div class="settings-section">
+      <button class="settings-export-btn" id="export-pdf-btn">⬇ 匯出 PDF</button>
+    </div>
+    <div class="settings-divider"></div>
+    <!-- 講師工具：學員用不到，預設收合；?teach=1／?present=1 預設展開，展開狀態記在 localStorage -->
+    <details class="settings-teacher" id="teacher-tools">
+      <summary>🧑‍🏫 講師工具</summary>
+      <div class="settings-section">
+        <button class="settings-export-btn" id="break-timer-btn">☕ 休息一下</button>
+      </div>
+      <div class="settings-divider"></div>
+      <div class="settings-section" id="qr-settings-section">
+        <button class="settings-export-btn" id="qr-code-btn">🔗 顯示 QRCode</button>
+        <div class="wifi-fields">
+          <div class="settings-label">📶 WiFi</div>
+          <input type="text" id="wifi-ssid" placeholder="WiFi 名稱（SSID）" autocomplete="off">
+          <input type="text" id="wifi-pass" placeholder="密碼（可留空）" autocomplete="off">
+          <div class="wifi-actions">
+            <button id="wifi-save-btn">儲存</button>
+            <button id="wifi-clear-btn">清除</button>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- QRCode Modal -->
+  <div class="qr-overlay" id="qr-overlay">
+    <div class="qr-modal" id="qr-modal">
+      <button class="qr-modal-close" id="qr-modal-close" aria-label="關閉">✕</button>
+      <div class="qr-panes">
+        <div class="qr-pane">
+          <h3>掃描獲得線上講義</h3>
+          <div class="qr-code-box" id="qr-code-box">{{QR_SVG}}</div>
+          <a class="qr-url" id="qr-url" href="{{QR_URL}}" target="_blank" rel="noopener">{{QR_URL}}</a>
+        </div>
+        <div class="qr-pane" id="qr-wifi-pane" hidden>
+          <h3>連線 WiFi</h3>
+          <div class="qr-wifi-ssid" id="qr-wifi-ssid"></div>
+          <div class="qr-wifi-pass" id="qr-wifi-pass"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Break Timer Modal -->
+  <div class="break-overlay" id="break-overlay">
+    <div class="break-modal">
+      <button class="break-modal-close" id="break-modal-close">✕</button>
+      <div class="break-modal-icon" id="break-modal-icon">☕</div>
+      <h3>休息一下</h3>
+      <p id="break-intro-text">設定休息時間，時間到會提醒你</p>
+      <div id="break-setup">
+        <div class="break-input-row">
+          <input type="number" id="break-minutes" value="10" min="1" max="120">
+          <span>分鐘</span>
+        </div>
+        <button class="break-start-btn" id="break-start-btn">開始休息</button>
+      </div>
+      <div class="break-countdown" id="break-countdown">
+        <div class="break-countdown-time" id="break-countdown-time">10:00</div>
+        <p class="break-done-message" id="break-done-message"><strong>休息時間到</strong><br>回來繼續下一段內容吧。</p>
+        <button class="break-end-btn" id="break-end-btn">結束休息</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bonus Modal -->
+  <div class="bonus-overlay" id="bonus-overlay">
+    <div class="bonus-modal">
+      <div class="bonus-modal-header">
+        <h3 id="bonus-modal-title"></h3>
+        <button class="bonus-modal-close" id="bonus-modal-close" aria-label="關閉">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="bonus-modal-body" id="bonus-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Theme & OG mode: early init (prevents flash) -->
+  <script>
+    (function () {
+      // OG mode: ?og=1 → hide sidebar/sections, hero-only layout for thumbnails
+      try {
+        var search = window.location.search || '';
+        if (search.indexOf('og=1') !== -1) {
+          document.documentElement.classList.add('og-mode');
+        }
+      } catch (e) { }
+
+      // localStorage 被封鎖時讀取會丟例外：同 app.js 的 safeStorage.get，失敗回 null
+      function stored(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+      var s = stored('theme');
+      var d = window.matchMedia('(prefers-color-scheme:dark)').matches;
+      var t = s || (d ? 'dark' : 'light');
+      if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      var b = document.getElementById('theme-toggle');
+      if (b) b.textContent = t === 'light' ? '☀️' : '🌙';
+      // Restore accent color
+      var accentData = stored('accentTheme');
+      if (accentData) {
+        try {
+          var ac = JSON.parse(accentData);
+          var isLight = t === 'light';
+          document.documentElement.style.setProperty('--accent', isLight ? ac.light : ac.dark);
+        } catch (e) { }
+      }
+    })();
+  </script>
+
+  <script>{{APP_JS}}</script>
+</body>
+
+</html>

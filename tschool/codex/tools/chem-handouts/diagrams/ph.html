@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1600px;height:640px;background:#fff;font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;color:#2b2b2b;padding:44px 60px}
+.zones{display:grid;grid-template-columns:7fr 1fr 7fr;gap:0;margin-bottom:14px;font-size:30px;font-weight:700;text-align:center}
+.zones div{padding:10px 0;border-radius:10px}
+.acid{color:#c0392b}.neu{color:#2e7d32}.base{color:#4a3aa7}
+.arrow{display:flex;justify-content:space-between;font-size:24px;color:#555;margin-bottom:12px}
+.bar{display:grid;grid-template-columns:repeat(15,1fr);height:130px;border-radius:14px;overflow:hidden;border:3px solid #333}
+.bar div{display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:800;color:#fff;text-shadow:0 2px 3px rgba(0,0,0,.35)}
+.items{position:relative;height:270px;margin-top:6px}
+.it{position:absolute;top:0;transform:translateX(-50%);text-align:center;width:190px}
+.it i{display:block;width:3px;height:var(--h,60px);background:#666;margin:0 auto 8px}
+.it b{display:block;font-size:30px}
+.it span{display:block;font-size:24px;color:#555;margin-top:2px}
+.note{position:absolute;left:60px;right:60px;bottom:26px;font-size:22px;color:#666;text-align:center}
+</style><body>
+<div class="zones"><div class="acid">酸性（pH ＜ 7）</div><div class="neu">中性</div><div class="base">鹼性（pH ＞ 7）</div></div>
+<div class="arrow"><span>◀ 數字越小，酸性越強</span><span>數字越大，鹼性越強 ▶</span></div>
+<div class="bar" id="bar"></div>
+<div class="items" id="items"></div>
+<div class="note">※ 25 ℃ 時的大約數值，實際 pH 值會隨濃度與品牌而不同</div>
+<script>
+const colors=['#d7191c','#e8402a','#f46d43','#fb9a4b','#fdc35e','#fee08b','#d9ef8b','#4caf50','#3aa99e','#3d8ecf','#3b6fc4','#4055b5','#4a3fa5','#5a2f99','#6a1b8a'];
+bar.innerHTML=colors.map((c,i)=>`<div style="background:${c}">${i}</div>`).join('');
+const data=[[1.5,'胃液','約 1～2',60],[2.4,'檸檬汁','約 2～3',170],[3.6,'食醋、汽水','約 3～4',60],[7,'純水','7',60],[8.5,'小蘇打水','約 8～9',170],[10,'肥皂水','約 9～10',60],[12.5,'漂白水','約 11～13',170]];
+items.innerHTML=data.map(([p,n,v,h])=>`<div class="it" style="left:${(p+0.5)/15*100}%;--h:${h}px"><i></i><b>${n}</b><span>${v}</span></div>`).join('');
+</script></body></html>

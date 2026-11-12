@@ -1,0 +1,5 @@
+Use the built-in image generation tool to generate exactly ONE image, then save it as a PNG file at ./img/fig1-daily.png (relative to the current working directory). Do not create any other files. After saving, reply with the saved path only.
+
+Scene: Everyday acids and bases shown as two groups. LEFT group (acidic foods) on a very light warm-pink rounded patch: one whole lemon and one cut lemon half, a glass bottle of clear white vinegar, and a glass of dark fizzy cola with bubbles. RIGHT group (alkaline household items) on a very light blue rounded patch: a bar of soap with a few foam bubbles, a small open box of white baking soda powder with a spoon, and a plain laundry detergent bottle. A thin vertical dashed line separates the two groups. All packaging is blank with no writing.
+
+Style: flat vector-style educational illustration for a junior high school science handout. Clean simple shapes, soft pastel colors, thin dark-gray outlines, plain off-white background (#FBF7EE), generous margins. Absolutely NO text, NO letters, NO numbers, NO labels, NO chemical formulas, NO watermark anywhere in the image. Landscape 4:3 aspect ratio.

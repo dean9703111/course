@@ -1,0 +1,4 @@
+fig3-cabbage exit=0
+fig4-neutral exit=0
+fig2-litmus exit=0
+fig1-daily exit=0

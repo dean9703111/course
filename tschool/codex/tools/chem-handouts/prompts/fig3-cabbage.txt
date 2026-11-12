@@ -1,0 +1,5 @@
+Use the built-in image generation tool to generate exactly ONE image, then save it as a PNG file at ./img/fig3-cabbage.png (relative to the current working directory). Do not create any other files. After saving, reply with the saved path only.
+
+Scene: A wooden test-tube rack holding exactly SIX glass test tubes in a single row, each tube filled with a clear liquid of a different color. From LEFT to RIGHT the liquid colors are: red, pink, purple, blue, green, yellow. To the right of the rack: half of a purple (red) cabbage showing its layered cross-section, and a small beaker of purple juice with a glass dropper resting in it.
+
+Style: flat vector-style educational illustration for a junior high school science handout. Clean simple shapes, soft pastel colors, thin dark-gray outlines, plain off-white background (#FBF7EE), generous margins. Absolutely NO text, NO letters, NO numbers, NO labels, NO chemical formulas, NO watermark anywhere in the image. Landscape 4:3 aspect ratio.

@@ -1,0 +1,5 @@
+Use the built-in image generation tool to generate exactly ONE image, then save it as a PNG file at ./img/fig6-evaporate.png (relative to the current working directory). Do not create any other files. After saving, reply with the saved path only.
+
+Scene: A school lab evaporation setup: a white porcelain evaporating dish resting on a wire gauze on top of a metal tripod stand, with a small glass alcohol burner with a gentle flame underneath. Inside the dish are small white salt crystals with a little wisp of steam rising. Next to the tripod, a glass rod and a pair of crucible tongs lie on the bench. No people, no hands.
+
+Style: flat vector-style educational illustration for a junior high school science handout. Clean simple shapes, soft pastel colors, thin dark-gray outlines, plain off-white background (#FBF7EE), generous margins. Absolutely NO text, NO letters, NO numbers, NO labels, NO chemical formulas, NO watermark anywhere in the image. Landscape 4:3 aspect ratio.

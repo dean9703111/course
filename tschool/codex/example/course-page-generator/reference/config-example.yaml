@@ -1,0 +1,90 @@
+# ===================================================
+# Course Page Generator — YAML Config 完整範例
+# 可作為 global.yaml 或課程 config.yaml 的參考
+# 課程 config 只需寫要覆蓋的欄位（deep merge）
+# 下面的值都是示範文字，請換成自己的
+# ===================================================
+
+# ---------------------------------------------------
+# 頁面基本設定
+# ---------------------------------------------------
+page:
+  lang: zh-TW
+  # favicon 用絕對網址；沒有就整行刪掉
+  favicon: "https://example.com/favicon.png"
+  title: "ChatGPT 桌面版入門｜讓 AI 直接讀你的資料夾"
+  badge: "校內研習｜30 分鐘"
+  # hero_title 支援 <br> 換行
+  hero_title: "ChatGPT 桌面版入門<br>讓 AI 直接讀你的資料夾"
+  subtitle: "安裝桌面版、選一個資料夾，把成果存成檔案"
+
+# ---------------------------------------------------
+# 講者資訊（整段不寫，頁面就不顯示講者介紹）
+# ---------------------------------------------------
+instructor:
+  name: "你的名字"
+  tagline: "一句話介紹自己（職稱 · 專長）"
+  bio: >
+    用兩三句話說明你是誰、這份講義為誰而寫。<br>
+    第二行可以寫你擅長的主題。
+  # avatar 留空則使用 placeholder（👤 圖示）
+  # 可省略副檔名，build 會自動偵測 jpg/jpeg/png/webp/gif/svg
+  # 路徑相對於 config/ 的父目錄（即 global.yaml 所在的 config/ 之上一層）
+  avatar: "config/assets/author"
+  # stats：text 支援 **粗體** 等 inline markdown
+  stats:
+    - text: "🎤 分享超過 **10** 場"
+      url: "https://example.com/talks"
+    - text: "✍️ 發表 **30** 篇文章"
+      url: "https://example.com/posts"
+  # 支援平台：Medium, Facebook, Threads, YouTube, GitHub, LinkedIn, Email
+  socials:
+    - platform: "YouTube"
+      url: "https://www.youtube.com/@example"
+    - platform: "Facebook"
+      url: "https://www.facebook.com/example"
+    - platform: "Email"
+      url: "mailto:you@example.com"
+
+# ---------------------------------------------------
+# 引言（opening 出現在講師介紹後、closing 出現在所有章節後）
+# ---------------------------------------------------
+quotes:
+  opening:
+    text: "把重複的事交給 AI，<br>把判斷留給自己。"
+    # author: "某某人"  # 可選，不填則不顯示
+  closing:
+    text: >
+      有檔案不等於完成，<br>
+      打開驗收才算交付。
+    # author: ""
+
+# ---------------------------------------------------
+# Hero 導覽按鈕
+# 預設從 content.md 的 # 章節自動產生，不需手動維護
+# 若需自訂按鈕文字，取消註解：
+# ---------------------------------------------------
+# nav:
+#   - text: "自訂文字"
+#     href: "#section-id"
+
+# ---------------------------------------------------
+# 頁尾
+# ---------------------------------------------------
+footer:
+  cta: "覺得內容有幫助，歡迎分享給需要的人"
+  copyright: "© 你的名字"
+  # show_socials: true 會在 footer 重複顯示社群連結
+  show_socials: true
+
+# ---------------------------------------------------
+# SEO / Open Graph（頁面要放上網分享才需要）
+# 重要：image 必須使用絕對 URL，社群平台無法解析相對路徑
+# ---------------------------------------------------
+seo:
+  site_name: "你的名字或單位名稱"
+  type: "article"
+  title: "ChatGPT 桌面版入門"
+  description: "給老師的 30 分鐘研習講義：安裝 ChatGPT 桌面版、選一個資料夾讓 AI 讀檔，並把成果存成檔案。"
+  image: "https://example.com/chatgpt-desktop/assets/og-image.jpg"
+  url: "https://example.com/chatgpt-desktop/"

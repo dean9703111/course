@@ -1,0 +1,20 @@
+# 全域設定：所有講義共用的講者資訊與頁尾。
+# 放在「講義資料夾的上一層」的 config/global.yaml（build 會從講義資料夾往上找最多 4 層）。
+# 下面是示範文字，請換成自己的；不需要的欄位整段刪掉即可。完整欄位見 reference/config-example.yaml。
+
+instructor:
+  name: "你的名字"
+  tagline: "一句話介紹自己（職稱 · 專長）"
+  bio: "用兩三句話說明你是誰、這份講義為誰而寫。"
+  # avatar: "config/assets/author"   # 頭像放 config/assets/author.jpg（副檔名可省略）；不設定就顯示預設圖示
+  # socials:
+  #   - platform: "Email"
+  #     url: "mailto:you@example.com"
+
+footer:
+  cta: "覺得內容有幫助，歡迎分享給需要的人"
+  copyright: "© 你的名字"
+  show_socials: false
+
+seo:
+  site_name: "你的名字或單位名稱"
