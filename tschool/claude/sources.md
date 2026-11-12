@@ -107,3 +107,43 @@ content.md 各處以 `<!-- 待補圖片：檔名｜要拍什麼 -->` 註解標�
 | `assets/claude-gmail.png` | 側欄露出達和案例對話「委託廢棄物遭非法棄置的責任研究」與釘選的「PPA 線上課程」；重拍時側欄只留練習對話，或裁掉側欄 |
 | `assets/claude-gmail-permissions-list.png` | 側欄露出達和案例對話「委託廢棄物遭非法棄置的責任研究」與釘選的「PPA 線上課程」；重拍時側欄只留練習對話，或裁掉側欄 |
 | `assets/claude-gmail-permissions-check.png` | 側欄露出達和案例對話「委託廢棄物遭非法棄置的責任研究」與釘選的「PPA 線上課程」；用閱讀日練習信件重拍授權視窗，側欄只留練習對話 |
+
+## 2026-11-12 重構：對齊第 1、2 堂改版後的內容與風格
+
+第 1 堂已教去識別化、Gmail／Calendar、專案，第 2 堂已教 Skill 的痛點、SOP 比喻、四種做法與使用經驗；本堂重複的段落改成「上一堂 🆚 今天」對照表。上面的章節對照表是重構前的紀錄，差異如下：
+
+| 章節 | 怎麼改 |
+| --- | --- |
+| 課前回顧 | 改成 Codex 堂的主題式寫法（第 1 堂、第 2 堂各一張 flow），新增「同一類功能，在兩家各叫什麼」對照表，成果由 4 個改為 5 個；修正舊版提到已取消的「教材配圖」Skill |
+| 起手式＋開工設定 | 併成一章。刪痛點 1～3 三張卡（前兩堂已解決）：痛點 1 的家長通知 Prompt 與風險提醒移到 Skill 章當動機，痛點 2 的記憶洞察與 `claude-memory.png` 移到「讓 Claude 更了解你」，痛點 3 只留「人類比 AI 更像機器人」洞察（移到 Skill 章）；`[interactive]` 移到 Skill 章「換成你」；新增兩家設定位置對照表 |
+| 資料安全 | 新增「上一堂處理 Word，今天處理 Excel」對照表，其餘不動 |
+| Connector | 新增兩家對照表；「練習前準備」移到章首；三個「沒有連接」的 Prompt 收成章末一節（改法對照表＋分類 Prompt＋參考分類），刪貼郵件串、貼行事曆兩個重複 Prompt |
+| Project | 刪與第 1 堂逐字相同的「痛點」「基礎架構」兩張卡與「無法分享」警告，改成「ChatGPT 專案 vs Claude Project」對照表；實作步驟不動 |
+| Skill | 刪與第 2 堂相同的「流程都在某個人腦袋裡」「提示詞一直複製貼上」「SOP 手冊」三張卡，改成兩家操作對照表＋家長通知 Prompt 當動機；驗證二獨立成「Skill 搭配 Project」小節 |
+| 分享與深入 | 「Skill 使用經驗」與第 2 堂逐字相同，收成一張 flow；Manus Skill 影片由嵌入改為連結 |
+| 結語 | 改為「📌 課程總結」，下一堂預告收成一則洞察 |
+
+授課前要確認：第 2 堂技能包（zip）匯入 Claude 尚未實測；兩家對照表的 ChatGPT 欄位取自第 1、2 堂講義，介面改版時要一起更新。
+
+## 2026-11-12 Skill 兩章改版：示範上一堂的 Skill，Project 改當案例庫
+
+- `parent-notice` 家長通知 Skill 整段移除，改成兩個 Skill：把第 2 堂的 `weekly-review` 用同一段白話在 Claude 再建一次；新增 `admin-template`，從 Project 的過去案例找最接近的一份來改寫。
+- 新增練習素材 `example/admin-cases/`（build 時打包為 `assets/admin-cases.zip`）：6 份虛構通知與公告，每份有「發出後的紀錄」（家長問最多的問題、下次要改的地方）。學校沿用第 2 堂的星光國小、五年三班王老師；日期都是 114 學年，星期已核對。
+- 驗證的預期結果寫在講義的表格：閱讀日通知應選 `02-親子共讀夜活動通知`，不能出現 12 月 12 日、圖書室、18:30；畢業典禮邀請函應先說沒有相近案例。兩個驗證都還沒在 Claude 實跑。
+- 分享改用 `weekly-review` 示範下載；匯入改用第 2 堂的 `info-card-generator`（連結到 `../codex/assets/info-card-generator.zip`，沒有複製一份），Prompt 是把本堂 5 個重點做成複習圖卡。
+- 「Skill 的結構」恢復成互動網頁 `html/skill-anatomy.html`（複製自 tahoho，四個範例改成 `admin-template` 與資訊卡技能包；程式腳本與參考資源兩格是示意，不是技能包的原始碼）。
+- 待補圖片改名：`claude-skill-parent-notice*.png` 三張不再使用；新增 `claude-skill-weekly-review.png`、`claude-skill-weekly-review-chat.png`、`claude-project-admin-cases.png`、`claude-skill-admin-template.png`、`claude-skill-admin-template-project.png`、`claude-skill-admin-template-nothing.png`、`claude-card-generator-school.png`。
+- 堂次時間軸的第 3 堂簡介仍寫「把家長通知流程存成 Skill」，四堂講義與 `overview.md` 都有這句，這次沒有動。
+
+## 2026-11-12 Project 改成行政情境，Skill 章只留行政範本
+
+上一段紀錄中的 `weekly-review` 重建已移除，以這一段為準。
+
+- Project 章的練習由「閱讀日活動籌備」改成「行政文件案例庫」：定版文件上傳 `example/admin-cases/` 的 01～06，會變動的文件改用新增的 `07-本學期活動一覽.csv` 放 Google Drive。指令改為「行政文件助理」，重點是分清過去的案例與這學期的安排。
+- Project 驗證改為四題：校外教學家長問最多什麼（出處）、有沒有畢業典禮的通知（誠實）、班親會能不能沿用上次時間（過去與現在）、閱讀日場地改完試算表後變成多功能教室（雲端更新）。原本的「草案被決議取代」與「物資收據 210 → 250」不再使用。
+- `07` 的年份用 2030，和 Connector 章的閱讀日郵件串一致；01～06 的案例是 2025 學年，講義只稱「過去的案例」。
+- 閱讀日素材包的 `01`、`02`、`05` 本堂不再用於 Project，Connector 章的素材對照表已改寫用途，檔案沒有刪。
+- Skill 章順序：兩家對照 → 用白話生成 `admin-template` → 進到案例庫專案呼叫（只說「幫我寫這學期閱讀日的家長通知」，日期與場地由活動一覽帶出）→ 存回案例庫 → 週報案例 → 換成你。畢業典禮的驗證移到 Project 章。
+- 上一堂 Skill 的示範只留「匯入 `info-card-generator`」，放在分享與深入章；下載示範改用 `admin-template`。
+- 待補圖片：`claude-skill-weekly-review*.png` 兩張與 `claude-skill-admin-template-nothing.png` 不再使用；Project 章各張截圖的檔名沿用，但要拍的內容已換成案例庫，以 `content.md` 的註解為準。
+

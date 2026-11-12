@@ -3,14 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="generator" content="course-page-generator 91bbd7c">
+  <meta name="generator" content="course-page-generator 63b0893">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Claude｜串接工具、建立知識庫、把好方法變 SOP</title>
   <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Claude 串接工具與知識庫｜生成式 AI 研習第 3 堂">
-  <meta property="og:description" content="教師與學校行政的 Connector、Project、Skill 實戰">
+  <meta property="og:description" content="為學校老師與行政設計的 Claude 講義：開工設定與學生名冊去識別化，用 Connector 分類信件、建立行程，用 Project 建立活動知識庫，再把家長通知流程存成 Skill。">
   <meta property="og:image" content="https://deanlin.net/course/tschool/claude/assets/og-image.jpg">
   <meta property="og:url" content="https://deanlin.net/course/tschool/claude/">
   <meta property="og:site_name" content="林鼎淵 Dean Lin">
@@ -955,6 +955,35 @@
       font-size: .8rem;
       color: var(--text-dim);
       line-height: 1.6
+    }
+
+    /* 步驟下方的子列點（[flow] 內縮排的 `- `） */
+    .flow-step .step-list {
+      list-style: none;
+      margin: .2rem 0 0;
+      padding: 0;
+      font-size: .8rem;
+      color: var(--text-dim);
+      line-height: 1.6
+    }
+
+    .flow-step .step-list li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: .15rem;
+      font-size: inherit
+    }
+
+    .flow-step .step-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: calc((1lh - 5px) / 2);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      border: 0;
+      background: var(--accent2)
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -4438,7 +4467,8 @@
       margin-bottom: .1rem;
     }
 
-    #print-slides .flow-step .step-desc {
+    #print-slides .flow-step .step-desc,
+    #print-slides .flow-step .step-list {
       font-size: .74rem;
       line-height: 1.5;
     }
@@ -6815,12 +6845,13 @@
       </a>
       <ul class="toc-sub"></ul>
     </li>
-    <li class="toc-group" data-section="section-x">
-      <a href="#section-x" class="toc-group-title">
+    <li class="toc-group" data-section="5">
+      <a href="#5" class="toc-group-title">
         <span class="toc-num">🙋</span> 課前回顧
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-1">開始前，快速確認兩件事</a></li>
+        <li><a href="#sub-1-chatgpt">第 1 堂 ChatGPT：把需求說清楚，守住資料</a></li>
+        <li><a href="#sub-2-codex-ai-skill">第 2 堂 Codex：讓 AI 動手，把流程存成 Skill</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="ai">
@@ -6828,22 +6859,14 @@
         <span class="toc-num">1</span> 起手式
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-2">不是不想用，而是不知道在哪裡用</a></li>
-        <li><a href="#sub-section-3">了解使用時機、合作方式</a></li>
+        <li><a href="#sub-claude">認識 Claude 的功能與模型</a></li>
+        <li><a href="#sub-claude-2">上一堂設過的，Claude 也設一次</a></li>
+        <li><a href="#sub-claude-3">讓 Claude 更懂你、更能幹</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-2">
       <a href="#section-2" class="toc-group-title">
-        <span class="toc-num">2</span> 開工設定
-      </a>
-      <ul class="toc-sub">
-        <li><a href="#sub-section-4">先守住資料底線</a></li>
-        <li><a href="#sub-claude">讓 Claude 更懂你、更能幹</a></li>
-      </ul>
-    </li>
-    <li class="toc-group" data-section="section-3">
-      <a href="#section-3" class="toc-group-title">
-        <span class="toc-num">3</span> 資料安全
+        <span class="toc-num">2</span> 資料安全
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-section-6">快速認識去識別化</a></li>
@@ -6852,34 +6875,37 @@
     </li>
     <li class="toc-group" data-section="connector-ai">
       <a href="#connector-ai" class="toc-group-title">
-        <span class="toc-num">4</span> 串接日常工具
+        <span class="toc-num">3</span> 串接日常工具
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-8">整理信件、建立標籤</a></li>
-        <li><a href="#sub-section-9">寫入日曆與參考資訊</a></li>
+        <li><a href="#sub-section-8">連接前先準備素材</a></li>
+        <li><a href="#sub-section-9">整理信件、建立標籤</a></li>
+        <li><a href="#sub-section-10">寫入日曆與參考資訊</a></li>
+        <li><a href="#sub-section-11">沒有連接權限，也能練同一件事</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="project">
       <a href="#project" class="toc-group-title">
-        <span class="toc-num">5</span> 建立專屬知識庫
+        <span class="toc-num">4</span> 建立專屬知識庫
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-project">為什麼要建立 Project</a></li>
-        <li><a href="#sub-section-11">活動草案、決議 &amp; 版本追蹤</a></li>
+        <li><a href="#sub-claude-4">上一堂的專案，換到 Claude</a></li>
+        <li><a href="#sub-section-13">過去的通知與這學期的安排，放進同一個專案</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="sop-skill">
       <a href="#sop-skill" class="toc-group-title">
-        <span class="toc-num">6</span> 把好方法變成 SOP
+        <span class="toc-num">5</span> 把好方法變成 SOP
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-skill">為什麼需要 Skill？</a></li>
-        <li><a href="#sub-skill-2">提出需求建立 Skill</a></li>
+        <li><a href="#sub-skill-claude">上一堂的 Skill，換到 Claude</a></li>
+        <li><a href="#sub-skill">用白話生成「找範本來改」的 Skill</a></li>
+        <li><a href="#sub-skill-2">換成你：哪個流程值得存成 Skill</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="skill">
       <a href="#skill" class="toc-group-title">
-        <span class="toc-num">7</span> 分享與深入
+        <span class="toc-num">6</span> 分享與深入
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-skill-3">分享 &amp; 匯入 Skill</a></li>
@@ -6887,13 +6913,11 @@
         <li><a href="#sub-skill-5">Skill 使用經驗</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="ai-sop">
-      <a href="#ai-sop" class="toc-group-title">
-        <span class="toc-num">8</span> 結語
+    <li class="toc-group" data-section="summary">
+      <a href="#summary" class="toc-group-title">
+        <span class="toc-num">📌</span> 課程總結
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-17">本堂重點回顧</a></li>
-        <li><a href="#sub-section-18">下一堂預告</a></li>
       </ul>
     </li>
 
@@ -6924,26 +6948,25 @@
 
     <header class="hero">
     <div class="hero-badge"><span class="dot"></span>生成式 AI 研習｜第 3 堂</div>
-    <h1>串接工具、建立知識庫、把好方法變 SOP</h1>
-    <p class="hero-sub">教師與學校行政的 Connector、Project、Skill 實戰</p>
+    <h1>串接工具、建立知識庫，<br>把好方法變 SOP</h1>
+    <p class="hero-sub">從去識別化、Connector、Project 到 Skill，了解不同 AI Agent 的通用性</p>
     <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
     <nav class="hero-nav">
-      <a href="#section-x">課前回顧</a>
+      <a href="#5">課前回顧</a>
     <a href="#ai">起手式</a>
-    <a href="#section-2">開工設定</a>
-    <a href="#section-3">資料安全</a>
+    <a href="#section-2">資料安全</a>
     <a href="#connector-ai">串接日常工具</a>
     <a href="#project">建立專屬知識庫</a>
     <a href="#sop-skill">把好方法變成 SOP</a>
     <a href="#skill">分享與深入</a>
-    <a href="#ai-sop">結語</a>
+    <a href="#summary">課程總結</a>
           </nav>
   </header>
 
   <section class="quote-page">
   <div class="reveal">
     <div class="quote-mark">“</div>
-    <blockquote>AI 可以幫你動手，先把資料、範圍與完成標準說清楚。</blockquote>
+    <blockquote>AI Agent 很多，<br>但熟悉一個最重要。</blockquote>
     <div class="quote-line"></div>
   </div>
 </section>
@@ -7043,90 +7066,147 @@
       </div>
     </div>
   </div>
-  <div class="reveal">
-    <p class="loose-text"><!-- 講師備註：本堂可獨立起步，不要求先上 ChatGPT／Codex。所有範例資料（閱讀日、信件、行事曆、收據）皆為虛構，不是校方既有規定。編寫依據見 sources.md。 --></p>
-  </div>
 </section>
 
 <hr class="divider">
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="section-x" data-seg="0"><span class="num">🙋</span> 課前回顧</span>
-    <h2>前兩堂學了什麼？</h2>
+    <span class="section-label" id="5" data-seg="0"><span class="num">🙋</span> 課前回顧</span>
+    <h2>5 分鐘掌握前兩堂的重點</h2>
     
   </div>
 
   <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">前兩堂都是在「聊天視窗」與「資料夾」裡把事情做好</div>
-      <p>今天要讓 AI 走出聊天視窗，<code>接上你每天在用的工具</code>，再把做得順的流程存下來。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-section-1" data-seg="0"><span class="bar"></span>開始前，快速確認兩件事</div>
+    <div class="sub-title" id="sub-1-chatgpt" data-seg="0"><span class="bar"></span>第 1 堂 ChatGPT：把需求說清楚，守住資料</div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">💬</span> 第 1 堂：ChatGPT 學了什麼？</div>
-      <div class="group-body">
-        <ul>
-  <li><strong>Prompt</strong>：角色、背景、格式、限制交代清楚，AI 才寫得出能用的通知與教案</li>
-  <li><strong>記憶與專案</strong>：讓 AI 記得你教哪個年級、常用什麼語氣</li>
-  <li><strong>三家功能對標</strong>：名字不同、方法相同；今天<code>換 Claude 做同樣的事</code>，你會發現很多操作似曾相識</li>
-  <li>不記得操作也沒關係，今天每個練習都會<code>重新帶一次</code></li>
-</ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📂</span> 第 2 堂：Codex 學了什麼？</div>
-      <div class="group-body">
-        <ul>
-  <li><strong>讓 AI 直接讀資料夾</strong>：安裝桌面版，文件不用上傳就能問答，還把手寫報名表照片轉成 Excel</li>
-  <li><strong>用現成的 Skill 交付教材</strong>：寫信風格、教材配圖在 ChatGPT 用；資訊卡、線上講義與校園簡報用到程式，交給 Codex</li>
-  <li><strong>人要驗收</strong>：AI 說做完了，要自己打開檔案核對</li>
-  <li>上一堂<code>用白話生成了第一版 Skill</code>，今天<code>把自己的流程設計得更完整</code></li>
-</ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧳</span> 這堂課會帶走的 4 個成果</div>
+      <div class="group-header"><span class="icon">💬</span> 先學會用對話把事情做好</div>
       <div class="group-body">
         <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <div class="step-title">工具設定</div>
-          <div class="step-desc">隱私、個人偏好、能力開關，一次設定好</div>
+          <div class="step-title"><strong>生成式 AI 的本質是文字接龍</strong></div>
+          <div class="step-desc">目前 AI 無法避免幻覺，課綱、法規、考題解析都可能是錯的，<code>得到答案後一定要查證</code></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title">信件分類與行程</div>
-          <div class="step-desc">用 Connector 讓 AI 整理信箱、把信件內容寫進行事曆</div>
+          <div class="step-title"><strong>帳號、工具、資料三道門</strong></div>
+          <div class="step-desc">關閉模型訓練、開啟多重驗證；學生資料要交給 AI，先做<code>去識別化</code></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">活動籌備 Project</div>
-          <div class="step-desc">把活動草案與決議放進知識庫，問得到出處、不會亂編</div>
+          <div class="step-title"><strong>Prompt 六個技巧</strong></div>
+          <div class="step-desc">角色、語氣與受眾、符號與格式、專有名詞、請 AI 優化 Prompt、先反問再動手</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
         <div class="step-content">
-          <div class="step-title">家長通知 Skill</div>
-          <div class="step-desc">把寫通知的好方法存成 SOP，換個活動也能重用</div>
+          <div class="step-title"><strong>不用每次重講的三個功能</strong></div>
+          <div class="step-desc"><code>記憶與自訂</code>讓 AI 認識你、<code>外掛程式</code>連上 Gmail 與行事曆、<code>專案</code>放進指令與知識庫</div>
+        </div>
+      </div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">主流 AI Agnet 功能雷同</div>
+      <p>名字不同、邏輯相同，<code>熟悉一個最重要</code>；今天用 Claude 示範給大家看。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-2-codex-ai-skill" data-seg="0"><span class="bar"></span>第 2 堂 Codex：讓 AI 動手，把流程存成 Skill</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">📂</span> 從回答問題，到交出檔案</div>
+      <div class="group-body">
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title"><strong>桌面版直接讀資料夾</strong></div>
+          <div class="step-desc">選一個資料夾當工作範圍，文件不用上傳；成果直接<code>寫成檔案</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title"><strong>照片也能彙整</strong></div>
+          <div class="step-desc">手寫報名表照片轉成 Excel，看不清楚的格子<code>留空標黃、不要猜</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title"><strong>Skill 的四種做法</strong></div>
+          <div class="step-desc">把既有流程存起來、用白話生成、讓 AI 讀你寫過的信做出自己的版本、匯入別人做好的技能包</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title"><strong>用到程式的 Skill 交給 Codex</strong></div>
+          <div class="step-desc">資訊卡、線上簡報、模板簡報，成品直接寫進資料夾</div>
+        </div>
+      </div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">專案放知識，Skill 放步驟</div>
+      <p>AI 說做完了，還是要自己打開檔案核對；<code>別忘記 AI 無法幫人背黑鍋</code>。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🧳</span> 這堂課會帶走的 5 個成果</div>
+      <div class="group-body">
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Claude 基礎設定</div>
+          <div class="step-desc">隱私、個人偏好、能力開關</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">學生名冊去識別化</div>
+          <div class="step-desc">多工作表的 Excel，學號用自訂規則一次處理</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">信件分類與行程</div>
+          <div class="step-desc">用 Connector 分類信件貼標籤、寫回覆草稿，建立行程前先檢查衝突</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">行政文件案例庫 Project</div>
+          <div class="step-desc">過去發過的通知上傳、這學期的安排放雲端；問得到出處、不會亂編</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">行政範本 Skill</div>
+          <div class="step-desc">用白話生成，讓 Skill 從 Project 的過去案例找範本改寫；再匯入上一堂的資訊卡 Skill，看懂 Skill 的結構</div>
         </div>
       </div>
     </div>
@@ -7147,230 +7227,12 @@
   <div class="reveal">
     <div class="insight">
       <div class="insight-title">為什麼別人的 AI 比我的強？</div>
-      <p>如果僅用聊天視窗與 AI 對話，那遠遠<code>無法發揮它的潛力</code>。</p>
+      <p>如果僅用聊天視窗與 AI 對話，那遠遠<code>無法發揮它的潛力</code>。<br>前兩堂已經給過 AI 資料夾與 Skill；今天在 Claude 把工具一樣一樣接上。</p>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-2" data-seg="0"><span class="bar"></span>不是不想用，而是不知道在哪裡用</div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">想讓 AI 落地，先讓大家看見案例</div>
-      <p>只有實戰演練，才會知道<code>可以這樣做</code>，否則大部分的人僅使用基本的<strong>對話功能、做重複的事</strong>。<br>所以這堂課不只我做，也會讓大家實際動手。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">💬</span> 回想一下，你平常都拿 AI 來做什麼？</div>
-      <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">寫文件</div>
-          <div class="step-desc">寫家長通知、潤飾評語、改語氣、翻譯成簡單的句子</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">查資料</div>
-          <div class="step-desc">搜尋資訊、查不懂的名詞、找活動靈感</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">整理資料</div>
-          <div class="step-desc">彙整名單、比對時程、整理會議紀錄</div>
-        </div>
-      </div>
-    </div>
-        <div class="insight">
-      <div class="insight-title">這些任務有一個共通點</div>
-      <p>你<code>問一句</code>、AI <code>答一段</code>，最後會拿到一個<code>結果</code>。<br>但下次再遇到同樣的事，你還是得<code>從頭再問一次</code>。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🤔</span> 痛點 1: 每一個 Prompt 都要重新交代</div>
-      <div class="group-body">
-        <p>為了有<strong>更好的品質</strong>，每次開啟新對話與 AI 討論時，都要提供<code>背景資訊</code>，比如請 AI <code>寫活動通知</code>時：</p>
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title"><strong>角色扮演</strong></div>
-          <div class="step-desc">你是熟悉<code>國中小學校行政</code>與<code>家長溝通</code>的<code>行政助理</code>，用詞清楚、語氣親切</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title"><strong>背景資訊</strong></div>
-          <div class="step-desc">學校要辦一場<code>閱讀日</code>，對象是哪個年級、什麼時間、什麼場地、誰要準備什麼</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title"><strong>參考資源</strong></div>
-          <div class="step-desc">指定 AI 只根據<code>我提供的活動草案與決議</code>寫，不要引用網路上的範例</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <div class="step-title"><strong>輸出結構</strong></div>
-          <div class="step-desc">通知依序列出<code>活動名稱、時間、地點、需準備、聯絡方式</code></div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">5</div>
-        <div class="step-content">
-          <div class="step-title"><strong>查證要求</strong></div>
-          <div class="step-desc">沒寫的資訊不要補，不確定的地方標「待確認」，<code>不可以自己編報名方式或費用</code></div>
-        </div>
-      </div>
-    </div>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">寫提示詞需要花很多力氣</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">你是一位熟悉國中小學校行政與家長溝通的行政助理，用詞清楚、語氣親切。
-
-背景：學校要辦「閱讀日」，對象是六年級，自由參加。
-活動資訊：[5/15 下午 13:30–14:30，多功能教室，需帶借閱證]
-
-只根據以上活動資訊撰寫，不要引用其他範例。
-
-請幫我整理成家長通知：
-- 依序列出：活動名稱、時間、地點、需準備、聯絡方式
-- 語氣親切，不要寫得像公文
-- 沒寫的資訊不要補，不確定的地方標「待確認」，不可以自己編報名方式或費用</div>
-    </div>
-        <div class="warning">
-      <div class="warning-title">⚠️ 家長通知交給 AI 前，先知道這些風險</div>
-      <ul>
-        <li>AI 可能把「看起來合理」的資訊補成<code>事實</code>，日期、場地、費用一定要<code>回到正式公文或決議核對</code></li>
-        <li>活動內容有更新時，要確認引用的是<code>最新版本</code></li>
-        <li>學生姓名、座號、輔導紀錄這類個資，<code>不要貼給 AI</code></li>
-        <li>尚未核定的預算與費用，<code>不要寫進通知</code></li>
-      </ul>
-    </div>
-        <div class="insight">
-      <div class="insight-title">每辦一場新活動，就要重打一次複雜的提示詞</div>
-      <p>後面的 <code>Project</code> 可以把角色、參考資料、查證要求存起來，之後只要換 <code>活動</code> 就好。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🤔</span> 痛點 2: 生成結果不穩定、需要多次引導</div>
-      <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title"><strong>需要多次引導</strong></div>
-          <div class="step-desc">AI 第一次給出的結果通常<code>無法直接使用</code>，需要<code>多輪對話</code>才能到位；但關閉對話後，新對話窗又要<strong>從頭磨合</strong>。</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title"><strong>受過去交談內容影響</strong></div>
-          <div class="step-desc">討論不同主題如果<code>沒開新對話窗</code>，AI 也會<code>精神錯亂</code>；比如前面請它「寫正式的活動通知」，後面又要求「設計課堂小遊戲」，AI 回應品質會下降。</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title"><strong>規則不夠明確</strong></div>
-          <div class="step-desc">語言是模糊的，比如請 AI 回覆家長訊息時要求<code>態度誠懇、但不能承諾補考或加分</code>，那「誠懇」要到什麼程度？哪句話算承諾？沒有給<code>可以這樣寫／不能這樣寫</code>的句型範例，每次 AI 拿捏的分寸都不一樣。</div>
-        </div>
-      </div>
-    </div>
-        <div class="insight">
-      <div class="insight-title">提示詞很重要，但不是全部！</div>
-      <p>現在 AI 回答問題時，會參考過去你跟它的<code>聊天紀錄</code>。<br><strong>操作路徑</strong>: 左下角頭像 → Settings → Memory</p>
-    </div>
-        <p class="loose-text"><!-- 待換圖：claude-memory.png｜上方標題列（模糊但讀得出）是達和案例對話「委託廢棄物遭非法棄置的責任研究」；在新對話或練習對話中開設定重拍 --></p>
-        <figure class="content-image">
-      <img src="assets/claude-memory.png" width="1909" height="1046" alt="使用越久，AI 會更像自己" loading="lazy">
-      <figcaption>使用越久，AI 會更像自己</figcaption>
-    </figure>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🤔</span> 痛點 3: 需要自己複製貼上動手操作</div>
-      <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title"><strong>Mail 信件</strong></div>
-          <div class="step-desc">要把家長與校內來信<code>複製貼給 AI 讀</code>，AI 給出回覆建議後，還得自己<code>切回信箱貼上</code>內容再送出。</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title"><strong>資料夾裡的多種檔案</strong></div>
-          <div class="step-desc">Word、Excel、PDF 的教學計畫與會議紀錄要<code>一份份上傳</code>給 AI，彙整好的結果還得<code>自行下載</code>封存。</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title"><strong>每週例行查詢</strong></div>
-          <div class="step-desc"><code>每週</code>讓 AI 看完研習公告、行事曆後，還要自己<code>彙整到特定文件</code>中。</div>
-        </div>
-      </div>
-    </div>
-        <div class="insight">
-      <div class="insight-title">人類比 AI 更像機器人</div>
-      <p>人類的價值在於<code>決策</code>，而不是這些<code>瑣碎、重複</code>的任務上<br><strong>如果這些痛點讓你感到共鳴，相信這堂課可以給你帶來幫助。</strong></p>
-    </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="interactive-page" id="ai-interactive">
-  <div class="interactive-session">
-    <div class="interactive-session__deco" aria-hidden="true">💬</div>
-    <div class="interactive-session__inner">
-      <h3 class="interactive-session__title">工作中重複又無聊的事</h3>
-    </div>
-    <div class="interactive-script">
-        <div class="interactive-script__mark" aria-hidden="true">"</div>
-        <div class="interactive-script__body"><strong>Q｜分享目前工作中感到重複、無聊的任務</strong><ul class="interactive-script__list"><li><code>多久做一次</code></li><li><code>一次花多久</code></li><li><code>最煩的是哪一步</code></li></ul></div>
-      </div>
-  </div>
-</section>
-
-<hr class="divider">
-<section class="section">
-  <div class="reveal">
-    <div class="sub-title" id="sub-section-3" data-seg="0"><span class="bar"></span>了解使用時機、合作方式</div>
+    <div class="sub-title" id="sub-claude" data-seg="0"><span class="bar"></span>認識 Claude 的功能與模型</div>
   </div>
 
   <div class="reveal">
@@ -7496,26 +7358,54 @@
       </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-<section class="section">
   <div class="reveal">
-    
-    <span class="section-label" id="section-2" data-seg="0"><span class="num">2</span> 開工設定</span>
-    <h2>隱私、偏好、權限，一次設好</h2>
-    
+    <div class="sub-title" id="sub-claude-2" data-seg="0"><span class="bar"></span>上一堂設過的，Claude 也設一次</div>
   </div>
 
   <div class="reveal">
-    <div class="insight">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🆚</span> 同樣的設定，在兩家的位置</div>
+      <div class="group-body">
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left">設定</th>
+            <th class="align-left">ChatGPT（第 1 堂）</th>
+            <th class="align-left">Claude（今天）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>不讓資料拿去訓練</strong></td>
+            <td class="align-left">頭像 → 個人化 → 資料控制</td>
+            <td class="align-left">頭像 → Settings → Privacy</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>讓 AI 認識你</strong></td>
+            <td class="align-left">個人化：暱稱、職業、自訂指令</td>
+            <td class="align-left">Settings → Account：工作類型、Instructions for Claude</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>記憶</strong></td>
+            <td class="align-left">個人化 → 記憶摘要</td>
+            <td class="align-left">Settings → Memory</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>能力開關</strong></td>
+            <td class="align-left">上一堂沒有設定</td>
+            <td class="align-left">Settings → Capabilities</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <div class="insight">
       <div class="insight-title">用 AI 之前，先把設定做對</div>
       <p>隱私、個人偏好、能力開關各花幾分鐘設好，後面每個練習都會<code>受益</code>。</p>
     </div>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-section-4" data-seg="0"><span class="bar"></span>先守住資料底線</div>
+      </div>
+    </div>
   </div>
 
   <div class="reveal">
@@ -7548,7 +7438,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-claude" data-seg="0"><span class="bar"></span>讓 Claude 更懂你、更能幹</div>
+    <div class="sub-title" id="sub-claude-3" data-seg="0"><span class="bar"></span>讓 Claude 更懂你、更能幹</div>
   </div>
 
   <div class="reveal">
@@ -7578,6 +7468,15 @@
         <figure class="content-image">
       <img src="assets/claude-general-setting.png" width="1909" height="1046" alt="Claude 使用偏好設定" loading="lazy">
       <figcaption>Claude 使用偏好設定</figcaption>
+    </figure>
+        <div class="insight">
+      <div class="insight-title">提示詞很重要，但不是全部！</div>
+      <p>現在 AI 回答問題時，會參考過去你跟它的<code>聊天紀錄</code>。<br><strong>操作路徑</strong>: 左下角頭像 → Settings → Memory</p>
+    </div>
+        <p class="loose-text"><!-- 待換圖：claude-memory.png｜上方標題列（模糊但讀得出）是達和案例對話「委託廢棄物遭非法棄置的責任研究」；在新對話或練習對話中開設定重拍 --></p>
+        <figure class="content-image">
+      <img src="assets/claude-memory.png" width="1909" height="1046" alt="使用越久，AI 會更像自己" loading="lazy">
+      <figcaption>使用越久，AI 會更像自己</figcaption>
     </figure>
       </div>
     </div>
@@ -7645,7 +7544,7 @@
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="section-3" data-seg="0"><span class="num">3</span> 資料安全</span>
+    <span class="section-label" id="section-2" data-seg="0"><span class="num">2</span> 資料安全</span>
     <h2>上傳學生資料前，先做去識別化</h2>
     
   </div>
@@ -7659,6 +7558,47 @@
 
   <div class="reveal">
     <div class="sub-title" id="sub-section-6" data-seg="0"><span class="bar"></span>快速認識去識別化</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🆚</span> 上一堂處理 Word，今天處理 Excel</div>
+      <div class="group-body">
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left"></th>
+            <th class="align-left">第 1 堂</th>
+            <th class="align-left">今天</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>檔案</strong></td>
+            <td class="align-left">Word 的學生個別輔導紀錄</td>
+            <td class="align-left">多工作表的 Excel 學生名冊</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>輸出設定</strong></td>
+            <td class="align-left"><code>全部隱藏</code>（不需要統計）</td>
+            <td class="align-left"><code>部分保留</code>（要統計行政區）</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>漏抓的學號</strong></td>
+            <td class="align-left">用滑鼠圈選，一筆一筆新增</td>
+            <td class="align-left">新增<code>自訂規則</code>，一次處理</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>交給 AI 做什麼</strong></td>
+            <td class="align-left">ChatGPT 整理成輔導室摘要</td>
+            <td class="align-left">Claude 統計人數、找出聯絡資料缺漏</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+      </div>
+    </div>
   </div>
 
   <div class="reveal">
@@ -7909,40 +7849,67 @@
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="connector-ai" data-seg="0"><span class="num">4</span> 串接日常工具</span>
+    <span class="section-label" id="connector-ai" data-seg="0"><span class="num">3</span> 串接日常工具</span>
     <h2>透過 Connector 讓 AI 長出眼睛和手</h2>
     
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <div class="insight-title">將不同工具操作的任務集中到 Claude 處理</div>
-      <p>以前寫信、建立行程、搜尋檔案都要去不同應用程式。<br>現在設定好 Connector 就能<code>在 Claude 集中管理</code>。</p>
+      <div class="insight-title">上一堂的「外掛程式」，在 Claude 叫 Connector</div>
+      <p>第 1 堂用 ChatGPT 彙整信件、把信件轉成行程；今天換 Claude 做同樣的事，再多做兩件：<code>分類信件貼標籤</code>、<code>寫回覆草稿</code>。</p>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-8" data-seg="0"><span class="bar"></span>整理信件、建立標籤</div>
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">信箱爆炸，重要的信被淹沒</div>
-      <ul>
-        <li>研習通知、校內公告、副本信太多，真正<code>要回的信被埋在下面</code></li>
-        <li>信件沒有分類，要找之前的信只能<code>靠記憶搜尋</code></li>
-        <li>刪除信件太繁瑣，<code>容量快速耗盡</code></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text"><!-- 講師備註（課前準備）：示範帳號請用測試信箱。① 把 03-活動郵件串 的三封信各寄一次給自己（主旨照抄、內文連同「寄件人、時間」那一行）；② 在 Google Calendar 建 2030-05-10 13:45–14:15「模擬教研會」，不邀請任何人；③ 要示範分類或補拍標籤結果圖，可再把 08-分類練習信件 的十封信寄進測試信箱，自己寄的信寄件人都是自己，分類 Prompt 的「不需閱讀內容」要改成「閱讀內文第一行的寄件人與收件方式」。學員端的連接權限不一，現場以「自己信箱」或「貼上文字」兩種方式分流。 --></p>
+    <div class="sub-title" id="sub-section-8" data-seg="0"><span class="bar"></span>連接前先準備素材</div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧰</span> 練習前準備：下載虛構素材，選一種練習方式</div>
+      <div class="group-header"><span class="icon">🆚</span> 同一件事，兩家怎麼做</div>
+      <div class="group-body">
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left"></th>
+            <th class="align-left">ChatGPT（第 1 堂）</th>
+            <th class="align-left">Claude（今天）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>名稱</strong></td>
+            <td class="align-left">外掛程式</td>
+            <td class="align-left">Connector</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>入口</strong></td>
+            <td class="align-left">外掛程式 → 搜尋 → 點擊「+」</td>
+            <td class="align-left">Customize → Connectors → 點擊「+」</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>練習</strong></td>
+            <td class="align-left">彙整信件脈絡、信件轉行事曆</td>
+            <td class="align-left">再加上<code>分類貼標籤</code>、<code>回覆草稿</code>、<code>檢查行程衝突</code></td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>動手之前</strong></td>
+            <td class="align-left">建立行程前先給草稿</td>
+            <td class="align-left">一樣先看草稿，確認後才執行</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <p class="loose-text"><!-- 講師備註（課前準備）：示範帳號請用測試信箱。① 把 03-活動郵件串 的三封信各寄一次給自己（主旨照抄、內文連同「寄件人、時間」那一行）；② 在 Google Calendar 建 2030-05-10 13:45–14:15「模擬教研會」，不邀請任何人；③ 要示範分類或補拍標籤結果圖，可再把 08-分類練習信件 的十封信寄進測試信箱，自己寄的信寄件人都是自己，分類 Prompt 的「不需閱讀內容」要改成「閱讀內文第一行的寄件人與收件方式」。學員端的連接權限不一，現場以「自己信箱」或「貼上文字」兩種方式分流。 --></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🧰</span> 下載虛構素材，選一種練習方式</div>
       <div class="group-body">
         <a class="download-card" href="assets/reading-day.zip" download>
     <span class="download-card__icon" aria-hidden="true">⬇</span>
@@ -7971,7 +7938,7 @@
           </tr>
           <tr>
             <td class="align-left col-w"><strong><code>01-閱讀日草案</code>、<code>02-閱讀日決議</code></strong></td>
-            <td class="align-left">Project：上傳到知識庫</td>
+            <td class="align-left">郵件串的背景資料，想了解活動全貌可以看</td>
           </tr>
           <tr>
             <td class="align-left col-w"><strong><code>03-活動郵件串</code></strong></td>
@@ -7983,7 +7950,7 @@
           </tr>
           <tr>
             <td class="align-left col-w"><strong><code>05-假物資收據.csv</code></strong></td>
-            <td class="align-left">Project：放到 Google Drive 用連結參考</td>
+            <td class="align-left">今天用不到</td>
           </tr>
           <tr>
             <td class="align-left col-w"><strong><code>06-測試紀錄空白表</code></strong></td>
@@ -7996,7 +7963,6 @@
         </tbody>
       </table>
     </div>
-        <h4 class="minor-title">依自己的狀況選一種方式</h4>
         <div class="table-wrap">
       <table class="content-table">
         <colgroup>
@@ -8032,10 +7998,17 @@
     </div>
         <ul class="loose-list">
       <li>連接的信箱請用<code>個人或測試帳號</code>；校務信箱要先確認學校允許再連接</li>
-      <li>兩種方式練的是同一件事：<code>給來源、看草稿、確認後才執行</code>；貼上文字的版本每個小節都有對應的 Prompt</li>
+      <li>兩種方式練的是同一件事：<code>給來源、看草稿、確認後才執行</code>；貼上文字的做法放在本章最後</li>
     </ul>
-        <h4 class="minor-title">已連接的人：把虛構信件與行程放進自己的帳號</h4>
-        <p class="loose-text">講師的示範帳號課前已經放好；想用自己的帳號跟做同一個範例，照下面三步做：</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">📮</span> 已連接的人：把虛構信件與行程放進自己的帳號</div>
+      <div class="group-body">
+        <p>講師的示範帳號課前已經放好；想用自己的帳號跟做同一個範例，照下面三步做：</p>
         <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
@@ -8064,6 +8037,21 @@
       <p>素材裡的「籌備 A、籌備 B」是虛構代號，<code>沒有 Email</code>；信是你自己寄的，信箱裡的寄件人就會顯示成你自己。<br>內文保留「寄件人：籌備 A」那一行，AI 才分得出每封信是誰說的。</p>
     </div>
       </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>整理信件、建立標籤</div>
+  </div>
+
+  <div class="reveal">
+    <div class="insight">
+      <div class="insight-title">信箱爆炸，重要的信被淹沒</div>
+      <ul>
+        <li>研習通知、校內公告、副本信太多，真正<code>要回的信被埋在下面</code></li>
+        <li>信件沒有分類，要找之前的信只能<code>靠記憶搜尋</code></li>
+        <li>刪除信件太繁瑣，<code>容量快速耗盡</code></li>
+      </ul>
     </div>
   </div>
 
@@ -8147,31 +8135,6 @@
       <div class="insight-title">使用提醒</div>
       <p>建立與 Gmail 的連結後，Claude 可以<code>閱讀信件、建立草稿、建立標籤</code><br>但<code>刪除信件</code>這類高風險操作，建議由人類在標籤建立後自己判斷；有些通知依舊重要。<br>建議<code>小範圍</code>測試（先 50 封），沒問題後再擴大測試範圍、調整判斷規則。</p>
     </div>
-        <h4 class="minor-title">沒有連接信箱：貼上分類練習信件</h4>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">沒有連接信箱：用貼上的信件練習分類</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">下面是我貼上的信件清單（練習基準日 2030-05-06），請依寄件人、主旨與收件方式分類：
-
-- 🔴 重要：家長、主任、同事直接寄給我，需要我回覆、處理或做決定
-- 📁 封存：研習通知、校內公告、我只是副本（CC）、已處理完不需回覆
-- 🗑️ 刪除候選：電子報、廠商促銷、過期的通知或活動邀請
-
-有疑慮時，優先歸入「封存」而非「刪除候選」。
-用表格列出分類結果：| 寄件者 | 主旨 | 標籤 | 判斷理由 |
-
-[把 08-分類練習信件 的全文貼在這裡]</div>
-    </div>
-        <div class="insight">
-      <div class="insight-title">參考分類：重要 3 封、封存 4 封、刪除候選 3 封</div>
-      <p>信件 1～3 要你回覆；4～7 是通知、公告、副本與已處理完的信；8～10 是電子報、促銷與過期邀請。<br>AI 的結果不必一模一樣，重點是看它的<code>判斷理由</code>：同樣是研習中心寄的，信件 4 還能報名、信件 10 已經過期，分法就不同。</p>
-    </div>
       </div>
     </div>
   </div>
@@ -8213,27 +8176,12 @@
       <div class="insight-title">草稿的收件人怎麼辦？</div>
       <p>「籌備 B」是虛構代號、沒有 Email，寄進信箱的三封信寄件人也都是你自己；草稿的收件人留空或填自己就好。<br>這個練習要看的是<code>內容有沒有根據信件脈絡</code>（報名方式、截止日還沒確認），看完也<code>不要寄出</code>。</p>
     </div>
-        <h4 class="minor-title">沒有連接信箱：貼上郵件串</h4>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">沒有連接信箱：用貼上的郵件串練習</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">下面是我貼上的三封信，請依時間列出活動安排改了哪些地方，以及還有哪些事情沒確認；
-再幫我擬一封給籌備 B 的回覆草稿，請教報名方式與截止日預計什麼時候確認
-
-[把 03-活動郵件串 的全文貼在這裡]</div>
-    </div>
       </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>寫入日曆與參考資訊</div>
+    <div class="sub-title" id="sub-section-10" data-seg="0"><span class="bar"></span>寫入日曆與參考資訊</div>
   </div>
 
   <div class="reveal">
@@ -8278,7 +8226,7 @@
         </div>
       </div>
     </div>
-        <p class="loose-text">開始前先確認：信箱裡有 <code>03</code> 的三封信，日曆上有 <code>2030-05-10 13:45–14:15</code> 的「模擬教研會」（做法見前面的「練習前準備」）。</p>
+        <p class="loose-text">開始前先確認：信箱裡有 <code>03</code> 的三封信，日曆上有 <code>2030-05-10 13:45–14:15</code> 的「模擬教研會」（做法見前面的「連接前先準備素材」）。</p>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
@@ -8301,24 +8249,6 @@
       <div class="insight-title">預期會看到什麼？</div>
       <p>信中提議的 <code>14:00–14:30</code> 和「模擬教研會」<code>13:45–14:15</code> 重疊 15 分鐘，AI 應該先提醒，再建議備選的 <code>15:00–15:30</code>。<br>日曆上 15:00 沒有事件，<code>不代表每個人都有空、場地借得到</code>，所以出席名單要維持「未確認」。</p>
     </div>
-        <h4 class="minor-title">沒有連接日曆：貼上郵件串與模擬行事曆</h4>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">沒有連接日曆：用貼上的文字練習衝突判斷</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">下面是三封信與我的行事曆，請幫我擬一個會議事件的草稿（不用真的建立）：
-- 事件標題加上「[練習]」開頭
-- 抓出信中提議的會議日期與時間
-- 在事件說明裡附上備選時段與「出席名單未確認」的提醒
-- 如果時間和行事曆上的行程衝突，先提醒我，並說明備選時段是否可行
-
-[把 03-活動郵件串 與 04-模擬行事曆 的全文貼在這裡]</div>
-    </div>
         <div class="warning">
       <div class="warning-title">⚠️ 使用提醒</div>
       <p>Claude 是真的會<code>建立行程</code>，行程也可能<code>出現在參與人日曆</code>，執行前請確認。<br>練習請加上「[練習]」並<code>不要邀請任何人</code>，做完後自行刪除。</p>
@@ -8328,10 +8258,79 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-11" data-seg="0"><span class="bar"></span>沒有連接權限，也能練同一件事</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">📋</span> 把素材全文貼進對話，Prompt 改一句就好</div>
+      <div class="group-body">
+        <div class="table-wrap">
+      <table class="content-table">
+        <colgroup>
+          <col style="width:170px">
+          <col>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="align-left col-w">練習</th>
+            <th class="align-left">貼上哪份素材</th>
+            <th class="align-left">Prompt 怎麼改</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left col-w"><strong>分類信件</strong></td>
+            <td class="align-left"><code>08-分類練習信件</code></td>
+            <td class="align-left">「信箱最近 7 天內未標籤的信件」改成「下面貼上的信件清單（練習基準日 2030-05-06）」，不用建立標籤</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>彙整脈絡、回覆草稿</strong></td>
+            <td class="align-left"><code>03-活動郵件串</code></td>
+            <td class="align-left">「信箱中主旨有…的信件」改成「下面貼上的三封信」</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong>寫入行事曆</strong></td>
+            <td class="align-left"><code>03-活動郵件串</code>、<code>04-模擬行事曆</code></td>
+            <td class="align-left">「在日曆上建立事件」改成「擬一個事件草稿，不用真的建立」</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">沒有連接信箱：用貼上的信件練習分類</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">下面是我貼上的信件清單（練習基準日 2030-05-06），請依寄件人、主旨與收件方式分類：
+
+- 🔴 重要：家長、主任、同事直接寄給我，需要我回覆、處理或做決定
+- 📁 封存：研習通知、校內公告、我只是副本（CC）、已處理完不需回覆
+- 🗑️ 刪除候選：電子報、廠商促銷、過期的通知或活動邀請
+
+有疑慮時，優先歸入「封存」而非「刪除候選」。
+用表格列出分類結果：| 寄件者 | 主旨 | 標籤 | 判斷理由 |
+
+[把 08-分類練習信件 的全文貼在這裡]</div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">參考分類：重要 3 封、封存 4 封、刪除候選 3 封</div>
+      <p>信件 1～3 要你回覆；4～7 是通知、公告、副本與已處理完的信；8～10 是電子報、促銷與過期邀請。<br>AI 的結果不必一模一樣，重點是看它的<code>判斷理由</code>：同樣是研習中心寄的，信件 4 還能報名、信件 10 已經過期，分法就不同。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎬</span> 延伸學習：Manus 也有連接器</div>
       <div class="group-body">
-        <p><!-- 講師備註：本堂三張「延伸學習」卡的影片都是課後延伸，課堂不播放，只提一句。 --></p>
+        <p><!-- 講師備註：本堂兩張「延伸學習」卡的影片都是課後延伸，課堂不播放，只提一句。 --></p>
         <ul class="loose-list">
       <li>我有錄一支影片完整示範 Manus 的連接器：接上 Gmail、行事曆、Notion，讓 AI Agent 完成任務</li>
       <li>AI Agent 的功能幾乎<code>都有對標產品</code>，<code>熟悉一個最重要</code>：學會 Claude 的 Connector，換到 Manus 也能很快上手</li>
@@ -8354,41 +8353,63 @@
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="project" data-seg="0"><span class="num">5</span> 建立專屬知識庫</span>
+    <span class="section-label" id="project" data-seg="0"><span class="num">4</span> 建立專屬知識庫</span>
     <h2>建立 Project 不必每次重講背景</h2>
     
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-project" data-seg="0"><span class="bar"></span>為什麼要建立 Project</div>
+    <div class="insight">
+      <div class="insight-title">第 1 堂的「專案」，在 Claude 叫 Project</div>
+      <p>一樣是<code>指令＋知識庫</code>；今天多學一件事：<code>會變動的文件放雲端，用連結參考</code>。</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-claude-4" data-seg="0"><span class="bar"></span>上一堂的專案，換到 Claude</div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">😩</span> 痛點：背景每次重講，品質還不穩定</div>
+      <div class="group-header"><span class="icon">🆚</span> ChatGPT 專案 vs Claude Project</div>
       <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title"><strong>同個聊天視窗中</strong></div>
-          <div class="step-desc">AI 對話有上下文限制，<code>超過會變笨</code>；討論不同主題，<code>幻覺會嚴重</code></div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title"><strong>開新的聊天視窗</strong></div>
-          <div class="step-desc">你需要<code>重新交代背景資訊</code>，每次打的指令都不一樣</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title"><strong>需要重新上傳參考資訊</strong></div>
-          <div class="step-desc">如果檔案放在電腦，而你剛好<code>人在外面就無法操作</code>。</div>
-        </div>
-      </div>
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left"></th>
+            <th class="align-left">ChatGPT 專案（第 1 堂）</th>
+            <th class="align-left">Claude Project（今天）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>基礎架構</strong></td>
+            <td class="align-left">指令、資料來源、記憶</td>
+            <td class="align-left">指令（Instructions）、知識庫（Files）、記憶（Memory）</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>練習素材</strong></td>
+            <td class="align-left">行動研究的 4 份文件</td>
+            <td class="align-left">過去發過的 6 份通知、本學期活動一覽</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>指令重點</strong></td>
+            <td class="align-left">以文件為準、附出處、沒寫就說沒有</td>
+            <td class="align-left">再加上<code>什麼問題去哪份文件找</code></td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>會變動的文件</strong></td>
+            <td class="align-left">改了要重新上傳</td>
+            <td class="align-left">可以放 Google Drive，<code>用連結參考</code></td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>與同事共用</strong></td>
+            <td class="align-left">可以分享，權限分開設定</td>
+            <td class="align-left">目前<code>無法分享</code>，主要針對個人使用設計</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
         <div class="insight">
       <div class="insight-title">AI 有記憶能力，但不是無限的</div>
@@ -8414,7 +8435,7 @@
         <div class="step-num">2</div>
         <div class="step-content">
           <div class="step-title"><strong>手上有多個案子在跑</strong></div>
-          <div class="step-desc">班級經營、學年課務、閱讀日與校慶等不同活動</div>
+          <div class="step-desc">班級經營、學年課務、行政文件、閱讀日與校慶等不同活動</div>
         </div>
       </div>
     </div>
@@ -8427,52 +8448,17 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🗂️</span> Project 基礎架構</div>
-      <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title"><strong>指令（Instructions）</strong></div>
-          <div class="step-desc">我是誰、這個專案在做什麼、固定規則（ex: 要參考的資料、不要做的事）</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title"><strong>知識庫（Files）</strong></div>
-          <div class="step-desc">參考資料，可以是教學計畫、會議紀錄、活動決議、校內規範</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title"><strong>記憶（Memory）</strong></div>
-          <div class="step-desc">這個 Project 使用一段時間後，就會更理解你想要做的事</div>
-        </div>
-      </div>
-    </div>
-        <div class="warning">
-      <div class="warning-title">⚠️ 使用提醒</div>
-      <p>Project 目前<code>無法分享</code>給其他人，主要針對個人使用設計</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-section-11" data-seg="0"><span class="bar"></span>活動草案、決議 & 版本追蹤</div>
+    <div class="sub-title" id="sub-section-13" data-seg="0"><span class="bar"></span>過去的通知與這學期的安排，放進同一個專案</div>
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <div class="insight-title">沒人記得「我們當初為什麼這樣決定？」</div>
+      <div class="insight-title">「上次那份通知放在哪裡？」</div>
       <ul>
-        <li><strong>活動籌備好幾週</strong>，草案、會議結論、信件往來<code>散落各處</code>，甚至版本不一</li>
-        <li><strong>新接手的組長或導師</strong>要花大量時間閱讀<code>過去的信件與文件</code></li>
-        <li><strong>反覆爭論</strong>早就拍板的事，因為<code>沒人記得當初討論過</code></li>
-        <li><strong>通知寫錯場地</strong>，因為拿了舊版草案，發出去才被家長問</li>
+        <li><strong>通知、公告每年都要發</strong>，檔案卻散在電腦、雲端與群組，不確定哪一份是<code>最後發出去的版本</code></li>
+        <li><strong>新接手的導師或組長</strong>不知道以前怎麼寫、<code>家長問過什麼</code></li>
+        <li><strong>拿舊檔來改</strong>，舊的日期與地點容易<code>留在新通知裡</code></li>
+        <li><strong>這學期的安排一直在變</strong>，場地、時間改了，手上的資料卻還是舊的</li>
       </ul>
     </div>
   </div>
@@ -8485,50 +8471,44 @@
         <p class="loose-text"><!-- 待補圖片：claude-projects-school.png｜Projects 頁面點擊「New project」（虛線紅框；專案清單要空白或只有虛構專案） --></p>
         <p class="loose-text"><!-- <img src="assets/claude-projects-school.png" alt="在 Projects 頁面點「New project」" class="inline-image"> --></p>
         <ul class="loose-list">
-      <li><strong>What are you working on</strong>: <code>閱讀日活動籌備</code>（也可以改成自己的<code>班級經營</code>或<code>學年課務</code>）</li>
-      <li><strong>What are you trying to achieve</strong>: <code>把活動草案與決議集中在一個地方；寫通知前先比對最新決議；文件沒寫的就老實說沒有</code></li>
+      <li><strong>What are you working on</strong>: <code>行政文件案例庫</code></li>
+      <li><strong>What are you trying to achieve</strong>: <code>把過去發過的通知與這學期的活動安排集中在一個地方；查得到以前怎麼寫、家長問過什麼；文件沒寫的就老實說沒有</code></li>
     </ul>
-        <p class="loose-text"><!-- 待補圖片：claude-project-create-school.png｜Create a project 視窗，已填入「閱讀日活動籌備」標題與描述（虛線紅框標出兩個欄位與 Create project 按鈕） --></p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-create-school.png｜Create a project 視窗，已填入「行政文件案例庫」標題與描述（虛線紅框標出兩個欄位與 Create project 按鈕） --></p>
         <p class="loose-text"><!-- <img src="assets/claude-project-create-school.png" alt="填入專案名稱與描述，再點「Create project」" class="inline-image"> --></p>
         <ul class="loose-list">
-      <li><strong>指令（Instructions）</strong> — 設定成「活動籌備記憶助理」：回答以文件為準、要附出處、找不到就說沒有、新版決議優先</li>
-      <li><strong>知識庫（Context）</strong> — 分兩步放：<code>定版的文件直接上傳</code>（活動草案、活動決議），<code>會變動的表格放 Google Drive 用連結參考</code>（物資收據）</li>
+      <li><strong>指令（Instructions）</strong> — 設定成「行政文件助理」：回答以文件為準、要附出處、找不到就說沒有、過去的資訊不當成這學期的安排</li>
+      <li><strong>知識庫（Context）</strong> — 分兩步放：<code>定版的文件直接上傳</code>（過去發過的 6 份通知），<code>會變動的表格放 Google Drive 用連結參考</code>（本學期活動一覽）</li>
     </ul>
         <h4 class="minor-title">設計專案指令（Instructions）</h4>
         <div class="insight">
       <div class="insight-title">Instructions 要告訴 AI「什麼問題去哪份文件找」</div>
-      <p>兩類文件各管一件事：<code>草案記最初安排、決議記最新確認</code>。先把這張地圖給 AI，它就不會拿草案去回答已經改掉的事。</p>
+      <p>兩類文件各管一件事：<code>案例記過去怎麼寫、活動一覽記這學期的安排</code>。先把這張地圖給 AI，它就不會拿過去的日期來回答這學期的事。</p>
     </div>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">instructions：活動籌備記憶助理</span>
+        <span class="label">instructions：行政文件助理</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
       <div class="prompt-body">## 角色設定
 
-你是這個專案的記憶助理，你的任務是幫我「回憶、查找、把關」，而不是自己發明設定。
+你是我的行政文件助理，你的任務是幫我「查找過去的案例、核對這學期的安排」，而不是自己發明內容。
 
 ## 知識庫怎麼查
 
-- 活動最初的安排（版本 1）→ 閱讀日草案
-- 後來確認了什麼、哪些被取代 → 閱讀日決議（版本 2 以上優先）
-- 活動物資用了多少錢 → 物資收據表
+- 過去發過的通知與公告、發出後家長問了什麼 → 01～06 的案例
+- 這學期的活動日期、時間、地點、確認狀態 → 本學期活動一覽
 
 ## 回答原則
 
-1. 回答一律以知識庫內的草案與決議為準，並標明出處（哪份文件、哪個版本）。
+1. 回答一律以知識庫內的文件為準，並標明出處（哪份文件）。
 2. 知識庫裡找不到答案時，明說「目前文件沒有記錄」，不要臆測或補完。
-3. 草案與決議互相矛盾時，以「決議明確取代」的內容為準，並提醒我有衝突。
-4. 被取代的項目，回答時要補一句「原本是…，後來改為…」，讓我看得到演變。
-
-## 你該主動做的事
-
-1. 我要寫通知時，先比對決議；報名方式、截止日、費用若文件寫「待確認」，就在通知中標「待確認」，不得自行填入。
-2. 我給的資訊不完整時，先問我關鍵缺口，不要自己編。
+3. 案例裡的日期、時間、地點、費用是過去的資訊，不能當成這學期的安排。
+4. 活動一覽標「待確認」的項目，不能寫成已經確定。
 
 ## 輸出格式
 - 查找類問題：先給「一句話結論」，再附「出處」與「原文摘錄」。
@@ -8544,41 +8524,92 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">📄</span> 第一步：定版的文件直接上傳</div>
       <div class="group-body">
-        <a class="download-card" href="assets/reading-day.zip" download>
+        <a class="download-card" href="assets/admin-cases.zip" download>
     <span class="download-card__icon" aria-hidden="true">⬇</span>
     <span class="download-card__body">
-      <span class="download-card__label">下載「閱讀日 Project 知識庫」範例包</span>
-      <span class="download-card__desc">活動草案、活動決議、假物資收據，以及 Connector 練習用的郵件串、行事曆、分類練習信件（皆為虛構，解壓即用）</span>
+      <span class="download-card__label">下載「行政文件案例庫」練習素材</span>
+      <span class="download-card__desc">王老師過去發過的 6 份虛構通知與公告（每份都附上發出後的紀錄），加上一份本學期活動一覽</span>
     </span>
     <span class="download-card__ext">ZIP</span>
   </a>
-        <ul class="loose-list">
-      <li>和 Connector 練習是<code>同一包</code>，下載過就不用再下載</li>
-      <li>這一章只用三份：<code>01-閱讀日草案</code>、<code>02-閱讀日決議</code>（第一步上傳），<code>05-假物資收據.csv</code>（第二步放雲端）；其他檔案的用途見「練習前準備」的對照表</li>
-    </ul>
+        <div class="table-wrap">
+      <table class="content-table">
+        <colgroup>
+          <col style="width:260px">
+          <col>
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="align-left col-w">檔案</th>
+            <th class="align-left">類型</th>
+            <th class="align-left">發出後的紀錄</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left col-w"><strong><code>01-校外教學行前通知</code></strong></td>
+            <td class="align-left">校外、要收費、要同意書</td>
+            <td class="align-left">過敏、暈車、退費被問最多</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong><code>02-親子共讀夜活動通知</code></strong></td>
+            <td class="align-left">校內、免費、要報名</td>
+            <td class="align-left">能不能帶手足、陪同人數、入鏡同意</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong><code>03-班親會邀請通知</code></strong></td>
+            <td class="align-left">會議邀請</td>
+            <td class="align-left">線上參加、帶孩子、停車</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong><code>04-校慶運動會家長通知</code></strong></td>
+            <td class="align-left">全校活動</td>
+            <td class="align-left">補假日期、提早接回、午餐</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong><code>05-流感防疫提醒通知</code></strong></td>
+            <td class="align-left">健康與防疫提醒</td>
+            <td class="align-left">作業怎麼補、會不會停課</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong><code>06-家長志工招募公告</code></strong></td>
+            <td class="align-left">招募公告</td>
+            <td class="align-left">排班彈性、需不需要經驗</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong><code>07-本學期活動一覽.csv</code></strong></td>
+            <td class="align-left">這學期的安排</td>
+            <td class="align-left">第二步才會用到</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
         <div class="insight">
       <div class="insight-title">哪些文件算「定版」？</div>
-      <p>簽核完的<code>決議</code>、已經公告的<code>通知</code>，發出去就不會再改，要改也是另出新版本。<br>這類文件直接拖進 Project 上傳最省事。</p>
+      <p>已經公告的<code>通知</code>、簽核完的<code>決議</code>，發出去就不會再改，要改也是另出新版本。<br>這類文件直接拖進 Project 上傳最省事。</p>
     </div>
         <h4 class="minor-title">加入專案知識庫（Context）</h4>
-        <p class="loose-text">先把範例包裡的 <code>01-閱讀日草案</code> 與 <code>02-閱讀日決議</code> 拖進 Files，共 2 份</p>
-        <h4 class="minor-title">出處可追溯與決議取代</h4>
+        <p class="loose-text">把素材包裡的 <code>01</code>～<code>06</code> 拖進 Files，共 6 份</p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-admin-cases.png｜「行政文件案例庫」專案的 Files 已放入 01～06 六份案例（虛線紅框標出 Files 區） --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-project-admin-cases.png" alt="把六份過去的通知放進專案的 Files" class="inline-image"> --></p>
+        <h4 class="minor-title">出處可追溯</h4>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">驗證可找出處與取代關係</span>
+        <span class="label">驗證可找出處</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">閱讀日的場地在哪裡？跟最初的安排有什麼不同？</div>
+      <div class="prompt-body">上次校外教學的通知發出後，家長問最多的是什麼？下次要改哪裡？</div>
     </div>
-        <p class="loose-text"><!-- 待補圖片：claude-project-source-school.png｜AI 回答「多功能教室，原本是圖書室，決議版本 2 取代」並附出處 --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-project-source-school.png" alt="回答附上出處，還會說明新版決議取代了舊版" class="inline-image"> --></p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-source-school.png｜AI 回答「過敏與素食、暈車、退費」與下次要改的地方，並附出處「01-校外教學行前通知」 --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-project-source-school.png" alt="回答附上出處，連上次要改的地方都找得到" class="inline-image"> --></p>
         <div class="insight">
       <div class="insight-title">不要再依靠大腦記憶了</div>
-      <p>過去追溯幾週前的東西，得自己翻信件與文件才知道「誰說的、哪時候改的」。<br>建好 Project 後，問一句連出處（哪一份文件、哪個版本）都一起附上。</p>
+      <p>過去要回想「上次家長問了什麼」，得自己翻聯絡簿與群組訊息。<br>建好 Project 後，問一句連出處（哪一份文件）都一起附上。</p>
     </div>
         <h4 class="minor-title">不知道的問題會誠實回覆</h4>
         <div class="prompt-block">
@@ -8590,10 +8621,10 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">閱讀日的報名截止日是哪一天？當天有邀請校外作家嗎？</div>
+      <div class="prompt-body">以前有發過畢業典禮的通知嗎？當時的費用是多少？</div>
     </div>
-        <p class="loose-text">這兩題在文件裡的狀況不一樣：<code>報名截止日</code>決議寫的是「待確認」，<code>校外作家</code>則是完全沒提到；AI 應該分別照實回答，兩題都不能自己編。</p>
-        <p class="loose-text"><!-- 待補圖片：claude-project-nothing-school.png｜AI 回答報名截止日「決議寫待確認」、校外作家「目前文件沒有記錄」，兩題都沒有自行編造 --></p>
+        <p class="loose-text">案例庫裡沒有畢業典禮的通知，AI 應該回覆「目前文件沒有記錄」，而不是拿別的活動拼出一份。</p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-nothing-school.png｜AI 回答案例庫沒有畢業典禮的通知、費用「目前文件沒有記錄」，沒有自行編造 --></p>
         <p class="loose-text"><!-- <img src="assets/claude-project-nothing-school.png" alt="文件沒寫的事，它會說「沒有記錄」，不會自己編" class="inline-image"> --></p>
         <div class="insight">
       <div class="insight-title">AI 時代很少有人看過全文，所以要盡可能減少幻覺</div>
@@ -8609,7 +8640,7 @@
       <div class="group-body">
         <div class="insight">
       <div class="insight-title">為什麼要上傳到雲端？</div>
-      <p><code>物資收據表</code>隨著採買進度一直在補、在改。<br>如果上傳固定檔案，無法取得最新資訊。<br>放 Google Drive 用連結參考，雲端改完，AI 下次回答就是新的。<strong>團隊共用同一份來源，不會各拿各的舊檔</strong></p>
+      <p><code>本學期活動一覽</code>隨著籌備進度一直在補、在改。<br>如果上傳固定檔案，無法取得最新資訊。<br>放 Google Drive 用連結參考，雲端改完，AI 下次回答就是新的。<strong>團隊共用同一份來源，不會各拿各的舊檔</strong></p>
     </div>
         <h4 class="minor-title">將 Google Drive 加入 Connectors</h4>
         <p class="loose-text"><strong>操作路徑</strong>: Customize → Connectors → 選擇 Google Drive 點擊「Connect」</p>
@@ -8617,29 +8648,42 @@
         <p class="loose-text"><!-- <img src="assets/claude-project-connect-drive-school.png" alt="在 Connectors 連接 Google Drive" class="inline-image"> --></p>
         <h4 class="minor-title">把表格放到雲端硬碟</h4>
         <ul class="loose-list">
-      <li>把範例包裡的<code>05-假物資收據.csv</code>上傳到 Google Drive</li>
+      <li>把素材包裡的 <code>07-本學期活動一覽.csv</code> 上傳到 Google Drive</li>
       <li>用「Google 試算表」開啟，存成 Google 格式</li>
     </ul>
         <h4 class="minor-title">用連結加入知識庫</h4>
         <ul class="loose-list">
       <li>在專案 Files 點「+」→ Drive，貼上這份試算表的連結</li>
     </ul>
-        <p class="loose-text"><!-- 待補圖片：claude-project-drive-school.png｜專案 Files「+」選單中的 Drive 選項（虛線紅框），已貼上虛構物資收據試算表 --></p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-drive-school.png｜專案 Files「+」選單中的 Drive 選項（虛線紅框），已貼上「本學期活動一覽」試算表 --></p>
         <p class="loose-text"><!-- <img src="assets/claude-project-drive-school.png" alt="在專案 Files 點「+」，選 Drive 加入雲端試算表" class="inline-image"> --></p>
+        <h4 class="minor-title">過去的資訊，不會被當成這學期的安排</h4>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">驗證分得清過去與現在</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">這學期的班親會是哪一天？可以直接沿用上次通知的時間嗎？</div>
+    </div>
+        <p class="loose-text">AI 應該從<code>活動一覽</code>回答 <code>6/7 19:00–20:30</code>，並提醒案例裡的 <code>9 月 19 日</code>是過去的資訊，不能沿用。</p>
         <h4 class="minor-title">雲端改完，AI 馬上讀到新的</h4>
         <p class="loose-text">先問一次：</p>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">驗證可查物資合計</span>
+        <span class="label">驗證讀得到活動一覽</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">目前物資收據的合計是多少？哪一筆需要人工補查？</div>
+      <div class="prompt-body">閱讀日的場地確認了嗎？還有哪些項目待確認？</div>
     </div>
-        <p class="loose-text">再到 Google 試算表，把「示範收據 C」的單價與小計補成 <code>40</code>、狀態改成「已補查」，然後問同一個問題：</p>
+        <p class="loose-text">再到 Google 試算表，把「閱讀日」的地點改成 <code>多功能教室</code>、狀態改成「已確認」，然後問同一個問題：</p>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
@@ -8649,10 +8693,10 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">再算一次物資收據合計，並說明跟剛才差在哪</div>
+      <div class="prompt-body">再查一次閱讀日的場地，並說明跟剛才差在哪</div>
     </div>
-        <p class="loose-text"><!-- 待補圖片：claude-project-drive-update-school.png｜補完試算表後，AI 的合計從 210 元（C 待補）變成 250 元，並說明差異 --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-project-drive-update-school.png" alt="試算表補完後不用重新上傳，合計就從 210 元變成 250 元" class="inline-image"> --></p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-drive-update-school.png｜改完試算表後，AI 回答閱讀日場地從「待確認」變成「多功能教室」，報名方式仍是待確認 --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-project-drive-update-school.png" alt="試算表改完不用重新上傳，場地就從「待確認」變成「多功能教室」" class="inline-image"> --></p>
         <div class="insight">
       <div class="insight-title">這就是兩種放法的差別</div>
       <p>第一步上傳的文件，改了要<code>回來重傳</code>；第二步連結的雲端文件，<code>改完就生效</code>。<br>資料分類：<code>定版的用上傳、會改的放雲端</code>。<br>如果答案沒更新，請 AI 說明它讀到的是哪個版本，再決定要不要重新連結。</p>
@@ -8687,83 +8731,113 @@
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="sop-skill" data-seg="0"><span class="num">6</span> 把好方法變成 SOP</span>
+    <span class="section-label" id="sop-skill" data-seg="0"><span class="num">5</span> 把好方法變成 SOP</span>
     <h2>設計 Skill 站在更高的起點</h2>
     
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <div class="insight-title">Skills 的出現，讓 AI 的價值可以持續累積</div>
-      <p>需要重複執行的流程，都值得設計成 Skill</p>
+      <div class="insight-title">Skill 是把你最好的一次，變成每一次</div>
+      <p>上一堂在 ChatGPT 與 Codex 用過 Skill；今天在 Claude 一樣<code>用白話</code>建立，再多學一招：<code>讓 Skill 從 Project 的過去案例找範本</code>。</p>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-skill" data-seg="0"><span class="bar"></span>為什麼需要 Skill？</div>
+    <div class="sub-title" id="sub-skill-claude" data-seg="0"><span class="bar"></span>上一堂的 Skill，換到 Claude</div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🤯</span> 流程都在某個人腦袋裡</div>
+      <div class="group-header"><span class="icon">🆚</span> 同樣是 Skill，兩家的操作對照</div>
+      <div class="group-body">
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left"></th>
+            <th class="align-left">ChatGPT（第 2 堂）</th>
+            <th class="align-left">Claude（今天）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>怎麼建立</strong></td>
+            <td class="align-left">在對話裡用白話請 AI 生成</td>
+            <td class="align-left">用內建的 <code>skill-creator</code>，同樣用白話</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>被動觸發</strong></td>
+            <td class="align-left">直接描述需求，符合就會選用</td>
+            <td class="align-left">相同</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>主動呼叫</strong></td>
+            <td class="align-left">輸入 <code>@</code> 選技能</td>
+            <td class="align-left">輸入 <code>/skill-name</code></td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>匯入</strong></td>
+            <td class="align-left">在對話上傳壓縮檔</td>
+            <td class="align-left">Customize → Skills → Add → Upload a skill</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>今天多學</strong></td>
+            <td class="align-left">—</td>
+            <td class="align-left">搭配 Project 的案例庫、下載分享、結構與執行階段</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <div class="insight">
+      <div class="insight-title">Project 放案例，Skill 負責找範本與改寫</div>
+      <p><strong>Project 讓 AI「知道事實」</strong> — 過去發過的通知、家長問過什麼、這學期的安排<br><strong>Skill 讓 AI「知道步驟」</strong> — 找最接近的案例、照它改寫、過去的資訊不沿用、缺的標「待確認」</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-skill" data-seg="0"><span class="bar"></span>用白話生成「找範本來改」的 Skill</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">😓</span> 拿舊通知來改，每次都是同一套步驟</div>
       <div class="group-body">
         <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <div class="step-title"><strong>關鍵人物不在，流程就卡死</strong></div>
-          <div class="step-desc">「這個活動通知怎麼寫？活動簽呈要附什麼？下一步該找誰？」如果答案全在某個<code>資深組長</code>的腦袋；他一請假、調動，這一切就需要<code>重新摸索</code>。</div>
+          <div class="step-title">找檔案</div>
+          <div class="step-desc">翻出上次發的那一份</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title"><strong>交接靠口耳相傳，品質全憑運氣</strong></div>
-          <div class="step-desc">新手導師上工時，只拿到<code>零散筆記</code>和<code>口頭經驗</code>；因此通知、評語、公告...每個人的<code>格式、品質</code>都不一樣。</div>
+          <div class="step-title">換資訊</div>
+          <div class="step-desc">把日期、時間、地點、費用改成這一次的</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title"><strong>需要手把手教學，難以擴散</strong></div>
-          <div class="step-desc">許多流程需要<code>實際 Demo</code>才能搞懂，因此就算有好方案也<code>擴散不出去</code>，案例難以複製到不同年級、不同處室。</div>
-        </div>
-      </div>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📋</span> 提示詞一直複製貼上</div>
-      <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title"><strong>存了一堆 Prompt，要用時翻半天</strong></div>
-          <div class="step-desc">提示詞散落在<code>記事本、聊天紀錄</code>；真的需要使用時，光是找出<code>最後一版</code>就浪費一堆時間。</div>
+          <div class="step-title">檢查有沒有漏</div>
+          <div class="step-desc">日期改了、星期沒改；費用改了、繳費期限還是舊的</div>
         </div>
       </div>
       <div class="flow-step">
-        <div class="step-num">2</div>
+        <div class="step-num">4</div>
         <div class="step-content">
-          <div class="step-title"><strong>換個情境就得調整提示詞參數</strong></div>
-          <div class="step-desc">同一套通知 Prompt，換個活動、從校內活動改成校外教學就得<code>手動微調</code>，浪費時間。</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title"><strong>規則改了，舊版本卻沒跟著改</strong></div>
-          <div class="step-desc">學校新增一條<code>回條截止日</code>的通知規定，但同樣的 Prompt 已經<code>被複製到十個 Projects</code>；漏改一處，不合規定的通知就<code>默默繼續產出</code>。</div>
+          <div class="step-title">回想上次的狀況</div>
+          <div class="step-desc">家長問過什麼，這次要不要先寫進去</div>
         </div>
       </div>
     </div>
         <div class="insight">
-      <div class="insight-title">技能是把最好的一次，變成每一次</div>
-      <p>你摸索出最順的流程後，只要成功過一次，就能把它設計成 Skill，未來就不用從零開始。</p>
+      <div class="insight-title">步驟每次都一樣，就值得存成 Skill</div>
+      <p>案例已經在剛剛的<code>行政文件案例庫</code>專案裡；現在把這四個步驟交給 Skill。</p>
     </div>
       </div>
     </div>
@@ -8771,130 +8845,146 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📝</span> 技能就像學校的 SOP 手冊</div>
-      <div class="group-body">
-        <ul>
-  <li>技能在完成後，是可以<code>下載與分享</code>的</li>
-  <li>即使是<strong>剛接觸行政的新人</strong>，使用前輩設計好的技能也能<code>做出符合學校期待的成果</code></li>
-</ul>
-        <div class="insight">
-      <div class="insight-title">Project 放知識，Skill 設計流程</div>
-      <p><strong>Project 讓 AI「知道事實」</strong> — 你扮演的角色、活動草案與決議、班級與學年的背景<br><strong>Skill 讓 AI「知道步驟」</strong> — 家長通知、活動簽呈、會議紀錄、評語要遵守的 SOP</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-skill-2" data-seg="0"><span class="bar"></span>提出需求建立 Skill</div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🎬</span> 我的剪片 Skill，是一支支影片優化出來的</div>
-      <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">過去</div>
-          <div class="step-desc">一支 10 分鐘的影片大概要剪 <code>1 天</code>：移除 NG、上字幕、加資訊卡、設計情境動畫、配音效，繁瑣又重複</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">現在</div>
-          <div class="step-desc">照自己的習慣建立 AI 剪片工作流，<code>用白話文就能剪片</code>，我只負責最後的品質把關</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">每一支都在優化</div>
-          <div class="step-desc">發現哪個細節能做得更好，就把經驗寫回 Skill，讓<code>下一支影片站在更高的起點</code></div>
-        </div>
-      </div>
-    </div>
-        <div class="insight">
-      <div class="insight-title">不要一開始就想設計完美的 Skill</div>
-      <p>先在 AI 的輔助下做出<code>雛形</code>，再從一次次的實踐中<code>優化細節</code>；這份線上講義也是靠 Skill 輔助生成，版本<code>迭代超過 100 次</code>。<br>AI 設計的 Skill 也常<code>過度設計、資訊冗贅</code>，用實戰結果來修剪就好。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📝</span> 第一版：用白話文建立家長通知 Skill</div>
+      <div class="group-header"><span class="icon">📝</span> 用白話文建立行政範本 Skill</div>
       <div class="group-body">
         <p>Skill <code>不需要</code>全程自己<code>手動建立</code>，先用<code>一段白話</code>描述需求，讓 Claude 內建的 <code>skill-creator</code> 幫你生成雛形。</p>
         <p class="loose-text"><strong>操作路徑</strong>: Customize → Skills → skill-creator</p>
         <p class="loose-text"><!-- 待補圖片：claude-skill-creator-school.png｜Customize → Skills 中的 skill-creator（虛線紅框；側欄不要出現真實專案名稱） --></p>
         <p class="loose-text"><!-- <img src="assets/claude-skill-creator-school.png" alt="在 Customize → Skills 找到 skill-creator" class="inline-image"> --></p>
-        <h4 class="minor-title">參考資訊來建立 Skill</h4>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">提供自己期待格式，而非讓 AI 自由發想</span>
+        <span class="label">把找範本、改寫、檢查的步驟講清楚</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
       <div class="prompt-body">/skill-creator
-名稱[parent-notice]
-會根據我提供的活動資訊，整理成給家長的通知
-通知依序包含：[活動名稱、時間、地點、需準備、報名方式、聯絡方式]，並遵循下面規則：
-- 只使用我提供的資訊；沒有提供的項目一律標「待確認」，不要自行填入
-- 不要寫尚未核定的費用或預算
-- 不要出現學生姓名與個資
-- 語氣親切、清楚，不要寫得像公文，使用繁體中文
-- 直接輸出通知，不需要額外解釋</div>
+名稱[admin-template]
+我要寫家長通知、活動公告這類行政文件時，先從專案知識庫找出最接近的過去案例，再照它改寫成這一次的版本
+步驟：
+1. 先告訴我選了哪一份案例、為什麼選它；沒有相近的案例就直接說，不要硬套
+2. 沿用案例的段落順序與語氣，內容換成我這次提供的資訊，或專案裡這學期的安排
+3. 案例裡的日期、時間、地點、費用、聯絡方式一律不沿用；查不到的項目標「待確認」
+4. 案例有「發出後的紀錄」時，把上次家長問最多的問題先寫進這次的通知；資訊不夠就提醒我補上
+5. 最後列出三件事：[沿用了什麼、改了什麼、哪些待確認]
+不要出現學生姓名與個資，使用繁體中文</div>
     </div>
         <p class="loose-text">完成後記得點擊「Save skill」。</p>
-        <p class="loose-text"><!-- 待補圖片：claude-skill-parent-notice.png｜skill-creator 產生 parent-notice 後的畫面，虛線紅框標出「Save skill」按鈕 --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-skill-parent-notice.png" alt="Skill 設計完成，點「Save skill」存起來" class="inline-image"> --></p>
-        <h4 class="minor-title">驗證一：資訊不完整時，它會標「待確認」</h4>
-        <p class="loose-text">Skill 建立完成後，有 2 種方式觸發：</p>
-        <ul class="loose-list">
-      <li><strong>用「意圖、關鍵字」觸發</strong>: 盡可能設計成<code>被動觸發</code>，因為 Skill 會越來越多，要記住每個名稱並不現實。</li>
-      <li><strong>輸入「/skill-name」指定觸發</strong>: 當然也可以<code>主動觸發</code>，當一段對話中想綜合多個 Skills 功能時，這個方案較為穩定。</li>
-    </ul>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">開新對話測試被動觸發</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
+        <p class="loose-text"><!-- 待補圖片：claude-skill-admin-template.png｜skill-creator 產生 admin-template 後的畫面，虛線紅框標出「Save skill」按鈕 --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-skill-admin-template.png" alt="Skill 設計完成，點「Save skill」存起來" class="inline-image"> --></p>
       </div>
-      <div class="prompt-body">幫我寫六年級閱讀日的家長通知：5/15 下午 13:30–14:30、多功能教室、自由參加、請帶借閱證，報名方式還沒決定</div>
     </div>
-        <p class="loose-text">在全新的對話中，AI 沒有 Project 的資料，要看它<code>有沒有把報名方式、聯絡方式標成「待確認」</code>，而不是自己編一個。</p>
-        <p class="loose-text"><!-- 待補圖片：claude-skill-parent-notice-chat.png｜新對話中被動觸發 parent-notice，通知中報名方式與聯絡方式標「待確認」 --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-skill-parent-notice-chat.png" alt="沒有特別呼叫也會自動觸發，缺的資訊標成「待確認」" class="inline-image"> --></p>
-        <h4 class="minor-title">驗證二：放進 Project，它會讀專案的知識</h4>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">▶️</span> 進到專案再呼叫：寫這學期的閱讀日通知</div>
+      <div class="group-body">
+        <p>Skill 建立完成後，有 2 種方式觸發：</p>
+<ul>
+  <li><strong>用「意圖、關鍵字」觸發</strong>: 盡可能設計成<code>被動觸發</code>，因為 Skill 會越來越多，要記住每個名稱並不現實。</li>
+  <li><strong>輸入「/skill-name」指定觸發</strong>: 當然也可以<code>主動觸發</code>，當一段對話中想綜合多個 Skills 功能時，這個方案較為穩定。</li>
+</ul>
         <div class="insight">
       <div class="insight-title">為什麼要進到專案裡再觸發？</div>
-      <p>專案上傳的檔案與指令<code>只在那個專案裡</code>看得到；在一般對話寫的通知，<code>不會</code>知道你在專案裡上傳的決議。<br>想用專案的資料寫通知，就要<code>進到那個專案</code>再觸發；下面到先前建立的<code>閱讀日活動籌備</code>專案測試。</p>
+      <p>專案上傳的檔案與指令<code>只在那個專案裡</code>看得到；在一般對話呼叫 Skill，它<code>找不到</code>你的案例。<br>想用案例庫寫通知，就要<code>進到那個專案</code>再觸發。</p>
     </div>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">選一個 Project 開新對話測試</span>
+        <span class="label">在「行政文件案例庫」專案開新對話</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">/parent-notice
-請根據專案裡的決議，幫我寫閱讀日的家長通知</div>
+      <div class="prompt-body">/admin-template
+幫我寫這學期閱讀日的家長通知</div>
     </div>
-        <p class="loose-text">通知應該帶出決議裡的<code>多功能教室</code>（不是草案的圖書室）；決議沒確認的<code>報名方式、聯絡方式</code>，仍然標「待確認」。</p>
-        <p class="loose-text"><!-- 待補圖片：claude-skill-parent-notice-project.png｜在閱讀日 Project 內用 /parent-notice，通知帶出「多功能教室」，報名方式與聯絡方式仍標「待確認」 --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-skill-parent-notice-project.png" alt="放進 Project 後，通知自動帶出專案文件裡的「多功能教室」" class="inline-image"> --></p>
+        <p class="loose-text"><!-- 待補圖片：claude-skill-admin-template-project.png｜在案例庫專案內用 /admin-template，先說明選用「02-親子共讀夜活動通知」，通知帶出活動一覽的 5/15 與多功能教室，報名方式標「待確認」，最後列出沿用、修改、待確認 --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-skill-admin-template-project.png" alt="先說明選了哪一份案例，再照它改寫成閱讀日的通知" class="inline-image"> --></p>
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left">檢查什麼</th>
+            <th class="align-left">應該出現的結果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>選了哪一份</strong></td>
+            <td class="align-left">最接近的是 <code>02-親子共讀夜活動通知</code>（校內的閱讀活動），並說明理由</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>這學期的資訊</strong></td>
+            <td class="align-left">來自<code>活動一覽</code>：5/15 13:30–14:30、多功能教室、自由參加、請帶借閱證</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>過去的資訊有沒有混進來</strong></td>
+            <td class="align-left">不能出現案例裡的 <code>12 月 12 日</code>、<code>圖書室</code>、<code>18:30</code></td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>缺的資訊</strong></td>
+            <td class="align-left"><code>報名方式</code>、<code>聯絡方式</code>標「待確認」，沒有自己編</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>過去的經驗</strong></td>
+            <td class="align-left">提醒你補上<code>能不能帶手足、陪同人數、是否同意入鏡</code></td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>最後的清單</strong></td>
+            <td class="align-left">列出沿用了什麼、改了什麼、哪些待確認</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <div class="warning">
+      <div class="warning-title">⚠️ 照範本改寫的通知，發出前先核對</div>
+      <ul>
+        <li>舊案例的日期、星期、地點、費用最容易<code>混進新通知</code>，發出前逐一對照這次的正式決議</li>
+        <li>AI 可能把「看起來合理」的資訊補成<code>事實</code>；標「待確認」的地方要補齊才能發</li>
+        <li>尚未核定的預算與費用，<code>不要寫進通知</code></li>
+        <li>學生姓名、座號、輔導紀錄這類個資，<code>不要貼給 AI</code>，也不要放進案例庫</li>
+      </ul>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🔄</span> 發完通知，把這一次存回案例庫</div>
+      <div class="group-body">
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">存回定稿</div>
+          <div class="step-desc">把最後發出去的版本放進專案的 Files</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">補上紀錄</div>
+          <div class="step-desc">家長問了什麼、哪裡要改，寫在文件最後</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">下次直接用</div>
+          <div class="step-desc">明年再辦，Skill 找到的就是<code>這一次的版本與經驗</code></div>
+        </div>
+      </div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">你自己的案例庫怎麼來？</div>
+      <p>把過去發過的通知、公告整理進一個專案就好；含學生姓名或個資的文件，先<code>去識別化</code>再放。<br>案例越存越多，Skill 找到的範本就越接近你要的。</p>
+    </div>
         <div class="group-block case-card">
       <div class="group-header"><span class="icon">📝</span> 案例：AI 寫的週報，為什麼還要改半小時？</div>
       <div class="group-body">
@@ -8931,7 +9021,46 @@
     </div>
         <div class="insight">
       <div class="insight-title">Connector、Project、Skill 一起用，才是完整的助理</div>
-      <p>Connector 與 Project 補齊<code>資料來源與最新事實</code>，Skill 固定<code>步驟、格式與對象</code>。<br>不管是家長通知還是週報，才不會寫錯、亂補，也<code>不用再大改</code>。</p>
+      <p>Connector 與 Project 補齊<code>資料來源與過去的案例</code>，Skill 固定<code>步驟、格式與檢查項目</code>。<br>不管是家長通知還是週報，才不會寫錯、亂補，也<code>不用再大改</code>。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-skill-2" data-seg="0"><span class="bar"></span>換成你：哪個流程值得存成 Skill</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🎬</span> 我的剪片 Skill，是一支支影片優化出來的</div>
+      <div class="group-body">
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">過去</div>
+          <div class="step-desc">一支 10 分鐘的影片大概要剪 <code>1 天</code>：移除 NG、上字幕、加資訊卡、設計情境動畫、配音效，繁瑣又重複</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">現在</div>
+          <div class="step-desc">照自己的習慣建立 AI 剪片工作流，<code>用白話文就能剪片</code>，我只負責最後的品質把關</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">每一支都在優化</div>
+          <div class="step-desc">發現哪個細節能做得更好，就把經驗寫回 Skill，讓<code>下一支影片站在更高的起點</code></div>
+        </div>
+      </div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">不要一開始就想設計完美的 Skill</div>
+      <p>先在 AI 的輔助下做出<code>雛形</code>，再從一次次的實踐中<code>優化細節</code>；這份線上講義也是靠 Skill 輔助生成，版本<code>迭代超過 100 次</code>。<br>AI 設計的 Skill 也常<code>過度設計、資訊冗贅</code>，用實戰結果來修剪就好。</p>
     </div>
       </div>
     </div>
@@ -8939,10 +9068,24 @@
 </section>
 
 <hr class="divider">
+<section class="interactive-page" id="sop-skill-interactive">
+  <div class="interactive-session">
+    <div class="interactive-session__deco" aria-hidden="true">💬</div>
+    <div class="interactive-session__inner">
+      <h3 class="interactive-session__title">工作中重複又無聊的事</h3>
+    </div>
+    <div class="interactive-script">
+        <div class="interactive-script__mark" aria-hidden="true">"</div>
+        <div class="interactive-script__body"><strong>Q｜分享目前工作中感到重複、無聊的任務</strong><ul class="interactive-script__list"><li><code>多久做一次</code></li><li><code>一次花多久</code></li><li><code>最煩的是哪一步</code></li></ul></div>
+      </div>
+  </div>
+</section>
+
+<hr class="divider">
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="skill" data-seg="0"><span class="num">7</span> 分享與深入</span>
+    <span class="section-label" id="skill" data-seg="0"><span class="num">6</span> 分享與深入</span>
     <h2>把 Skill 傳出去，也看懂它怎麼運作</h2>
     
   </div>
@@ -8962,26 +9105,56 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">💾</span> 將 Skill 下載為壓縮檔</div>
       <div class="group-body">
-        <p><strong>操作路徑</strong>: Customize → Skills → 選擇要分享的 Skill（ex: <code>parent-notice</code>）→ 右上角「⋮」→ Download</p>
-        <p class="loose-text"><!-- 待補圖片：claude-skill-download-school.png｜Customize → Skills → parent-notice 右上角「⋮」→ Download（虛線紅框；側欄不要出現真實專案名稱） --></p>
+        <p><strong>操作路徑</strong>: Customize → Skills → 選擇要分享的 Skill（ex: <code>admin-template</code>）→ 右上角「⋮」→ Download</p>
+        <p class="loose-text"><!-- 待補圖片：claude-skill-download-school.png｜Customize → Skills → admin-template 右上角「⋮」→ Download（虛線紅框；側欄不要出現真實專案名稱） --></p>
         <p class="loose-text"><!-- <img src="assets/claude-skill-download-school.png" alt="點右上角「⋮」→ Download，把 Skill 下載成檔案分享" class="inline-image"> --></p>
+        <ul class="loose-list">
+      <li>下載的壓縮檔可以傳給同事，也可以匯入其他支援 Skill 的 AI 工具</li>
+    </ul>
       </div>
     </div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🤝</span> 匯入別人建立好的 Skill</div>
+      <div class="group-header"><span class="icon">🤝</span> 匯入上一堂的資訊卡 Skill</div>
       <div class="group-body">
-        <p><strong>操作路徑</strong>: Customize → Skills → Add → Upload a skill</p>
-<ul>
-  <li>可接受 Markdown 格式、<code>.zip</code> 壓縮檔、<code>.skill</code> 匯出檔</li>
+        <ul>
+  <li>上一堂在 ChatGPT 與 Codex 用過 <code>info-card-generator</code>；同一個壓縮檔，今天匯入 Claude</li>
+  <li>上一堂下載過就不用再下載；沒有的話從這裡拿：<a href="../codex/assets/info-card-generator.zip" target="_blank" rel="noopener">下載「資訊卡」技能包</a></li>
 </ul>
+        <p class="loose-text"><strong>操作路徑</strong>: Customize → Skills → Add → Upload a skill</p>
+        <ul class="loose-list">
+      <li>可接受 Markdown 格式、<code>.zip</code> 壓縮檔、<code>.skill</code> 匯出檔</li>
+    </ul>
         <p class="loose-text"><!-- 待補圖片：claude-skill-upload2-school.png｜Upload skill 視窗，提示可接受 Markdown、.zip、.skill 檔（虛線紅框標出拖放區） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-skill-upload2-school.png" alt="把同事給的 Skill 檔拖進來就能匯入" class="inline-image"> --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-skill-upload2-school.png" alt="把技能包的壓縮檔拖進來就能匯入" class="inline-image"> --></p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">用匯入的 Skill，把今天的重點做成複習圖卡</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">/info-card-generator
+主題：「換一家 AI 做同樣的事：Claude 這堂課的 5 個重點」
+
+1. 開工設定。左下角頭像 → Settings：Privacy 關閉「Help improve our AI models」；Account 填工作類型與協作指令；Capabilities 原則上全開。
+2. 去識別化。學生名冊交給 AI 之前，先把姓名、身分證字號、電話換成代號；學號用自訂規則一次處理；編碼表留在自己的電腦。
+3. Connector 讓 AI 長出眼睛和手。信件分成重要、封存、刪除候選三類；先給清單、確認後才套用標籤；建立行程前先看草稿、檢查衝突。
+4. Project 不用每次重講背景。指令告訴 AI 什麼問題去哪份文件找；定版的文件上傳、會變動的放雲端；文件沒寫的要誠實說沒有。
+5. Skill 把好方法變成 SOP。用白話就能建立；把過去的通知放進 Project，讓 Skill 找最接近的案例來改寫，舊資訊不沿用、缺的標「待確認」。
+
+結尾卡放一句話：名字不同、邏輯相同，熟悉一個最重要。</div>
+    </div>
+        <p class="loose-text"><!-- 待補圖片：claude-card-generator-school.png｜Claude 用匯入的 info-card-generator 產出今天重點的複習圖卡 --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-card-generator-school.png" alt="Claude 不能生成 AI 圖片，但可以用寫網頁的方式產出圖卡" class="inline-image"> --></p>
+        <p class="loose-text"><!-- 講師備註：達和內訓版的 info-card-generator 在 Claude 跑過；第 2 堂的教師版壓縮檔還沒在 Claude 實測，授課前跑一次。產圖用到程式，Settings → Capabilities 的「Code execution and file creation」要開啟。 --></p>
         <div class="insight">
-      <div class="insight-title">同事做好的 Skill，可以直接拿來用</div>
-      <p>同學年的老師共用同一套<code>通知格式</code>，比各自摸索更穩定；匯入前先看一眼內容，<code>不明來源的 Skill 不要匯入</code>。</p>
+      <div class="insight-title">同一個技能包，三個地方都能用</div>
+      <p>上一堂在 ChatGPT、Codex，今天在 Claude；匯入前先看一眼內容，<code>不明來源的 Skill 不要匯入</code>。</p>
     </div>
       </div>
     </div>
@@ -8995,45 +9168,540 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎒</span> Skill 的結構</div>
       <div class="group-body">
-        <p>把剛才下載的 Skill 壓縮檔解開，會看到一份 <code>SKILL.md</code>（純文字的說明檔）；複雜一點的 Skill 還會多出 <code>scripts/</code>、<code>reference/</code> 資料夾，簡單的 Skill 不一定有。</p>
-        <div class="table-wrap">
-      <table class="content-table">
-        <colgroup>
-          <col style="width:150px">
-          <col>
-          <col>
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="align-left col-w">組成</th>
-            <th class="align-left">放在哪裡</th>
-            <th class="align-left">用途</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left col-w"><strong>元數據</strong> Metadata</td>
-            <td class="align-left"><code>SKILL.md</code> 開頭的設定區（名稱與描述）</td>
-            <td class="align-left">告訴 Claude「你是誰、什麼時候該出場」</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>提示詞</strong> Prompt</td>
-            <td class="align-left"><code>SKILL.md</code> 主文</td>
-            <td class="align-left">Skill 的「大腦」與「SOP」，寫步驟、原則、產出格式</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>程式腳本</strong> Scripts</td>
-            <td class="align-left"><code>scripts/</code></td>
-            <td class="align-left">重複、確定性的工作交給程式，<code>SKILL.md</code> 只負責「呼叫」，省下大量 Token</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>參考資源</strong> Reference</td>
-            <td class="align-left"><code>reference/</code></td>
-            <td class="align-left">補充判斷依據（範例、規則、樣板），AI 需要時才會載入</td>
-          </tr>
-        </tbody>
-      </table>
+        <p>把技能包的壓縮檔解開，會看到一份 <code>SKILL.md</code>（純文字的說明檔）；像資訊卡這種複雜一點的 Skill，還會多出 <code>scripts/</code>、<code>reference/</code> 資料夾，<code>admin-template</code> 這種簡單的 Skill 不一定有。</p>
+        <iframe class="raw-html-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-Hant&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+<title>Agent Skill 結構解剖</title>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root {
+    /* Light mode (default) */
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --card-alt: #f7f3ed;
+    --text: #1a1a1a;
+    --text-secondary: #5c5c5c;
+    --text-muted: #8a8a8a;
+    --border: #e8e4df;
+    --border-strong: #d5cfc7;
+    --highlight: #fff8e1;
+    --shadow: 0 2px 10px rgba(0,0,0,0.05);
+    --shadow-strong: 0 8px 24px rgba(0,0,0,0.1);
+
+    /* Four component colors */
+    --c-meta: #d35400;        /* Metadata - orange */
+    --c-meta-bg: #fef5ed;
+    --c-prompt: #2c7a7b;      /* Prompt - teal */
+    --c-prompt-bg: #edf7f7;
+    --c-script: #2563eb;      /* Scripts - blue */
+    --c-script-bg: #eef4ff;
+    --c-ref: #8e44ad;         /* Reference - purple */
+    --c-ref-bg: #f5edf9;
+
+    --code-bg: #2d3142;
+    --code-text: #e8e8e8;
+    --code-key: #d4a85a;
+    --code-str: #95c97a;
+    --code-cmt: #7a7d8f;
+  }
+
+  body.dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --card-alt: #252a3d;
+    --text: #e4e4e7;
+    --text-secondary: #a8aab8;
+    --text-muted: #6b6e80;
+    --border: #2d3148;
+    --border-strong: #3a3e57;
+    --highlight: #2a2f45;
+    --shadow: 0 2px 10px rgba(0,0,0,0.3);
+    --shadow-strong: 0 8px 28px rgba(0,0,0,0.45);
+
+    --c-meta: #f0a060;
+    --c-meta-bg: #3a1f0a;
+    --c-prompt: #5cc5c5;
+    --c-prompt-bg: #0e2e30;
+    --c-script: #6b95f5;
+    --c-script-bg: #1a2444;
+    --c-ref: #c290e0;
+    --c-ref-bg: #2a1838;
+
+    --code-bg: #0f111a;
+    --code-text: #d8dae0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    padding: 24px 16px;
+    max-width: 920px;
+    margin: 0 auto;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  .intro {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .intro h2 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  .intro p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+  }
+
+  .intro .skill-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--c-prompt);
+    font-weight: 700;
+  }
+
+  /* ===== Anatomy grid ===== */
+  .anatomy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 640px) {
+    .anatomy { grid-template-columns: 1fr; }
+  }
+
+  .part {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 18px 16px;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .part:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-strong);
+  }
+
+  .part::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--part-color);
+  }
+
+  .part.metadata  { --part-color: var(--c-meta);   --part-bg: var(--c-meta-bg); }
+  .part.prompt    { --part-color: var(--c-prompt); --part-bg: var(--c-prompt-bg); }
+  .part.scripts   { --part-color: var(--c-script); --part-bg: var(--c-script-bg); }
+  .part.reference { --part-color: var(--c-ref);    --part-bg: var(--c-ref-bg); }
+
+  .part:hover { border-color: var(--part-color); }
+
+  .part-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .part-num {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--part-bg);
+    color: var(--part-color);
+    font-weight: 900;
+    font-size: 0.92rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  .part-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--part-color);
+    line-height: 1.3;
+  }
+
+  .part-title .en {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 3px;
+    letter-spacing: 0.4px;
+  }
+
+  .part-desc {
+    font-size: 0.96rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.65;
+  }
+
+  .part-desc code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    background: var(--highlight);
+    color: var(--part-color);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .part-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.84rem;
+    color: var(--part-color);
+    font-weight: 600;
+    user-select: none;
+  }
+
+  .part-toggle .arrow {
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+
+  .part.open .part-toggle .arrow {
+    transform: rotate(90deg);
+  }
+
+  .part-example {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease, margin-top 0.28s ease;
+    margin-top: 0;
+  }
+
+  .part.open .part-example {
+    max-height: 500px;
+    margin-top: 14px;
+  }
+
+  .code {
+    background: var(--code-bg);
+    color: var(--code-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.84rem;
+    line-height: 1.6;
+    padding: 14px 16px;
+    border-radius: 8px;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .code .k { color: var(--code-key); }
+  .code .s { color: var(--code-str); }
+  .code .c { color: var(--code-cmt); font-style: italic; }
+
+  /* ===== Tree summary ===== */
+  .tree-summary {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: var(--shadow);
+  }
+
+  .tree-summary h3 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tree-summary h3::before {
+    content: '📁';
+    font-size: 1.15rem;
+  }
+
+  .tree {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.96rem;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  .tree-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 0;
+  }
+
+  .tree-row .branch {
+    color: var(--border-strong);
+    flex-shrink: 0;
+    white-space: pre;       /* preserve any inner spaces */
+  }
+
+  .tree-row .name { font-weight: 700; }
+
+  .tree-row .folder    { color: var(--c-meta); }
+  .tree-row .file-skill { color: var(--c-prompt); }
+  .tree-row .file-py    { color: var(--c-script); }
+  .tree-row .file-md    { color: var(--c-ref); }
+
+  .tree-row .comment {
+    color: var(--text-muted);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .tree-row .comment::before {
+    content: '← ';
+    opacity: 0.55;
+  }
+
+  /* Indent levels — proportional to monospace branch width */
+  .tree-row.indent-1 { padding-left: 0.2em; }
+  .tree-row.indent-2 { padding-left: 2.4em; }
+
+  @media (max-width: 520px) {
+    .tree-row .comment { white-space: normal; }
+  }
+
+  /* ===== Theme toggle (manual fallback) ===== */
+  .theme-toggle {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;          /* shown only when parent sync fails */
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow);
+  }
+  body.standalone .theme-toggle { display: flex; }
+</style>
+</head>
+<body>
+
+<button class=&quot;theme-toggle&quot; onclick=&quot;toggleTheme()&quot; title=&quot;切換主題&quot;>🌓</button>
+
+<div class=&quot;anatomy&quot;>
+
+  <!-- 1. Metadata -->
+  <div class=&quot;part metadata&quot; onclick=&quot;togglePart(this)&quot;>
+    <div class=&quot;part-head&quot;>
+      <div class=&quot;part-num&quot;>1</div>
+      <div class=&quot;part-title&quot;>
+        元數據
+        <span class=&quot;en&quot;>METADATA</span>
+      </div>
     </div>
+    <div class=&quot;part-desc&quot;>
+      告訴 Claude「你是誰、什麼時候該出場」。寫在 <code>SKILL.md</code> 開頭的 YAML frontmatter。
+    </div>
+    <div class=&quot;part-toggle&quot;><span class=&quot;arrow&quot;>▶</span> 點擊查看範例</div>
+    <div class=&quot;part-example&quot;>
+      <div class=&quot;code&quot;><span class=&quot;c&quot;>--- SKILL.md ---</span>
+<span class=&quot;k&quot;>---</span>
+<span class=&quot;k&quot;>name:</span> <span class=&quot;s&quot;>admin-template</span>
+<span class=&quot;k&quot;>description:</span> <span class=&quot;s&quot;>使用者要寫家長通知、活動公告
+  等行政文件時使用；先從專案知識庫
+  找最接近的過去案例，再照它改寫</span>
+<span class=&quot;k&quot;>---</span></div>
+    </div>
+  </div>
+
+  <!-- 2. Prompt -->
+  <div class=&quot;part prompt&quot; onclick=&quot;togglePart(this)&quot;>
+    <div class=&quot;part-head&quot;>
+      <div class=&quot;part-num&quot;>2</div>
+      <div class=&quot;part-title&quot;>
+        提示詞
+        <span class=&quot;en&quot;>PROMPT</span>
+      </div>
+    </div>
+    <div class=&quot;part-desc&quot;>
+      Skill 的「大腦」與「SOP」。寫在 <code>SKILL.md</code> 主文中，告訴 Claude 步驟、原則、產出格式。
+    </div>
+    <div class=&quot;part-toggle&quot;><span class=&quot;arrow&quot;>▶</span> 點擊查看範例</div>
+    <div class=&quot;part-example&quot;>
+      <div class=&quot;code&quot;><span class=&quot;c&quot;>--- SKILL.md（接續上面）---</span>
+<span class=&quot;k&quot;># 行政文件範本</span>
+
+<span class=&quot;c&quot;>## 執行步驟</span>
+1. 從知識庫找出最接近的案例
+2. 說明選了哪一份、為什麼
+3. 沿用段落順序與語氣，換成這次的資訊
+4. 列出沿用、修改、待確認
+
+<span class=&quot;c&quot;>## 原則</span>
+- 案例的日期、地點、費用不沿用
+- 沒提供的項目標「待確認」</div>
+    </div>
+  </div>
+
+  <!-- 3. Scripts -->
+  <div class=&quot;part scripts&quot; onclick=&quot;togglePart(this)&quot;>
+    <div class=&quot;part-head&quot;>
+      <div class=&quot;part-num&quot;>3</div>
+      <div class=&quot;part-title&quot;>
+        程式腳本
+        <span class=&quot;en&quot;>SCRIPTS</span>
+      </div>
+    </div>
+    <div class=&quot;part-desc&quot;>
+      把重複、確定性的工作交給程式（Python / Node.js），<code>SKILL.md</code> 只負責「呼叫」，省下大量 token。
+    </div>
+    <div class=&quot;part-toggle&quot;><span class=&quot;arrow&quot;>▶</span> 點擊查看範例</div>
+    <div class=&quot;part-example&quot;>
+      <div class=&quot;code&quot;><span class=&quot;c&quot;>--- 資訊卡技能包的 scripts/build.mjs（示意）---</span>
+<span class=&quot;c&quot;>// 把每一張卡的網頁轉成圖片</span>
+<span class=&quot;k&quot;>for</span> (<span class=&quot;k&quot;>const</span> card <span class=&quot;k&quot;>of</span> cards) {
+  <span class=&quot;k&quot;>await</span> page.setContent(card.html)
+  <span class=&quot;k&quot;>await</span> page.screenshot({
+    path: <span class=&quot;s&quot;>`cards/${card.no}.png`</span>,
+  })
+}
+console.log(<span class=&quot;s&quot;>`✓ 產出 ${cards.length} 張圖卡`</span>)</div>
+    </div>
+  </div>
+
+  <!-- 4. Reference -->
+  <div class=&quot;part reference&quot; onclick=&quot;togglePart(this)&quot;>
+    <div class=&quot;part-head&quot;>
+      <div class=&quot;part-num&quot;>4</div>
+      <div class=&quot;part-title&quot;>
+        參考資源
+        <span class=&quot;en&quot;>REFERENCE</span>
+      </div>
+    </div>
+    <div class=&quot;part-desc&quot;>
+      補充判斷依據（範例、規則、樣板）。AI 需要時才會載入，避免 <code>SKILL.md</code> 過長。
+    </div>
+    <div class=&quot;part-toggle&quot;><span class=&quot;arrow&quot;>▶</span> 點擊查看範例</div>
+    <div class=&quot;part-example&quot;>
+      <div class=&quot;code&quot;><span class=&quot;c&quot;>--- 資訊卡技能包的 reference/hooks.md（示意）---</span>
+<span class=&quot;k&quot;># 封面與排卡規則</span>
+
+- 封面：一句話講出這組卡的重點
+- 內頁：一張卡只放一個重點
+- 結尾：回顧重點，提醒下一步
+
+<span class=&quot;c&quot;># AI 開始排卡時</span>
+<span class=&quot;c&quot;># 才會載入這份檔案</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Tree summary -->
+<div class=&quot;tree-summary&quot;>
+  <h3>實際的資料夾長這樣</h3>
+  <div class=&quot;tree&quot;>
+    <div class=&quot;tree-row&quot;>
+      <span class=&quot;name folder&quot;>📂 info-card-generator/</span>
+    </div>
+    <div class=&quot;tree-row indent-1&quot;>
+      <span class=&quot;branch&quot;>├─</span>
+      <span class=&quot;name file-skill&quot;>SKILL.md</span>
+      <span class=&quot;comment&quot;>1 元數據 + 2 提示詞</span>
+    </div>
+    <div class=&quot;tree-row indent-1&quot;>
+      <span class=&quot;branch&quot;>├─</span>
+      <span class=&quot;name folder&quot;>scripts/</span>
+    </div>
+    <div class=&quot;tree-row indent-2&quot;>
+      <span class=&quot;branch&quot;>├─</span>
+      <span class=&quot;name file-py&quot;>build.mjs</span>
+      <span class=&quot;comment&quot;>3 程式腳本</span>
+    </div>
+    <div class=&quot;tree-row indent-2&quot;>
+      <span class=&quot;branch&quot;>└─</span>
+      <span class=&quot;name file-py&quot;>lint.mjs</span>
+    </div>
+    <div class=&quot;tree-row indent-1&quot;>
+      <span class=&quot;branch&quot;>└─</span>
+      <span class=&quot;name folder&quot;>reference/</span>
+    </div>
+    <div class=&quot;tree-row indent-2&quot;>
+      <span class=&quot;branch&quot;>├─</span>
+      <span class=&quot;name file-md&quot;>hooks.md</span>
+      <span class=&quot;comment&quot;>4 參考資源</span>
+    </div>
+    <div class=&quot;tree-row indent-2&quot;>
+      <span class=&quot;branch&quot;>└─</span>
+      <span class=&quot;name file-md&quot;>base.html</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== Card toggle =====
+  function togglePart(el) {
+    el.classList.toggle('open');
+  }
+
+  // ===== Theme sync with parent course page =====
+  function applyTheme() {
+    try {
+      var parentTheme = window.parent.document.documentElement.getAttribute('data-theme');
+      // course base.html: no attribute = dark, 'light' = light
+      document.body.classList.toggle('dark', parentTheme !== 'light');
+      document.body.classList.remove('standalone');
+    } catch (e) {
+      // Cross-origin or standalone — fall back to OS preference + manual toggle
+      document.body.classList.add('standalone');
+      document.body.classList.toggle(
+        'dark',
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      );
+    }
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+  }
+
+  applyTheme();
+
+  try {
+    new MutationObserver(applyTheme).observe(
+      window.parent.document.documentElement,
+      { attributes: true, attributeFilter: ['data-theme'] }
+    );
+  } catch (e) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+  }
+</script>
+</body>
+</html>
+" frameborder="0" scrolling="no" style="width:100%;border:none;overflow:hidden" onload="(function(f){var sync=function(){try{var d=f.contentDocument;if(!d||!d.documentElement)return;var s=f.style,p=s.height;s.height='0px';var h=d.documentElement.scrollHeight;s.height=h?h+'px':p;}catch(e){}};sync();try{var d=f.contentDocument;if(d&&'ResizeObserver' in window){var ro=new ResizeObserver(sync);ro.observe(d.documentElement);if(d.body)ro.observe(d.body);}if(f.contentWindow){f.contentWindow.addEventListener('resize',sync);}window.addEventListener('resize',sync);if(d&&d.fonts&&d.fonts.ready)d.fonts.ready.then(sync);}catch(e){}})(this)"></iframe>
       </div>
     </div>
   </div>
@@ -9079,46 +9747,41 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧩</span> Skill 不是越多，AI 就越強</div>
+      <div class="group-header"><span class="icon">🧩</span> 上一堂的提醒，換到 Claude 一樣適用</div>
       <div class="group-body">
-        <p><code>同一類型的 Skill 裝了兩個以上，當需求命中時，常常會一起觸發</code>；這不只會增加 Token 消耗，也容易讓 AI 在執行過程中卡住或走偏。</p>
-        <p class="loose-text"><strong>在提示詞的世界裡，1 + 1 不一定大於 2，甚至可能小於 1。</strong></p>
-        <div class="insight">
-      <div class="insight-title">同類型的 Skill，建議擇優安裝一個</div>
-      <p>像撰寫家長通知、班級公告這類需求，如果同時安裝多個相近 Skill，AI 反而要花更多成本判斷該遵循哪一套規則，結果未必更好。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🤔</span> 網路上很多 Skill 只是看起來有用</div>
-      <div class="group-body">
-        <ul>
-  <li>有些 Skill 描述看起來很厲害，實際使用時<code>效果卻不穩定</code></li>
-  <li>安裝<code>太多沒有用到的 Skills</code> 甚至會讓 AI 的行為變得更難預測</li>
-</ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🎬</span> 延伸學習：Skill 也有對標產品</div>
-      <div class="group-body">
-        <ul>
-  <li>我有錄一支影片完整示範 Manus 的 Skill 技能：教會 AI 一次，它就一直記得</li>
-  <li>Google 的 Antigravity 也有 Agent Skills，觀念相同：<a href="https://youtu.be/xe00zJEtuMo" target="_blank" rel="noopener">【Antigravity Agent Skills 教學】當別人還在複製貼上，你的 AI 已經自動搞定</a></li>
-</ul>
-        <div class="youtube-embed">
-      <div class="youtube-wrapper" data-id="lKiwb381mfU">
-        <iframe src="https://www.youtube.com/embed/lKiwb381mfU" title="【Manus Skill 技能教學】教會 AI 一次，他永遠記得！" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-        <div class="youtube-local-notice">
-          <p>本機直接開啟 HTML 時，YouTube 可能因缺少 HTTP referrer 而拒絕播放。請改用本機伺服器預覽，或直接前往 <a href="https://www.youtube.com/watch?v=lKiwb381mfU" target="_blank" rel="noopener">YouTube 觀看影片</a>。</p>
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title"><strong>同類型的 Skill，擇優安裝一個</strong></div>
+          <div class="step-desc">裝了兩個以上，需求命中時常常一起觸發，增加 Token 消耗，也容易讓 AI 卡住或走偏</div>
         </div>
       </div>
-      <p class="youtube-caption">【Manus Skill 技能教學】教會 AI 一次，他永遠記得！</p>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title"><strong>看起來有用，不等於真的有用</strong></div>
+          <div class="step-desc">有些 Skill 描述很厲害，實際使用時<code>效果卻不穩定</code>；裝太多沒用到的，AI 的行為會更難預測</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title"><strong>來路不明的不要裝</strong></div>
+          <div class="step-desc"><code>SKILL.md</code> 與程式腳本都可能被動手腳，匯入前先看內容、看發佈者是否可信</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title"><strong>不同 AI Agent 都有 Skill</strong></div>
+          <div class="step-desc">學會一次，換工具也用得上；延伸學習：<a href="https://youtu.be/lKiwb381mfU" target="_blank" rel="noopener">Manus Skill 技能教學</a>、<a href="https://youtu.be/xe00zJEtuMo" target="_blank" rel="noopener">Antigravity Agent Skills 教學</a></div>
+        </div>
+      </div>
+    </div>
+        <div class="insight">
+      <div class="insight-title">別人的 SOP 是參考，自己的工作流才是答案</div>
+      <p>有持續在用的 Skill，一定會持續優化；放著不改的，通常也是沒在用的。</p>
     </div>
       </div>
     </div>
@@ -9129,65 +9792,56 @@
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="ai-sop" data-seg="0"><span class="num">8</span> 結語</span>
+    <span class="section-label" id="summary" data-seg="0"><span class="num">📌</span> 課程總結</span>
     <h2>讓 AI 長出眼睛、記得背景、照 SOP 做事</h2>
     
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-17" data-seg="0"><span class="bar"></span>本堂重點回顧</div>
-  </div>
-
-  <div class="reveal">
     <div class="summary-grid">
       <div class="summary-card">
-        <div class="sc-icon">🧭</div>
-        <h4>起手式</h4>
-        <p>AI 的能力取決於你給它哪些工具；先分清楚 Connector、Project、Skill 各自的使用時機</p>
+        <div class="sc-icon">🗺️</div>
+        <h4>換一家做同樣的事</h4>
+        <p>外掛程式＝Connector、專案＝Project、技能＝Skill；名字不同、邏輯相同</p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🛡️</div>
         <h4>設定與資料安全</h4>
-        <p>先關閉模型改善、設好個人偏好；資料不確定就別貼，要上傳先去識別化</p>
+        <p>關閉模型改善、設好個人偏好與能力開關；名冊先去識別化，學號用自訂規則一次處理</p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🔌</div>
         <h4>Connector</h4>
-        <p>讓 AI 讀信箱、行事曆、雲端檔案；小範圍測試、先看草稿再執行，刪除與建立行程由人把關</p>
+        <p>分類信件貼標籤、彙整脈絡、寫回覆草稿；小範圍測試、先看草稿再執行，刪除與建立行程由人把關</p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🗂️</div>
         <h4>Project</h4>
-        <p>指令、知識庫、記憶不必每次重講；定版的上傳、會改的放雲端，沒寫的要讓它誠實說沒有</p>
+        <p>指令告訴 AI 什麼問題去哪份文件找；定版的上傳、會改的放雲端，沒寫的要讓它誠實說沒有</p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">📋</div>
         <h4>Skill</h4>
-        <p>把最好的一次變成每一次；先求有再迭代，同類型擇優安裝，不明來源不匯入</p>
+        <p>用白話生成行政範本 Skill；進到 Project 再呼叫，找最接近的案例改寫，過去的資訊不沿用、缺的標「待確認」</p>
+      </div>
+      <div class="summary-card">
+        <div class="sc-icon">🎒</div>
+        <h4>分享與結構</h4>
+        <p>下載壓縮檔分享、匯入前先看內容；Skill 先讀名稱與描述，符合才載入全文</p>
       </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-18" data-seg="0"><span class="bar"></span>下一堂預告</div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🔮</span> Cowork：讓 AI 交付成品，替自己做班級小工具</div>
-      <div class="group-body">
-        <ul>
-  <li><strong>讓 AI 從給建議到交付成品</strong>：指定電腦資料夾，讓它直接整理檔案、做出活動工作包</li>
-  <li><strong>驗收是你的責任</strong>：抽一格對原始資料、看得到錯誤再放行</li>
-  <li><strong>Vibe Coding 做班級小工具</strong>：用 AI 做出雙擊就能開的抽籤分組工具，再用 Git 存檔點練習改壞了也能回到上一版</li>
-</ul>
-      </div>
+    <div class="insight">
+      <div class="insight-title">下一堂：讓 Claude 動手交付成品</div>
+      <p>今天的 Connector、Project、Skill 都在對話裡完成；第 4 堂換成 <code>Cowork</code>，指定電腦資料夾讓它整理檔案、設定排程，再用 Vibe Coding 做出班級抽籤分組工具。</p>
     </div>
   </div>
 </section>
 
 <hr class="divider">
-<section class="qa-page" id="ai-sop-qa">
+<section class="qa-page" id="summary-qa">
   <div class="qa-session">
     <div class="qa-session__deco" aria-hidden="true">?</div>
     <div class="qa-session__inner">
@@ -9202,7 +9856,7 @@
   <section class="quote-page">
   <div class="reveal">
     <div class="quote-mark">“</div>
-    <blockquote>把可重複的工作交給 AI，把來源核對與品質判斷留在自己手上。</blockquote>
+    <blockquote>工具會一直換，<br>但底層邏輯不變。</blockquote>
     <div class="quote-line"></div>
   </div>
 </section>
@@ -9497,8 +10151,8 @@
     });
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
-    var sectionIds = ["instructor","section-x","ai","section-2","section-3","connector-ai","project","sop-skill","skill","ai-sop"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","section-x","sub-section-1","ai","sub-section-2","sub-section-3","section-2","sub-section-4","sub-claude","section-3","sub-section-6","sub-section-7","connector-ai","sub-section-8","sub-section-9","project","sub-project","sub-section-11","sop-skill","sub-skill","sub-skill-2","skill","sub-skill-3","sub-skill-4","sub-skill-5","ai-sop","sub-section-17","sub-section-18"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var sectionIds = ["instructor","5","ai","section-2","connector-ai","project","sop-skill","skill","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+    var allAnchorIds = ["instructor","5","sub-1-chatgpt","sub-2-codex-ai-skill","ai","sub-claude","sub-claude-2","sub-claude-3","section-2","sub-section-6","sub-section-7","connector-ai","sub-section-8","sub-section-9","sub-section-10","sub-section-11","project","sub-claude-4","sub-section-13","sop-skill","sub-skill-claude","sub-skill","sub-skill-2","skill","sub-skill-3","sub-skill-4","sub-skill-5","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
     // 兩張對照表由 toc 段填入；updateToc 在任何時機呼叫都讀得到（未填時退回第一個章節）
     var sectionForAnchor = {};
     var subForAnchor = {};
