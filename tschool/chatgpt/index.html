@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="generator" content="course-page-generator 91bbd7c">
+  <meta name="generator" content="course-page-generator 0e0d2af-dirty">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>ChatGPT｜釐清需求，建立專屬的教學助理</title>
@@ -955,6 +955,35 @@
       font-size: .8rem;
       color: var(--text-dim);
       line-height: 1.6
+    }
+
+    /* 步驟下方的子列點（[flow] 內縮排的 `- `） */
+    .flow-step .step-list {
+      list-style: none;
+      margin: .2rem 0 0;
+      padding: 0;
+      font-size: .8rem;
+      color: var(--text-dim);
+      line-height: 1.6
+    }
+
+    .flow-step .step-list li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: .15rem;
+      font-size: inherit
+    }
+
+    .flow-step .step-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: calc((1lh - 5px) / 2);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      border: 0;
+      background: var(--accent2)
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -4438,7 +4467,8 @@
       margin-bottom: .1rem;
     }
 
-    #print-slides .flow-step .step-desc {
+    #print-slides .flow-step .step-desc,
+    #print-slides .flow-step .step-list {
       font-size: .74rem;
       line-height: 1.5;
     }
@@ -6908,7 +6938,6 @@
         <span class="toc-num">10</span> 結語
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-26">本堂重點回顧</a></li>
       </ul>
     </li>
 
@@ -9409,10 +9438,6 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-26" data-seg="0"><span class="bar"></span>本堂重點回顧</div>
-  </div>
-
-  <div class="reveal">
     <div class="summary-grid">
       <div class="summary-card">
         <div class="sc-icon">🤖</div>
@@ -9782,7 +9807,7 @@
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
     var sectionIds = ["instructor","ai","section-2","ai-2","section-4","prompt-ai","section-6","ai-3","gmail","section-9","ai-4"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","ai","sub-ai","sub-ai-2","sub-ai-3","section-2","sub-section-4","sub-ai-4","sub-section-6","sub-vs","ai-2","sub-ai-5","sub-ai-6","section-4","sub-section-10","sub-section-11","prompt-ai","sub-prompt","sub-prompt-2","sub-ai-prompt","sub-section-15","section-6","sub-ai-7","sub-chatgpt","sub-section-18","ai-3","sub-chatgpt-2","sub-chatgpt-3","gmail","sub-gmail","sub-google-calendar","section-9","sub-section-23","sub-section-24","sub-section-25","ai-4","sub-section-26"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var allAnchorIds = ["instructor","ai","sub-ai","sub-ai-2","sub-ai-3","section-2","sub-section-4","sub-ai-4","sub-section-6","sub-vs","ai-2","sub-ai-5","sub-ai-6","section-4","sub-section-10","sub-section-11","prompt-ai","sub-prompt","sub-prompt-2","sub-ai-prompt","sub-section-15","section-6","sub-ai-7","sub-chatgpt","sub-section-18","ai-3","sub-chatgpt-2","sub-chatgpt-3","gmail","sub-gmail","sub-google-calendar","section-9","sub-section-23","sub-section-24","sub-section-25","ai-4"];   // e.g. ['instructor','new-project','sub-create-project',...]
     // 兩張對照表由 toc 段填入；updateToc 在任何時機呼叫都讀得到（未填時退回第一個章節）
     var sectionForAnchor = {};
     var subForAnchor = {};
