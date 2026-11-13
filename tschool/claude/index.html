@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Claude 串接工具與知識庫｜生成式 AI 研習第 3 堂">
-  <meta property="og:description" content="為學校老師與行政設計的 Claude 講義：開工設定與學生名冊去識別化，用 Connector 分類信件、建立行程，用 Project 建立活動知識庫，再把家長通知流程存成 Skill。">
+  <meta property="og:description" content="為學校老師與行政設計的 Claude 講義：開工設定與學生名冊去識別化，用連接器分類信件、建立行程，用 Project 建立活動知識庫，再把家長通知流程存成 Skill。">
   <meta property="og:image" content="https://deanlin.net/course/tschool/claude/assets/og-image.jpg">
   <meta property="og:url" content="https://deanlin.net/course/tschool/claude/">
   <meta property="og:site_name" content="林鼎淵 Dean Lin">
@@ -6869,19 +6869,17 @@
         <span class="toc-num">2</span> 資料安全
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-6">快速認識去識別化</a></li>
+        <li><a href="#sub-section-6">認識去識別化</a></li>
         <li><a href="#sub-section-7">用學生名冊實作一次</a></li>
       </ul>
     </li>
-    <li class="toc-group" data-section="connector-ai">
-      <a href="#connector-ai" class="toc-group-title">
+    <li class="toc-group" data-section="ai-2">
+      <a href="#ai-2" class="toc-group-title">
         <span class="toc-num">3</span> 串接日常工具
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-8">連接前先準備素材</a></li>
-        <li><a href="#sub-section-9">整理信件、建立標籤</a></li>
-        <li><a href="#sub-section-10">寫入日曆與參考資訊</a></li>
-        <li><a href="#sub-section-11">沒有連接權限，也能練同一件事</a></li>
+        <li><a href="#sub-section-8">整理信件、建立標籤</a></li>
+        <li><a href="#sub-section-9">寫入日曆與參考資訊</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="project">
@@ -6890,7 +6888,7 @@
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-claude-4">上一堂的專案，換到 Claude</a></li>
-        <li><a href="#sub-section-13">過去的通知與這學期的安排，放進同一個專案</a></li>
+        <li><a href="#sub-section-11">把過去的通知放進同一個專案</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="sop-skill">
@@ -6949,13 +6947,13 @@
     <header class="hero">
     <div class="hero-badge"><span class="dot"></span>生成式 AI 研習｜第 3 堂</div>
     <h1>串接工具、建立知識庫，<br>把好方法變 SOP</h1>
-    <p class="hero-sub">從去識別化、Connector、Project 到 Skill，了解不同 AI Agent 的通用性</p>
+    <p class="hero-sub">從去識別化、連接器、Project 到 Skill，了解不同 AI Agent 的通用性</p>
     <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
     <nav class="hero-nav">
       <a href="#5">課前回顧</a>
     <a href="#ai">起手式</a>
     <a href="#section-2">資料安全</a>
-    <a href="#connector-ai">串接日常工具</a>
+    <a href="#ai-2">串接日常工具</a>
     <a href="#project">建立專屬知識庫</a>
     <a href="#sop-skill">把好方法變成 SOP</a>
     <a href="#skill">分享與深入</a>
@@ -7045,7 +7043,7 @@
             <span class="class-timeline__status-tag is-current">進行中</span>
           </div>
           <div class="class-timeline__time">19:00~21:00</div>
-          <div class="class-timeline__des"><strong>串接工具、建立知識庫，把好方法變 SOP</strong>：先把學生名冊去識別化，再用 Connector 整理信件與行事曆、用 Project 建立活動知識庫、把家長通知流程存成 Skill。</div>
+          <div class="class-timeline__des"><strong>串接工具、建立知識庫，把好方法變 SOP</strong>：先把學生名冊去識別化，再用連接器整理信件與行事曆、用 Project 建立活動知識庫、把家長通知流程存成 Skill。</div>
           <a class="class-timeline__link" href="../claude/index.html" target="_blank" rel="noopener">查看講義<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
@@ -7192,7 +7190,7 @@
         <div class="step-num">3</div>
         <div class="step-content">
           <div class="step-title">信件分類與行程</div>
-          <div class="step-desc">用 Connector 連接外部工具，信件<code>分類標籤</code>、寫<code>回覆草稿</code>，彙整資訊<code>建立行程</code></div>
+          <div class="step-desc">用連接器連接外部工具，信件<code>分類標籤</code>、寫<code>回覆草稿</code>，彙整資訊<code>建立行程</code></div>
         </div>
       </div>
       <div class="flow-step">
@@ -7256,7 +7254,7 @@
         <tbody>
           <tr>
             <td class="align-left"><strong>讓 AI 讀我的信箱 / 行事曆 / 雲端檔案</strong></td>
-            <td class="align-left col-w"><code>Connector</code></td>
+            <td class="align-left col-w"><code>連接器</code></td>
             <td class="align-left">給它「眼睛跟手」去碰你的工具</td>
           </tr>
           <tr>
@@ -7450,14 +7448,36 @@
       <img src="assets/claude-general-setting.png" width="3828" height="1916" alt="Claude 使用偏好設定" loading="lazy">
       <figcaption>Claude 使用偏好設定</figcaption>
     </figure>
-        <div class="insight">
-      <div class="insight-title">提示詞很重要，但不是全部！</div>
-      <p>現在 AI 回答問題時，會參考過去你跟它的<code>聊天紀錄</code>。<br><strong>操作路徑</strong>: 左下角頭像 → Settings → Memory</p>
+      </div>
     </div>
-        <p class="loose-text"><!-- 待換圖：claude-memory.png｜上方標題列（模糊但讀得出）是達和案例對話「委託廢棄物遭非法棄置的責任研究」；在新對話或練習對話中開設定重拍 --></p>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🧠</span> 讓 AI 會越用越懂你</div>
+      <div class="group-body">
+        <p><strong>操作路徑</strong>: 左下角頭像 → 設定 → 記憶</p>
+<ul>
+  <li>現在 AI 回答問題時，會參考過去你跟它的<code>聊天紀錄</code>。</li>
+</ul>
         <figure class="content-image">
-      <img src="assets/claude-memory.png" width="1909" height="1046" alt="使用越久，AI 會更像自己" loading="lazy">
+      <img src="assets/claude-memory.png" width="1916" height="963" alt="使用越久，AI 會更像自己" loading="lazy">
       <figcaption>使用越久，AI 會更像自己</figcaption>
+    </figure>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">讓 AI 總結它認識的你</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">根據我們過去所有的對話，請你深入挖掘、分析並總結我的性格、專長與獨特之處，並用具有說服力、吸引力且讓人眼睛一亮的方式來介紹我！</div>
+    </div>
+        <figure class="content-image">
+      <img src="assets/claude-memory-about-me.png" width="1916" height="963" alt="你在 AI 眼中的樣子" loading="lazy">
+      <figcaption>你在 AI 眼中的樣子</figcaption>
     </figure>
       </div>
     </div>
@@ -7467,10 +7487,9 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🦾</span> 賦予 Claude 能力</div>
       <div class="group-body">
-        <p><strong>操作路徑</strong>: 左下角頭像 → Settings → Capabilities</p>
-        <p class="loose-text"><!-- 待換圖：claude-capabilities.png｜上方標題列（模糊但讀得出）是達和案例對話「委託廢棄物遭非法棄置的責任研究」；在新對話或練習對話中開設定重拍 --></p>
+        <p><strong>操作路徑</strong>: 左下角頭像 → 設定 → 功能</p>
         <figure class="content-image">
-      <img src="assets/claude-capabilities.png" width="1909" height="1046" alt="原則上全部打開" loading="lazy">
+      <img src="assets/claude-capabilities.png" width="1916" height="963" alt="原則上全部打開" loading="lazy">
       <figcaption>原則上全部打開</figcaption>
     </figure>
         <div class="table-wrap">
@@ -7489,27 +7508,27 @@
         </thead>
         <tbody>
           <tr>
-            <td class="align-left col-w"><strong>Tool access mode</strong></td>
-            <td class="align-left">決定新對話裡的 Connector 工具怎麼載入</td>
-            <td class="align-left">維持預設 <code>Load tools when needed</code>；如果全部載入可能浪費 Token 額度</td>
+            <td class="align-left col-w"><strong>工具存取模式</strong></td>
+            <td class="align-left">決定新對話裡的連接器工具怎麼載入</td>
+            <td class="align-left">維持預設 <code>需要時載入</code>；如果全部載入可能浪費 Token 額度</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong>Connector search</strong></td>
+            <td class="align-left col-w"><strong>連接器搜尋</strong></td>
             <td class="align-left">主動推薦跟對話相關的工具（ex: 討論排會議時，建議你連接行事曆）</td>
             <td class="align-left">開啟</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong>Switch models when a message is flagged</strong></td>
+            <td class="align-left col-w"><strong>當訊息被標記時切換模型</strong></td>
             <td class="align-left">訊息被安全機制標記時，自動換另一個模型繼續回答</td>
             <td class="align-left">開啟，避免工作到一半卡住</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong>Artifacts</strong></td>
+            <td class="align-left col-w"><strong>視覺內容</strong></td>
             <td class="align-left">可以直接從對話預覽程式渲染成果</td>
-            <td class="align-left">開啟</td>
+            <td class="align-left">全部開啟</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong>Code execution and file creation</strong></td>
+            <td class="align-left col-w"><strong>程式碼執行與檔案建立</strong></td>
             <td class="align-left">執行程式、建立與編輯 Excel、Word、PowerPoint、PDF，並做資料分析</td>
             <td class="align-left">開啟</td>
           </tr>
@@ -7538,45 +7557,70 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-6" data-seg="0"><span class="bar"></span>快速認識去識別化</div>
+    <div class="sub-title" id="sub-section-6" data-seg="0"><span class="bar"></span>認識去識別化</div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🆚</span> 上一堂處理 Word，今天處理 Excel</div>
+      <div class="group-header"><span class="icon">😓</span> 想請 AI 幫忙，但資料裡都是個資</div>
       <div class="group-body">
+        <p>這些情境，你應該都遇過：</p>
+        <ul class="loose-list">
+      <li><strong>把資料交給 AI 之前</strong>
+        <ul class="loose-list nested">
+        <li><strong>Word</strong>：想請 AI 把一學期的輔導紀錄整理成摘要，但裡面有<code>學生姓名、家長電話、住址</code></li>
+        <li><strong>Excel</strong>：想請 AI 統整家長問卷的回覆，但每一列都有<code>家長姓名、電話、Email</code></li>
+        <li><strong>PDF</strong>：想請 AI 幫你抓出學生評估報告的重點，但裡面有<code>姓名、學號</code></li>
+      </ul>
+      </li>
+      <li><strong>IEP（個別化教育計畫）的應用</strong>
+        <ul class="loose-list nested">
+        <li>個案研討會議要討論學生的 IEP，得先把<code>名字、學校、家人</code>代換掉</li>
+        <li>同事想參考你寫的 IEP 當範本，不能把真實的學生資料直接給出去</li>
+      </ul>
+      </li>
+    </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">⚠️</span> 我知道要去識別化，但工具呢？</div>
+      <div class="group-body">
+        <p>沒有對應的工具，所以很多人是用土法煉鋼的方式<code>手動逐個處理</code>。</p>
         <div class="table-wrap">
       <table class="content-table">
         <thead>
           <tr>
-            <th class="align-left"></th>
-            <th class="align-left">第 1 堂</th>
-            <th class="align-left">今天</th>
+            <th class="align-left">檔案</th>
+            <th class="align-left">常見的手動做法</th>
+            <th class="align-left">會踩到的坑</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="align-left"><strong>檔案</strong></td>
-            <td class="align-left">Word 的學生個別輔導紀錄</td>
-            <td class="align-left">多工作表的 Excel 學生名冊</td>
+            <td class="align-left"><strong>Word</strong></td>
+            <td class="align-left">用「取代」功能一個一個換</td>
+            <td class="align-left">要取代的內容一多就<code>很容易漏</code>；沒有設計對照表，改完就<code>回不去了</code></td>
           </tr>
           <tr>
-            <td class="align-left"><strong>輸出設定</strong></td>
-            <td class="align-left"><code>全部隱藏</code>（不需要統計）</td>
-            <td class="align-left"><code>部分保留</code>（要統計行政區）</td>
+            <td class="align-left"><strong>Excel</strong></td>
+            <td class="align-left">處理完第一個工作表</td>
+            <td class="align-left"><code>後面幾個工作表</code>忘了處理</td>
           </tr>
           <tr>
-            <td class="align-left"><strong>漏抓的學號</strong></td>
-            <td class="align-left">用滑鼠圈選，一筆一筆新增</td>
-            <td class="align-left">新增<code>自訂規則</code>，一次處理</td>
-          </tr>
-          <tr>
-            <td class="align-left"><strong>交給 AI 做什麼</strong></td>
-            <td class="align-left">ChatGPT 整理成輔導室摘要</td>
-            <td class="align-left">Claude 統計人數、找出聯絡資料缺漏</td>
+            <td class="align-left"><strong>PDF</strong></td>
+            <td class="align-left">畫一個白框蓋上去</td>
+            <td class="align-left">表面上遮掉了，但框選起來複製貼上，<code>資料還在</code></td>
           </tr>
         </tbody>
       </table>
+    </div>
+        <div class="insight">
+      <div class="insight-title">為什麼不要隨便用網路上搜到的「去識別化工具」？</div>
+      <p>除非你了解服務背後使用的技術架構，否則你原本的目標是去識別化，結果卻<code>直接把機敏資料送給對方</code>。</p>
+      <p style="margin-top:.5rem"><strong>檔案會不會離開你的電腦，是選工具的第一個重點。</strong></p>
     </div>
       </div>
     </div>
@@ -7584,54 +7628,40 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🔁</span> 快速回顧：去識別化的六個步驟</div>
+      <div class="group-header"><span class="icon">🛠️</span> 免費的資料去識別化工具</div>
       <div class="group-body">
-        <ul>
-  <li>第 1 堂用一份 Word 輔導紀錄完整操作過，這裡只帶重點，沒上第 1 堂也能直接跟著做</li>
-  <li>工具：<a href="https://deanlin.net/data-deidentification" target="_blank" rel="noopener">資料去識別化工具</a>，我自己設計的免費工具，檔案只在你的瀏覽器裡處理，<code>不會離開你的電腦</code></li>
-  <li>手動處理最常出錯的地方：Word 用「取代」一個一個換容易漏、Excel <code>處理完第一個工作表，後面就忘了</code>、PDF 蓋白框但複製貼上資料還在</li>
-</ul>
+        <p><a href="https://deanlin.net/data-deidentification" target="_blank" rel="noopener">資料去識別化工具</a>是我自己設計的免費工具。</p>
+        <figure class="content-image">
+      <img src="assets/deid-tool-home.png" width="3802" height="1920" alt="資料去識別化工具首頁" loading="lazy">
+      <figcaption>資料去識別化工具首頁</figcaption>
+    </figure>
         <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <div class="step-title">上傳</div>
-          <div class="step-desc">把檔案拖進<code>去識別化</code>分頁</div>
+          <div class="step-title">檔案不會離開你的電腦</div>
+          <div class="step-desc">以純前端網頁設計，所有處理都在瀏覽器內完成</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title">看預覽</div>
-          <div class="step-desc">敏感資料換成方括號加類別的標記</div>
+          <div class="step-title">支援常見格式</div>
+          <div class="step-desc">Word（.docx）、Excel（.xlsx）、PDF、TXT、Markdown，一次最多 10 個檔案；信件或對話紀錄也可以<code>直接貼上文字</code></div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">人工調整</div>
-          <div class="step-desc">漏抓的用滑鼠圈選新增，抓錯的點標記取消</div>
+          <div class="step-title">自動辨識常見隱私資訊</div>
+          <div class="step-desc">姓名、身分證字號、手機、市話、地址、Email、出生日期等；辨識錯誤或遺漏的地方，可以手動增加或取消</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
         <div class="step-content">
-          <div class="step-title">下載</div>
-          <div class="step-desc">拿到去識別化文件與 CSV 編碼表</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">5</div>
-        <div class="step-content">
-          <div class="step-title">交給 AI</div>
-          <div class="step-desc">只上傳去識別化的那一份</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">6</div>
-        <div class="step-content">
-          <div class="step-title">還原</div>
-          <div class="step-desc">到<code>還原</code>分頁，用編碼表換回原文</div>
+          <div class="step-title">還能還原回來</div>
+          <div class="step-desc">下載時附一份 CSV 編碼表，AI 處理完後可以把代號換回原文</div>
         </div>
       </div>
     </div>
@@ -7645,75 +7675,29 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📊</span> 換一種資料：多工作表的學生名冊</div>
+      <div class="group-header"><span class="icon">📊</span> 多工作表的學生名冊</div>
       <div class="group-body">
-        <a class="download-card" href="assets/student-roster.zip" download>
+        <a class="download-card" href="assets/學生名冊-虛構.xlsx" download>
     <span class="download-card__icon" aria-hidden="true">⬇</span>
     <span class="download-card__body">
       <span class="download-card__label">下載「學生名冊」練習檔</span>
-      <span class="download-card__desc">虛構的 12 位學生名冊 Excel，含基本資料、家長聯絡、說明三個工作表（解壓即用）</span>
+      <span class="download-card__desc">虛構的 12 位學生名冊 Excel，含基本資料、家長聯絡、說明三個工作表</span>
     </span>
-    <span class="download-card__ext">ZIP</span>
+    <span class="download-card__ext">XLSX</span>
   </a>
         <h4 class="minor-title">STEP 1：上傳名冊，每個工作表都看一眼</h4>
         <ul class="loose-list">
-      <li>把 <code>學生名冊-虛構.xlsx</code> 拖進工具，預覽上方會出現<code>基本資料</code>、<code>家長聯絡</code>、<code>說明</code>三個工作表頁籤，工具一次處理所有工作表，逐一點開確認</li>
-      <li>同一位學生出現在兩個工作表時，會換成<code>同一個編碼</code>，資料還是對得起來</li>
-      <li>輸出設定的「保留」維持預設的<code>部分保留</code>：留下姓氏與行政區，等一下才能請 Claude 統計；改成<code>全部隱藏</code>的話，整個地址都會變成編碼，就統計不了</li>
+      <li>打開<a href="https://deanlin.net/data-deidentification" target="_blank" rel="noopener">資料去識別化工具</a>，停在<code>去識別化</code>分頁</li>
+      <li>把 <code>學生名冊-虛構.xlsx</code> 拖進虛線區（或點擊選擇檔案），預覽上方會出現<code>基本資料</code>、<code>家長聯絡</code>、<code>說明</code>三個工作表頁籤</li>
     </ul>
-        <div class="table-wrap">
-      <table class="content-table">
-        <colgroup>
-          <col style="width:220px">
-          <col>
-          <col>
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="align-left col-w">欄位</th>
-            <th class="align-left">工具怎麼處理</th>
-            <th class="align-left">部分保留後的樣子</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left col-w"><strong>姓名、家長姓名</strong></td>
-            <td class="align-left">自動隱藏</td>
-            <td class="align-left"><code>陳[姓名]</code></td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>身分證字號</strong></td>
-            <td class="align-left">自動隱藏（會驗證檢核碼，隨手亂打的號碼不會命中）</td>
-            <td class="align-left"><code>F1[身分證]</code></td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>戶籍地址</strong></td>
-            <td class="align-left">自動隱藏</td>
-            <td class="align-left"><code>新北市板橋區[地址]</code></td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>手機、市話、Email</strong></td>
-            <td class="align-left">自動隱藏</td>
-            <td class="align-left"><code>0900-[手機]</code>、<code>02-[市話]</code>、<code>[電子郵件]@example.com</code></td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>學號</strong></td>
-            <td class="align-left"><code>沒有被隱藏</code>，STEP 2 處理</td>
-            <td class="align-left"><code>S113001</code></td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>班級、座號、性別、關係</strong></td>
-            <td class="align-left">不處理</td>
-            <td class="align-left">原樣保留</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-        <p class="loose-text"><!-- 待補圖片：deid-roster-sheets.png｜去識別化工具載入「學生名冊-虛構.xlsx」後的預覽，以虛線紅框標出上方三個工作表頁籤與輸出設定的「部分保留」，畫面可見學號欄仍是原文 --></p>
-        <p class="loose-text"><!-- <img src="assets/deid-roster-sheets.png" alt="三個工作表都讀進來了，但學號欄還是原文" class="inline-image"> --></p>
+        <figure class="content-image">
+      <img src="assets/deid-roster-sheets.png" width="1916" height="963" alt="三個工作表都讀進來了，但學號欄還是原文" loading="lazy">
+      <figcaption>三個工作表都讀進來了，但學號欄還是原文</figcaption>
+    </figure>
         <h4 class="minor-title">STEP 2：學號沒被隱藏，新增自訂規則</h4>
         <ul class="loose-list">
-      <li>學號是每間學校自己訂的格式，內建規則不認得；兩個工作表加起來 24 格，一格一格圈選太慢，改用規則一次處理</li>
+      <li>學號是每間學校自己訂的格式，<code>內建規則不認得</code></li>
+      <li>兩個工作表加起來 24 格，<code>一格一格圈選</code>太慢，改用規則一次處理</li>
     </ul>
         <div class="flow">
       <div class="flow-step">
@@ -7761,20 +7745,28 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">請幫我寫一個 JavaScript 正規表達式，偵測文件中的：學號，大寫 S 開頭接 6 位數字（例如 S113001）</div>
+      <div class="prompt-body">請幫我寫一個 JavaScript 正規表達式，偵測文件中的：學號，大寫 S 開頭接 6 位數字（例如 S113001）
+
+限制：以 new RegExp(規則, 'gu') 搜尋整份文件；不要加斜線、flags、^ 或 $；不可比對空字串；避免誤抓一般文字。
+
+請只回覆以下四項：
+1. 名稱
+2. 類別（姓名／身分證／手機／市話／地址／電子郵件／公司／統編／識別碼／國際電話／信用卡／SSN／IBAN／IP／生日 擇一）
+3. 規則
+4. 測試文字：一段 2～3 句的文字，同時包含應命中與不應命中的例子</div>
     </div>
-        <ul class="loose-list">
-      <li>Claude 的回覆大致會是：名稱 <code>學號</code>、類別 <code>識別碼</code>、規則 <code>S\d{6}(?!\d)</code>（寫法不同沒關係，以測試結果為準）</li>
-      <li>回到<code>去識別化</code>分頁，兩個工作表的學號都變成 <code>S[識別碼]</code>；沒有變化就按<code>重新偵測</code></li>
-    </ul>
-        <p class="loose-text"><!-- 待補圖片：deid-roster-rule-form.png｜「偵測規則」分頁的新增自訂規則表單，已填入名稱「學號」、類別「識別碼」、規則與測試文字並顯示命中結果，以虛線紅框標出「複製 AI 提示詞」與「新增規則」 --></p>
-        <p class="loose-text"><!-- <img src="assets/deid-roster-rule-form.png" alt="填好名稱、類別與規則，先用測試文字確認有命中再新增" class="inline-image"> --></p>
-        <p class="loose-text"><!-- 待補圖片：deid-roster-rule-result.png｜回到「去識別化」分頁的「家長聯絡」工作表，整欄學號都換成 S[識別碼] 標記 --></p>
-        <p class="loose-text"><!-- <img src="assets/deid-roster-rule-result.png" alt="新增規則後，整欄學號都換成了標記" class="inline-image"> --></p>
-        <div class="insight">
-      <div class="insight-title">規則看不懂怎麼辦？</div>
-      <p>不用看懂，你要確認的是<code>結果</code>：測試文字有沒有命中、預覽裡整欄有沒有被隱藏。<br>自訂規則只存在這台電腦的瀏覽器，換一台電腦要重新新增一次。</p>
-    </div>
+        <figure class="content-image">
+      <img src="assets/deid-roster-rule-claude.png" width="1916" height="963" alt="Claude 照提示詞回覆名稱、類別、規則與測試文字四項" loading="lazy">
+      <figcaption>Claude 照提示詞回覆名稱、類別、規則與測試文字四項</figcaption>
+    </figure>
+        <figure class="content-image">
+      <img src="assets/deid-roster-rule-form.png" width="1916" height="963" alt="填好名稱、類別與規則，先用測試文字確認有命中再新增" loading="lazy">
+      <figcaption>填好名稱、類別與規則，先用測試文字確認有命中再新增</figcaption>
+    </figure>
+        <figure class="content-image">
+      <img src="assets/deid-roster-rule-result.png" width="1916" height="963" alt="新增規則後，整欄學號都換成了標記" loading="lazy">
+      <figcaption>新增規則後，整欄學號都換成了標記</figcaption>
+    </figure>
         <h4 class="minor-title">STEP 3：下載，只把去識別化的檔案交給 Claude</h4>
         <ul class="loose-list">
       <li>按<code>下載（文件＋編碼表）</code>會拿到兩個檔案：<code>學生名冊-虛構.deid.xlsx</code> 交給 Claude，<code>學生名冊-虛構.mapping.csv</code> 編碼表<code>留在自己的電腦</code></li>
@@ -7798,26 +7790,26 @@
 
 請把結果整理成一份 Excel 檔，兩件事各放一個工作表。</div>
     </div>
-        <p class="loose-text"><!-- 待補圖片：deid-roster-claude.png｜Claude 讀取「學生名冊-虛構.deid.xlsx」後的回覆：各行政區人數與三筆缺漏，標記原樣保留，並提供 Excel 檔下載 --></p>
-        <p class="loose-text"><!-- <img src="assets/deid-roster-claude.png" alt="Claude 只看得到標記，照樣能統計人數、找出缺漏" class="inline-image"> --></p>
-        <div class="insight">
-      <div class="insight-title">怎麼知道 Claude 算對了？</div>
-      <p>參考答案：板橋區 4 人、中和區 3 人、永和區 2 人、土城區 2 人、萬華區 1 人；缺漏 3 筆（2 筆缺 Email、1 筆缺手機）。</p>
-    </div>
+        <figure class="content-image">
+      <img src="assets/deid-roster-claude.png" width="1916" height="963" alt="Claude 只看得到標記，照樣能統計人數、找出缺漏" loading="lazy">
+      <figcaption>Claude 只看得到標記，照樣能統計人數、找出缺漏</figcaption>
+    </figure>
         <h4 class="minor-title">STEP 4：用編碼表還原</h4>
         <ul class="loose-list">
       <li>下載 Claude 產出的 Excel，回到工具的<code>還原</code>分頁</li>
       <li>「1. 去識別化文件」放 Claude 給的檔案，「2. 編碼表 (CSV)」放剛剛的 <code>學生名冊-虛構.mapping.csv</code></li>
-      <li>畫面顯示已還原的筆數後，按<code>下載還原文件</code>：缺漏名單變回張語彤、蔡睿恩、許博鈞，可以直接拿去聯絡家長</li>
+      <li>畫面可以看到缺漏名單變回實際名字</li>
     </ul>
-        <p class="loose-text"><!-- 待補圖片：deid-roster-restore.png｜「還原」分頁放入 Claude 產出的 Excel 與編碼表後的還原預覽，以虛線紅框標出已還原筆數與「下載還原文件」 --></p>
-        <p class="loose-text"><!-- <img src="assets/deid-roster-restore.png" alt="放入 Claude 產出的檔案與編碼表，標記就能還原成原本的資料" class="inline-image"> --></p>
+        <figure class="content-image">
+      <img src="assets/deid-roster-restore.png" width="1916" height="963" alt="放入 Claude 產出的檔案與編碼表，標記就能還原成原本的資料" loading="lazy">
+      <figcaption>放入 Claude 產出的檔案與編碼表，標記就能還原成原本的資料</figcaption>
+    </figure>
         <div class="warning">
       <div class="warning-title">⚠️ 去識別化不等於匿名</div>
       <ul>
-        <li>班級、座號、性別、特殊事件這些沒被隱藏的資訊組合起來，還是可能<code>認得出是誰</code>（ex: 全班只有一位由祖母照顧的學生）</li>
-        <li>能不能把真實學生資料交給 AI，仍然依學校規定；課堂練習一律用虛構資料</li>
-        <li>編碼表可以還原所有資料，要和文件<code>分開保存</code>，不要一起上傳給 AI</li>
+        <li>班級、座號、性別、特殊事件這些沒被隱藏的資訊組合起來，還是可能<code>認得出是誰</code></li>
+        <li>能不能把真實學生資料交給 AI，仍然依學校規定</li>
+        <li>編碼表可以還原所有資料，不要一起上傳給 AI</li>
         <li>自動偵測會有漏抓與誤判；Excel 裡以數值儲存的儲存格（ex: 純數字的學號）工具不會處理，下載前自己再檢查一遍</li>
       </ul>
     </div>
@@ -7830,199 +7822,20 @@
 <section class="section">
   <div class="reveal">
     
-    <span class="section-label" id="connector-ai" data-seg="0"><span class="num">3</span> 串接日常工具</span>
-    <h2>透過 Connector 讓 AI 長出眼睛和手</h2>
+    <span class="section-label" id="ai-2" data-seg="0"><span class="num">3</span> 串接日常工具</span>
+    <h2>透過連接器讓 AI 長出眼睛和手</h2>
     
   </div>
 
   <div class="reveal">
     <div class="insight">
-      <div class="insight-title">上一堂的「外掛程式」，在 Claude 叫 Connector</div>
-      <p>第 1 堂用 ChatGPT 彙整信件、把信件轉成行程；今天換 Claude 做同樣的事，再多做兩件：<code>分類信件貼標籤</code>、<code>寫回覆草稿</code>。</p>
+      <div class="insight-title">將不同工具操作的任務集中到 Claude 處理</div>
+      <p>以前寫信、建立行程、搜尋檔案都要去不同應用程式。<br>現在設定好連接器就能<code>在 Claude 集中管理</code>。</p>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-8" data-seg="0"><span class="bar"></span>連接前先準備素材</div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🆚</span> 同一件事，兩家怎麼做</div>
-      <div class="group-body">
-        <div class="table-wrap">
-      <table class="content-table">
-        <thead>
-          <tr>
-            <th class="align-left"></th>
-            <th class="align-left">ChatGPT（第 1 堂）</th>
-            <th class="align-left">Claude（今天）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left"><strong>名稱</strong></td>
-            <td class="align-left">外掛程式</td>
-            <td class="align-left">Connector</td>
-          </tr>
-          <tr>
-            <td class="align-left"><strong>入口</strong></td>
-            <td class="align-left">外掛程式 → 搜尋 → 點擊「+」</td>
-            <td class="align-left">Customize → Connectors → 點擊「+」</td>
-          </tr>
-          <tr>
-            <td class="align-left"><strong>練習</strong></td>
-            <td class="align-left">彙整信件脈絡、信件轉行事曆</td>
-            <td class="align-left">再加上<code>分類貼標籤</code>、<code>回覆草稿</code>、<code>檢查行程衝突</code></td>
-          </tr>
-          <tr>
-            <td class="align-left"><strong>動手之前</strong></td>
-            <td class="align-left">建立行程前先給草稿</td>
-            <td class="align-left">一樣先看草稿，確認後才執行</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-        <p class="loose-text"><!-- 講師備註（課前準備）：示範帳號請用測試信箱。① 把 03-活動郵件串 的三封信各寄一次給自己（主旨照抄、內文連同「寄件人、時間」那一行）；② 在 Google Calendar 建 2030-05-10 13:45–14:15「模擬教研會」，不邀請任何人；③ 要示範分類或補拍標籤結果圖，可再把 08-分類練習信件 的十封信寄進測試信箱，自己寄的信寄件人都是自己，分類 Prompt 的「不需閱讀內容」要改成「閱讀內文第一行的寄件人與收件方式」。學員端的連接權限不一，現場以「自己信箱」或「貼上文字」兩種方式分流。 --></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧰</span> 下載虛構素材，選一種練習方式</div>
-      <div class="group-body">
-        <a class="download-card" href="assets/reading-day.zip" download>
-    <span class="download-card__icon" aria-hidden="true">⬇</span>
-    <span class="download-card__body">
-      <span class="download-card__label">下載「閱讀日」練習素材包</span>
-      <span class="download-card__desc">虛構的活動草案、決議、郵件串、行事曆、物資收據與分類練習信件（解壓即用，今天的練習都用這一包）</span>
-    </span>
-    <span class="download-card__ext">ZIP</span>
-  </a>
-        <div class="table-wrap">
-      <table class="content-table">
-        <colgroup>
-          <col style="width:240px">
-          <col>
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="align-left col-w">檔案</th>
-            <th class="align-left">用在哪裡</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left col-w"><strong><code>00-使用說明</code></strong></td>
-            <td class="align-left">素材包的說明，先看一眼</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong><code>01-閱讀日草案</code>、<code>02-閱讀日決議</code></strong></td>
-            <td class="align-left">郵件串的背景資料，想了解活動全貌可以看</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong><code>03-活動郵件串</code></strong></td>
-            <td class="align-left">Connector：彙整信件脈絡、寫回覆草稿、轉成行事曆事件</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong><code>04-模擬行事曆</code></strong></td>
-            <td class="align-left">Connector：檢查會議時間有沒有衝突</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong><code>05-假物資收據.csv</code></strong></td>
-            <td class="align-left">今天用不到</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong><code>06-測試紀錄空白表</code></strong></td>
-            <td class="align-left">第 4 堂才會用到，今天先放著</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong><code>08-分類練習信件</code></strong></td>
-            <td class="align-left">Connector：沒有連接信箱時，用來練習分類信件</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-        <div class="table-wrap">
-      <table class="content-table">
-        <colgroup>
-          <col style="width:170px">
-          <col>
-          <col>
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="align-left col-w">練習</th>
-            <th class="align-left">已連接 Gmail／Google Calendar</th>
-            <th class="align-left">沒有連接權限</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left col-w"><strong>分類信件</strong></td>
-            <td class="align-left">整理<code>自己信箱</code>最近 7 天的信</td>
-            <td class="align-left">把 <code>08-分類練習信件</code> 全文貼進對話</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>彙整脈絡、回覆草稿</strong></td>
-            <td class="align-left">先把 <code>03</code> 的三封信寄進自己的信箱</td>
-            <td class="align-left">把 <code>03-活動郵件串</code> 全文貼進對話</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>寫入行事曆</strong></td>
-            <td class="align-left">再到日曆建一個「模擬教研會」</td>
-            <td class="align-left">把 <code>03</code>、<code>04</code> 全文貼進對話</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-        <ul class="loose-list">
-      <li>連接的信箱請用<code>個人或測試帳號</code>；校務信箱要先確認學校允許再連接</li>
-      <li>兩種方式練的是同一件事：<code>給來源、看草稿、確認後才執行</code>；貼上文字的做法放在本章最後</li>
-    </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📮</span> 已連接的人：把虛構信件與行程放進自己的帳號</div>
-      <div class="group-body">
-        <p>講師的示範帳號課前已經放好；想用自己的帳號跟做同一個範例，照下面三步做：</p>
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">寄三封信給自己</div>
-          <div class="step-desc">打開 <code>03-活動郵件串</code>，一封信寄一次：<code>主旨照抄</code>（含 <code>[教學示範-閱讀日]</code>），內文連同「寄件人、時間」那一行一起貼上，收件人填<code>自己的信箱</code></div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">建立一個日曆事件</div>
-          <div class="step-desc">在 Google Calendar 新增 <code>2030-05-10 13:45–14:15</code> 的「模擬教研會」，不要邀請任何人</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">做完再清掉</div>
-          <div class="step-desc">練習結束後，把這三封信與日曆事件刪除</div>
-        </div>
-      </div>
-    </div>
-        <div class="insight">
-      <div class="insight-title">為什麼寄件人會變成自己？</div>
-      <p>素材裡的「籌備 A、籌備 B」是虛構代號，<code>沒有 Email</code>；信是你自己寄的，信箱裡的寄件人就會顯示成你自己。<br>內文保留「寄件人：籌備 A」那一行，AI 才分得出每封信是誰說的。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>整理信件、建立標籤</div>
+    <div class="sub-title" id="sub-section-8" data-seg="0"><span class="bar"></span>整理信件、建立標籤</div>
   </div>
 
   <div class="reveal">
@@ -8040,17 +7853,15 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">📥</span> 讓 AI 幫你分類郵件、建立標籤</div>
       <div class="group-body">
-        <h4 class="minor-title">將 Gmail 加入 Connector</h4>
-        <p class="loose-text"><strong>操作路徑</strong>: Customize → Connectors → 選擇 Gmail 點擊「+」</p>
-        <p class="loose-text"><!-- 待換圖：claude-gmail.png｜側欄露出達和案例對話「委託廢棄物遭非法棄置的責任研究」與釘選的「PPA 線上課程」；重拍時側欄只留練習對話，或裁掉側欄 --></p>
+        <h4 class="minor-title">將 Gmail 加入連接器</h4>
+        <p class="loose-text"><strong>操作路徑</strong>: 外掛程式 → 連接器 → 選擇 Gmail</p>
         <figure class="content-image">
-      <img src="assets/claude-gmail.png" width="1909" height="1046" alt="將 Gmail 加入 Connector" loading="lazy">
-      <figcaption>將 Gmail 加入 Connector</figcaption>
+      <img src="assets/claude-gmail.png" width="1916" height="963" alt="將 Gmail 加入連接器" loading="lazy">
+      <figcaption>將 Gmail 加入連接器</figcaption>
     </figure>
-        <p class="loose-text"><!-- 待換圖：claude-gmail-permissions-list.png｜側欄露出達和案例對話「委託廢棄物遭非法棄置的責任研究」與釘選的「PPA 線上課程」；重拍時側欄只留練習對話，或裁掉側欄 --></p>
         <figure class="content-image">
-      <img src="assets/claude-gmail-permissions-list.png" width="1909" height="1046" alt="連線完成後，點進去可以看到 AI 能做的事情" loading="lazy">
-      <figcaption>連線完成後，點進去可以看到 AI 能做的事情</figcaption>
+      <img src="assets/claude-gmail-permissions-list.png" width="1916" height="963" alt="連線完成後，點「權限」可以看到 AI 能做的事情" loading="lazy">
+      <figcaption>連線完成後，點「權限」可以看到 AI 能做的事情</figcaption>
     </figure>
         <h4 class="minor-title">分類郵件建立標籤</h4>
         <div class="flow">
@@ -8080,7 +7891,44 @@
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">分類學校信件並建立標籤</span>
+        <span class="label">我的示範：分類工作信件並建立標籤</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">幫我整理信箱最近 7 天內未標籤的信件（前 [50] 封），步驟如下：
+
+## 第一步：分類
+閱讀每封信的寄件人、主旨（不需閱讀內容），依下列規則分類：
+
+- 🔴 重要：主管、同事、客戶或廠商直接寄給我，需要我回覆、處理或做決定
+- 📁 封存：系統通知、公告、我只是副本（CC）、已處理完不需回覆
+- 🗑️ 刪除候選：電子報、促銷、過期的通知或會議邀請
+
+有疑慮時，優先歸入「封存」而非「刪除候選」。
+
+## 第二步：建立標籤並說明
+如果信箱還沒有這 3 個標籤就先建立，並用表格列出分類結果：
+| 寄件者 | 主旨 | 標籤 | 判斷理由 |
+
+## ⚠️ 執行前確認
+先給我清單讓我確認，我明確說「確認執行」後，才套用標籤。
+不要刪除或移動任何信件。</div>
+    </div>
+        <figure class="content-image">
+      <img src="assets/claude-gmail-permissions-check.png" width="1916" height="963" alt="Claude 會先進行初步分類讓我們確認" loading="lazy">
+      <figcaption>Claude 會先進行初步分類讓我們確認</figcaption>
+    </figure>
+        <figure class="content-image">
+      <img src="assets/claude-gmail-result-check.png" width="1916" height="963" alt="確認無誤讓 Claude 執行後，前往 Gmail 確認結果是否符合預期" loading="lazy">
+      <figcaption>確認無誤讓 Claude 執行後，前往 Gmail 確認結果是否符合預期</figcaption>
+    </figure>
+        <p class="loose-text">如果是老師，可以換成下面這個版本：</p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">老師版本：分類學校信件並建立標籤</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
@@ -8104,17 +7952,28 @@
 先給我清單讓我確認，我明確說「確認執行」後，才套用標籤。
 不要刪除或移動任何信件。</div>
     </div>
-        <p class="loose-text"><!-- 待換圖：claude-gmail-permissions-check.png｜側欄露出達和案例對話「委託廢棄物遭非法棄置的責任研究」與釘選的「PPA 線上課程」；用閱讀日練習信件重拍授權視窗，側欄只留練習對話 --></p>
-        <figure class="content-image">
-      <img src="assets/claude-gmail-permissions-check.png" width="1909" height="1046" alt="Claude 執行修改操作時，會先詢問" loading="lazy">
-      <figcaption>Claude 執行修改操作時，會先詢問</figcaption>
-    </figure>
-        <p class="loose-text">Claude 執行完成後，前往 Gmail 確認結果是否符合預期。</p>
-        <p class="loose-text"><!-- 待補圖片：claude-gmail-result-check-school.png｜Claude 完成後，回到 Gmail 看到「重要／封存／刪除候選」標籤的畫面（用 08-分類練習信件 寄進測試信箱的虛構信件，遮住真實寄件人與主旨） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-gmail-result-check-school.png" alt="回到 Gmail 檢查：信件已貼上「重要／封存／刪除候選」標籤" class="inline-image"> --></p>
         <div class="insight">
       <div class="insight-title">使用提醒</div>
-      <p>建立與 Gmail 的連結後，Claude 可以<code>閱讀信件、建立草稿、建立標籤</code><br>但<code>刪除信件</code>這類高風險操作，建議由人類在標籤建立後自己判斷；有些通知依舊重要。<br>建議<code>小範圍</code>測試（先 50 封），沒問題後再擴大測試範圍、調整判斷規則。</p>
+      <p>建立與 Gmail 的連結後，Claude 可以<code>閱讀信件、建立草稿、建立標籤</code><br>但<code>刪除信件</code>這類高風險操作，建議由人類在標籤建立後自己判斷；有些系統通知依舊重要。<br>建議<code>小範圍</code>測試（先 50 封），沒問題後再擴大測試範圍、調整判斷規則。</p>
+    </div>
+        <h4 class="minor-title">舉一反三：將 Microsoft 365 加入連接器</h4>
+        <div class="insight">
+      <div class="insight-title">學校信箱是 Outlook？改接 Microsoft 365</div>
+      <p>一次打通 <code>Outlook、Teams、OneDrive、SharePoint</code>。</p>
+    </div>
+        <p class="loose-text"><strong>操作路徑</strong>: 外掛程式 → 連接器 → 選擇 Microsoft 365 → 用公司的 Microsoft 帳號登入</p>
+        <figure class="content-image">
+      <img src="assets/claude-M365.png" width="1916" height="963" alt="Microsoft 365 一次涵蓋 SharePoint, OneDrive, Outlook, Teams" loading="lazy">
+      <figcaption>Microsoft 365 一次涵蓋 SharePoint, OneDrive, Outlook, Teams</figcaption>
+    </figure>
+        <div class="warning">
+      <div class="warning-title">⚠️ Microsoft 365 連不上？請找 IT 開通</div>
+      <p>Microsoft 365 登入後如果出現<code>需要管理員授權</code>之類的訊息，代表權限還沒開通。</p>
+      <ul>
+        <li><strong>Microsoft</strong>：Administrator 要先同意授權</li>
+        <li><strong>Claude</strong>：組織擁有者（Owner）要在後台加入 Microsoft 365</li>
+        <li>官方設定說明：<a href="https://support.claude.com/zh-TW/articles/12542951-%E8%A8%AD%E5%AE%9A-microsoft-365-%E9%80%A3%E6%8E%A5%E5%99%A8" target="_blank" rel="noopener">Set up the Microsoft 365 connector</a></li>
+      </ul>
     </div>
       </div>
     </div>
@@ -8124,22 +7983,27 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🔎</span> 彙整特定主題信件脈絡</div>
       <div class="group-body">
-        <p>與同事、家長的信件通常有<code>多段來回、細節持續調整</code>，而且每一段可能都有<code>重要資訊</code>。</p>
+        <p>與同事、客戶的信件通常有<code>多段來回、細節持續調整</code>，而且每一段可能都有<code>重要資訊</code>。</p>
         <p class="loose-text">甚至討論過程可能<code>不在同一封 Email 而是散落成多封</code>。</p>
-        <p class="loose-text">下面用素材包 <code>03-活動郵件串</code> 的三封信示範：同一場閱讀日，場地改過一次，還有一封會議邀約提案。</p>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">彙整信件脈絡</span>
+        <span class="label">我的示範：彙整信件脈絡</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">幫我整理信箱中主旨有 [教學示範-閱讀日] 的信件，依時間列出活動安排改了哪些地方，以及還有哪些事情沒確認</div>
+      <div class="prompt-body">幫我整理信箱中 [Blackbao AI] 合作的過程</div>
     </div>
-        <p class="loose-text"><!-- 待補圖片：claude-gmail-integration-school.png｜Claude 依三封虛構「閱讀日」信件整理出的時間線（初稿→場地調整→會議提案）與「待確認」清單 --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-gmail-integration-school.png" alt="三封信整理成一條時間線，還沒定案的事項另外列成「待確認」" class="inline-image"> --></p>
+        <figure class="content-image">
+      <img src="data:image/png;base64,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" width="1362" height="274" alt="有些信件來回可能超過數個月份，回憶、閱讀都很花時間" loading="lazy">
+      <figcaption>有些信件來回可能超過數個月份，回憶、閱讀都很花時間</figcaption>
+    </figure>
+        <figure class="content-image">
+      <img src="assets/claude-gmail-integration.png" width="1916" height="963" alt="給予關鍵字 AI 就能做好整理任務" loading="lazy">
+      <figcaption>給予關鍵字 AI 就能做好整理任務</figcaption>
+    </figure>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
@@ -8149,20 +8013,18 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">幫我擬一封信給籌備 B，請教報名方式與截止日預計什麼時候確認；只寫草稿，不要寄出</div>
+      <div class="prompt-body">我目前還沒有收到款項，幫我擬一封信確認入帳時間</div>
     </div>
-        <p class="loose-text"><!-- 待補圖片：claude-gmail-res-school.png｜AI 根據信件脈絡擬出的回覆草稿（只出現在對話中、未寄出） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-gmail-res-school.png" alt="回覆草稿只出現在對話裡，不會自動寄出" class="inline-image"> --></p>
-        <div class="insight">
-      <div class="insight-title">草稿的收件人怎麼辦？</div>
-      <p>「籌備 B」是虛構代號、沒有 Email，寄進信箱的三封信寄件人也都是你自己；草稿的收件人留空或填自己就好。<br>這個練習要看的是<code>內容有沒有根據信件脈絡</code>（報名方式、截止日還沒確認），看完也<code>不要寄出</code>。</p>
-    </div>
+        <figure class="content-image">
+      <img src="assets/claude-gmail-res.png" width="1916" height="963" alt="讓 AI 根據脈絡撰寫回覆草稿" loading="lazy">
+      <figcaption>讓 AI 根據脈絡撰寫回覆草稿</figcaption>
+    </figure>
       </div>
     </div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-10" data-seg="0"><span class="bar"></span>寫入日曆與參考資訊</div>
+    <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>寫入日曆與參考資訊</div>
   </div>
 
   <div class="reveal">
@@ -8179,10 +8041,12 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">📅</span> 把零散資訊彙整為完整行程</div>
       <div class="group-body">
-        <h4 class="minor-title">將 Google Calendar 加入 Connector</h4>
-        <p class="loose-text"><strong>操作路徑</strong>: Customize → Connectors → 選擇 Google Calendar 點擊「Connect」</p>
-        <p class="loose-text"><!-- 待補圖片：claude-calendar-school.png｜Customize → Connectors 頁面中 Google Calendar 的「Connect」按鈕（虛線紅框；側欄不要出現真實專案或對話名稱） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-calendar-school.png" alt="在 Connectors 找到 Google Calendar，點「Connect」" class="inline-image"> --></p>
+        <h4 class="minor-title">將 Google Calendar 加入連接器</h4>
+        <p class="loose-text"><strong>操作路徑</strong>: 外掛程式 → 連接器 → 選擇 Google Calendar</p>
+        <figure class="content-image">
+      <img src="assets/claude-calendar.png" width="1916" height="963" alt="將 Google Calendar 加入連接器" loading="lazy">
+      <figcaption>將 Google Calendar 加入連接器</figcaption>
+    </figure>
         <h4 class="minor-title">Gmail + Google Calendar 讓 AI 統整信件細節、加入行事曆</h4>
         <div class="flow">
       <div class="flow-step">
@@ -8196,112 +8060,44 @@
         <div class="step-num">2</div>
         <div class="step-content">
           <div class="step-title">帶入參考資訊</div>
-          <div class="step-desc">把會議時間、備選時段、注意事項一起寫進事件說明</div>
+          <div class="step-desc">把會議連結、議程、注意事項一起寫進事件說明</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">檢查衝突</div>
-          <div class="step-desc">對照現有行程，有重疊先提醒</div>
+          <div class="step-title">加入與會人員</div>
+          <div class="step-desc">取出信件討論人員，設定為 attendees</div>
         </div>
       </div>
     </div>
-        <p class="loose-text">開始前先確認：信箱裡有 <code>03</code> 的三封信，日曆上有 <code>2030-05-10 13:45–14:15</code> 的「模擬教研會」（做法見前面的「連接前先準備素材」）。</p>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">把 Mail 討論轉成行事曆事件</span>
+        <span class="label">我的示範：把 Mail 討論轉成行事曆事件</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">從信箱找出主旨有 [教學示範-閱讀日] 的信件，在日曆上建立事件：
-- 事件標題加上「[練習]」開頭
-- 抓出信中提議的會議日期與時間（年份以信件內文寫的 2030 年為準）
-- 在事件說明裡附上備選時段與「出席名單未確認」的提醒
-- 如果時間和我現有行程衝突，先提醒我，並建議備選時段是否可行
-建立事件前，請先提供草稿讓我過目；不要發送邀請給任何人</div>
+      <div class="prompt-body">從信箱找出[雙 11 新品活動｜上線滿月成效初步整理]信件，並在日曆上建立事件：
+- 抓出最後會議的日期、時間、地點
+- 在事件說明裡附上議程重點
+- 取出信件討論人員，設定為 attendees
+- 如果時間和我現有行程衝突，先提醒我
+建立事件前，請先提供草稿讓我過目</div>
     </div>
-        <p class="loose-text"><!-- 待補圖片：claude-calendar-gmail-school.png｜Claude 讀完虛構信件後提出的事件草稿，並指出 14:00–14:30 與模擬教研會重疊、建議改 15:00–15:30 --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-calendar-gmail-school.png" alt="建立事件前，Claude 先指出時間衝突並建議改期" class="inline-image"> --></p>
-        <div class="insight">
-      <div class="insight-title">預期會看到什麼？</div>
-      <p>信中提議的 <code>14:00–14:30</code> 和「模擬教研會」<code>13:45–14:15</code> 重疊 15 分鐘，AI 應該先提醒，再建議備選的 <code>15:00–15:30</code>。<br>日曆上 15:00 沒有事件，<code>不代表每個人都有空、場地借得到</code>，所以出席名單要維持「未確認」。</p>
-    </div>
+        <figure class="content-image">
+      <img src="assets/claude-calendar-gmail.png" width="1916" height="963" alt="連接器的綜合運用" loading="lazy">
+      <figcaption>連接器的綜合運用</figcaption>
+    </figure>
+        <figure class="content-image">
+      <img src="assets/claude-calendar-create.png" width="1916" height="963" alt="確認行程建立成功" loading="lazy">
+      <figcaption>確認行程建立成功</figcaption>
+    </figure>
         <div class="warning">
       <div class="warning-title">⚠️ 使用提醒</div>
-      <p>Claude 是真的會<code>建立行程</code>，行程也可能<code>出現在參與人日曆</code>，執行前請確認。<br>練習請加上「[練習]」並<code>不要邀請任何人</code>，做完後自行刪除。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-section-11" data-seg="0"><span class="bar"></span>沒有連接權限，也能練同一件事</div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📋</span> 把素材全文貼進對話，Prompt 改一句就好</div>
-      <div class="group-body">
-        <div class="table-wrap">
-      <table class="content-table">
-        <colgroup>
-          <col style="width:170px">
-          <col>
-          <col>
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="align-left col-w">練習</th>
-            <th class="align-left">貼上哪份素材</th>
-            <th class="align-left">Prompt 怎麼改</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left col-w"><strong>分類信件</strong></td>
-            <td class="align-left"><code>08-分類練習信件</code></td>
-            <td class="align-left">「信箱最近 7 天內未標籤的信件」改成「下面貼上的信件清單（練習基準日 2030-05-06）」，不用建立標籤</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>彙整脈絡、回覆草稿</strong></td>
-            <td class="align-left"><code>03-活動郵件串</code></td>
-            <td class="align-left">「信箱中主旨有…的信件」改成「下面貼上的三封信」</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>寫入行事曆</strong></td>
-            <td class="align-left"><code>03-活動郵件串</code>、<code>04-模擬行事曆</code></td>
-            <td class="align-left">「在日曆上建立事件」改成「擬一個事件草稿，不用真的建立」</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">沒有連接信箱：用貼上的信件練習分類</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">下面是我貼上的信件清單（練習基準日 2030-05-06），請依寄件人、主旨與收件方式分類：
-
-- 🔴 重要：家長、主任、同事直接寄給我，需要我回覆、處理或做決定
-- 📁 封存：研習通知、校內公告、我只是副本（CC）、已處理完不需回覆
-- 🗑️ 刪除候選：電子報、廠商促銷、過期的通知或活動邀請
-
-有疑慮時，優先歸入「封存」而非「刪除候選」。
-用表格列出分類結果：| 寄件者 | 主旨 | 標籤 | 判斷理由 |
-
-[把 08-分類練習信件 的全文貼在這裡]</div>
-    </div>
-        <div class="insight">
-      <div class="insight-title">參考分類：重要 3 封、封存 4 封、刪除候選 3 封</div>
-      <p>信件 1～3 要你回覆；4～7 是通知、公告、副本與已處理完的信；8～10 是電子報、促銷與過期邀請。<br>AI 的結果不必一模一樣，重點是看它的<code>判斷理由</code>：同樣是研習中心寄的，信件 4 還能報名、信件 10 已經過期，分法就不同。</p>
+      <p>Claude 是真的會<code>建立行程</code>，行程也會<code>出現在參與人日曆</code>，執行前請確認</p>
     </div>
       </div>
     </div>
@@ -8311,11 +8107,22 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">🎬</span> 延伸學習：Manus 也有連接器</div>
       <div class="group-body">
-        <p><!-- 講師備註：本堂兩張「延伸學習」卡的影片都是課後延伸，課堂不播放，只提一句。 --></p>
-        <ul class="loose-list">
-      <li>我有錄一支影片完整示範 Manus 的連接器：接上 Gmail、行事曆、Notion，讓 AI Agent 完成任務</li>
-      <li>AI Agent 的功能幾乎<code>都有對標產品</code>，<code>熟悉一個最重要</code>：學會 Claude 的 Connector，換到 Manus 也能很快上手</li>
-    </ul>
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Manus 示範影片</div>
+          <div class="step-desc">接上 Gmail、行事曆、Notion，讓 AI Agent 完成任務</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">學會一個就通用</div>
+          <div class="step-desc">連接器已經是主流 AI Agent 的標配，未來換到其他工具也都用得上</div>
+        </div>
+      </div>
+    </div>
         <div class="youtube-embed">
       <div class="youtube-wrapper" data-id="gNVkDO6-7Jo">
         <iframe src="https://www.youtube.com/embed/gNVkDO6-7Jo" title="【Manus 連接器教學】接上 Gmail、行事曆、Notion 讓 AI Agent 完成任務" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
@@ -8340,63 +8147,13 @@
   </div>
 
   <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">第 1 堂的「專案」，在 Claude 叫 Project</div>
-      <p>一樣是<code>指令＋知識庫</code>；今天多學一件事：<code>會變動的文件放雲端，用連結參考</code>。</p>
-    </div>
-  </div>
-
-  <div class="reveal">
     <div class="sub-title" id="sub-claude-4" data-seg="0"><span class="bar"></span>上一堂的專案，換到 Claude</div>
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🆚</span> ChatGPT 專案 vs Claude Project</div>
-      <div class="group-body">
-        <div class="table-wrap">
-      <table class="content-table">
-        <thead>
-          <tr>
-            <th class="align-left"></th>
-            <th class="align-left">ChatGPT 專案（第 1 堂）</th>
-            <th class="align-left">Claude Project（今天）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left"><strong>基礎架構</strong></td>
-            <td class="align-left">指令、資料來源、記憶</td>
-            <td class="align-left">指令（Instructions）、知識庫（Files）、記憶（Memory）</td>
-          </tr>
-          <tr>
-            <td class="align-left"><strong>練習素材</strong></td>
-            <td class="align-left">行動研究的 4 份文件</td>
-            <td class="align-left">過去發過的 6 份通知、本學期活動一覽</td>
-          </tr>
-          <tr>
-            <td class="align-left"><strong>指令重點</strong></td>
-            <td class="align-left">以文件為準、附出處、沒寫就說沒有</td>
-            <td class="align-left">再加上<code>什麼問題去哪份文件找</code></td>
-          </tr>
-          <tr>
-            <td class="align-left"><strong>會變動的文件</strong></td>
-            <td class="align-left">改了要重新上傳</td>
-            <td class="align-left">可以放 Google Drive，<code>用連結參考</code></td>
-          </tr>
-          <tr>
-            <td class="align-left"><strong>與同事共用</strong></td>
-            <td class="align-left">可以分享，權限分開設定</td>
-            <td class="align-left">目前<code>無法分享</code>，主要針對個人使用設計</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-        <div class="insight">
+    <div class="insight">
       <div class="insight-title">AI 有記憶能力，但不是無限的</div>
       <p>儘管現在 AI 已經具備記憶能力，回答時會參考你過去與它的對話，但<code>非常隨機</code>。<br>而 Project 的設計，就是讓<code>隨機變成穩定</code>。</p>
-    </div>
-      </div>
     </div>
   </div>
 
@@ -8415,8 +8172,8 @@
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title"><strong>手上有多個案子在跑</strong></div>
-          <div class="step-desc">班級經營、學年課務、行政文件、閱讀日與校慶等不同活動</div>
+          <div class="step-title"><strong>手上有多個任務在跑</strong></div>
+          <div class="step-desc">班級經營、學年課務、行政文件、校慶等不同活動</div>
         </div>
       </div>
     </div>
@@ -8429,7 +8186,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-13" data-seg="0"><span class="bar"></span>過去的通知與這學期的安排，放進同一個專案</div>
+    <div class="sub-title" id="sub-section-11" data-seg="0"><span class="bar"></span>把過去的通知放進同一個專案</div>
   </div>
 
   <div class="reveal">
@@ -8437,34 +8194,37 @@
       <div class="insight-title">「上次那份通知放在哪裡？」</div>
       <ul>
         <li><strong>通知、公告每年都要發</strong>，檔案卻散在電腦、雲端與群組，不確定哪一份是<code>最後發出去的版本</code></li>
-        <li><strong>新接手的導師或組長</strong>不知道以前怎麼寫、<code>家長問過什麼</code></li>
-        <li><strong>拿舊檔來改</strong>，舊的日期與地點容易<code>留在新通知裡</code></li>
-        <li><strong>這學期的安排一直在變</strong>，場地、時間改了，手上的資料卻還是舊的</li>
+        <li><strong>新接手的導師或組長</strong>不知道以前怎麼寫，<code>找不到範例</code></li>
+        <li><strong>拿舊檔來改</strong>，舊的日期與地點容易<code>留在新通知裡</code>忘記改</li>
       </ul>
     </div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧠</span> 建立第一個專案 Project</div>
+      <div class="group-header"><span class="icon">🧠</span> 建立第一個專案</div>
       <div class="group-body">
-        <p><strong>操作路徑</strong>: Projects → 點擊「New project」</p>
-        <p class="loose-text"><!-- 待補圖片：claude-projects-school.png｜Projects 頁面點擊「New project」（虛線紅框；專案清單要空白或只有虛構專案） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-projects-school.png" alt="在 Projects 頁面點「New project」" class="inline-image"> --></p>
+        <p><strong>操作路徑</strong>: 專案 → 新增專案</p>
+        <figure class="content-image">
+      <img src="assets/claude-projects-school.png" width="1916" height="963" alt="在專案頁面點「新增專案」" loading="lazy">
+      <figcaption>在專案頁面點「新增專案」</figcaption>
+    </figure>
         <ul class="loose-list">
-      <li><strong>What are you working on</strong>: <code>行政文件案例庫</code></li>
-      <li><strong>What are you trying to achieve</strong>: <code>把過去發過的通知與這學期的活動安排集中在一個地方；查得到以前怎麼寫、家長問過什麼；文件沒寫的就老實說沒有</code></li>
+      <li><strong>您正在進行什麼工作？</strong>: <code>行政文件案例庫</code></li>
+      <li><strong>您想達成什麼目標？</strong>: <code>把過去發過的通知與這學期的活動安排集中在一個地方；查得到以前怎麼寫；文件沒寫的就老實說沒有</code></li>
     </ul>
-        <p class="loose-text"><!-- 待補圖片：claude-project-create-school.png｜Create a project 視窗，已填入「行政文件案例庫」標題與描述（虛線紅框標出兩個欄位與 Create project 按鈕） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-project-create-school.png" alt="填入專案名稱與描述，再點「Create project」" class="inline-image"> --></p>
+        <figure class="content-image">
+      <img src="assets/claude-project-create-school.png" width="1916" height="963" alt="填入方便識別的資訊後就可建立" loading="lazy">
+      <figcaption>填入方便識別的資訊後就可建立</figcaption>
+    </figure>
         <ul class="loose-list">
-      <li><strong>指令（Instructions）</strong> — 設定成「行政文件助理」：回答以文件為準、要附出處、找不到就說沒有、過去的資訊不當成這學期的安排</li>
-      <li><strong>知識庫（Context）</strong> — 分兩步放：<code>定版的文件直接上傳</code>（過去發過的 6 份通知），<code>會變動的表格放 Google Drive 用連結參考</code>（本學期活動一覽）</li>
+      <li><strong>指示</strong> — 設定成「行政文件助理」：回答以文件為準、要附出處、找不到就說沒有、過去的資訊不當成這學期的安排</li>
+      <li><strong>背景資訊</strong> — 分兩步放：<code>定版的文件直接上傳</code>（過去發過的 9 份通知與公告），<code>會變動的表格放 Google Drive 用連結參考</code>（本學期活動一覽）</li>
     </ul>
-        <h4 class="minor-title">設計專案指令（Instructions）</h4>
+        <h4 class="minor-title">設計專案指示</h4>
         <div class="insight">
-      <div class="insight-title">Instructions 要告訴 AI「什麼問題去哪份文件找」</div>
-      <p>兩類文件各管一件事：<code>案例記過去怎麼寫、活動一覽記這學期的安排</code>。先把這張地圖給 AI，它就不會拿過去的日期來回答這學期的事。</p>
+      <div class="insight-title">要告訴 AI「什麼問題去哪份文件找」</div>
+      <p>明確告訴他：<code>案例記過去怎麼寫、活動一覽記這學期的安排</code>，這樣就不會拿過去的日期來回答這學期的事。<br>再把<code>檔名規則</code>寫進去，AI 就分得出每份案例是哪一類、哪一年的版本。</p>
     </div>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -8481,12 +8241,14 @@
 
 ## 知識庫怎麼查
 
-- 過去發過的通知與公告、發出後家長問了什麼 → 01～06 的案例
+- 案例的檔名規則是「類型-主題-學年度」，例如「活動通知-校外教學-114」是 114 學年度的校外教學通知
+- 過去怎麼寫、發出後家長問了什麼 → 找同類型、同主題的案例
+- 同一個主題有多個學年度時，以最新的版本為準；舊版本只用來對照改了什麼
 - 這學期的活動日期、時間、地點、確認狀態 → 本學期活動一覽
 
 ## 回答原則
 
-1. 回答一律以知識庫內的文件為準，並標明出處（哪份文件）。
+1. 回答一律以知識庫內的文件為準，並標明出處（檔名）。
 2. 知識庫裡找不到答案時，明說「目前文件沒有記錄」，不要臆測或補完。
 3. 案例裡的日期、時間、地點、費用是過去的資訊，不能當成這學期的安排。
 4. 活動一覽標「待確認」的項目，不能寫成已經確定。
@@ -8509,7 +8271,7 @@
     <span class="download-card__icon" aria-hidden="true">⬇</span>
     <span class="download-card__body">
       <span class="download-card__label">下載「行政文件案例庫」練習素材</span>
-      <span class="download-card__desc">王老師過去發過的 6 份虛構通知與公告（每份都附上發出後的紀錄），加上一份本學期活動一覽</span>
+      <span class="download-card__desc">星光國小過去發過的 9 份虛構通知與公告（每份都附上發出後的紀錄），加上一份本學期活動一覽</span>
     </span>
     <span class="download-card__ext">ZIP</span>
   </a>
@@ -8523,57 +8285,103 @@
         <thead>
           <tr>
             <th class="align-left col-w">檔案</th>
-            <th class="align-left">類型</th>
-            <th class="align-left">發出後的紀錄</th>
+            <th class="align-left">學年度</th>
+            <th class="align-left">說明</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="align-left col-w"><strong><code>01-校外教學行前通知</code></strong></td>
+            <td class="align-left col-w"><strong><code>活動通知-校外教學</code></strong></td>
+            <td class="align-left">113、114</td>
             <td class="align-left">校外、要收費、要同意書</td>
-            <td class="align-left">過敏、暈車、退費被問最多</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong><code>02-親子共讀夜活動通知</code></strong></td>
+            <td class="align-left col-w"><strong><code>活動通知-校慶運動會</code></strong></td>
+            <td class="align-left">113、114</td>
+            <td class="align-left">全校活動、要補假</td>
+          </tr>
+          <tr>
+            <td class="align-left col-w"><strong><code>活動通知-親子共讀夜</code></strong></td>
+            <td class="align-left">114</td>
             <td class="align-left">校內、免費、要報名</td>
-            <td class="align-left">能不能帶手足、陪同人數、入鏡同意</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong><code>03-班親會邀請通知</code></strong></td>
+            <td class="align-left col-w"><strong><code>會議邀請-班親會</code></strong></td>
+            <td class="align-left">114</td>
             <td class="align-left">會議邀請</td>
-            <td class="align-left">線上參加、帶孩子、停車</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong><code>04-校慶運動會家長通知</code></strong></td>
-            <td class="align-left">全校活動</td>
-            <td class="align-left">補假日期、提早接回、午餐</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong><code>05-流感防疫提醒通知</code></strong></td>
+            <td class="align-left col-w"><strong><code>健康提醒-流感防疫</code></strong></td>
+            <td class="align-left">114</td>
             <td class="align-left">健康與防疫提醒</td>
-            <td class="align-left">作業怎麼補、會不會停課</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong><code>06-家長志工招募公告</code></strong></td>
+            <td class="align-left col-w"><strong><code>招募公告-家長志工</code></strong></td>
+            <td class="align-left">113、114</td>
             <td class="align-left">招募公告</td>
-            <td class="align-left">排班彈性、需不需要經驗</td>
           </tr>
           <tr>
-            <td class="align-left col-w"><strong><code>07-本學期活動一覽.csv</code></strong></td>
-            <td class="align-left">這學期的安排</td>
-            <td class="align-left">第二步才會用到</td>
+            <td class="align-left col-w"><strong><code>本學期活動一覽.csv</code></strong></td>
+            <td class="align-left">115</td>
+            <td class="align-left">這學期的安排，第二步才會用到</td>
           </tr>
         </tbody>
       </table>
+    </div>
+        <div class="insight">
+      <div class="insight-title">檔名照「類型-主題-學年度」命名</div>
+      <p><code>活動通知-校外教學-114</code> 一看就知道是<code>哪一類、哪個主題、哪一年</code>，你找得到，AI 也找得準。<br>同一個主題每年存一份，<code>學年度放最後</code>，同主題的新舊版本就會排在一起。</p>
     </div>
         <div class="insight">
       <div class="insight-title">哪些文件算「定版」？</div>
       <p>已經公告的<code>通知</code>、簽核完的<code>決議</code>，發出去就不會再改，要改也是另出新版本。<br>這類文件直接拖進 Project 上傳最省事。</p>
     </div>
         <h4 class="minor-title">加入專案知識庫（Context）</h4>
-        <p class="loose-text">把素材包裡的 <code>01</code>～<code>06</code> 拖進 Files，共 6 份</p>
-        <p class="loose-text"><!-- 待補圖片：claude-project-admin-cases.png｜「行政文件案例庫」專案的 Files 已放入 01～06 六份案例（虛線紅框標出 Files 區） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-project-admin-cases.png" alt="把六份過去的通知放進專案的 Files" class="inline-image"> --></p>
+        <p class="loose-text">把素材包裡 9 份 <code>.md</code> 案例拖進 Files；<code>本學期活動一覽.csv</code> 先留著，第二步才會用到</p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-admin-cases.png｜「行政文件案例庫」專案的 Files 已放入 9 份案例（虛線紅框標出 Files 區） --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-project-admin-cases.png" alt="把過去的通知放進專案的 Files" class="inline-image"> --></p>
+        <h4 class="minor-title">分門別類，看出哪一版最新</h4>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">驗證分得出類型與版本</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">案例庫裡有哪些類型的通知？用表格整理；同一個主題有好幾個學年度的，說明新版本改了什麼</div>
+    </div>
+        <div class="table-wrap">
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th class="align-left">檢查什麼</th>
+            <th class="align-left">應該出現的結果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-left"><strong>類型</strong></td>
+            <td class="align-left">活動通知（校外教學、校慶運動會、親子共讀夜）、會議邀請、健康提醒、招募公告</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>有兩個版本的主題</strong></td>
+            <td class="align-left">校外教學、校慶運動會、家長志工，都有 113、114 學年度</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>新版本改了什麼</strong></td>
+            <td class="align-left">114 學年補上了 113 學年「下次要改」的地方（ex: 校外教學補上<code>雨天備案</code>、<code>返校時間</code>、<code>費用包含哪些項目</code>）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <p class="loose-text"><!-- 待補圖片：claude-project-category-school.png｜AI 用表格整理四種類型，並列出三個主題 114 學年比 113 學年改了什麼，附出處檔名 --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-project-category-school.png" alt="AI 照檔名分出類型與學年度，還看得出新版本改了什麼" class="inline-image"> --></p>
+        <div class="insight">
+      <div class="insight-title">案例庫會越存越好用</div>
+      <p>每一年的<code>發出後的紀錄</code>，就是下一年要改的地方。<br>新版本把家長回饋補進去，案例庫裡留下的就是<code>更好的版本</code>。</p>
+    </div>
         <h4 class="minor-title">出處可追溯</h4>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -8586,7 +8394,8 @@
       </div>
       <div class="prompt-body">上次校外教學的通知發出後，家長問最多的是什麼？下次要改哪裡？</div>
     </div>
-        <p class="loose-text"><!-- 待補圖片：claude-project-source-school.png｜AI 回答「過敏與素食、暈車、退費」與下次要改的地方，並附出處「01-校外教學行前通知」 --></p>
+        <p class="loose-text">校外教學有 113、114 兩個版本，AI 應該用最新的 <code>活動通知-校外教學-114</code> 回答：過敏與素食、暈車、退費。</p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-source-school.png｜AI 回答「過敏與素食、暈車、退費」與下次要改的地方，並附出處「活動通知-校外教學-114」 --></p>
         <p class="loose-text"><!-- <img src="assets/claude-project-source-school.png" alt="回答附上出處，連上次要改的地方都找得到" class="inline-image"> --></p>
         <div class="insight">
       <div class="insight-title">不要再依靠大腦記憶了</div>
@@ -8623,13 +8432,13 @@
       <div class="insight-title">為什麼要上傳到雲端？</div>
       <p><code>本學期活動一覽</code>隨著籌備進度一直在補、在改。<br>如果上傳固定檔案，無法取得最新資訊。<br>放 Google Drive 用連結參考，雲端改完，AI 下次回答就是新的。<strong>團隊共用同一份來源，不會各拿各的舊檔</strong></p>
     </div>
-        <h4 class="minor-title">將 Google Drive 加入 Connectors</h4>
-        <p class="loose-text"><strong>操作路徑</strong>: Customize → Connectors → 選擇 Google Drive 點擊「Connect」</p>
-        <p class="loose-text"><!-- 待補圖片：claude-project-connect-drive-school.png｜Customize → Connectors 中 Google Drive 的連接按鈕（虛線紅框；側欄不要出現真實專案名稱） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-project-connect-drive-school.png" alt="在 Connectors 連接 Google Drive" class="inline-image"> --></p>
+        <h4 class="minor-title">將 Google Drive 加入連接器</h4>
+        <p class="loose-text"><strong>操作路徑</strong>: 外掛程式 → 連接器 → 選擇 Google Drive 點擊「Connect」</p>
+        <p class="loose-text"><!-- 待補圖片：claude-project-connect-drive-school.png｜外掛程式 → 連接器中 Google Drive 的連接按鈕（虛線紅框；側欄不要出現真實專案名稱） --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-project-connect-drive-school.png" alt="在連接器連接 Google Drive" class="inline-image"> --></p>
         <h4 class="minor-title">把表格放到雲端硬碟</h4>
         <ul class="loose-list">
-      <li>把素材包裡的 <code>07-本學期活動一覽.csv</code> 上傳到 Google Drive</li>
+      <li>把素材包裡的 <code>本學期活動一覽.csv</code> 上傳到 Google Drive</li>
       <li>用「Google 試算表」開啟，存成 Google 格式</li>
     </ul>
         <h4 class="minor-title">用連結加入知識庫</h4>
@@ -8760,7 +8569,7 @@
           <tr>
             <td class="align-left"><strong>匯入</strong></td>
             <td class="align-left">在對話上傳壓縮檔</td>
-            <td class="align-left">Customize → Skills → Add → Upload a skill</td>
+            <td class="align-left">外掛程式 → Skills → Add → Upload a skill</td>
           </tr>
           <tr>
             <td class="align-left"><strong>今天多學</strong></td>
@@ -8829,9 +8638,9 @@
       <div class="group-header"><span class="icon">📝</span> 用白話文建立行政範本 Skill</div>
       <div class="group-body">
         <p>Skill <code>不需要</code>全程自己<code>手動建立</code>，先用<code>一段白話</code>描述需求，讓 Claude 內建的 <code>skill-creator</code> 幫你生成雛形。</p>
-        <p class="loose-text"><strong>操作路徑</strong>: Customize → Skills → skill-creator</p>
-        <p class="loose-text"><!-- 待補圖片：claude-skill-creator-school.png｜Customize → Skills 中的 skill-creator（虛線紅框；側欄不要出現真實專案名稱） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-skill-creator-school.png" alt="在 Customize → Skills 找到 skill-creator" class="inline-image"> --></p>
+        <p class="loose-text"><strong>操作路徑</strong>: 外掛程式 → Skills → skill-creator</p>
+        <p class="loose-text"><!-- 待補圖片：claude-skill-creator-school.png｜外掛程式 → Skills 中的 skill-creator（虛線紅框；側欄不要出現真實專案名稱） --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-skill-creator-school.png" alt="在 外掛程式 → Skills 找到 skill-creator" class="inline-image"> --></p>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
@@ -8884,7 +8693,7 @@
       <div class="prompt-body">/admin-template
 幫我寫這學期閱讀日的家長通知</div>
     </div>
-        <p class="loose-text"><!-- 待補圖片：claude-skill-admin-template-project.png｜在案例庫專案內用 /admin-template，先說明選用「02-親子共讀夜活動通知」，通知帶出活動一覽的 5/15 與多功能教室，報名方式標「待確認」，最後列出沿用、修改、待確認 --></p>
+        <p class="loose-text"><!-- 待補圖片：claude-skill-admin-template-project.png｜在案例庫專案內用 /admin-template，先說明選用「活動通知-親子共讀夜-114」，通知帶出活動一覽的 5/14 與多功能教室，報名方式標「待確認」，最後列出沿用、修改、待確認 --></p>
         <p class="loose-text"><!-- <img src="assets/claude-skill-admin-template-project.png" alt="先說明選了哪一份案例，再照它改寫成閱讀日的通知" class="inline-image"> --></p>
         <div class="table-wrap">
       <table class="content-table">
@@ -8897,11 +8706,11 @@
         <tbody>
           <tr>
             <td class="align-left"><strong>選了哪一份</strong></td>
-            <td class="align-left">最接近的是 <code>02-親子共讀夜活動通知</code>（校內的閱讀活動），並說明理由</td>
+            <td class="align-left">最接近的是 <code>活動通知-親子共讀夜-114</code>（校內的閱讀活動），並說明理由</td>
           </tr>
           <tr>
             <td class="align-left"><strong>這學期的資訊</strong></td>
-            <td class="align-left">來自<code>活動一覽</code>：5/15 13:30–14:30、多功能教室、自由參加、請帶借閱證</td>
+            <td class="align-left">來自<code>活動一覽</code>：5/14 13:30–14:30、多功能教室、自由參加、請帶借閱證</td>
           </tr>
           <tr>
             <td class="align-left"><strong>過去的資訊有沒有混進來</strong></td>
@@ -8944,7 +8753,7 @@
         <div class="step-num">1</div>
         <div class="step-content">
           <div class="step-title">存回定稿</div>
-          <div class="step-desc">把最後發出去的版本放進專案的 Files</div>
+          <div class="step-desc">照<code>類型-主題-學年度</code>命名（ex: <code>活動通知-閱讀日-115</code>），放進專案的 Files</div>
         </div>
       </div>
       <div class="flow-step">
@@ -8991,7 +8800,7 @@
         <div class="case-step__body">
           <ul>
             <li><strong>日常、專案各整理一份</strong>：Claude 能<code>搜尋過去的對話</code>（付費方案），但一般對話只搜 Project 以外的對話，Project 裡只搜<code>同一個 Project</code></li>
-            <li><strong>Connector 補來源</strong>：信件、行事曆裡的進度，要<code>授權 Connector</code> 才讀得到</li>
+            <li><strong>連接器補來源</strong>：信件、行事曆裡的進度，要<code>授權連接器</code> 才讀得到</li>
             <li><strong>Skill 固定格式</strong>：學校規定的欄位（ex: 本週完成的任務、待辦事項）寫進 Skill，每次照同一個格式產出</li>
             <li><strong>說清楚寫給誰</strong>：給主任、校長看的版本，請 AI <code>寫白話一點</code>，讓長官一眼看懂</li>
           </ul>
@@ -9001,8 +8810,8 @@
       </div>
     </div>
         <div class="insight">
-      <div class="insight-title">Connector、Project、Skill 一起用，才是完整的助理</div>
-      <p>Connector 與 Project 補齊<code>資料來源與過去的案例</code>，Skill 固定<code>步驟、格式與檢查項目</code>。<br>不管是家長通知還是週報，才不會寫錯、亂補，也<code>不用再大改</code>。</p>
+      <div class="insight-title">連接器、Project、Skill 一起用，才是完整的助理</div>
+      <p>連接器與 Project 補齊<code>資料來源與過去的案例</code>，Skill 固定<code>步驟、格式與檢查項目</code>。<br>不管是家長通知還是週報，才不會寫錯、亂補，也<code>不用再大改</code>。</p>
     </div>
       </div>
     </div>
@@ -9086,8 +8895,8 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">💾</span> 將 Skill 下載為壓縮檔</div>
       <div class="group-body">
-        <p><strong>操作路徑</strong>: Customize → Skills → 選擇要分享的 Skill（ex: <code>admin-template</code>）→ 右上角「⋮」→ Download</p>
-        <p class="loose-text"><!-- 待補圖片：claude-skill-download-school.png｜Customize → Skills → admin-template 右上角「⋮」→ Download（虛線紅框；側欄不要出現真實專案名稱） --></p>
+        <p><strong>操作路徑</strong>: 外掛程式 → Skills → 選擇要分享的 Skill（ex: <code>admin-template</code>）→ 右上角「⋮」→ Download</p>
+        <p class="loose-text"><!-- 待補圖片：claude-skill-download-school.png｜外掛程式 → Skills → admin-template 右上角「⋮」→ Download（虛線紅框；側欄不要出現真實專案名稱） --></p>
         <p class="loose-text"><!-- <img src="assets/claude-skill-download-school.png" alt="點右上角「⋮」→ Download，把 Skill 下載成檔案分享" class="inline-image"> --></p>
         <ul class="loose-list">
       <li>下載的壓縮檔可以傳給同事，也可以匯入其他支援 Skill 的 AI 工具</li>
@@ -9104,7 +8913,7 @@
   <li>上一堂在 ChatGPT 與 Codex 用過 <code>info-card-generator</code>；同一個壓縮檔，今天匯入 Claude</li>
   <li>上一堂下載過就不用再下載；沒有的話從這裡拿：<a href="../codex/assets/info-card-generator.zip" target="_blank" rel="noopener">下載「資訊卡」技能包</a></li>
 </ul>
-        <p class="loose-text"><strong>操作路徑</strong>: Customize → Skills → Add → Upload a skill</p>
+        <p class="loose-text"><strong>操作路徑</strong>: 外掛程式 → Skills → Add → Upload a skill</p>
         <ul class="loose-list">
       <li>可接受 Markdown 格式、<code>.zip</code> 壓縮檔、<code>.skill</code> 匯出檔</li>
     </ul>
@@ -9124,7 +8933,7 @@
 
 1. 開工設定。左下角頭像 → Settings：Privacy 關閉「Help improve our AI models」；Account 填工作類型與協作指令；Capabilities 原則上全開。
 2. 去識別化。學生名冊交給 AI 之前，先把姓名、身分證字號、電話換成代號；學號用自訂規則一次處理；編碼表留在自己的電腦。
-3. Connector 讓 AI 長出眼睛和手。信件分成重要、封存、刪除候選三類；先給清單、確認後才套用標籤；建立行程前先看草稿、檢查衝突。
+3. 連接器讓 AI 長出眼睛和手。信件分成重要、封存、刪除候選三類；先給清單、確認後才套用標籤；建立行程前先看草稿、檢查衝突。
 4. Project 不用每次重講背景。指令告訴 AI 什麼問題去哪份文件找；定版的文件上傳、會變動的放雲端；文件沒寫的要誠實說沒有。
 5. Skill 把好方法變成 SOP。用白話就能建立；把過去的通知放進 Project，讓 Skill 找最接近的案例來改寫，舊資訊不沿用、缺的標「待確認」。
 
@@ -9783,7 +9592,7 @@ console.log(<span class=&quot;s&quot;>`✓ 產出 ${cards.length} 張圖卡`</sp
       <div class="summary-card">
         <div class="sc-icon">🗺️</div>
         <h4>換一家做同樣的事</h4>
-        <p>外掛程式＝Connector、專案＝Project、技能＝Skill；名字不同、邏輯相同</p>
+        <p>外掛程式＝連接器、專案＝Project、技能＝Skill；名字不同、邏輯相同</p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🛡️</div>
@@ -9792,7 +9601,7 @@ console.log(<span class=&quot;s&quot;>`✓ 產出 ${cards.length} 張圖卡`</sp
       </div>
       <div class="summary-card">
         <div class="sc-icon">🔌</div>
-        <h4>Connector</h4>
+        <h4>連接器</h4>
         <p>分類信件貼標籤、彙整脈絡、寫回覆草稿；小範圍測試、先看草稿再執行，刪除與建立行程由人把關</p>
       </div>
       <div class="summary-card">
@@ -9816,7 +9625,7 @@ console.log(<span class=&quot;s&quot;>`✓ 產出 ${cards.length} 張圖卡`</sp
   <div class="reveal">
     <div class="insight">
       <div class="insight-title">下一堂：讓 Claude 動手交付成品</div>
-      <p>今天的 Connector、Project、Skill 都在對話裡完成；第 4 堂換成 <code>Cowork</code>，指定電腦資料夾讓它整理檔案、設定排程，再用 Vibe Coding 做出班級抽籤分組工具。</p>
+      <p>今天的連接器、Project、Skill 都在對話裡完成；第 4 堂換成 <code>Cowork</code>，指定電腦資料夾讓它整理檔案、設定排程，再用 Vibe Coding 做出班級抽籤分組工具。</p>
     </div>
   </div>
 </section>
@@ -10132,8 +9941,8 @@ console.log(<span class=&quot;s&quot;>`✓ 產出 ${cards.length} 張圖卡`</sp
     });
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
-    var sectionIds = ["instructor","5","ai","section-2","connector-ai","project","sop-skill","skill","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","5","sub-1-chatgpt","sub-2-codex-ai-skill","ai","sub-claude","sub-claude-2","sub-claude-3","section-2","sub-section-6","sub-section-7","connector-ai","sub-section-8","sub-section-9","sub-section-10","sub-section-11","project","sub-claude-4","sub-section-13","sop-skill","sub-skill-claude","sub-skill","sub-skill-2","skill","sub-skill-3","sub-skill-4","sub-skill-5","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var sectionIds = ["instructor","5","ai","section-2","ai-2","project","sop-skill","skill","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
+    var allAnchorIds = ["instructor","5","sub-1-chatgpt","sub-2-codex-ai-skill","ai","sub-claude","sub-claude-2","sub-claude-3","section-2","sub-section-6","sub-section-7","ai-2","sub-section-8","sub-section-9","project","sub-claude-4","sub-section-11","sop-skill","sub-skill-claude","sub-skill","sub-skill-2","skill","sub-skill-3","sub-skill-4","sub-skill-5","summary"];   // e.g. ['instructor','new-project','sub-create-project',...]
     // 兩張對照表由 toc 段填入；updateToc 在任何時機呼叫都讀得到（未填時退回第一個章節）
     var sectionForAnchor = {};
     var subForAnchor = {};

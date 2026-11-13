@@ -2,11 +2,11 @@ page:
   title: "Claude｜串接工具、建立知識庫、把好方法變 SOP"
   badge: "生成式 AI 研習｜第 3 堂"
   hero_title: "串接工具、建立知識庫，<br>把好方法變 SOP"
-  subtitle: "從去識別化、Connector、Project 到 Skill，了解不同 AI Agent 的通用性"
+  subtitle: "從去識別化、連接器、Project 到 Skill，了解不同 AI Agent 的通用性"
 seo:
   default_image: "https://deanlin.net/course/tschool/claude/assets/og-image.jpg"
   title: "Claude 串接工具與知識庫｜生成式 AI 研習第 3 堂"
-  description: "為學校老師與行政設計的 Claude 講義：開工設定與學生名冊去識別化，用 Connector 分類信件、建立行程，用 Project 建立活動知識庫，再把家長通知流程存成 Skill。"
+  description: "為學校老師與行政設計的 Claude 講義：開工設定與學生名冊去識別化，用連接器分類信件、建立行程，用 Project 建立活動知識庫，再把家長通知流程存成 Skill。"
   url: "https://deanlin.net/course/tschool/claude/"
   image: "https://deanlin.net/course/tschool/claude/assets/og-image.jpg"
 quotes:

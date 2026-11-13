@@ -18,7 +18,7 @@
 | 能力與風險：AI 的能力範圍 | BICS 第 1 堂 300–347 行 | 幻覺清單改為出考題、引用課綱法規；「最新資訊不等於正確資訊」併成一條；課綱 insight 刪除（與 warning 重複） |
 | 能力與風險：AI 的逆向工程 | 講師文章〈[小心！你的 AI 可能被人控制了](https://deanlin.net/blog/202511/prompt-injection-risks/)〉＋影片〈AI 陷阱 EP1〉（BICS 第 1 堂原用合約範例） | 改用〈再別康橋〉作業：Word 白底版給 ChatGPT（照唯一解答亂寫）、網頁版 [deanlin.net/prompt-inject-exmaple](https://deanlin.net/prompt-inject-exmaple/) 給 Gemini（最後一行加 AI 聲明）；範例檔放講師 [Google 雲端資料夾](https://drive.google.com/drive/folders/1WXeC4aqqLkq4mwimhgIV0qLn1rkBHgeu?usp=sharing)（白底／黑字兩版，2026-11-10 確認未登入可瀏覽）；新增「老師反過來用」insight，註明不能當抄襲證據；講師示範＋課後自行操作 |
 | 資料安全：帳號安全與基本設定 | BICS 第 1 堂 427–454 行 | 設定步驟與截圖沿用；「對話 vs 工作」移到選擇工具章 |
-| 資料安全：上傳敏感資料前，先做去識別化 | 非 BICS 底稿；來源為 `video/surfshark_esim/surfshark/講稿.md`「痛點：去識別化很繁瑣」「多重驗證＋去識別化」「去識別化工具分享」「① 為什麼需要去識別化」「② 去識別化工具實戰 Demo」STEP 1–6 與結語提醒 | 企業合約改為虛構「學生個別輔導紀錄」（`example/student-deid`）；STEP 5 的 Prompt 改為整理給輔導室的摘要；STEP 7 自訂規則只留一句預告（第 3 堂 Claude 講）；按鈕與分頁名稱對過工具原始碼（`~/Documents/external_project/data-deidentification`）；本次改版未動 |
+| 資料安全：上傳敏感資料前，先做去識別化 | 非 BICS 底稿；來源為 `video/surfshark_esim/surfshark/講稿.md`「痛點：去識別化很繁瑣」「多重驗證＋去識別化」「去識別化工具分享」「① 為什麼需要去識別化」「② 去識別化工具實戰 Demo」STEP 1–6 與結語提醒 | 企業合約改為虛構「學生個別輔導紀錄」（`assets/學生個別輔導紀錄.docx`）；STEP 5 的 Prompt 改為整理給輔導室的摘要；STEP 7 自訂規則只留一句預告（第 3 堂 Claude 講）；按鈕與分頁名稱對過工具原始碼（`~/Documents/external_project/data-deidentification`）；本次改版未動 |
 | Prompt 撰寫 | BICS 第 1 堂 456–611 行＋講師專訪回覆 Q3 第二個技巧 | 六技巧共用「國小高年級晨間閱讀」例子；技巧 5 合併「先反問」與專訪的「選擇題發想」，新增「家長通知 3 個切角」Prompt；「拿到答案後」兩張卡併成一張 |
 | 圖片生成 | `course/tschool/codex/content.md` 改版前快照（308–474 行「圖片起手式」「教材與活動配圖」），更早出處為 `course/bics/lesson2/content.md` 1197–1585 行「生成圖片」 | 操作改為 ChatGPT「+」→「創作圖像」、下載圖片（不存 `output/`）；保留著作權、第一張閱讀情境圖、家長懶人包、學習流程圖、海報底圖、一句回饋修改；刪去校外教學活動流程圖與水的三態教材示意圖（後者「精確內容對照課本」併入檢查卡）；修改步驟加入官方說明的「選取區域」 |
 | 個人化：記憶與自訂 | BICS 第 1 堂 613–735 行 | 兩個實戰演練合併成一個；「工具都是類似的」卡片（Gemini／Claude 設定圖）與第二個互動投票刪除，改在自訂結尾一句帶到第 3 堂 |
@@ -128,7 +128,7 @@ content.md 已在對應位置留 HTML 註解，不建立失效的圖片連結。
 
 ## 去識別化範例檔：自動偵測結果
 
-`example/student-deid/學生個別輔導紀錄.docx` 全為虛構，以工具的 `scripts/lib/render-docx.ts` 產生。2026-11-10 用工具原始碼的 `parseDocx` → `detect(BUILTIN_PATTERNS)` 實跑：自動偵測 24 筆（編碼表 12 列），去識別化後再還原與原文完全一致。
+`assets/學生個別輔導紀錄.docx`（講義直接連這個檔下載，單一檔案不打包 zip）全為虛構，以工具的 `scripts/lib/render-docx.ts` 產生。2026-11-10 用工具原始碼的 `parseDocx` → `detect(BUILTIN_PATTERNS)` 實跑：自動偵測 24 筆（編碼表 12 列），去識別化後再還原與原文完全一致。
 
 | 內容 | 結果 |
 |---|---|
