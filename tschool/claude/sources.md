@@ -164,3 +164,9 @@ content.md 各處以 `<!-- 待補圖片：檔名｜要拍什麼 -->` 註解標�
 - 9 份案例改成 Word（`.docx`），因為學校老師平常用的是 Word。由原本的 `.md` 逐字轉出（用 Python 標準函式庫寫的轉檔腳本，沒有改內容）：A4、標楷體 12 號、開頭「學年度／類型／對象／發出日期／承辦」表格、內文首行縮排、「敬上」靠右、清單用項目符號。之後要改案例直接改 Word 檔，`.md` 不再保留。
 - 已拍的 `claude-project-admin-cases.png` 等截圖若看得到 `.md` 副檔名，要用 Word 版重拍。
 
+## 2026-11-15 提供 admin-template Skill 範例下載
+
+- 講師從 Claude 匯出的 `Admin template-v3.zip`（`.claude-plugin/plugin.json` ＋ `skills/admin-template/SKILL.md`）複製為 `assets/admin-template.zip`，放在「💾 將 Skill 下載為壓縮檔」下方供學員下載。內容已讀過，沒有個資。
+- 這一版 SKILL.md 會讀專案的 Word 案例，最後版本產成 `.docx`、「發出後的紀錄」另起一頁；之後 Skill 改版要重新匯出覆蓋這個檔。
+- 「匯入上一堂的資訊卡 Skill」原本連到 `../codex/assets/info-card-generator.zip`，跨資料夾的連結下載失敗，改成複製一份到本堂 `assets/info-card-generator.zip`（與第 2 堂的檔案內容相同），用 `[download file=]` 下載卡。第 2 堂的技能包改版時，這一份要一起更新。
+

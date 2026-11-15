@@ -534,7 +534,7 @@ Claude 是真的會`建立行程`，行程也會`出現在參與人日曆`，執
 - 整理類問題：用條列或表格。
 ```
 
-![把指令貼進 Instructions，這個專案的每次對話都會遵守](assets/claude-project-instructions-school.png)
+![把指令貼進「指示」，這個專案的每次對話都會遵守](assets/claude-project-instructions-school.png)
 
 ### 📄 第一步：上傳定版的文件
 
@@ -551,7 +551,7 @@ Claude 是真的會`建立行程`，行程也會`出現在參與人日曆`，執
 
 把素材包裡的 9 份 Word 檔拖進專案
 
-![把過去的通知放進專案的 Files](assets/claude-project-admin-cases.png)
+![把過去的通知放進專案的背景資訊](assets/claude-project-admin-cases.png)
 
 #### 分門別類，看出哪一版最新
 
@@ -745,6 +745,7 @@ Skill 建立完成後，有 2 種方式觸發：
 - 過去 — 一支 10 分鐘的影片大概要剪 `1 天`：移除 NG、上字幕、加資訊卡、設計情境動畫、配音效，繁瑣又重複
 - 現在 — 照自己的習慣建立 AI 剪片工作流，`用白話文就能剪片`，我只負責最後的品質把關
 - 每一支都在優化 — 發現哪個細節能做得更好，就把經驗寫回 Skill，讓`下一支影片站在更高的起點`
+- 工作流公開分享 — 我把 AI 剪片工作流放在 [GitHub：auto-edit-workspace](https://github.com/dean9703111/auto-edit-workspace)，想看 Skill 實際怎麼寫可以參考
 [/flow]
 
 > **不要一開始就想設計完美的 Skill**
@@ -762,50 +763,59 @@ Skill 建立完成後，有 2 種方式觸發：
 
 ### 💾 將 Skill 下載為壓縮檔
 
-**操作路徑**: 外掛程式 → Skills → 選擇要分享的 Skill（ex: `admin-template`）→ 右上角「⋮」→ Download
+**操作路徑**: 外掛程式 → Skills → 選擇要分享的 Skill（ex: `admin-template`）→ 檔案 → 下載 icon
 
-<!-- 待補圖片：claude-skill-download-school.png｜外掛程式 → Skills → admin-template 右上角「⋮」→ Download（虛線紅框；側欄不要出現真實專案名稱） -->
-<!-- ![點右上角「⋮」→ Download，把 Skill 下載成檔案分享](assets/claude-skill-download-school.png) -->
+![把 Skill 下載成檔案分享](assets/claude-skill-download-school.png)
 
-- 下載的壓縮檔可以傳給同事，也可以匯入其他支援 Skill 的 AI 工具
+[download file="assets/admin-template.zip" label="下載「admin-template」Skill 範例" desc="下載的壓縮檔可以傳給同事，也可以匯入其他支援 Skill 的 AI 工具"]
+
+#### 試著上傳剛剛下載的 Skill
+
+**操作路徑**: 外掛程式 → Skills → 新增 → 上傳外掛程式 → 選擇剛剛下載的 `admin-template.zip`
+
+![若同名的 Skill 已經在帳號裡，上傳時會提示已存在](assets/claude-skill-upload-exists-school.png)
+
+> **為什麼會出現「已存在」？**
+> Skill 是用`名稱`辨識的，前面建立過的 `admin-template` 已經在你的帳號裡，所以匯入時會有警告。
+> 但其他人的帳號裡沒有這個 Skill，收到壓縮檔就能`直接匯入`。
 
 ### 🤝 匯入上一堂的資訊卡 Skill
 
-- 上一堂在 ChatGPT 與 Codex 用過 `info-card-generator`；同一個壓縮檔，今天匯入 Claude
-- 上一堂下載過就不用再下載；沒有的話從這裡拿：[下載「資訊卡」技能包](../codex/assets/info-card-generator.zip)
+- 上一堂在 ChatGPT 與 Codex 用過 `info-card-generator`；同一個壓縮檔，Claude 也能使用
 
-**操作路徑**: 外掛程式 → Skills → Add → Upload a skill
+[download file="assets/info-card-generator.zip" label="下載「資訊卡」技能包" desc="Skill 可以在多個 Agent 共用"]
+
+**操作路徑**: 外掛程式 → Skills → Add → 上傳外掛程式
 - 可接受 Markdown 格式、`.zip` 壓縮檔、`.skill` 匯出檔
 
-<!-- 待補圖片：claude-skill-upload2-school.png｜Upload skill 視窗，提示可接受 Markdown、.zip、.skill 檔（虛線紅框標出拖放區） -->
-<!-- ![把技能包的壓縮檔拖進來就能匯入](assets/claude-skill-upload2-school.png) -->
+![把技能包的壓縮檔拖進來就能匯入](assets/claude-skill-upload2-school.png)
 
 ```prompt [label="用匯入的 Skill，把今天的重點做成複習圖卡"]
 /info-card-generator
-主題：「換一家 AI 做同樣的事：Claude 這堂課的 5 個重點」
+主題：「Claude 這堂課的 5 個重點」
 
-1. 開工設定。左下角頭像 → Settings：Privacy 關閉「Help improve our AI models」；Account 填工作類型與協作指令；Capabilities 原則上全開。
+1. 開工設定。左下角頭像 → 設定：隱私權關閉「協助改善我們的 AI 模型」；帳戶選工作類型、填「給 Claude 的指示」；功能原則上全開。
 2. 去識別化。學生名冊交給 AI 之前，先把姓名、身分證字號、電話換成代號；學號用自訂規則一次處理；編碼表留在自己的電腦。
 3. 連接器讓 AI 長出眼睛和手。信件分成重要、封存、刪除候選三類；先給清單、確認後才套用標籤；建立行程前先看草稿、檢查衝突。
-4. Project 不用每次重講背景。指令告訴 AI 什麼問題去哪份文件找；定版的文件上傳、會變動的放雲端；文件沒寫的要誠實說沒有。
-5. Skill 把好方法變成 SOP。用白話就能建立；把過去的通知放進 Project，讓 Skill 找最接近的案例來改寫，舊資訊不沿用、缺的標「待確認」。
-
-結尾卡放一句話：名字不同、邏輯相同，熟悉一個最重要。
+4. 專案不用每次重講背景。用指示告訴 AI 什麼問題去哪份文件找；定版的文件上傳、會變動的放雲端；文件沒寫的要誠實說沒有。
+5. Skill 把好方法變成 SOP。用白話就能建立；把過去的通知放進專案，讓 Skill 找最接近的案例來改寫，舊資訊不沿用、缺的標「待確認」。
 ```
 
-<!-- 待補圖片：claude-card-generator-school.png｜Claude 用匯入的 info-card-generator 產出今天重點的複習圖卡 -->
-<!-- ![Claude 不能生成 AI 圖片，但可以用寫網頁的方式產出圖卡](assets/claude-card-generator-school.png) -->
+![Claude 不能生成 AI 圖片，但可以用寫網頁的方式產出圖卡](assets/claude-card-generator-school.png)
 
-<!-- 講師備註：達和內訓版的 info-card-generator 在 Claude 跑過；第 2 堂的教師版壓縮檔還沒在 Claude 實測，授課前跑一次。產圖用到程式，Settings → Capabilities 的「Code execution and file creation」要開啟。 -->
+只想要圖片的話，接著補一句：
 
-> **同一個技能包，三個地方都能用**
-> 上一堂在 ChatGPT、Codex，今天在 Claude；匯入前先看一眼內容，`不明來源的 Skill 不要匯入`。
+```prompt [label="只要圖片檔"]
+取出每一張圖卡的圖片檔，給我觀看
+```
+
+![輸出格式可以自己決定的](assets/claude-card-generator-png-school.png)
 
 ## 深入認識 Skill
 
 ### 🎒 Skill 的結構
 
-把技能包的壓縮檔解開，會看到一份 `SKILL.md`（純文字的說明檔）；像資訊卡這種複雜一點的 Skill，還會多出 `scripts/`、`reference/` 資料夾，`admin-template` 這種簡單的 Skill 不一定有。
+把技能包的壓縮檔解開，會看到一份 `SKILL.md`（純文字的說明檔）；像資訊卡這種複雜一點的 Skill，還會多出 `scripts/`、`reference/` 資料夾。
 
 [html src="./html/skill-anatomy.html"]
 
@@ -818,38 +828,58 @@ Skill 建立完成後，有 2 種方式觸發：
 [/flow]
 
 > **Skill 為什麼能節省 Token？**
-> Project 的指令每次對話都會整份讀進去；Skill 在匹配需求前`只讀標題與描述（Metadata）`。
+> 專案的指示每次對話都會整份讀進去；Skill 在匹配需求前`只讀標題與描述（Metadata）`。
 > 就像 Google 搜尋時先看標題摘要，確認相關再點進去。
 
 ## Skill 使用經驗
 
-### 🧩 上一堂的提醒，換到 Claude 一樣適用
+### 🧩 Skill 不是越多，AI 就越強
+
+`同一類型的 Skill 裝了兩個以上，當需求命中時，常常會一起觸發`；這不只會增加 Token 消耗，也容易讓 AI 在執行過程中卡住或走偏。
+
+**在提示詞的世界裡，1 + 1 不一定大於 2，甚至可能小於 1。**
+
+> **同類型的 Skill，建議擇優安裝一個**
+> 像生成簡報這類需求，如果同時安裝多個相近 Skill，AI 反而要花更多成本判斷該遵循哪一套規則，結果未必更好。
+
+### 🤔 網路上很多 Skill 只是看起來有用
+
+- 有些 Skill 描述看起來很厲害，實際使用時`效果卻不穩定`
+- 過多的 Skill 只會`增加上下文負擔`，卻沒有提供足夠的專業價值
+- 安裝`太多沒有用到的 Skill`，甚至會讓 AI 的行為變得更難預測
+
+### 🛡️ 匯入第三方 Skill 的資安風險
 
 [flow]
-- **同類型的 Skill，擇優安裝一個** - 裝了兩個以上，需求命中時常常一起觸發，增加 Token 消耗，也容易讓 AI 卡住或走偏
-- **看起來有用，不等於真的有用** - 有些 Skill 描述很厲害，實際使用時`效果卻不穩定`；裝太多沒用到的，AI 的行為會更難預測
-- **來路不明的不要裝** - `SKILL.md` 與程式腳本都可能被動手腳，匯入前先看內容、看發佈者是否可信
-- **不同 AI Agent 都有 Skill** - 學會一次，換工具也用得上；延伸學習：[Manus Skill 技能教學](https://youtu.be/lKiwb381mfU)、[Antigravity Agent Skills 教學](https://youtu.be/xe00zJEtuMo)
+- **SKILL.md** - 可能被寫入危險指令，例如偷偷把個人資訊傳到某個網址，造成隱私外洩
+- **Skill 的程式腳本（Script）** - 腳本一樣有機會被動手腳；Claude 執行時讀得到你上傳的檔案，也能使用你接上的`連接器`（ex: Gmail、Google Drive）
+- **判斷原則** - 看發佈者是否可信、專案的 Star 數，作為初步篩選；來路不明的不要裝
+[/flow]
+
+### 🌐 不同 AI Agent 都有 Skill
+
+[flow]
+- **Skill 已是各家 AI Agent 的基礎功能** - ChatGPT 與 Codex、Claude、Antigravity、Manus 都有，學會一次，換工具也用得上
+- **延伸學習** - 其他 Agent 的 Skill 教學
+   - [【Antigravity Agent Skills 教學】當別人還在複製貼上，你的 AI 已經自動搞定](https://youtu.be/xe00zJEtuMo)
+   - [【Manus Skill 技能教學】教會 AI 一次，他永遠記得！](https://youtu.be/lKiwb381mfU)
 [/flow]
 
 > **別人的 SOP 是參考，自己的工作流才是答案**
-> 有持續在用的 Skill，一定會持續優化；放著不改的，通常也是沒在用的。
+> 今天下載的技能包，你都可以打開 `SKILL.md` 看看它怎麼寫；但別停在「裝好了」，可以嘗試把它改成符合自己的版本。
 
 ---
 
 # 📌 課程總結：讓 AI 長出眼睛、記得背景、照 SOP 做事
 
 [summary]
-- 🗺️ **換一家做同樣的事** | 外掛程式＝連接器、專案＝Project、技能＝Skill；名字不同、邏輯相同
-- 🛡️ **設定與資料安全** | 關閉模型改善、設好個人偏好與能力開關；名冊先去識別化，學號用自訂規則一次處理
+- 🗺️ **AI 技巧是通用的** | 外掛程式＝連接器、專案、技能＝Skill；名字不同、邏輯相同
+- 🛡️ **設定與資料安全** | 關閉模型改善、設好個人偏好與能力開關、隱私資訊先去識別化
 - 🔌 **連接器** | 分類信件貼標籤、彙整脈絡、寫回覆草稿；小範圍測試、先看草稿再執行，刪除與建立行程由人把關
-- 🗂️ **Project** | 指令告訴 AI 什麼問題去哪份文件找；定版的上傳、會改的放雲端，沒寫的要讓它誠實說沒有
-- 📋 **Skill** | 用白話生成行政範本 Skill；進到 Project 再呼叫，找最接近的案例改寫，過去的資訊不沿用、缺的標「待確認」
-- 🎒 **分享與結構** | 下載壓縮檔分享、匯入前先看內容；Skill 先讀名稱與描述，符合才載入全文
+- 🗂️ **專案** | 指令告訴 AI 什麼問題去哪份文件找；定版的上傳、會改的放雲端，沒寫的要讓它誠實說沒有
+- 📋 **Skill** | 用白話生成行政範本 Skill，在專案中結合運用
+- 🎒 **分享與結構** | 下載壓縮檔分享、匯入前先看內容；了解 Skill 運作原理
 [/summary]
-
-> **下一堂：讓 Claude 動手交付成品**
-> 今天的連接器、Project、Skill 都在對話裡完成；第 4 堂換成 `Cowork`，指定電腦資料夾讓它整理檔案、設定排程，再用 Vibe Coding 做出班級抽籤分組工具。
 
 [qa-session title="Q&A 時間"]
 [/qa-session]
