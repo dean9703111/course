@@ -9,7 +9,7 @@
 | 1：ChatGPT | 11/23 | BICS 第 1 堂（前導＋ChatGPT 實戰應用）＋BICS 第 2 堂「生成圖片」＋去識別化影片講稿 | [content.md](chatgpt/content.md) | [index.html](chatgpt/index.html) | 網頁版 vs 桌面版、三家 AI 功能對標、學生輔導紀錄去識別化、家長通知 Prompt、教材圖片生成、記憶與自訂、連接外部工具、閱讀探索日專案 |
 | 2：Codex | 11/24 | EDA「讓 AI 動手處理檔案」＋安美諾「技能封裝」（文案、圖片、簡報 Skill），工具換成 ChatGPT 桌面版（工作模式與 Codex） | [content.md](codex/content.md) | [index.html](codex/index.html) | 第 1 堂重點回顧、行動研究資料夾問答、單元備課包彙整、手寫報名表照片轉 Excel、ChatGPT 非程式 Skill（寫信風格、教材配圖）、Codex 程式類 Skill（資訊卡、線上講義、校園簡報） |
 | 3：Claude | 11/26 | 達和（起手式、Connector、Project、Skill）＋去識別化影片講稿 | [content.md](claude/content.md) | [index.html](claude/index.html) | 學生名冊去識別化（自訂規則）、信件分類與行事曆、閱讀日 Project、家長通知 Skill |
-| 4：Cowork | 11/27 | 達和（Cowork、Vibe Coding、課程總結） | [content.md](cowork/content.md) | [index.html](cowork/index.html) | 簽收表照片轉 Excel、閱讀日摘要與輪值、排程、班級抽籤分組工具（Git 存檔點）、SDD 延伸 |
+| 4：Claude Code | 11/27 | 達和（桌面版處理檔案、Vibe Coding、課程總結）＋ tsgh（Vibe Coding 協作步驟、Git 與 GitHub Pages） | [content.md](claudecode/content.md) | [index.html](claudecode/index.html) | 行政文件案例庫改成直接讀資料夾、沿用 admin-template Skill 寫出期末班親會通知、班級官網（Markdown 編輯、Git 存檔點、GitHub Pages 與 GitHub Actions 發布）、SDD 延伸 |
 
 ## 備課與來源
 
@@ -18,7 +18,7 @@
 - [ChatGPT 來源與圖片](chatgpt/sources.md)
 - [Codex 來源與圖片](codex/sources.md)
 - [Claude 來源與圖片](claude/sources.md)
-- [Cowork 來源與圖片](cowork/sources.md)
+- [Claude Code 來源與圖片](claudecode/sources.md)
 
 通用的介面截圖已從底稿 `assets/` 複製過來；顯示範例結果的截圖還沒拍，位置用 `<!-- 待補圖片：… -->` 註解標在 `content.md`，不建立失效的圖片連結。正式上課前用授課帳號補拍，操作圖用虛線紅框標出控件。
 
@@ -34,7 +34,7 @@
 - Codex 的手寫報名表照片辨識、能否直接寫出 `.xlsx`，授課前實測一次（講義已附「不確定先標黃」「改存 CSV」的備案）。
 - Codex 的老師版 Skill：`@` 或 `$` 哪個能列出技能、技能包安裝核准畫面、授課電腦能否用 `python3` 產出 PPTX（Mac、Windows 各試一次）；備案是把技能 zip 匯入 ChatGPT 網頁版「技能」。
 - 第 2 堂前半用 ChatGPT 桌面版「工作」模式選資料夾（Plus 以上），免費版學員改用 Codex；ChatGPT「技能」頁在授課帳號與免費帳號是否可用、工作模式選資料夾的入口位置，授課前各確認一次。
-- 第 4 堂的 Git 存檔點在 Claude 桌面版 Code 分頁操作（社群回報 Cowork 掛載資料夾跑 Git 會卡 `index.lock`）；Windows 學員課前先裝 Git。
+- 第 4 堂的班級官網在 Claude 桌面版 Code 分頁（Local）操作，由 AI 檢查並安裝 Node.js、Git、GitHub CLI；授課前在 Mac、Windows 各實測一次安裝核准畫面、GitHub 登入與 GitHub Pages（Actions）發布，學員課前先註冊 GitHub 帳號可省下課堂時間。
 - 各堂授課前確認清單詳見各自的 `sources.md`。
 - 學員任教學段與學校實際核准政策尚未指定，因此沒有代填。
 - `content.md` 是內容來源；修改後需重新產生 `index.html` 與 `assets/og-image.jpg`。
@@ -46,4 +46,4 @@ node .agents/skills/course-page-generator/scripts/build.mjs course/tschool/chatg
 node .agents/skills/course-page-generator/scripts/generate-og.mjs course/tschool/chatgpt
 ```
 
-將最後的 `chatgpt` 替換為 `codex`、`claude` 或 `cowork`，即可更新對應講義。
+將最後的 `chatgpt` 替換為 `codex`、`claude` 或 `claudecode`，即可更新對應講義。

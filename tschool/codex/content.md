@@ -15,11 +15,11 @@
   time: 19:00~21:00
   des: **串接工具、建立知識庫，把好方法變 SOP**：先把學生名冊去識別化，再用 Connector 整理信件與行事曆、用 Project 建立活動知識庫、把家長通知流程存成 Skill。
   link: [查看講義](../claude/index.html)
-- label: 第 4 堂｜Cowork
+- label: 第 4 堂｜Claude Code
   date: 11/27
   time: 19:00~21:00
-  des: **讓 AI 交付成品，替自己做班級小工具**：用 Cowork 把簽收表照片轉 Excel、整理活動資料並設定排程，再用 Vibe Coding 做出班級抽籤分組工具，搭配 Git 存檔點，改壞了也能回到上一版。
-  link: [查看講義](../cowork/index.html)
+  des: **讓 AI 動手整理檔案，做出班級官網**：用 Claude 桌面版直接讀取電腦裡的資料夾，沿用上一堂的 Skill 把活動通知存成 Word 檔；再切到 Code 分頁，請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。
+  link: [查看講義](../claudecode/index.html)
 [/time]
 
 # 🙋 課前回顧：5 分鐘掌握上一堂的重點

@@ -1,0 +1,16 @@
+page:
+  title: "Claude Code｜讓 AI 動手整理檔案，做出班級官網"
+  badge: "生成式 AI 研習｜第 4 堂"
+  hero_title: "讓 AI 動手整理檔案，<br>做出班級官網"
+  subtitle: "從直接讀資料夾、沿用 Skill 寫通知，到用 Markdown 編輯的班級官網，練習驗收、Git 存檔點與 GitHub Pages 發布"
+seo:
+  default_image: "https://deanlin.net/course/tschool/claudecode/assets/og-image.jpg"
+  title: "Claude 桌面版與班級官網｜生成式 AI 研習第 4 堂"
+  description: "為學校老師與行政設計的 Claude 講義：用桌面版直接讀取資料夾、沿用上一堂的 Skill 把活動通知存成 Word 檔，再到 Code 分頁請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。"
+  url: "https://deanlin.net/course/tschool/claudecode/"
+  image: "https://deanlin.net/course/tschool/claudecode/assets/og-image.jpg"
+quotes:
+  opening:
+    text: "AI 可以幫你動手，<br>先把範圍與完成標準說清楚。"
+  closing:
+    text: "執行交給 AI，<br>驗收留在自己手上。"
