@@ -3,6 +3,7 @@ page:
   badge: "生成式 AI 研習｜第 3 堂"
   hero_title: "串接工具、建立知識庫，<br>把好方法變 SOP"
   subtitle: "從去識別化、連接器、Project 到 Skill，了解不同 AI Agent 的通用性"
+  year: 2026
 seo:
   default_image: "https://deanlin.net/course/tschool/claude/assets/og-image.jpg"
   title: "Claude 串接工具與知識庫｜生成式 AI 研習第 3 堂"

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="generator" content="course-page-generator 9839424">
+  <meta name="generator" content="course-page-generator 0da7545-dirty">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Claude｜串接工具、建立知識庫、把好方法變 SOP</title>
@@ -496,7 +496,7 @@
     .group-body .insight,
     .group-body .youtube-embed,
     .group-body .image-text {
-      margin-bottom: 0;
+      margin: 0;
     }
 
     .group-body ul,
@@ -1229,6 +1229,39 @@
     .class-timeline__item.is-upcoming .class-timeline__link:hover {
       background: rgb(var(--accent2-rgb) / .14);
       border-color: rgb(var(--accent2-rgb) / .7);
+    }
+
+    /* 上課時刻未到的連結（app.js 加 .is-locked）：不能點，滑過去或鍵盤聚焦時出提示 */
+    .class-timeline__item .class-timeline__link.is-locked,
+    .class-timeline__item .class-timeline__link.is-locked:hover {
+      position: relative;
+      color: var(--text-dim);
+      border-color: rgb(120 130 145 / .35);
+      border-style: dashed;
+      background: none;
+      cursor: not-allowed;
+    }
+    .class-timeline__link.is-locked::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 0;
+      bottom: calc(100% + 8px);
+      padding: .3rem .65rem;
+      border-radius: 6px;
+      font-size: .78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      color: #fff;
+      background: rgba(20, 22, 30, .92);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s;
+      z-index: 5;
+    }
+    .class-timeline__link.is-locked:hover::after,
+    .class-timeline__link.is-locked:focus-visible::after {
+      opacity: 1;
     }
 
     /* ===== Class Timeline – Status states ===== */
@@ -7044,7 +7077,7 @@
           </div>
           <div class="class-timeline__time">19:00~21:00</div>
           <div class="class-timeline__des"><strong>串接工具、建立知識庫，把好方法變 SOP</strong>：先把學生名冊去識別化，再用連接器整理信件與行事曆、用 Project 建立活動知識庫、把家長通知流程存成 Skill。</div>
-          <a class="class-timeline__link" href="../claude/index.html" target="_blank" rel="noopener">查看講義<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          
         </div>
       </div>
       <div class="class-timeline__item is-upcoming" data-status="upcoming">
@@ -7059,7 +7092,7 @@
           </div>
           <div class="class-timeline__time">19:00~21:00</div>
           <div class="class-timeline__des"><strong>讓 AI 動手整理檔案，做出班級官網</strong>：用 Claude 桌面版直接讀取電腦裡的資料夾，沿用上一堂的 Skill 把活動通知存成 Word 檔；再切到 Code 分頁，請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。</div>
-          <a class="class-timeline__link" href="../claudecode/index.html" target="_blank" rel="noopener">查看講義<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="class-timeline__link" href="../claudecode/index.html" target="_blank" rel="noopener" data-open-at="2026-11-27T19:00">查看講義<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
     </div>
@@ -9809,6 +9842,39 @@ console.log(<span class=&quot;s&quot;>`✓ 產出 ${cards.length} 張圖卡`</sp
           });
         });
       }).observe(document.body, { childList: true, subtree: true });
+
+      // ### [time] 連結的開放時刻（併在 reveal 段：介面 D 的段名固定）
+      // blocks.mjs 在還沒上的堂的連結寫 data-open-at="YYYY-MM-DDTHH:MM"（上課起始時刻，瀏覽器當地時間），
+      // 時刻未到就鎖住：點了沒反應、滑過去出提示。
+      // 每次點擊前與每分鐘重算，頁面開著跨過上課時刻也會解鎖；簡報模式複製出來的連結一併處理。
+      function timelineOpenTime(v) {
+        var m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(v || '');
+        return m ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]) : null;
+      }
+      function refreshTimelineLinks() {
+        var now = new Date();
+        document.querySelectorAll('.class-timeline__link[data-open-at]').forEach(function (a) {
+          var at = timelineOpenTime(a.getAttribute('data-open-at'));
+          var locked = !!at && now < at;
+          a.classList.toggle('is-locked', locked);
+          if (locked) {
+            a.setAttribute('aria-disabled', 'true');
+            a.setAttribute('data-tip', '上課時間還沒到，' + (at.getMonth() + 1) + '/' + at.getDate() + ' '
+              + at.getHours() + ':' + ('0' + at.getMinutes()).slice(-2) + ' 開放');
+          } else {
+            a.removeAttribute('aria-disabled');
+            a.removeAttribute('data-tip');
+          }
+        });
+      }
+      refreshTimelineLinks();
+      setInterval(refreshTimelineLinks, 60000);
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('.class-timeline__link[data-open-at]');
+        if (!a) return;
+        refreshTimelineLinks();
+        if (a.classList.contains('is-locked')) e.preventDefault();
+      });
     });
 
     // Sidebar / Hamburger
