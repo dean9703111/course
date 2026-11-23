@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="generator" content="course-page-generator 0da7545-dirty">
+  <meta name="generator" content="course-page-generator 957203a-dirty">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Claude Code｜讓 AI 動手整理檔案，做出班級官網</title>
@@ -9520,7 +9520,9 @@
           e.target.classList.add('visible');
           if (e.target.__revealBuddy) e.target.__revealBuddy.classList.add('visible');
         });
-      }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+      // threshold 用 0（上緣進入就顯示）：比例門檻對很高的卡片（多張大圖）會永遠達不到，
+      // 例如瀏覽器 150% 縮放時 7,000px 高的卡片露出 8% 要約 600px，比整個視窗還高，卡片就一直透明
+      }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
       document.querySelectorAll('.reveal').forEach(function (el) { revealObs.observe(el) });
 
       // ### [html] iframe 高度（併在 reveal 段：介面 D 的段名固定）
