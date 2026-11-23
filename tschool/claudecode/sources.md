@@ -13,9 +13,9 @@
 | （同章）上一堂的案例庫，改成直接讀資料夾 | 結構比照 `codex/content.md`「上一堂的專案，改成直接讀資料夾」；問題沿用 `claude/content.md` Project 章的驗證 prompt；選資料夾與使用提醒出自 `course/tahoho/content.md` 第 856～871 行 | 素材與第 3 堂完全相同（9 份 Word＋本學期活動一覽），不新增案例；選資料夾與使用提醒放在下載素材之後，在案例裡操作，介面名稱不寫死，待截圖時以當下版本為準；對照表改成「網頁版 Project 🆚 桌面版資料夾」；補一個洞察：Project 的指示不會跟過來，規則要寫進 prompt |
 | （同章）Skill 跟著帳號走 | 沿用第 3 堂的 `admin-template` Skill 與呼叫方式 | 第 3 堂寫閱讀日通知，本堂改寫期末班親會通知（活動一覽裡唯一「已確認」又有對應案例的項目），成品直接存成 Word 進資料夾；附技能包給沒上過第 3 堂的學員匯入 |
 | （同章）檔名雜亂的資料夾，也可以請它整理 | 無（新增一張卡） | 兌現第 3 堂「下一堂讓 AI 直接動手整理檔名」的預告；只給通用 prompt（先列對照表、確認後才改名），不另做素材 |
-| 班級官網：每天都要發的訊息，給它一個固定的家 | `course/tahoho/content.md` 第 1115～1190 行（Vibe Coding 概念、風險、從需求出發） | 保留 Vibe Coding 定義、玩具與工具、醫院排班故事；新增「班級訊息散落各處」痛點、班刊比喻的名詞表（Markdown、轉換程式、Git、GitHub、GitHub Pages、GitHub Actions）、三個分頁與六個步驟總覽、公開網站的邊界 |
-| 動手做：一步一步蓋出班級官網（第 0～5 步） | 流程參考 `course/tsgh/content.md` 第 1166～1323 行（先讀懂、先問方案、親手驗收）與第 1512～1643 行（Git、GitHub Pages）；環境安裝的說法承接第 2 堂「Skill 第一次在 Codex 執行，可能遇到的問題」 | 步驟切小：0 規劃與環境檢測 → 1 生成網站 → 2 用 Markdown 編輯 → 3 加入 Git → 4 發布到 GitHub Pages（GitHub Actions 自動產生網頁）→ 5 更新聯絡簿、公告附檔案、課表圖片轉 Markdown。不做 GitHub 網頁拖拉上傳、Code 雲端、PR 與 merge |
-| 規格驅動開發 | 無（2026-11-10 新增） | 迷你規格的對應改成第 0 步的目標說明與每一步的驗收表 |
+| 班級官網：每天都要發的訊息，給它一個固定的家 | `course/tahoho/content.md` 第 1115～1190 行（Vibe Coding 概念、風險、從需求出發） | 保留 Vibe Coding 定義、玩具與工具、醫院排班故事；新增「班級訊息散落各處」痛點、班刊比喻的名詞表（Markdown、轉換程式、Git、GitHub、GitHub Pages、GitHub Actions）、三個分頁與五個步驟總覽、公開網站的邊界 |
+| 動手做：一步一步蓋出班級官網（第 1～5 步） | 流程參考 `course/tsgh/content.md` 第 1166～1323 行（先讀懂、先問方案、親手驗收）與第 1512～1643 行（Git、GitHub Pages）；環境安裝的說法承接第 2 堂「Skill 第一次在 Codex 執行，可能遇到的問題」 | 步驟切小（2026-11-23 拿掉第 0 步：先說具體需求、符合期待再一次加一樣東西，工具改成各步驟需要時才裝）：1 說出需求做出第一版 → 2 符合期待後把內容轉成 Markdown → 3 加入 Git → 4 發布到 GitHub Pages（GitHub Actions 自動產生網頁）→ 5 更新聯絡簿、公告附檔案、課表圖片轉 Markdown。不做 GitHub 網頁拖拉上傳、Code 雲端、PR 與 merge |
+| 規格驅動開發 | 無（2026-11-10 新增） | 迷你規格的對應改成第 1 步的需求表與每一步的驗收表 |
 | 課程總結 | `course/tahoho/content.md` 第 1337～1462 行 | 四堂回顧、summary 與 Q&A 改成桌面版整理檔案與班級官網 |
 
 ## 講師專訪內容
@@ -61,8 +61,9 @@
 | 更新 Skill | claude-desktop-skill-update.png | AI 列出要改的段落（資料來源、交付方式），確認後才更新 |
 | 寫通知 | claude-desktop-skill-notice.png | AI 說明選用的案例，資料夾裡多出新的 Word 檔 |
 | Code 分頁 | claude-code-open-folder.png | 環境「Local」、資料夾「class-website」與權限模式 |
-| 第 0 步 | claude-code-step0-plan.png、claude-code-step0-install.png | 環境檢查結果；安裝工具的核准提示（Mac、Windows 各一） |
+| 第 2 步（安裝工具） | claude-code-install-approve.png | 安裝工具的核准提示（Mac、Windows 各一） |
 | 第 1 步 | class-website-v1.png | 第一版官網首頁（手機與電腦寬度） |
+| 第 1 步（安裝 Skill） | claude-code-plugin-frontend-design.png | Code 分頁「外掛程式」搜尋到 frontend-design 與安裝按鈕 |
 | 第 2 步 | class-website-edit-md.png | 記事本改 Markdown 與重新整理後的聯絡簿對照 |
 | 第 3 步 | claude-code-first-save.png | 第一個存檔點「班級官網第一版」 |
 | 第 4 步 | github-login-device.png、github-actions-success.png、class-website-phone.png | 登入驗證碼畫面、Actions 綠色勾勾、手機打開網址 |
@@ -85,7 +86,8 @@ claude-desktop-permissions.png（授權視窗，2026-11-16 由 claude-cowork-per
 - **介面名稱**：桌面版選資料夾的入口、權限模式的名稱；Code 分頁的環境「Local」、「Open folder…」、權限模式「Accept edits」（2026-11-10 依 [Claude Code Desktop](https://code.claude.com/docs/en/desktop) 核對，授課前再看一次）。
 - **Skill 在桌面版資料夾的行為**：`admin-template` 的 SKILL.md 寫的是「用 Projects 工具查案例，不要去本機檔案系統找」，並用網頁版的方式交付檔案。講義改成先請 AI 更新 Skill（有選資料夾就從資料夾讀案例、成品存進資料夾，沒選才去專案找），再用一句話呼叫；請實測在桌面版能否用對話直接更新 Skill、更新後是否照做、Word 檔是否真的出現在資料夾；也確認網頁版建立的 Skill 在桌面版輸入「/」時看得到。
 - **前半段的隔離環境**：講義寫「前半段的對話有一套備好工具的隔離環境，Code 分頁的 Local 用的是你電腦上的工具」，請以當下版本確認這個差異仍然成立。
-- **環境安裝**：Mac、Windows 各跑一次第 0 步，確認 AI 安裝 Node.js、Git、GitHub CLI 的方式與核准畫面；Windows 的 Code 分頁（Local）是否要先裝 Git for Windows；學校電腦沒有安裝權限時的備案（講師示範，學員看畫面）。
+- **安裝 frontend-design（2026-11-23 新增）**：講義寫的操作路徑「左側欄『外掛程式』→ 搜尋 frontend-design → 安裝」是依側欄有「外掛程式」推定的，尚未在桌面版 Code 分頁實測；請確認實際的按鈕名稱與步驟、裝好後用一句話能否叫出這個 Skill，以及它優化後的風格是否適合國小班級（Skill 本身偏向大膽的視覺風格）。只確認過 Anthropic 官方外掛市集有 `frontend-design`（v1.1.1）。
+- **環境安裝**：Mac、Windows 各跑一次第 1～4 步，確認 AI 在各步驟安裝 Node.js（第 2 步）、Git（第 3 步）、GitHub CLI（第 4 步）的方式與核准畫面；第 1 步只給需求時，確認 AI 做出的第一版不用裝任何工具就能用瀏覽器打開；Windows 的 Code 分頁（Local）是否要先裝 Git for Windows；學校電腦沒有安裝權限時的備案（講師示範，學員看畫面）。
 - **GitHub 登入**：`gh auth login` 是互動式流程（瀏覽器輸入驗證碼），確認能在 Code 分頁內完成；卡住時的備案是請學員自己開終端機執行。
 - **GitHub Pages**：AI 能否用 GitHub CLI 把 Pages 來源設成 GitHub Actions；第一次發布大約多久；講義寫的「1～2 分鐘」是否符合。
 - **不公開信箱**：第 3 步請 AI 用 GitHub 的 noreply 信箱設定 Git，確認 AI 設定的格式正確、推送不會被擋。

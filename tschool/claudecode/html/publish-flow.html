@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>班刊的旅程：從你的電腦到家長的手機</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* 字級全部用 rem：嵌進講義時，腳本會把這裡的根字級對齊講義頁（A1～A5 的設定），
+     所以 1rem = 講義頁的 1rem；單獨開檔時用下面的 22px（講義預設的 A3）。 */
+  html { font-size: 22px; }
+  html, body { margin: 0; padding: 0; }
+
+  /* 變數掛在 .pj 而不是 :root：講義列印模式會把這份 HTML 攤平進頁面，:root 與 body 的規則到時對不到 */
+  .pj {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --cap-bg: #f5f5f7;
+    --text: #1a1a2e;
+    --text-2: #4f5060;
+    --muted: #7a7b8a;
+    --border: #d9d9df;
+    --shadow: 0 8px 24px rgba(0,0,0,0.12);
+
+    --c-local: #c2410c;  --c-local-bg: #fef5ed;  --c-local-line: #f0c9a8;
+    --c-cloud: #2563eb;  --c-cloud-bg: #eef4ff;  --c-cloud-line: #bcd0fa;
+    --c-read:  #2f855a;  --c-read-bg:  #edf7f1;  --c-read-line:  #b0dcc4;
+  }
+  .pj.pj-dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --cap-bg: #1e2130;
+    --text: #e4e4e7;
+    --text-2: #b3b5c2;
+    --muted: #8b8d9a;
+    --border: #2d3148;
+    --shadow: 0 8px 28px rgba(0,0,0,0.5);
+
+    --c-local: #f0a060;  --c-local-bg: #2a1b10;  --c-local-line: #5a3a1c;
+    --c-cloud: #7da2f7;  --c-cloud-bg: #171f3a;  --c-cloud-line: #2f3f73;
+    --c-read:  #6fcf97;  --c-read-bg:  #12281c;  --c-read-line:  #25563a;
+  }
+
+  .pj, .pj * { box-sizing: border-box; }
+
+  .pj {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    line-height: 1.55;
+    padding: 0.75rem 0.7rem 0.8rem;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  /* ===== 旁白列（平常是標題，走流程時說明目前這一站） ===== */
+  .pj-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--cap-bg);
+    border-left: 5px solid var(--cap-color, var(--muted));
+    border-radius: 10px;
+    padding: 0.45rem 0.7rem;
+    margin-bottom: 0.65rem;
+    transition: border-color 0.2s;
+  }
+  .pj-cap-body { flex: 1; min-width: 0; }
+  .pj-cap-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--cap-color, var(--muted));
+    letter-spacing: 0.4px;
+  }
+  .pj-cap-text { font-size: 0.95rem; font-weight: 700; }
+  .pj-play {
+    flex-shrink: 0;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--c-local);
+    border: none;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .pj-dark .pj-play { color: #1a1206; }
+  .pj-play:hover { transform: translateY(-1px); opacity: 0.9; }
+
+  /* ===== 區域（你的電腦／網路上） ===== */
+  .pj-zone {
+    background: var(--zone-bg);
+    border: 1.5px dashed var(--zone-line);
+    border-radius: 14px;
+    padding: 0.5rem 0.6rem 0.7rem;
+  }
+  .pj-local { --zone: var(--c-local); --zone-bg: var(--c-local-bg); --zone-line: var(--c-local-line); }
+  .pj-cloud { --zone: var(--c-cloud); --zone-bg: var(--c-cloud-bg); --zone-line: var(--c-cloud-line); }
+  .pj-read  { --zone: var(--c-read);  --zone-bg: var(--c-read-bg);  --zone-line: var(--c-read-line); }
+
+  .pj-zone-label {
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: var(--zone);
+    margin-bottom: 0.55rem;
+  }
+
+  .pj-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+    gap: 0.3rem;
+  }
+  .pj-arrow {
+    align-self: center;
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--zone);
+  }
+
+  /* ===== 每一站 ===== */
+  .pj-st {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 0.6rem 0.6rem 0.55rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, opacity 0.25s;
+  }
+  .pj-st:hover { border-color: var(--zone); transform: translateY(-2px); }
+
+  .pj-num {
+    position: absolute;
+    top: -0.5rem;
+    left: -0.4rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background: var(--zone);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pj-dark .pj-num { color: #14161f; }
+
+  .pj-st-head { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.3rem; }
+  .pj-ico {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 10px;
+    background: var(--zone-bg);
+    font-size: 1.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pj-tech {
+    font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--zone);
+  }
+  .pj-name { display: block; font-size: 1.02rem; font-weight: 900; line-height: 1.35; text-wrap: balance; }
+  .pj-desc { display: block; font-size: 0.8rem; color: var(--text-2); line-height: 1.5; margin-top: 0.15rem; }
+  /* 一個詞組一個 inline-block：換行只發生在詞組之間，不會剩一個字掉到下一行 */
+  .pj-ph { display: inline-block; }
+
+  /* ===== 區域之間的銜接 ===== */
+  .pj-bridge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-2);
+  }
+  .pj-bridge b { font-size: 1.1rem; line-height: 1; color: var(--muted); }
+
+  /* ===== 終點：家長的手機 ===== */
+  .pj-dest { flex-direction: row; align-items: center; gap: 0.55rem; border-style: dashed; border-color: var(--zone-line); background: var(--zone-bg); }
+  .pj-dest .pj-ico { background: var(--card); }
+  .pj-dest .pj-desc { margin-top: 0; }
+
+  /* ===== 走流程時：目前這一站亮起，還沒到的變淡 ===== */
+  .pj-on .pj-st { opacity: 0.4; }
+  .pj-on .pj-st.pj-done { opacity: 0.85; }
+  .pj-on .pj-st.pj-active {
+    opacity: 1;
+    border-style: solid;
+    border-color: var(--zone);
+    box-shadow: var(--shadow);
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 620px) {
+    .pj { padding: 0.6rem 0.5rem; }
+    .pj-row { grid-template-columns: 1fr; }
+    .pj-arrow { justify-self: center; transform: rotate(90deg); }
+    .pj-cap { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  }
+
+  /* 印成 PDF 時不會動，旁白列收起來，一頁 1280×720 才放得下整張圖 */
+  @media print {
+    .pj-cap { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="pj" id="pj">
+
+  <div class="pj-cap" id="pj-cap">
+    <div class="pj-cap-body">
+      <div class="pj-cap-label" id="pj-cap-label">班刊的旅程（每一站都可以點）</div>
+      <div class="pj-cap-text" id="pj-cap-text">一則聯絡簿，怎麼從你的電腦走到家長的手機？</div>
+    </div>
+    <button class="pj-play" id="pj-play" type="button">▶ 跑一次流程</button>
+  </div>
+
+  <!-- ===== 你的電腦 ===== -->
+  <div class="pj-zone pj-local">
+    <div class="pj-zone-label">💻 在你的電腦上</div>
+    <div class="pj-row">
+      <button class="pj-st" type="button" data-say="打開 contact-book.md，加上今天的聯絡簿，存檔。">
+        <span class="pj-num">1</span>
+        <span class="pj-st-head"><span class="pj-ico">📝</span><span class="pj-tech">Markdown</span></span>
+        <span class="pj-name">原稿</span>
+        <span class="pj-desc"><span class="pj-ph">用純文字寫內容，</span><span class="pj-ph">像打字一樣</span></span>
+      </button>
+      <span class="pj-arrow" aria-hidden="true">→</span>
+      <button class="pj-st" type="button" data-say="跟 Claude 說「重新產生網頁」，先在自己的電腦預覽。">
+        <span class="pj-num">2</span>
+        <span class="pj-st-head"><span class="pj-ico">🖨️</span><span class="pj-tech">轉換程式</span></span>
+        <span class="pj-name">印刷廠</span>
+        <span class="pj-desc"><span class="pj-ph">把原稿套上版面，</span><span class="pj-ph">變成網頁</span></span>
+      </button>
+      <span class="pj-arrow" aria-hidden="true">→</span>
+      <button class="pj-st" type="button" data-say="預覽沒問題，跟 Claude 說「幫我存檔」，記下這一版。">
+        <span class="pj-num">3</span>
+        <span class="pj-st-head"><span class="pj-ico">💾</span><span class="pj-tech">Git</span></span>
+        <span class="pj-name">存檔點</span>
+        <span class="pj-desc"><span class="pj-ph">記下每一版，</span><span class="pj-ph">改壞了可以回到上一版</span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="pj-bridge"><b aria-hidden="true">↓</b><span><span class="pj-ph">推上 GitHub：</span><span class="pj-ph">把存檔點放一份到網路上</span></span></div>
+
+  <!-- ===== 網路上 ===== -->
+  <div class="pj-zone pj-cloud">
+    <div class="pj-zone-label">☁️ 在網路上（GitHub）</div>
+    <div class="pj-row">
+      <button class="pj-st" type="button" data-say="跟 Claude 說「推上 GitHub」，這一版放一份到網路上。">
+        <span class="pj-num">4</span>
+        <span class="pj-st-head"><span class="pj-ico">🗄️</span><span class="pj-tech">GitHub</span></span>
+        <span class="pj-name">雲端的檔案櫃</span>
+        <span class="pj-desc">保管你推上來的每一版</span>
+      </button>
+      <span class="pj-arrow" aria-hidden="true">→</span>
+      <button class="pj-st" type="button" data-say="小幫手發現新的原稿，自動送印，你等 1～2 分鐘就好。">
+        <span class="pj-num">5</span>
+        <span class="pj-st-head"><span class="pj-ico">🤖</span><span class="pj-tech">GitHub Actions</span></span>
+        <span class="pj-name">自動送印的小幫手</span>
+        <span class="pj-desc"><span class="pj-ph">一收到新的原稿，</span><span class="pj-ph">自動送印、貼上公布欄</span></span>
+      </button>
+      <span class="pj-arrow" aria-hidden="true">→</span>
+      <button class="pj-st" type="button" data-say="新的網頁貼上公布欄，網址和原本一樣。">
+        <span class="pj-num">6</span>
+        <span class="pj-st-head"><span class="pj-ico">📌</span><span class="pj-tech">GitHub Pages</span></span>
+        <span class="pj-name">公布欄</span>
+        <span class="pj-desc">把網頁公開成一個網址</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="pj-bridge"><b aria-hidden="true">↓</b><span>一個固定的網址</span></div>
+
+  <!-- ===== 終點 ===== -->
+  <div class="pj-read">
+    <button class="pj-st pj-dest" type="button" data-say="學生與家長重新整理網址，就看到今天的聯絡簿。">
+      <span class="pj-ico">📱</span>
+      <span>
+        <span class="pj-name">學生與家長的手機</span>
+        <span class="pj-desc"><span class="pj-ph">打開網址，</span><span class="pj-ph">看到的就是最新的版本</span></span>
+      </span>
+    </button>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('pj');
+  var btn = document.getElementById('pj-play');
+  var capBox = document.getElementById('pj-cap');
+  var capLabel = document.getElementById('pj-cap-label');
+  var capText = document.getElementById('pj-cap-text');
+  var stops = Array.prototype.slice.call(root.querySelectorAll('.pj-st'));
+  var idle = { label: capLabel.textContent, text: capText.textContent };
+  var current = -1;
+  var timer = null;
+
+  // i = -1 回到初始狀態
+  function show(i) {
+    current = i;
+    root.classList.toggle('pj-on', i >= 0);
+    stops.forEach(function (el, k) {
+      el.classList.toggle('pj-active', k === i);
+      el.classList.toggle('pj-done', i >= 0 && k < i);
+    });
+    if (i < 0) {
+      capLabel.textContent = idle.label;
+      capText.textContent = idle.text;
+      capBox.style.removeProperty('--cap-color');
+      return;
+    }
+    var el = stops[i];
+    var name = el.querySelector('.pj-name').textContent;
+    var tech = el.querySelector('.pj-tech');
+    capLabel.textContent = tech ? '第 ' + (i + 1) + ' 站｜' + name + '（' + tech.textContent + '）' : '終點｜' + name;
+    capText.textContent = el.dataset.say;
+    capBox.style.setProperty('--cap-color', getComputedStyle(el).getPropertyValue('--zone'));
+  }
+
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+    btn.textContent = '▶ 跑一次流程';
+  }
+
+  btn.addEventListener('click', function () {
+    if (timer) { stop(); show(-1); return; }
+    var i = 0;
+    show(0);
+    btn.textContent = '■ 停止';
+    timer = setInterval(function () {
+      i++;
+      if (i >= stops.length) { stop(); return; }
+      show(i);
+    }, 2800);
+  });
+
+  stops.forEach(function (el, k) {
+    el.addEventListener('click', function () {
+      stop();
+      show(k === current ? -1 : k);
+    });
+  });
+
+  // ===== 跟講義頁同步：深淺色（沒有 data-theme = 深色，'light' = 淺色）與字級（A1～A5） =====
+  function syncWithPage() {
+    var dark;
+    try {
+      if (window.parent === window) throw new Error('standalone');
+      var pageRoot = window.parent.document.documentElement;
+      dark = pageRoot.getAttribute('data-theme') !== 'light';
+      document.documentElement.style.fontSize = window.parent.getComputedStyle(pageRoot).fontSize;
+    } catch (e) {
+      dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    root.classList.toggle('pj-dark', dark);
+    if (current >= 0) show(current);
+  }
+  syncWithPage();
+  try {
+    new MutationObserver(syncWithPage).observe(
+      window.parent.document.documentElement,
+      { attributes: true, attributeFilter: ['data-theme', 'style'] }
+    );
+  } catch (e) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncWithPage);
+  }
+})();
+</script>
+</body>
+</html>

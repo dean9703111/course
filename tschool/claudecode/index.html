@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="generator" content="course-page-generator 957203a-dirty">
+  <meta name="generator" content="course-page-generator 2ee1387">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Claude Code｜讓 AI 動手整理檔案，做出班級官網</title>
@@ -6905,7 +6905,7 @@
         <li><a href="#sub-vibe-coding">Vibe Coding 是什麼？</a></li>
         <li><a href="#sub-section-7">從自己的需求出發</a></li>
         <li><a href="#sub-section-8">為什麼第一個作品選班級官網</a></li>
-        <li><a href="#sub-section-9">先認識幾個名詞：你寫原稿，其他交給工具</a></li>
+        <li><a href="#sub-section-9">先認識幾個名詞</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-3">
@@ -6914,13 +6914,12 @@
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-code-ai">換到 Code 分頁：這次 AI 用的是你電腦上的工具</a></li>
-        <li><a href="#sub-0-ai">第 0 步：把目標講完整，先讓 AI 檢查環境</a></li>
-        <li><a href="#sub-1">第 1 步：生成網站，先在自己的電腦看到成果</a></li>
-        <li><a href="#sub-2-markdown">第 2 步：學會用 Markdown 更新內容</a></li>
+        <li><a href="#sub-1">第 1 步：說出需求，先在自己的電腦看到成果</a></li>
+        <li><a href="#sub-2-markdown">第 2 步：符合期待後，把內容轉成 Markdown</a></li>
         <li><a href="#sub-3-git">第 3 步：加入 Git，替網站留下存檔點</a></li>
         <li><a href="#sub-4-github-pages">第 4 步：發布到 GitHub Pages，官網有了網址</a></li>
         <li><a href="#sub-5">第 5 步：更新內容，線上跟著更新</a></li>
-        <li><a href="#sub-section-17">案例回顧</a></li>
+        <li><a href="#sub-section-16">案例回顧</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-4">
@@ -6935,9 +6934,9 @@
         <span class="toc-num">📌</span> 課程總結
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-18">技術更新好快，我好焦慮</a></li>
+        <li><a href="#sub-section-17">技術更新好快，我好焦慮</a></li>
         <li><a href="#sub-work-smart-dont-work-hard">Work Smart, Don't Work Hard</a></li>
-        <li><a href="#sub-section-20">回顧：這個系列走過的路</a></li>
+        <li><a href="#sub-section-19">回顧：這個系列走過的路</a></li>
       </ul>
     </li>
 
@@ -7527,12 +7526,8 @@
   <div class="reveal">
     
     <span class="section-label" id="section-2" data-seg="0"><span class="num">2</span> 班級官網</span>
-    <h2>每天都要發的訊息，給它一個固定的家</h2>
+    <h2>可以持續擴充的家園</h2>
     
-  </div>
-
-  <div class="reveal">
-    <p class="loose-text"><!-- 講師備註：本章約 12 分鐘：Vibe Coding 概念與風險 3、排班故事與為什麼選官網 4、Markdown 與六個步驟 5。時間不夠時先縮短概念與風險，保留「內容與版面分開」的比喻與六個步驟總覽。 --></p>
   </div>
 
   <div class="reveal">
@@ -7566,7 +7561,7 @@
         <div class="step-num">1</div>
         <div class="step-content">
           <div class="step-title">一句話就能生成「看起來可以用」的網站</div>
-          <div class="step-desc">這樣的東西，你真的敢<code>直接把網址傳給家長</code>嗎？</div>
+          <div class="step-desc">但未來想調整文字、優化細節時該怎麼辦？</div>
         </div>
       </div>
       <div class="flow-step">
@@ -7580,7 +7575,7 @@
         <div class="step-num">3</div>
         <div class="step-content">
           <div class="step-title">等一下做的<code>班級官網</code></div>
-          <div class="step-desc">重點並不是做出來好開心，而是<code>審視 AI 犯了哪些錯誤</code>（ex: 公告日期抄錯、課表填錯一格，家長會照著錯的資訊準備）</div>
+          <div class="step-desc">重點並不是做出來好開心，而是<code>自己對他有多少掌控力</code></div>
         </div>
       </div>
     </div>
@@ -7625,7 +7620,7 @@
     </div>
         <div class="insight">
       <div class="insight-title">為什麼班級的東西，由老師自己做最合適？</div>
-      <p>過去要會寫程式才能做工具，<code>做工具的人往往不是真正的使用者</code>；就像一位主管在課前訪談跟我說的：「<strong>開發的人不用系統，用系統的人不會開發。</strong>」<br>現在懂現場的人，也能用 Vibe Coding 做出幫助自己的成品，並<code>根據使用細節持續優化</code>。<br>家長最常問什麼、哪些資訊不能公開、聯絡簿要怎麼寫孩子才看得懂，最清楚的就是老師。</p>
+      <p>過去要會寫程式才能做工具，<code>做工具的人往往不是真正的使用者</code>；就像一位主管在課前訪談跟我說的：「<strong>開發的人不用系統，用系統的人不會開發。</strong>」<br>現在懂現場的人，也能用 Vibe Coding 做出幫助自己的成品，並<code>根據使用細節持續優化</code>。</p>
     </div>
       </div>
     </div>
@@ -7640,14 +7635,14 @@
       <div class="group-header"><span class="icon">😓</span> 班級的訊息，散落在各個地方</div>
       <div class="group-body">
         <ul>
-  <li>聯絡簿抄在黑板，孩子漏抄一項，家長晚上就來訊息問</li>
-  <li>公告發在群組，<code>兩天後就被洗到找不到</code></li>
-  <li>課表是開學時傳的一張照片，要用的時候得往上滑很久</li>
-  <li>報名表弄丟了，只能再跟老師要一張</li>
+  <li>聯絡簿抄在黑板，孩子漏抄家長<code>晚上就來訊息問</code></li>
+  <li>家長常見問題（ex: 請假怎麼請、餐費何時繳），<code>每位家長常問的問題</code></li>
+  <li>班級課表發過紙本，要用的時候<code>找不到在哪裡</code></li>
+  <li>最新公告發在群組，<code>兩天後就被洗到找不到</code></li>
 </ul>
         <div class="insight">
-      <div class="insight-title">同樣的問題，為什麼每個月都要回答一次？</div>
-      <p>「明天要帶什麼？」「報名表哪裡下載？」這些問題的答案其實都有，只是<code>沒有一個固定找得到的地方</code>。<br>班級官網就是這個地方：<code>一個網址</code>，家長隨時查得到最新的版本。</p>
+      <div class="insight-title">嘗試把資訊彙整在一個固定的地方</div>
+      <p>「明天要帶什麼？」「報名表哪裡下載？」這些問題的答案都有，只是<code>沒有一個固定找得到的地方</code>。<br>我們可以讓班級官網成為<code>資訊匯聚的地方</code>。</p>
     </div>
       </div>
     </div>
@@ -7655,61 +7650,38 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧰</span> 班級裡還有這些，都可以自己做</div>
+      <div class="group-header"><span class="icon">💡</span> 站在第一線的你，一定有更多需求</div>
       <div class="group-body">
-        <div class="table-wrap">
-      <table class="content-table">
-        <colgroup>
-          <col style="width:130px">
-          <col>
-          <col>
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="align-left col-w">成品</th>
-            <th class="align-left">用在哪裡</th>
-            <th class="align-left">只有你知道的隱性規則（ex）</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left col-w"><strong>🌐 班級官網</strong></td>
-            <td class="align-left">公告、課表、聯絡簿的固定入口</td>
-            <td class="align-left">哪些資訊不能公開、聯絡簿怎麼寫孩子才看得懂</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>🎲 抽籤與分組</strong></td>
-            <td class="align-left">點人回答、小組討論</td>
-            <td class="align-left">剛被抽過的先跳過、哪些學生不適合同組</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>🙋 課堂搶答</strong></td>
-            <td class="align-left">單元複習、親子活動</td>
-            <td class="align-left">錯最多的題目放後面、只公布小組分數</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>🪑 座位表</strong></td>
-            <td class="align-left">排座位、換座位</td>
-            <td class="align-left">視力、身高、需要坐在老師附近的學生</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>🧹 輪值表</strong></td>
-            <td class="align-left">值日生、打掃區域</td>
-            <td class="align-left">每個人輪到的次數要平均</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>🏆 班級集點</strong></td>
-            <td class="align-left">小組加分、全班目標</td>
-            <td class="align-left">加減分要留紀錄，避免爭議</td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">上面四個是我想得到的</div>
+          <div class="step-desc">每天在現場的你，一定知道還有<code>很多可以做的事情</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">別拿用不到的主題練習</div>
+          <div class="step-desc">用不到、或已經有現成工具的東西（ex: 記帳軟體、番茄鐘）別再重做了，<code>練習幫助有限</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">從班上真的用得到的開始</div>
+          <div class="step-desc">你才<code>分辨得出對錯</code>，遇到錯誤也<code>有動力解決</code></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">班級官網只是一個起點</div>
+          <div class="step-desc">未來你想到的其他需求都可以<code>一個一個加進去</code></div>
+        </div>
+      </div>
     </div>
-        <ul class="loose-list">
-      <li>別再拿「記帳軟體、番茄鐘」當練習題，<code>缺少挫折的練習幫助有限</code>；從班上真的用得到的開始，你才<code>分辨得出對錯</code>，遇到錯誤也<code>有動力解決</code></li>
-      <li>今天做<code>班級官網</code>，因為它每天都會用到，而且做完就有一個網址可以帶回去</li>
-      <li>官網做起來之後，上面這些小工具都可以<code>一個一個加進去</code></li>
-    </ul>
       </div>
     </div>
   </div>
@@ -7732,7 +7704,7 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>先認識幾個名詞：你寫原稿，其他交給工具</div>
+    <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>先認識幾個名詞</div>
   </div>
 
   <div class="reveal">
@@ -7777,7 +7749,7 @@
           <tr>
             <td class="align-left col-w"><strong>GitHub Pages</strong></td>
             <td class="align-left">公布欄</td>
-            <td class="align-left">把網頁公開成一個網址，家長用手機就能看</td>
+            <td class="align-left">把網頁公開成一個網址，學生與家長用手機就能看</td>
           </tr>
           <tr>
             <td class="align-left col-w"><strong>GitHub Actions</strong></td>
@@ -7787,6 +7759,404 @@
         </tbody>
       </table>
     </div>
+        <iframe class="raw-html-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-Hant&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+<title>班刊的旅程：從你的電腦到家長的手機</title>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  /* 字級全部用 rem：嵌進講義時，腳本會把這裡的根字級對齊講義頁（A1～A5 的設定），
+     所以 1rem = 講義頁的 1rem；單獨開檔時用下面的 22px（講義預設的 A3）。 */
+  html { font-size: 22px; }
+  html, body { margin: 0; padding: 0; }
+
+  /* 變數掛在 .pj 而不是 :root：講義列印模式會把這份 HTML 攤平進頁面，:root 與 body 的規則到時對不到 */
+  .pj {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --cap-bg: #f5f5f7;
+    --text: #1a1a2e;
+    --text-2: #4f5060;
+    --muted: #7a7b8a;
+    --border: #d9d9df;
+    --shadow: 0 8px 24px rgba(0,0,0,0.12);
+
+    --c-local: #c2410c;  --c-local-bg: #fef5ed;  --c-local-line: #f0c9a8;
+    --c-cloud: #2563eb;  --c-cloud-bg: #eef4ff;  --c-cloud-line: #bcd0fa;
+    --c-read:  #2f855a;  --c-read-bg:  #edf7f1;  --c-read-line:  #b0dcc4;
+  }
+  .pj.pj-dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --cap-bg: #1e2130;
+    --text: #e4e4e7;
+    --text-2: #b3b5c2;
+    --muted: #8b8d9a;
+    --border: #2d3148;
+    --shadow: 0 8px 28px rgba(0,0,0,0.5);
+
+    --c-local: #f0a060;  --c-local-bg: #2a1b10;  --c-local-line: #5a3a1c;
+    --c-cloud: #7da2f7;  --c-cloud-bg: #171f3a;  --c-cloud-line: #2f3f73;
+    --c-read:  #6fcf97;  --c-read-bg:  #12281c;  --c-read-line:  #25563a;
+  }
+
+  .pj, .pj * { box-sizing: border-box; }
+
+  .pj {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    line-height: 1.55;
+    padding: 0.75rem 0.7rem 0.8rem;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  /* ===== 旁白列（平常是標題，走流程時說明目前這一站） ===== */
+  .pj-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--cap-bg);
+    border-left: 5px solid var(--cap-color, var(--muted));
+    border-radius: 10px;
+    padding: 0.45rem 0.7rem;
+    margin-bottom: 0.65rem;
+    transition: border-color 0.2s;
+  }
+  .pj-cap-body { flex: 1; min-width: 0; }
+  .pj-cap-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--cap-color, var(--muted));
+    letter-spacing: 0.4px;
+  }
+  .pj-cap-text { font-size: 0.95rem; font-weight: 700; }
+  .pj-play {
+    flex-shrink: 0;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--c-local);
+    border: none;
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .pj-dark .pj-play { color: #1a1206; }
+  .pj-play:hover { transform: translateY(-1px); opacity: 0.9; }
+
+  /* ===== 區域（你的電腦／網路上） ===== */
+  .pj-zone {
+    background: var(--zone-bg);
+    border: 1.5px dashed var(--zone-line);
+    border-radius: 14px;
+    padding: 0.5rem 0.6rem 0.7rem;
+  }
+  .pj-local { --zone: var(--c-local); --zone-bg: var(--c-local-bg); --zone-line: var(--c-local-line); }
+  .pj-cloud { --zone: var(--c-cloud); --zone-bg: var(--c-cloud-bg); --zone-line: var(--c-cloud-line); }
+  .pj-read  { --zone: var(--c-read);  --zone-bg: var(--c-read-bg);  --zone-line: var(--c-read-line); }
+
+  .pj-zone-label {
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: var(--zone);
+    margin-bottom: 0.55rem;
+  }
+
+  .pj-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: stretch;
+    gap: 0.3rem;
+  }
+  .pj-arrow {
+    align-self: center;
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--zone);
+  }
+
+  /* ===== 每一站 ===== */
+  .pj-st {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 0.6rem 0.6rem 0.55rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, opacity 0.25s;
+  }
+  .pj-st:hover { border-color: var(--zone); transform: translateY(-2px); }
+
+  .pj-num {
+    position: absolute;
+    top: -0.5rem;
+    left: -0.4rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background: var(--zone);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pj-dark .pj-num { color: #14161f; }
+
+  .pj-st-head { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.3rem; }
+  .pj-ico {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 10px;
+    background: var(--zone-bg);
+    font-size: 1.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pj-tech {
+    font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--zone);
+  }
+  .pj-name { display: block; font-size: 1.02rem; font-weight: 900; line-height: 1.35; text-wrap: balance; }
+  .pj-desc { display: block; font-size: 0.8rem; color: var(--text-2); line-height: 1.5; margin-top: 0.15rem; }
+  /* 一個詞組一個 inline-block：換行只發生在詞組之間，不會剩一個字掉到下一行 */
+  .pj-ph { display: inline-block; }
+
+  /* ===== 區域之間的銜接 ===== */
+  .pj-bridge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-2);
+  }
+  .pj-bridge b { font-size: 1.1rem; line-height: 1; color: var(--muted); }
+
+  /* ===== 終點：家長的手機 ===== */
+  .pj-dest { flex-direction: row; align-items: center; gap: 0.55rem; border-style: dashed; border-color: var(--zone-line); background: var(--zone-bg); }
+  .pj-dest .pj-ico { background: var(--card); }
+  .pj-dest .pj-desc { margin-top: 0; }
+
+  /* ===== 走流程時：目前這一站亮起，還沒到的變淡 ===== */
+  .pj-on .pj-st { opacity: 0.4; }
+  .pj-on .pj-st.pj-done { opacity: 0.85; }
+  .pj-on .pj-st.pj-active {
+    opacity: 1;
+    border-style: solid;
+    border-color: var(--zone);
+    box-shadow: var(--shadow);
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 620px) {
+    .pj { padding: 0.6rem 0.5rem; }
+    .pj-row { grid-template-columns: 1fr; }
+    .pj-arrow { justify-self: center; transform: rotate(90deg); }
+    .pj-cap { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  }
+
+  /* 印成 PDF 時不會動，旁白列收起來，一頁 1280×720 才放得下整張圖 */
+  @media print {
+    .pj-cap { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class=&quot;pj&quot; id=&quot;pj&quot;>
+
+  <div class=&quot;pj-cap&quot; id=&quot;pj-cap&quot;>
+    <div class=&quot;pj-cap-body&quot;>
+      <div class=&quot;pj-cap-label&quot; id=&quot;pj-cap-label&quot;>班刊的旅程（每一站都可以點）</div>
+      <div class=&quot;pj-cap-text&quot; id=&quot;pj-cap-text&quot;>一則聯絡簿，怎麼從你的電腦走到家長的手機？</div>
+    </div>
+    <button class=&quot;pj-play&quot; id=&quot;pj-play&quot; type=&quot;button&quot;>▶ 跑一次流程</button>
+  </div>
+
+  <!-- ===== 你的電腦 ===== -->
+  <div class=&quot;pj-zone pj-local&quot;>
+    <div class=&quot;pj-zone-label&quot;>💻 在你的電腦上</div>
+    <div class=&quot;pj-row&quot;>
+      <button class=&quot;pj-st&quot; type=&quot;button&quot; data-say=&quot;打開 contact-book.md，加上今天的聯絡簿，存檔。&quot;>
+        <span class=&quot;pj-num&quot;>1</span>
+        <span class=&quot;pj-st-head&quot;><span class=&quot;pj-ico&quot;>📝</span><span class=&quot;pj-tech&quot;>Markdown</span></span>
+        <span class=&quot;pj-name&quot;>原稿</span>
+        <span class=&quot;pj-desc&quot;><span class=&quot;pj-ph&quot;>用純文字寫內容，</span><span class=&quot;pj-ph&quot;>像打字一樣</span></span>
+      </button>
+      <span class=&quot;pj-arrow&quot; aria-hidden=&quot;true&quot;>→</span>
+      <button class=&quot;pj-st&quot; type=&quot;button&quot; data-say=&quot;跟 Claude 說「重新產生網頁」，先在自己的電腦預覽。&quot;>
+        <span class=&quot;pj-num&quot;>2</span>
+        <span class=&quot;pj-st-head&quot;><span class=&quot;pj-ico&quot;>🖨️</span><span class=&quot;pj-tech&quot;>轉換程式</span></span>
+        <span class=&quot;pj-name&quot;>印刷廠</span>
+        <span class=&quot;pj-desc&quot;><span class=&quot;pj-ph&quot;>把原稿套上版面，</span><span class=&quot;pj-ph&quot;>變成網頁</span></span>
+      </button>
+      <span class=&quot;pj-arrow&quot; aria-hidden=&quot;true&quot;>→</span>
+      <button class=&quot;pj-st&quot; type=&quot;button&quot; data-say=&quot;預覽沒問題，跟 Claude 說「幫我存檔」，記下這一版。&quot;>
+        <span class=&quot;pj-num&quot;>3</span>
+        <span class=&quot;pj-st-head&quot;><span class=&quot;pj-ico&quot;>💾</span><span class=&quot;pj-tech&quot;>Git</span></span>
+        <span class=&quot;pj-name&quot;>存檔點</span>
+        <span class=&quot;pj-desc&quot;><span class=&quot;pj-ph&quot;>記下每一版，</span><span class=&quot;pj-ph&quot;>改壞了可以回到上一版</span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class=&quot;pj-bridge&quot;><b aria-hidden=&quot;true&quot;>↓</b><span><span class=&quot;pj-ph&quot;>推上 GitHub：</span><span class=&quot;pj-ph&quot;>把存檔點放一份到網路上</span></span></div>
+
+  <!-- ===== 網路上 ===== -->
+  <div class=&quot;pj-zone pj-cloud&quot;>
+    <div class=&quot;pj-zone-label&quot;>☁️ 在網路上（GitHub）</div>
+    <div class=&quot;pj-row&quot;>
+      <button class=&quot;pj-st&quot; type=&quot;button&quot; data-say=&quot;跟 Claude 說「推上 GitHub」，這一版放一份到網路上。&quot;>
+        <span class=&quot;pj-num&quot;>4</span>
+        <span class=&quot;pj-st-head&quot;><span class=&quot;pj-ico&quot;>🗄️</span><span class=&quot;pj-tech&quot;>GitHub</span></span>
+        <span class=&quot;pj-name&quot;>雲端的檔案櫃</span>
+        <span class=&quot;pj-desc&quot;>保管你推上來的每一版</span>
+      </button>
+      <span class=&quot;pj-arrow&quot; aria-hidden=&quot;true&quot;>→</span>
+      <button class=&quot;pj-st&quot; type=&quot;button&quot; data-say=&quot;小幫手發現新的原稿，自動送印，你等 1～2 分鐘就好。&quot;>
+        <span class=&quot;pj-num&quot;>5</span>
+        <span class=&quot;pj-st-head&quot;><span class=&quot;pj-ico&quot;>🤖</span><span class=&quot;pj-tech&quot;>GitHub Actions</span></span>
+        <span class=&quot;pj-name&quot;>自動送印的小幫手</span>
+        <span class=&quot;pj-desc&quot;><span class=&quot;pj-ph&quot;>一收到新的原稿，</span><span class=&quot;pj-ph&quot;>自動送印、貼上公布欄</span></span>
+      </button>
+      <span class=&quot;pj-arrow&quot; aria-hidden=&quot;true&quot;>→</span>
+      <button class=&quot;pj-st&quot; type=&quot;button&quot; data-say=&quot;新的網頁貼上公布欄，網址和原本一樣。&quot;>
+        <span class=&quot;pj-num&quot;>6</span>
+        <span class=&quot;pj-st-head&quot;><span class=&quot;pj-ico&quot;>📌</span><span class=&quot;pj-tech&quot;>GitHub Pages</span></span>
+        <span class=&quot;pj-name&quot;>公布欄</span>
+        <span class=&quot;pj-desc&quot;>把網頁公開成一個網址</span>
+      </button>
+    </div>
+  </div>
+
+  <div class=&quot;pj-bridge&quot;><b aria-hidden=&quot;true&quot;>↓</b><span>一個固定的網址</span></div>
+
+  <!-- ===== 終點 ===== -->
+  <div class=&quot;pj-read&quot;>
+    <button class=&quot;pj-st pj-dest&quot; type=&quot;button&quot; data-say=&quot;學生與家長重新整理網址，就看到今天的聯絡簿。&quot;>
+      <span class=&quot;pj-ico&quot;>📱</span>
+      <span>
+        <span class=&quot;pj-name&quot;>學生與家長的手機</span>
+        <span class=&quot;pj-desc&quot;><span class=&quot;pj-ph&quot;>打開網址，</span><span class=&quot;pj-ph&quot;>看到的就是最新的版本</span></span>
+      </span>
+    </button>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('pj');
+  var btn = document.getElementById('pj-play');
+  var capBox = document.getElementById('pj-cap');
+  var capLabel = document.getElementById('pj-cap-label');
+  var capText = document.getElementById('pj-cap-text');
+  var stops = Array.prototype.slice.call(root.querySelectorAll('.pj-st'));
+  var idle = { label: capLabel.textContent, text: capText.textContent };
+  var current = -1;
+  var timer = null;
+
+  // i = -1 回到初始狀態
+  function show(i) {
+    current = i;
+    root.classList.toggle('pj-on', i >= 0);
+    stops.forEach(function (el, k) {
+      el.classList.toggle('pj-active', k === i);
+      el.classList.toggle('pj-done', i >= 0 &amp;&amp; k < i);
+    });
+    if (i < 0) {
+      capLabel.textContent = idle.label;
+      capText.textContent = idle.text;
+      capBox.style.removeProperty('--cap-color');
+      return;
+    }
+    var el = stops[i];
+    var name = el.querySelector('.pj-name').textContent;
+    var tech = el.querySelector('.pj-tech');
+    capLabel.textContent = tech ? '第 ' + (i + 1) + ' 站｜' + name + '（' + tech.textContent + '）' : '終點｜' + name;
+    capText.textContent = el.dataset.say;
+    capBox.style.setProperty('--cap-color', getComputedStyle(el).getPropertyValue('--zone'));
+  }
+
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+    btn.textContent = '▶ 跑一次流程';
+  }
+
+  btn.addEventListener('click', function () {
+    if (timer) { stop(); show(-1); return; }
+    var i = 0;
+    show(0);
+    btn.textContent = '■ 停止';
+    timer = setInterval(function () {
+      i++;
+      if (i >= stops.length) { stop(); return; }
+      show(i);
+    }, 2800);
+  });
+
+  stops.forEach(function (el, k) {
+    el.addEventListener('click', function () {
+      stop();
+      show(k === current ? -1 : k);
+    });
+  });
+
+  // ===== 跟講義頁同步：深淺色（沒有 data-theme = 深色，'light' = 淺色）與字級（A1～A5） =====
+  function syncWithPage() {
+    var dark;
+    try {
+      if (window.parent === window) throw new Error('standalone');
+      var pageRoot = window.parent.document.documentElement;
+      dark = pageRoot.getAttribute('data-theme') !== 'light';
+      document.documentElement.style.fontSize = window.parent.getComputedStyle(pageRoot).fontSize;
+    } catch (e) {
+      dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    root.classList.toggle('pj-dark', dark);
+    if (current >= 0) show(current);
+  }
+  syncWithPage();
+  try {
+    new MutationObserver(syncWithPage).observe(
+      window.parent.document.documentElement,
+      { attributes: true, attributeFilter: ['data-theme', 'style'] }
+    );
+  } catch (e) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncWithPage);
+  }
+})();
+</script>
+</body>
+</html>
+" frameborder="0" scrolling="no" style="width:100%;border:none;overflow:hidden" onload="(function(f){var sync=function(){try{var d=f.contentDocument;if(!d||!d.documentElement)return;var s=f.style,p=s.height;s.height='0px';var h=d.documentElement.scrollHeight;s.height=h?h+'px':p;}catch(e){}};sync();try{var d=f.contentDocument;if(d&&'ResizeObserver' in window){var ro=new ResizeObserver(sync);ro.observe(d.documentElement);if(d.body)ro.observe(d.body);}if(f.contentWindow){f.contentWindow.addEventListener('resize',sync);}window.addEventListener('resize',sync);if(d&&d.fonts&&d.fonts.ready)d.fonts.ready.then(sync);}catch(e){}})(this)"></iframe>
         <div class="insight">
       <div class="insight-title">為什麼內容要用 Markdown 寫，不直接請 AI 改網頁？</div>
       <p>網頁檔裡內容和版面混在一起，改一個字都可能弄壞版面。<br>把內容抽成 Markdown，<code>你只管寫字，版面交給程式</code>；每個分頁一份檔案，想改哪一頁就開哪一份。</p>
@@ -7797,7 +8167,7 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🗺️</span> 今天要蓋的網站：三個分頁，三份原稿</div>
+      <div class="group-header"><span class="icon">🗺️</span> 先從三個基礎分頁開始</div>
       <div class="group-body">
         <div class="table-wrap">
       <table class="content-table">
@@ -7833,46 +8203,39 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🪜</span> 六個步驟，每一步只做一件事</div>
+      <div class="group-header"><span class="icon">🪜</span> 一步只做一件事</div>
       <div class="group-body">
         <div class="flow">
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <div class="step-title">第 0 步：規劃與環境</div>
-          <div class="step-desc">把目標講完整，請 AI 說明要安裝、註冊什麼，並檢查你的電腦</div>
+          <div class="step-title">第 1 步：說出需求</div>
+          <div class="step-desc">先在自己的電腦看到三個分頁，檢查後再一項一項優化</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title">第 1 步：生成網站</div>
-          <div class="step-desc">先在自己的電腦看到三個分頁</div>
+          <div class="step-title">第 2 步：轉成 Markdown</div>
+          <div class="step-desc">符合期待後再把內容抽出來，親手改一次聯絡簿</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">第 2 步：用 Markdown 編輯</div>
-          <div class="step-desc">親手改一次聯絡簿，知道內容放在哪裡</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">4</div>
         <div class="step-content">
           <div class="step-title">第 3 步：加入 Git</div>
           <div class="step-desc">替網站留下第一個存檔點</div>
         </div>
       </div>
       <div class="flow-step">
-        <div class="step-num">5</div>
+        <div class="step-num">4</div>
         <div class="step-content">
           <div class="step-title">第 4 步：發布到 GitHub Pages</div>
           <div class="step-desc">網站有了網址，用手機打開</div>
         </div>
       </div>
       <div class="flow-step">
-        <div class="step-num">6</div>
+        <div class="step-num">5</div>
         <div class="step-content">
           <div class="step-title">第 5 步：更新內容</div>
           <div class="step-desc">改聯絡簿、公告附檔案、補上課表，線上跟著更新</div>
@@ -7883,7 +8246,7 @@
       <div class="warning-title">⚠️ 班級官網是公開的，只放可以公開的內容</div>
       <p>放上 GitHub Pages 的網站，<code>全世界都看得到</code>，不是只有你們班的家長。</p>
       <ul>
-        <li>不放<code>學生姓名、學生照片、座號對應的個人資料</code>；榮譽榜、活動相簿這類內容，今天先不做</li>
+        <li>考量到隱私，不建議放<code>學生姓名、學生照片、座號對應等個人資料</code></li>
         <li>聯絡方式只放<code>學校總機與分機</code>，不放私人手機</li>
         <li>正式使用前，先確認學校對班級網站的規範</li>
       </ul>
@@ -7903,10 +8266,6 @@
   </div>
 
   <div class="reveal">
-    <p class="loose-text"><!-- 講師備註：本章約 65 分鐘：換到 Code 分頁 3、第 0 步 9、第 1 步 11、第 2 步 8、第 3 步 8、第 4 步 12、第 5 步 14。授課前確認見 sources.md：① Windows 的 Code 分頁（Local）是否需要先裝 Git for Windows；② AI 安裝 Node.js、Git、GitHub CLI 時的核准畫面，Mac、Windows 各跑一次；③ GitHub 登入（瀏覽器輸入驗證碼）能否在 Code 分頁內完成；④ AI 能否把 Pages 的來源設成 GitHub Actions；⑤ Code 分頁的權限模式名稱與位置。學員的生成結果會和講義略有不同，驗收以每一步的驗收表為準。 --></p>
-  </div>
-
-  <div class="reveal">
     <div class="insight">
       <div class="insight-title">為什麼要先做 MVP？</div>
       <p><code>先求有、再求好</code>。MVP（Minimum Viable Product）是<code>最小可行產品</code>：先做出「能用的最簡版本」，再一次加一樣東西。<br>今天的官網只有三個分頁，每完成一步都要<code>親手驗收</code>，確認沒問題才往下走。</p>
@@ -7923,34 +8282,39 @@
       <div class="group-body">
         <ul>
   <li>前半段寫通知，選好資料夾就能請 Claude 動手；要做網站，得<code>寫程式、執行程式、用 Git</code>，這些交給專門做這件事的 <code>Claude Code</code></li>
-  <li>Claude Code 就在 Claude 桌面版裡面，也就是「Code」分頁，<code>不用另外安裝</code>；需要付費方案</li>
-  <li>它直接在你選的資料夾裡工作，做出來的檔案都在你的電腦上</li>
+  <li>Claude Code 就在 Claude 桌面版裡面，也就是「Code」分頁，<code>不用另外安裝</code>；但需要付費方案</li>
 </ul>
         <a class="download-card" href="assets/班級官網素材.zip" download>
     <span class="download-card__icon" aria-hidden="true">⬇</span>
     <span class="download-card__body">
       <span class="download-card__label">下載「班級官網素材」</span>
-      <span class="download-card__desc">兩份活動通知（Word）、親子共讀夜報名表（PDF）與五年三班課表（圖片），全部為虛構資料</span>
+      <span class="download-card__desc">兩份活動通知（Word）、親子共讀夜報名表（PDF）與五年三班課表（圖片）</span>
     </span>
     <span class="download-card__ext">ZIP</span>
   </a>
         <ul class="loose-list">
-      <li>在桌面新建一個資料夾，取名 <code>class-website</code></li>
-      <li>把下載解壓縮後的 <code>班級官網素材</code> 整個資料夾，放進 <code>class-website</code> 裡</li>
+      <li>把下載解壓縮後的 <code>班級官網素材</code> 整個資料夾，重新命名為 <code>class-website</code></li>
     </ul>
-        <p class="loose-text"><strong>操作路徑</strong>: 左側欄上方「Code」→ 輸入框下方的環境選「Local」→ 旁邊的資料夾選「Open folder…」→ 選桌面的 <code>class-website</code></p>
+        <p class="loose-text"><strong>操作路徑</strong>: 左側欄上方「Code」→ 選擇環境 → 新增環境</p>
         <ul class="loose-list">
-      <li>權限模式選「Accept edits」：改檔案會直接進行；安裝工具這類指令<code>多半還是會先問你</code>，看清楚再允許</li>
+      <li>名稱 <code>class-website</code></li>
+      <li>資料夾選桌面的 <code>class-website</code></li>
     </ul>
-        <p class="loose-text"><!-- 待補圖片：claude-code-open-folder.png｜Claude 桌面版的 Code 分頁，以虛線紅框標出輸入框下方的環境「Local」、資料夾「class-website」與權限模式（用乾淨帳號拍攝，側欄不要出現其他專案） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-code-open-folder.png" alt="Code 分頁：環境選「Local」、資料夾選「class-website」" class="inline-image"> --></p>
+        <figure class="content-image">
+      <img src="assets/claude-code-new-environment.png" width="1908" height="1047" alt="在「本機」分頁填入名稱 class-website、選好資料夾，再按「建立環境」" loading="lazy">
+      <figcaption>在「本機」分頁填入名稱 class-website、選好資料夾，再按「建立環境」</figcaption>
+    </figure>
+        <figure class="content-image">
+      <img src="assets/claude-code-trust-workspace.png" width="1908" height="1047" alt="跳出「要信任此工作區嗎？」時，確認路徑是 class-website，再按「信任工作區」" loading="lazy">
+      <figcaption>跳出「要信任此工作區嗎？」時，確認路徑是 class-website，再按「信任工作區」</figcaption>
+    </figure>
       </div>
     </div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧰</span> 這裡沒有備好的工具箱，缺什麼就請 AI 裝</div>
+      <div class="group-header"><span class="icon">🧰</span> 缺什麼就請 AI 裝</div>
       <div class="group-body">
         <div class="flow">
       <div class="flow-step">
@@ -7964,14 +8328,14 @@
         <div class="step-num">2</div>
         <div class="step-content">
           <div class="step-title"><strong>Code 分頁的 Local</strong></div>
-          <div class="step-desc">用的是<code>你電腦上的工具</code>，第一次做網站時，多半會缺幾樣</div>
+          <div class="step-desc">用的是<code>你電腦上的工具</code>，第一次做網站時，多半會缺東缺西</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
           <div class="step-title"><strong>缺東西就請 AI 裝</strong></div>
-          <div class="step-desc">第 2 堂在 Codex 遇過一樣的事：過去安裝環境很折磨人，現在 AI 可以<code>先檢查、再幫你裝好</code></div>
+          <div class="step-desc">第 2 堂在 Codex 遇過一樣的事：過去安裝環境很折磨人，但現在 AI 可以<code>先檢查、再幫你裝好</code></div>
         </div>
       </div>
     </div>
@@ -7981,6 +8345,7 @@
         <li>安裝時會跳出核准提示；看不懂就先問 AI <code>這個工具是做什麼用的</code>，不要全部同意</li>
         <li>只安裝 AI 說明過用途、而且<code>這次任務需要</code>的工具</li>
         <li><code>按下同意，責任就是你的</code></li>
+        <li>學校的電腦<code>不能自行安裝軟體</code>時，AI 會裝不起來：今天先看講師示範，回家用自己的電腦照講義做一次</li>
       </ul>
     </div>
       </div>
@@ -7988,123 +8353,19 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-0-ai" data-seg="0"><span class="bar"></span>第 0 步：把目標講完整，先讓 AI 檢查環境</div>
+    <div class="sub-title" id="sub-1" data-seg="0"><span class="bar"></span>第 1 步：說出需求，先在自己的電腦看到成果</div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧭</span> 先說終點在哪裡，但不要它動手</div>
-      <div class="group-body">
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">說明做法與需要的工具，先不要動手</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">我想做五年三班的班級官網，給家長和學生用手機看，分頁有：首頁（班呼、導師的話、最新公告）、課表、每日聯絡簿。
-每個分頁是一份獨立的 Markdown，我改完 Markdown 就能轉成網頁。
-之後要用 Git 管理版本、放上 GitHub Pages，並用 GitHub Actions 在每次更新後自動產生網頁。
-我沒有程式背景。先不要動手：
-1. 用白話說明整個做法，以及需要安裝哪些工具、註冊哪些帳號，各自做什麼用
-2. 檢查這台電腦目前已經有哪些、還缺哪些</div>
-    </div>
-        <p class="loose-text"><!-- 待補圖片：claude-code-step0-plan.png｜Claude 說明做法並列出「已安裝／還缺」工具清單的畫面，以虛線紅框標出環境檢查結果 --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-code-step0-plan.png" alt="AI 先說明做法，並檢查這台電腦還缺哪些工具" class="inline-image"> --></p>
-        <p class="loose-text">AI 列出的清單通常會有這幾項（名稱可能略有不同）：</p>
-        <div class="table-wrap">
-      <table class="content-table">
-        <colgroup>
-          <col style="width:150px">
-          <col>
-          <col>
-        </colgroup>
-        <thead>
-          <tr>
-            <th class="align-left col-w">工具或帳號</th>
-            <th class="align-left">白話用途</th>
-            <th class="align-left">誰來處理</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="align-left col-w"><strong>Node.js</strong></td>
-            <td class="align-left">執行「把 Markdown 轉成網頁」的程式</td>
-            <td class="align-left">AI 安裝，你核准</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>Git</strong></td>
-            <td class="align-left">替資料夾留存檔點</td>
-            <td class="align-left">AI 安裝，你核准</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>GitHub CLI</strong></td>
-            <td class="align-left">讓 AI 能幫你登入 GitHub、建立專案</td>
-            <td class="align-left">AI 安裝，你核准</td>
-          </tr>
-          <tr>
-            <td class="align-left col-w"><strong>GitHub 帳號</strong></td>
-            <td class="align-left">放網站的地方</td>
-            <td class="align-left"><code>你自己註冊</code>，AI 不代辦</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-        <div class="insight">
-      <div class="insight-title">為什麼第 0 步就要講到 Git 和 GitHub？</div>
-      <p>AI 知道終點在哪裡，才會<code>一開始就選對做法</code>，也才能一次列出所有要準備的東西。<br>做到一半才說「我還要放上網路」，常常得整個重來。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🔧</span> 缺的工具一項一項裝，帳號自己註冊</div>
-      <div class="group-body">
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">缺的工具一項一項安裝</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">缺的工具一項一項幫我安裝，每裝一項前先說明它是做什麼用的，我同意再裝。
-全部裝完後再檢查一次，確認都能使用。</div>
-    </div>
-        <ul class="loose-list">
-      <li>到 <a href="https://github.com" target="_blank" rel="noopener">github.com</a> 註冊帳號，有 Email 就能辦，免費</li>
-      <li>帳號名稱會出現在官網的網址裡（<code>https://你的帳號.github.io/class-website/</code>），取一個<code>適合給家長看</code>的名稱</li>
-      <li>學校的電腦<code>不能自行安裝軟體</code>時，AI 會裝不起來：今天先看講師示範，回家用自己的電腦照講義做一次</li>
-    </ul>
-        <p class="loose-text"><!-- 待補圖片：claude-code-step0-install.png｜AI 安裝工具前跳出的核准提示，以虛線紅框標出要執行的指令與核准按鈕（Mac、Windows 各一張） --></p>
-        <p class="loose-text"><!-- <img src="assets/claude-code-step0-install.png" alt="安裝前會先跳出核准提示，看懂它要裝什麼再同意" class="inline-image"> --></p>
-        <div class="insight">
-      <div class="insight-title">為什麼不照著網路教學自己裝？</div>
-      <p>每台電腦的狀況不一樣，教學的版本也常常過期；AI 會<code>先檢查你的電腦，再決定怎麼裝</code>。<br>但核准的人是你：看不懂的指令，<code>先問清楚再同意</code>。</p>
-    </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div class="sub-title" id="sub-1" data-seg="0"><span class="bar"></span>第 1 步：生成網站，先在自己的電腦看到成果</div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">📋</span> 把這一版的範圍說具體</div>
+      <div class="group-header"><span class="icon">📋</span> 先說具體需求，做法交給 AI</div>
       <div class="group-body">
         <div class="table-wrap">
       <table class="content-table">
         <thead>
           <tr>
             <th class="align-left">項目</th>
-            <th class="align-left">這一版的範圍</th>
+            <th class="align-left">這一版的需求</th>
           </tr>
         </thead>
         <tbody>
@@ -8131,56 +8392,71 @@
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">建立三個分頁的班級官網</span>
+        <span class="label">說出需求，做出第一版</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">照剛剛的做法建立網站：
-- 三個分頁：首頁、課表、每日聯絡簿；課表先放「課表即將公布」
-- 每個分頁一份 Markdown，放在 content 資料夾，檔名固定為 index.md（首頁）、timetable.md（課表）、contact-book.md（每日聯絡簿）
-- 產生的網頁放在 site 資料夾；我要能直接雙擊 site/index.html 用瀏覽器打開，不需要另外啟動任何程式，分頁之間的連結用相對路徑
-- 首頁有班呼、導師的話、最新公告；最新公告從「班級官網素材」資料夾的兩份活動通知整理，每則一句話加日期
-- 聯絡簿最新的一天放最上面，先放三天的範例
-- 每頁上方有導覽列，手機上看得清楚
-- 建立 CLAUDE.md，寫下之後都要遵守的規則：網站是公開的，不放學生姓名、照片與私人電話；聯絡簿最新的放最上面
-完成後告訴我怎麼在電腦上預覽。</div>
+      <div class="prompt-body">我想做「五年三班」的班級官網，給家長和學生用手機看。
+分頁有：首頁（班呼、導師的話、最新公告）、課表、每日聯絡簿。
+最新公告從「班級官網素材」資料夾的兩份活動通知整理；課表先寫「即將公布」；聯絡簿先放三天的範例。
+網站是公開的，不要放學生姓名、照片與私人電話。
+我沒有程式背景，做好後我要能直接用瀏覽器打開，並告訴我怎麼打開。</div>
     </div>
         <p class="loose-text"><!-- 待補圖片：class-website-v1.png｜第一版班級官網的首頁（手機寬度與電腦寬度各一），以虛線紅框標出導覽列的三個分頁 --></p>
         <p class="loose-text"><!-- <img src="assets/class-website-v1.png" alt="第一版班級官網：首頁、課表、每日聯絡簿三個分頁" class="inline-image"> --></p>
+        <div class="insight">
+      <div class="insight-title">為什麼一開始不提 Markdown、Git、GitHub？</div>
+      <p>一次交代太多，AI 會<code>一口氣做完一大包</code>，哪裡不對你也很難分辨。<br>先把<code>看得到的需求</code>做到符合期待，再一次加一樣東西；每一步都驗收過，出問題就知道是哪一步。</p>
+    </div>
         <h4 class="minor-title">親手驗收第 1 步</h4>
-        <p class="loose-text">到 <code>class-website</code> 的 <code>site</code> 資料夾，雙擊 <code>index.html</code> 用瀏覽器開啟，照下表逐項檢查：</p>
+        <p class="loose-text">照 AI 說的方式用瀏覽器打開網站。下面是第一版<code>常見的狀況</code>，不一定會遇到，但每一項都要看過：</p>
         <div class="table-wrap">
       <table class="content-table">
+        <colgroup>
+          <col style="width:170px">
+          <col>
+          <col>
+        </colgroup>
         <thead>
           <tr>
-            <th class="align-left">檢查什麼</th>
-            <th class="align-left">應該看到</th>
+            <th class="align-left col-w">檢查什麼</th>
+            <th class="align-left">怎麼檢查</th>
+            <th class="align-left">有狀況的話，跟 AI 這樣說</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="align-left"><strong>點導覽列的三個分頁</strong></td>
-            <td class="align-left">首頁、課表、每日聯絡簿都打得開，也回得來</td>
+            <td class="align-left col-w"><strong>分頁能不能切換</strong></td>
+            <td class="align-left">導覽列的三個分頁各點一次，再點回首頁</td>
+            <td class="align-left">「＿＿分頁打不開，請修正」</td>
           </tr>
           <tr>
-            <td class="align-left"><strong>首頁的最新公告</strong></td>
-            <td class="align-left">親子共讀夜是 12/11（五）、校外教學是 12/23（三），和通知寫的一致</td>
+            <td class="align-left col-w"><strong>手機上好不好讀</strong></td>
+            <td class="align-left">把瀏覽器視窗<code>拉窄到手機的寬度</code>，看字有沒有被切掉、要不要左右捲動</td>
+            <td class="align-left">「視窗拉窄後，＿＿超出畫面，請調整成手機也好讀」</td>
           </tr>
           <tr>
-            <td class="align-left"><strong>每日聯絡簿</strong></td>
-            <td class="align-left">最新的一天在最上面</td>
+            <td class="align-left col-w"><strong>內容有沒有錯</strong></td>
+            <td class="align-left">對照兩份通知：親子共讀夜是 12/11（五）、校外教學是 12/23（三）</td>
+            <td class="align-left">「＿＿的日期和通知不一樣，請以通知為準」</td>
           </tr>
           <tr>
-            <td class="align-left"><strong>把瀏覽器視窗拉窄</strong></td>
-            <td class="align-left">字沒有被切掉，不用左右捲動</td>
+            <td class="align-left col-w"><strong>聯絡簿的順序</strong></td>
+            <td class="align-left">最新的一天是不是在最上面</td>
+            <td class="align-left">「聯絡簿改成最新的一天在最上面」</td>
           </tr>
           <tr>
-            <td class="align-left"><strong>整個網站</strong></td>
-            <td class="align-left">沒有出現任何學生姓名</td>
+            <td class="align-left col-w"><strong>有沒有不該公開的資料</strong></td>
+            <td class="align-left">整個網站看一遍，有沒有學生姓名、照片、私人電話</td>
+            <td class="align-left">「請拿掉＿＿」</td>
           </tr>
         </tbody>
       </table>
+    </div>
+        <div class="insight">
+      <div class="insight-title">什麼是 RWD？</div>
+      <p>RWD（Responsive Web Design，響應式設計）：同一個網頁，會<code>依螢幕寬度自動調整排版</code>。<br>家長大多用手機看，電腦上好看還不夠，<code>一定要用手機的寬度檢查一次</code>。</p>
     </div>
         <div class="insight">
       <div class="insight-title">我的畫面和旁邊的老師不一樣，是哪裡做錯了嗎？</div>
@@ -8191,7 +8467,98 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-2-markdown" data-seg="0"><span class="bar"></span>第 2 步：學會用 Markdown 更新內容</div>
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🔁</span> 有狀況就描述現象，一次改一件事</div>
+      <div class="group-body">
+        <ul>
+  <li>不用知道原因，也不用懂術語：說出<code>在哪裡、看到什麼、希望變成怎樣</code>就好</li>
+  <li>說不清楚，就<code>截圖貼給 AI</code></li>
+  <li>一次改一件事，改完再檢查一次；表格每一項都看過了，才往下一步</li>
+</ul>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">描述你看到的狀況（括號換成你的內容）</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">（哪一個分頁的哪個地方）看起來（怎麼了）。
+我希望（變成怎樣），其他地方不要動。</div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🎨</span> 想要更好看？安裝 Skill 來優化</div>
+      <div class="group-body">
+        <ul>
+  <li>Skill 記的是<code>做事的方法</code>；除了自己做，也可以<code>安裝別人做好的</code></li>
+  <li>Anthropic 官方的 <code>frontend-design</code> 是網頁設計的 Skill，裝好之後請它優化配色、字體與版面</li>
+</ul>
+        <p class="loose-text"><strong>操作路徑</strong>: 左側欄「外掛程式」→ 搜尋 <code>frontend-design</code> → 安裝</p>
+        <p class="loose-text"><!-- 待補圖片：claude-code-plugin-frontend-design.png｜Code 分頁的「外掛程式」畫面，以虛線紅框標出搜尋到的 frontend-design 與安裝按鈕 --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-code-plugin-frontend-design.png" alt="在「外掛程式」搜尋 frontend-design，按下安裝" class="inline-image"> --></p>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">用設計 Skill 優化版面</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">用 frontend-design 這個 Skill 優化班級官網的版面，風格要適合國小班級，家長用手機看要清楚。
+內容與分頁不要改，改完告訴我調整了哪些地方。</div>
+    </div>
+        <ul class="loose-list">
+      <li>版面變了，<code>上面的表格要再檢查一次</code></li>
+    </ul>
+        <div class="insight">
+      <div class="insight-title">為什麼不一開始就安裝 Skill？</div>
+      <p>先用白話做出能用的第一版，檢查過、改過，再用 Skill 把它變好看。<br>順序反過來，出了狀況你會分不出是<code>需求沒講清楚</code>，還是<code>設計出了問題</code>。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="sub-title" id="sub-2-markdown" data-seg="0"><span class="bar"></span>第 2 步：符合期待後，把內容轉成 Markdown</div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🔄</span> 內容抽出來，改字不怕弄壞版面</div>
+      <div class="group-body">
+        <ul>
+  <li>現在內容和版面混在同一個網頁檔裡；<code>樣子確定了</code>，再把內容抽成 Markdown，之後只改文字就好</li>
+  <li>這一步通常要裝工具（ex: Node.js），照前面的原則：<code>先問用途再核准</code></li>
+</ul>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">符合期待了，再把內容轉成 Markdown</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">網站的樣子我滿意了，接下來內容我想自己改。
+把每個分頁的內容抽成一份 Markdown，放在 content 資料夾：index.md（首頁）、timetable.md（課表）、contact-book.md（每日聯絡簿）。
+我改完 Markdown 就能重新產生網頁，版面維持現在的樣子，一樣能直接用瀏覽器打開。
+需要安裝工具時，先說明用途，我同意再裝。
+完成後告訴我改完要怎麼重新產生網頁，並把這個網站要遵守的規則寫進 CLAUDE.md（給 AI 看的規則檔）。</div>
+    </div>
+        <p class="loose-text"><!-- 待補圖片：claude-code-install-approve.png｜AI 安裝工具前跳出的核准提示，以虛線紅框標出要執行的指令與核准按鈕（Mac、Windows 各一張） --></p>
+        <p class="loose-text"><!-- <img src="assets/claude-code-install-approve.png" alt="安裝前會先跳出核准提示，看懂它要裝什麼再同意" class="inline-image"> --></p>
+        <ul class="loose-list">
+      <li>轉換完先打開網站看一次：<code>樣子和內容都跟轉換前一樣</code>，再開始自己改</li>
+    </ul>
+      </div>
+    </div>
   </div>
 
   <div class="reveal">
@@ -8229,17 +8596,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
-        <div class="prompt-block">
-      <div class="prompt-header">
-        <div class="dots"><span></span><span></span><span></span></div>
-        Prompt
-        <span class="label">請 AI 說明怎麼更新內容</span>
-        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        </button>
-      </div>
-      <div class="prompt-body">教我怎麼更新網站內容：每個分頁對應哪一份 Markdown、改完之後要怎麼重新產生網頁。</div>
     </div>
       </div>
     </div>
@@ -8377,6 +8733,10 @@
     <div class="group-block" data-seg="0">
       <div class="group-header"><span class="icon">💾</span> 建立第一個存檔點</div>
       <div class="group-body">
+        <ul>
+  <li>存檔點會記下「誰存的」，要用到 GitHub 帳號：還沒有的話，先到 <a href="https://github.com" target="_blank" rel="noopener">github.com</a> 註冊，有 Email 就能辦，免費</li>
+  <li>帳號名稱會出現在官網的網址裡（<code>https://你的帳號.github.io/class-website/</code>），取一個<code>適合給家長看</code>的名稱</li>
+</ul>
         <div class="prompt-block">
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
@@ -8386,12 +8746,10 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">幫這個網站加上 Git 版本控制：
-1. 不需要放上網路的東西不要納入：安裝下來的套件、產生出來的網頁、「班級官網素材」資料夾
-2. 需要設定名稱與信箱時，先問我的 GitHub 帳號名稱；信箱不要用我的私人信箱，改用 GitHub 提供的不公開信箱
-3. 設定前，把要用的名稱與信箱列給我確認
-4. 建立第一個存檔點，說明寫「班級官網第一版」
-5. 完成後，用白話列出目前所有的存檔點，以及哪些檔案有被存進去</div>
+      <div class="prompt-body">幫這個網站加上 Git，建立第一個存檔點，說明寫「班級官網第一版」。
+- 不需要放上網路的東西不要存進去（ex: 「班級官網素材」資料夾）
+- 需要設定名稱與信箱時先問我；之後會公開，信箱不要用我的私人信箱
+完成後用白話告訴我存了哪些檔案。</div>
     </div>
         <p class="loose-text"><!-- 待補圖片：claude-code-first-save.png｜Code 分頁中 Claude 回報已建立第一個存檔點「班級官網第一版」並列出存進去的檔案（虛線紅框標出存檔說明） --></p>
         <p class="loose-text"><!-- <img src="assets/claude-code-first-save.png" alt="第一個存檔點建立完成，之後改壞了都能回到這裡" class="inline-image"> --></p>
@@ -8479,17 +8837,15 @@
       <div class="prompt-header">
         <div class="dots"><span></span><span></span><span></span></div>
         Prompt
-        <span class="label">放上 GitHub，並自動發布到 GitHub Pages</span>
+        <span class="label">放上 GitHub Pages，之後自動更新</span>
         <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">把網站放上 GitHub，並用 GitHub Pages 發布：
-1. 先檢查你這邊是否已經登入我的 GitHub 帳號；還沒登入就一步一步帶我完成，登入後告訴我是哪個帳號
-2. 專案是公開的。推上去之前，先列出所有會被公開的檔案給我確認，我說可以再繼續
-3. 建立公開的專案「class-website」，把目前的存檔點推上去
-4. 設定 GitHub Actions：每次推上新的存檔點，就自動把 Markdown 產生成網頁並發布到 GitHub Pages
-5. 完成後給我網址，並告訴我去哪裡看發布有沒有成功</div>
+      <div class="prompt-body">我要讓家長用手機看這個網站：放上 GitHub 的公開專案「class-website」，用 GitHub Pages 發布；之後我每次推上新的存檔點，網站就自動跟著更新。
+- 還沒登入 GitHub 就一步一步帶我完成
+- 推上去之前，先列出所有會公開的檔案給我確認，我說可以再繼續
+完成後給我網址。</div>
     </div>
         <p class="loose-text"><!-- 待補圖片：github-login-device.png｜GitHub 登入時瀏覽器顯示輸入驗證碼的畫面，以虛線紅框標出驗證碼輸入欄 --></p>
         <p class="loose-text"><!-- <img src="assets/github-login-device.png" alt="登入時照畫面輸入 AI 給你的驗證碼，密碼只在瀏覽器裡輸入" class="inline-image"> --></p>
@@ -8767,7 +9123,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-17" data-seg="0"><span class="bar"></span>案例回顧</div>
+    <div class="sub-title" id="sub-section-16" data-seg="0"><span class="bar"></span>案例回顧</div>
   </div>
 
   <div class="reveal">
@@ -8778,8 +9134,8 @@
       <div class="flow-step">
         <div class="step-num">1</div>
         <div class="step-content">
-          <div class="step-title">先講終點</div>
-          <div class="step-desc">第 0 步就把目標說完整，讓 AI <code>說明做法、檢查環境</code>，不急著動手</div>
+          <div class="step-title">先說具體需求</div>
+          <div class="step-desc">給誰看、有哪些分頁、資料從哪來，<code>做法交給 AI</code></div>
         </div>
       </div>
       <div class="flow-step">
@@ -8792,8 +9148,8 @@
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">先做最小版本</div>
-          <div class="step-desc">三個分頁先能看，課表先放「即將公布」</div>
+          <div class="step-title">檢查後再優化</div>
+          <div class="step-desc">第一版出來先逐項檢查，<code>有狀況就描述現象</code>，還能安裝 Skill 讓它更好看</div>
         </div>
       </div>
       <div class="flow-step">
@@ -8869,7 +9225,7 @@
       <div class="group-header"><span class="icon">📐</span> 其實你今天已經寫過迷你規格</div>
       <div class="group-body">
         <ul>
-  <li>第 0 步那段「分頁有哪些、怎麼更新、要發布到哪裡」，就是<code>最小的規格</code></li>
+  <li>第 1 步那張需求表「給誰看、有哪些分頁、資料從哪來、什麼不能放」，就是<code>最小的規格</code></li>
   <li>每一步的驗收表，就是規格裡的<code>驗收標準</code></li>
   <li>SDD 把這些寫成文件，讓 AI <code>每次迭代都有依據</code>，換了對話也不會走偏</li>
 </ul>
@@ -8923,7 +9279,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-18" data-seg="0"><span class="bar"></span>技術更新好快，我好焦慮</div>
+    <div class="sub-title" id="sub-section-17" data-seg="0"><span class="bar"></span>技術更新好快，我好焦慮</div>
   </div>
 
   <div class="reveal">
@@ -9096,7 +9452,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-20" data-seg="0"><span class="bar"></span>回顧：這個系列走過的路</div>
+    <div class="sub-title" id="sub-section-19" data-seg="0"><span class="bar"></span>回顧：這個系列走過的路</div>
   </div>
 
   <div class="reveal">
@@ -9136,7 +9492,7 @@
         <div class="step-num">5</div>
         <div class="step-content">
           <div class="step-title">做出班級官網</div>
-          <div class="step-desc">請 AI 檢查並安裝環境，用 Markdown 寫內容，做出首頁、課表、每日聯絡簿</div>
+          <div class="step-desc">先說需求做出首頁、課表、每日聯絡簿，符合期待再把內容轉成 Markdown</div>
         </div>
       </div>
       <div class="flow-step">
@@ -9645,7 +10001,7 @@
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
     var sectionIds = ["instructor","5","ai-ai","section-2","section-3","section-4","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","5","sub-sop","sub-section-2","ai-ai","sub-claude","sub-section-4","sub-skill","section-2","sub-vibe-coding","sub-section-7","sub-section-8","sub-section-9","section-3","sub-code-ai","sub-0-ai","sub-1","sub-2-markdown","sub-3-git","sub-4-github-pages","sub-5","sub-section-17","section-4","summary","sub-section-18","sub-work-smart-dont-work-hard","sub-section-20"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var allAnchorIds = ["instructor","5","sub-sop","sub-section-2","ai-ai","sub-claude","sub-section-4","sub-skill","section-2","sub-vibe-coding","sub-section-7","sub-section-8","sub-section-9","section-3","sub-code-ai","sub-1","sub-2-markdown","sub-3-git","sub-4-github-pages","sub-5","sub-section-16","section-4","summary","sub-section-17","sub-work-smart-dont-work-hard","sub-section-19"];   // e.g. ['instructor','new-project','sub-create-project',...]
     // 兩張對照表由 toc 段填入；updateToc 在任何時機呼叫都讀得到（未填時退回第一個章節）
     var sectionForAnchor = {};
     var subForAnchor = {};
