@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="generator" content="course-page-generator 2ee1387-dirty">
+  <meta name="generator" content="course-page-generator 158e8e3">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Claude Code｜讓 AI 動手整理檔案，做出班級官網</title>
@@ -7330,40 +7330,45 @@
       <div class="group-body">
         <div class="table-wrap">
       <table class="content-table">
+        <colgroup>
+          <col style="width:20%">
+          <col style="width:40%">
+          <col style="width:40%">
+        </colgroup>
         <thead>
           <tr>
-            <th class="align-left"></th>
-            <th class="align-left">🌐 上一堂：網頁版專案</th>
-            <th class="align-left">💻 今天：桌面版資料夾</th>
+            <th class="align-left col-w"></th>
+            <th class="align-left col-w">🌐 上一堂：網頁版專案</th>
+            <th class="align-left col-w">💻 今天：桌面版資料夾</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="align-left"><strong>怎麼給資料</strong></td>
-            <td class="align-left">建立專案 → 9 份 Word <code>拖進去</code>，活動一覽放雲端再貼連結</td>
-            <td class="align-left">選一次資料夾，裡面的檔案<code>都讀得到</code></td>
+            <td class="align-left col-w"><strong>怎麼給資料</strong></td>
+            <td class="align-left col-w">建立專案 → 9 份 Word <code>拖進去</code>，活動一覽放雲端再貼連結</td>
+            <td class="align-left col-w">選一次資料夾，裡面的檔案<code>都讀得到</code></td>
           </tr>
           <tr>
-            <td class="align-left"><strong>文件更新了</strong></td>
-            <td class="align-left">上傳的文件要重新上傳</td>
-            <td class="align-left">改完存檔，AI 下次讀到的就是新版</td>
+            <td class="align-left col-w"><strong>文件更新了</strong></td>
+            <td class="align-left col-w">上傳的文件要重新上傳</td>
+            <td class="align-left col-w">改完存檔，AI 下次讀到的就是新版</td>
           </tr>
           <tr>
-            <td class="align-left"><strong>AI 的成品</strong></td>
-            <td class="align-left">在對話裡，要自己下載、再放回資料夾</td>
-            <td class="align-left">直接存成檔案，<code>出現在資料夾裡</code></td>
+            <td class="align-left col-w"><strong>AI 的成品</strong></td>
+            <td class="align-left col-w">在對話裡，要自己下載、再放回資料夾</td>
+            <td class="align-left col-w">直接存成檔案，<code>出現在資料夾裡</code></td>
           </tr>
           <tr>
-            <td class="align-left"><strong>適合</strong></td>
-            <td class="align-left">用手機查、跨裝置使用</td>
-            <td class="align-left">檔案多、常更新、要交出檔案</td>
+            <td class="align-left col-w"><strong>適合</strong></td>
+            <td class="align-left col-w">用手機查、跨裝置使用</td>
+            <td class="align-left col-w">檔案多、常更新、要交出檔案</td>
           </tr>
         </tbody>
       </table>
     </div>
         <div class="insight">
       <div class="insight-title">網頁版專案沒有被取代</div>
-      <p>人在外面想用手機查，還是網頁版專案方便；在電腦上處理一整包檔案、要交出 Word，直接讀資料夾最順。</p>
+      <p>人在外面想用手機查，還是網頁版專案方便；而在電腦上處理多格式檔案、要彙整報告，直接讀資料夾最順。</p>
     </div>
       </div>
     </div>
@@ -7500,8 +7505,14 @@
       <div class="group-header"><span class="icon">🗂️</span> 亂放的班級資料夾，先請它盤點</div>
       <div class="group-body">
         <ul>
-  <li>我們知道<code>檔案命名要有邏輯</code>，這樣人跟 AI 的可讀性才高，但<code>真實的資料夾通常不是這樣</code></li>
-  <li>下面這個練習資料夾，模擬一位導師一學期下來<code>隨手存的東西</code>：<code>文件1.docx</code>、<code>校外教學通知_final_改2.docx</code>、手機翻拍的 <code>IMG_4821.HEIC</code>、LINE 截圖、黑板照片都混在一起</li>
+  <li>我們都知道檔名要有邏輯，人和 AI 才好找；但<code>真實的資料夾通常不是這樣</code></li>
+  <li>下面這個練習資料夾，模擬一位導師一學期下來隨手存的東西：
+    <ul class="nested">
+      <li>看不出內容的檔名：<code>文件1.docx</code></li>
+      <li>同一份通知好幾個版本：<code>校外教學通知_final_改2.docx</code></li>
+      <li>各種照片和截圖：手機照片、LINE 截圖、黑板照片</li>
+    </ul>
+  </li>
 </ul>
         <a class="download-card" href="assets/五三班務.zip" download>
     <span class="download-card__icon" aria-hidden="true">⬇</span>
@@ -7512,7 +7523,8 @@
     <span class="download-card__ext">ZIP</span>
   </a>
         <ul class="loose-list">
-      <li>解壓縮後選這個資料夾，貼上下面的 prompt</li>
+      <li>這些素材最後要做成<code>班級官網</code>；網站是公開的，所以第一步先盤點<code>哪些能放、哪些不能放</code></li>
+      <li>解壓縮後開一個新對話，點擊<code>新增資料夾</code>選 <code>五三班務</code>，再貼上下面的 prompt</li>
     </ul>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -7534,7 +7546,7 @@
     </figure>
         <div class="insight">
       <div class="insight-title">為什麼要先列表，不直接請它做網站？</div>
-      <p>版本、日期、個資，<code>只有你能拍板</code>；AI 能做的是把該問的問題<code>一次攤在你面前</code>。</p>
+      <p>直接做網站，放什麼內容就由 AI 決定，舊版日期、學生個資可能就這樣<code>被放上網</code>。<br>先列表，版本、日期、個資這些<code>只有你能拍板</code>的事，才會一次攤在你面前。</p>
     </div>
       </div>
     </div>
@@ -7545,7 +7557,8 @@
       <div class="group-header"><span class="icon">🏷️</span> 盤點完，再請它整理檔名</div>
       <div class="group-body">
         <ul>
-  <li>同一個資料夾，接著請它照「類型-主題-學年度」的規則改檔名；否則像 <code>新增文字文件 (2).txt</code> 這種檔名，打開前沒人知道裡面是什麼</li>
+  <li>像 <code>新增文字文件 (2).txt</code> 這種檔名，打開前沒人知道裡面是什麼</li>
+  <li>不用開新對話，在同一個對話接著請它照「類型-主題-學年度」的規則改檔名</li>
 </ul>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -7592,7 +7605,8 @@
       <div class="group-header"><span class="icon">📦</span> 告訴它要做班級官網，把能用的素材放進新資料夾</div>
       <div class="group-body">
         <ul>
-  <li>先回覆盤點第 3 張表裡<code>需要你決定的地方</code></li>
+  <li>一樣在同一個對話，貼上下面的 prompt</li>
+  <li>盤點第 3 張表<code>需要你決定的地方</code>，就在 prompt 第 2 點拍板</li>
   <li>只有部分內容能用的檔案（ex: 開學信裡有私人手機），請它<code>把能用的段落另存一份</code>，不要整份複製</li>
 </ul>
         <div class="prompt-block">
@@ -7604,9 +7618,9 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">我想做一個班級官網。請新增一個「官網可用素材」資料夾，把可以公開給家長的內容「複製」進去：
+      <div class="prompt-body">我想做一個班級官網。請新增一個「website-materials」資料夾，把可以公開給家長的內容「複製」進去：
 1. 不能公開的檔案一律不放；只有部分內容能用的，把能用的段落另存成新檔，私人聯絡方式與草稿備註不要帶進去
-2. 重複資訊先使用最新版
+2. 盤點第 3 張表需要我決定的地方：日期和版本以最新的通知為準，還不確定的內容先不要放
 3. 原本的檔案不要移動、修改或刪除
 完成後列出放了哪些檔案，以及每一份來自哪裡。</div>
     </div>
@@ -7616,7 +7630,7 @@
     </figure>
         <div class="insight">
       <div class="insight-title">為什麼要另外建一個資料夾，不直接拿原本的做網站？</div>
-      <p>原本的資料夾是你的<code>正本</code>，裡面有學生資料、成績；官網素材資料夾只放<code>確定可以公開</code>的東西。<br>等一下做網站，只把這個資料夾交給 AI，<code>看不到的東西，就不會被放上網</code>。</p>
+      <p>原本的資料夾是你的<code>正本</code>，裡面有學生資料、成績；官網素材 <code>website-materials</code> 只放<code>確定可以公開</code>的東西。<br>等一下做網站，只把這個資料夾交給 AI，<code>看不到的東西，就不會被放上網</code>。</p>
     </div>
       </div>
     </div>
@@ -8388,18 +8402,18 @@
 </ul>
         <ul class="loose-list">
       <li>在桌面新增一個資料夾，取名 <code>class-website</code></li>
-      <li>把剛剛在 <code>五三班務</code> 裡建好的 <code>官網可用素材</code> 整個資料夾，複製一份放進 <code>class-website</code> 裡</li>
+      <li>把剛剛在 <code>五三班務</code> 裡建好的 <code>website-materials</code> 整個資料夾，複製一份放進 <code>class-website</code> 裡</li>
       <li>前面沒整理完的老師，下載下面的備用包，解壓縮後一樣放進 <code>class-website</code></li>
     </ul>
-        <a class="download-card" href="assets/官網可用素材.zip" download>
+        <a class="download-card" href="assets/website-materials.zip" download>
     <span class="download-card__icon" aria-hidden="true">⬇</span>
     <span class="download-card__body">
-      <span class="download-card__label">下載「官網可用素材」備用包</span>
+      <span class="download-card__label">下載「website-materials」備用包</span>
       <span class="download-card__desc">前面沒整理完的老師用：兩份活動通知、親子共讀夜報名表、課表、家長常見問答、開學信的公開段落與聯絡簿草稿</span>
     </span>
     <span class="download-card__ext">ZIP</span>
   </a>
-        <p class="loose-text"><strong>操作路徑</strong>: 左側欄上方「Code」→ 選擇環境 → 新增環境</p>
+        <p class="loose-text"><strong>操作路徑</strong>: 左側欄上方「Code」→「新增」→ 選擇環境 → 新增環境</p>
         <ul class="loose-list">
       <li>名稱 <code>class-website</code></li>
       <li>資料夾選桌面的 <code>class-website</code></li>
@@ -8483,7 +8497,7 @@
           </tr>
           <tr>
             <td class="align-left"><strong>內容來源</strong></td>
-            <td class="align-left">從 <code>官網可用素材</code> 整理：班呼、導師的話、兩則活動公告、聯絡簿</td>
+            <td class="align-left">從 <code>website-materials</code> 整理：班呼、導師的話、兩則活動公告、聯絡簿</td>
           </tr>
           <tr>
             <td class="align-left"><strong>邊界</strong></td>
@@ -8503,7 +8517,7 @@
       </div>
       <div class="prompt-body">我想做「五年三班」的班級官網，給家長和學生用手機看。
 分頁有：首頁（班呼、導師的話、最新公告）、課表、每日聯絡簿。
-內容從「官網可用素材」資料夾整理；課表先寫「即將公布」；聯絡簿先放 11/24～11/26 三天。
+內容從「website-materials」資料夾整理；課表先寫「即將公布」；聯絡簿先放 11/24～11/26 三天。
 網站是公開的，不要放學生姓名、照片與私人電話。
 我沒有程式背景，做好後我要能直接用瀏覽器打開，並告訴我怎麼打開。</div>
     </div>
@@ -8893,7 +8907,7 @@
       <span class=&quot;ps-git no&quot;>✗</span>
     </button>
     <button class=&quot;ps-row k-skip&quot; type=&quot;button&quot; data-label=&quot;素材｜不上網&quot; data-say=&quot;從班務資料夾挑出來的素材，AI 從這裡抄內容；原檔不存進 Git，也不放上網。&quot;>
-      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>🗂️</span><span class=&quot;ps-file&quot;>官網可用素材/</span></span>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>🗂️</span><span class=&quot;ps-file&quot;>website-materials/</span></span>
       <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>前面挑好的素材，</span><span class=&quot;ps-ph&quot;>只給 AI 參考</span></span>
       <span class=&quot;ps-git no&quot;>✗</span>
     </button>
@@ -9073,8 +9087,8 @@
         <ul class="loose-list">
       <li>前面有跟上的老師<code>不用下載</code>，直接往下做</li>
       <li>把桌面上做到一半的 <code>class-website</code> 改成別的名字（ex: <code>class-website-舊</code>），再把解壓縮後的資料夾改名為 <code>class-website</code></li>
-      <li>把 <code>官網可用素材</code> 資料夾放進新的 <code>class-website</code>，後面的練習會用到</li>
-      <li>在 Code 分頁開啟這個資料夾，跟 Claude 說「安裝這個專案需要的套件並產生網頁」，就能從這一步接著做</li>
+      <li>把 <code>website-materials</code> 資料夾放進新的 <code>class-website</code>，後面的練習會用到</li>
+      <li>在 Code 分頁開一個新對話，環境選 <code>class-website</code>，跟 Claude 說「安裝這個專案需要的套件並產生網頁」，就能從這一步接著做</li>
     </ul>
       </div>
     </div>
@@ -9152,7 +9166,7 @@
         </button>
       </div>
       <div class="prompt-body">幫這個網站加上 Git，建立第一個存檔點，說明寫「班級官網第一版」。
-- 不需要放上網路的東西不要存進去（ex: 「官網可用素材」資料夾）
+- 不需要放上網路的東西不要存進去（ex: 「website-materials」資料夾）
 - 需要設定名稱與信箱時先問我；之後會公開，信箱不要用我的私人信箱
 完成後用白話告訴我存了哪些檔案。</div>
     </div>
@@ -9178,7 +9192,7 @@
           </tr>
           <tr>
             <td class="align-left"><strong>沒存進去的東西</strong></td>
-            <td class="align-left"><code>官網可用素材</code>、AI 安裝的工具（<code>node_modules</code>）、產生出來的網頁（<code>site</code> 資料夾）都不在裡面</td>
+            <td class="align-left"><code>website-materials</code>、AI 安裝的工具（<code>node_modules</code>）、產生出來的網頁（<code>site</code> 資料夾）都不在裡面</td>
           </tr>
         </tbody>
       </table>
@@ -9283,7 +9297,7 @@
           </tr>
           <tr>
             <td class="align-left"><strong>GitHub 專案的檔案列表</strong></td>
-            <td class="align-left">沒有 <code>官網可用素材</code> 資料夾</td>
+            <td class="align-left">沒有 <code>website-materials</code> 資料夾</td>
           </tr>
         </tbody>
       </table>
@@ -9398,7 +9412,7 @@
         </button>
       </div>
       <div class="prompt-body">在首頁的最新公告新增一則：「親子共讀夜報名表開放下載，請於 12/4（五）前交回」。
-把「官網可用素材」裡的親子共讀夜報名表（PDF）附在這則公告，家長點了就能下載。
+把「website-materials」裡的親子共讀夜報名表（PDF）附在這則公告，家長點了就能下載。
 先重新產生網頁讓我預覽，我確認沒問題，你再存檔推上 GitHub。</div>
     </div>
         <div class="table-wrap">
@@ -9430,7 +9444,7 @@
       <div class="group-header"><span class="icon">🗓️</span> 練習三：課表圖片轉成 Markdown</div>
       <div class="group-body">
         <ul>
-  <li>課表圖片已經在 <code>官網可用素材</code> 裡，不用另外上傳，直接貼上下面的 prompt</li>
+  <li>課表圖片已經在 <code>website-materials</code> 裡，不用另外上傳，直接貼上下面的 prompt</li>
 </ul>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -9441,7 +9455,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">把「官網可用素材」裡的課表圖片，轉成課表分頁的 Markdown，取代「課表即將公布」。
+      <div class="prompt-body">把「website-materials」裡的課表圖片，轉成課表分頁的 Markdown，取代「課表即將公布」。
 科任課要保留老師與教室，表格下方的備註也要保留；看不清楚的格子寫「待確認」，不要猜。
 先重新產生網頁讓我預覽，我確認沒問題，你再存檔推上 GitHub。</div>
     </div>
