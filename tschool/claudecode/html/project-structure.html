@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>班級官網的資料夾：哪些你改、哪些交給 AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* 字級全部用 rem：嵌進講義時，腳本會把這裡的根字級對齊講義頁（A1～A5 的設定），
+     所以 1rem = 講義頁的 1rem；單獨開檔時用下面的 22px（講義預設的 A3）。 */
+  html { font-size: 22px; }
+  html, body { margin: 0; padding: 0; }
+
+  /* 變數掛在 .ps 而不是 :root：講義列印模式會把這份 HTML 攤平進頁面，:root 與 body 的規則到時對不到 */
+  .ps {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --cap-bg: #f5f5f7;
+    --text: #1a1a2e;
+    --text-2: #4f5060;
+    --muted: #7a7b8a;
+    --border: #d9d9df;
+    --row-hover: #f7f7fa;
+
+    --c-edit: #c2410c;  --c-edit-bg: #fef5ed;
+    --c-rule: #2563eb;  --c-rule-bg: #eef4ff;
+    --c-ai:   #2f855a;  --c-ai-bg:   #edf7f1;
+    --c-skip: #7a7b8a;  --c-skip-bg: #f1f1f4;
+  }
+  .ps.ps-dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --cap-bg: #1e2130;
+    --text: #e4e4e7;
+    --text-2: #b3b5c2;
+    --muted: #8b8d9a;
+    --border: #2d3148;
+    --row-hover: #23273a;
+
+    --c-edit: #f0a060;  --c-edit-bg: #2a1b10;
+    --c-rule: #7da2f7;  --c-rule-bg: #171f3a;
+    --c-ai:   #6fcf97;  --c-ai-bg:   #12281c;
+    --c-skip: #9a9cab;  --c-skip-bg: #23263a;
+  }
+
+  .ps, .ps * { box-sizing: border-box; }
+
+  .ps {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    line-height: 1.55;
+    padding: 0.75rem 0.7rem 0.8rem;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  /* ===== 旁白列：平常是標題，點一列就說明那一列 ===== */
+  .ps-cap {
+    background: var(--cap-bg);
+    border-left: 5px solid var(--cap-color, var(--muted));
+    border-radius: 10px;
+    padding: 0.45rem 0.7rem;
+    margin-bottom: 0.6rem;
+    transition: border-color 0.2s;
+  }
+  .ps-cap-label { font-size: 0.7rem; font-weight: 700; color: var(--cap-color, var(--muted)); letter-spacing: 0.4px; }
+  .ps-cap-text { font-size: 0.95rem; font-weight: 700; }
+
+  /* ===== 圖例 ===== */
+  .ps-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 0.5rem; margin-bottom: 0.55rem; }
+  .ps-chip {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    font-size: 0.68rem; font-weight: 700; line-height: 1.3;
+    color: var(--k); background: var(--kb);
+    border-radius: 999px; padding: 0.12rem 0.55rem;
+  }
+  .k-edit { --k: var(--c-edit); --kb: var(--c-edit-bg); }
+  .k-rule { --k: var(--c-rule); --kb: var(--c-rule-bg); }
+  .k-ai   { --k: var(--c-ai);   --kb: var(--c-ai-bg); }
+  .k-skip { --k: var(--c-skip); --kb: var(--c-skip-bg); }
+
+  /* ===== 資料夾樹 ===== */
+  .ps-tree { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--card); }
+  .ps-head, .ps-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.6fr) 3.2rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.32rem 0.6rem;
+  }
+  .ps-head { font-size: 0.66rem; font-weight: 700; color: var(--muted); background: var(--cap-bg); letter-spacing: 0.3px; }
+  .ps-head span:last-child, .ps-git { text-align: center; }
+  .ps-row {
+    width: 100%; font: inherit; color: inherit; text-align: left;
+    background: transparent; border: none; border-top: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    cursor: pointer; transition: background 0.15s, border-color 0.15s;
+  }
+  .ps-row:hover { background: var(--row-hover); }
+  .ps-row.ps-active { background: var(--kb); border-left-color: var(--k); }
+  .ps-row:focus-visible { outline: 2px solid var(--k); outline-offset: -2px; }
+
+  .ps-name { display: flex; align-items: center; gap: 0.35rem; min-width: 0; }
+  .ps-ind { flex-shrink: 0; display: inline-block; }
+  .ps-ind-1 { width: 0.9rem; }
+  .ps-ind-2 { width: 1.8rem; }
+  .ps-ico { flex-shrink: 0; font-size: 0.95rem; line-height: 1; }
+  .ps-file {
+    font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
+    font-size: 0.78rem; font-weight: 700; color: var(--k, var(--text));
+    overflow-wrap: break-word;
+  }
+  .ps-root .ps-file { color: var(--text); }
+  .ps-desc { font-size: 0.78rem; color: var(--text-2); line-height: 1.45; min-width: 0; }
+  .ps-git { font-size: 0.8rem; font-weight: 700; }
+  .ps-git.yes { color: var(--c-ai); }
+  .ps-git.no { color: var(--muted); }
+  .ps-later .ps-file::after {
+    content: '第 4 步'; margin-left: 0.35rem;
+    font-family: 'Noto Sans TC', sans-serif; font-size: 0.6rem; font-weight: 700;
+    color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 0 0.35rem;
+    vertical-align: 0.1rem;
+  }
+  /* 一個詞組一個 inline-block：換行只發生在詞組之間 */
+  .ps-ph { display: inline-block; }
+
+  @media (max-width: 620px) {
+    .ps { padding: 0.6rem 0.5rem; }
+    .ps-head { display: none; }
+    /* 手機：檔名獨占第一行，說明與存檔記號放第二行，檔名才不會從字中間斷開 */
+    .ps-row { grid-template-columns: minmax(0, 1fr) 1.6rem; gap: 0.1rem 0.4rem; padding: 0.4rem 0.5rem; }
+    .ps-name { grid-column: 1 / 3; grid-row: 1; }
+    .ps-ind-1 { width: 0.6rem; }
+    .ps-ind-2 { width: 1.2rem; }
+    .ps-file { font-size: 0.74rem; }
+    .ps-desc { grid-column: 1; grid-row: 2; padding-left: 1.6rem; }
+    .ps-git { grid-column: 2; grid-row: 2; }
+  }
+
+  @media print {
+    .ps-cap { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="ps" id="ps">
+
+  <div class="ps-cap" id="ps-cap">
+    <div class="ps-cap-label" id="ps-cap-label">class-website 資料夾（每一列都可以點）</div>
+    <div class="ps-cap-text" id="ps-cap-text">你只要改 content 裡的 Markdown，其他交給 AI。</div>
+  </div>
+
+  <div class="ps-legend">
+    <span class="ps-chip k-edit">✏️ 你會改的原稿</span>
+    <span class="ps-chip k-rule">📘 給 AI 看的手冊</span>
+    <span class="ps-chip k-ai">⚙️ AI 負責，不用動</span>
+    <span class="ps-chip k-skip">🚫 不存檔、不上網</span>
+  </div>
+
+  <div class="ps-tree">
+    <div class="ps-head"><span>檔案／資料夾</span><span>放什麼</span><span>存檔</span></div>
+
+    <button class="ps-row ps-root k-skip" type="button" data-label="整個網站" data-say="在 Code 分頁開的就是這個資料夾，AI 只能在這裡面動手。">
+      <span class="ps-name"><span class="ps-ico">📁</span><span class="ps-file">class-website/</span></span>
+      <span class="ps-desc">整個網站的資料夾</span>
+      <span class="ps-git"></span>
+    </button>
+
+    <button class="ps-row k-edit" type="button" data-label="原稿｜你會改" data-say="想改哪一頁，就打開哪一份 Markdown；改完請 AI 重新產生網頁。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">📂</span><span class="ps-file">content/</span></span>
+      <span class="ps-desc"><span class="ps-ph">原稿：</span><span class="ps-ph">每個分頁一份 Markdown</span></span>
+      <span class="ps-git yes">✓</span>
+    </button>
+    <button class="ps-row k-edit" type="button" data-label="原稿｜首頁" data-say="班呼、導師的話、最新公告都寫在這一份。">
+      <span class="ps-name"><span class="ps-ind ps-ind-2"></span><span class="ps-ico">📝</span><span class="ps-file">index.md</span></span>
+      <span class="ps-desc"><span class="ps-ph">首頁：班呼、導師的話、</span><span class="ps-ph">最新公告</span></span>
+      <span class="ps-git yes">✓</span>
+    </button>
+    <button class="ps-row k-edit" type="button" data-label="原稿｜課表" data-say="一開始寫「即將公布」，第 5 步再把課表圖片轉成表格放進來。">
+      <span class="ps-name"><span class="ps-ind ps-ind-2"></span><span class="ps-ico">📝</span><span class="ps-file">timetable.md</span></span>
+      <span class="ps-desc">課表</span>
+      <span class="ps-git yes">✓</span>
+    </button>
+    <button class="ps-row k-edit" type="button" data-label="原稿｜每日聯絡簿" data-say="你最常改的一份：每天在最上面加一天。">
+      <span class="ps-name"><span class="ps-ind ps-ind-2"></span><span class="ps-ico">📝</span><span class="ps-file">contact-book.md</span></span>
+      <span class="ps-desc"><span class="ps-ph">每日聯絡簿，</span><span class="ps-ph">最新的一天在最上面</span></span>
+      <span class="ps-git yes">✓</span>
+    </button>
+    <button class="ps-row k-edit" type="button" data-label="原稿｜附件" data-say="公告要附的檔案放這裡，Markdown 用「files/檔名」連過來。">
+      <span class="ps-name"><span class="ps-ind ps-ind-2"></span><span class="ps-ico">📎</span><span class="ps-file">files/</span></span>
+      <span class="ps-desc"><span class="ps-ph">公告的附件</span><span class="ps-ph">（ex: 空白報名表）</span></span>
+      <span class="ps-git yes">✓</span>
+    </button>
+
+    <button class="ps-row k-rule" type="button" data-label="員工手冊｜給 AI 看" data-say="日期怎麼寫、公告和聯絡簿的格式、什麼不能放上網：AI 每次開工前都會先讀。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">📘</span><span class="ps-file">CLAUDE.md</span></span>
+      <span class="ps-desc"><span class="ps-ph">呈現規則：日期寫法、</span><span class="ps-ph">公告與聯絡簿格式</span></span>
+      <span class="ps-git yes">✓</span>
+    </button>
+
+    <button class="ps-row k-ai" type="button" data-label="印刷廠｜AI 負責" data-say="把 Markdown 套上版面變成網頁的程式，AI 寫的，你不用打開。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🖨️</span><span class="ps-file">build.mjs</span></span>
+      <span class="ps-desc"><span class="ps-ph">轉換程式（印刷廠），</span><span class="ps-ph">連同 package.json</span></span>
+      <span class="ps-git yes">✓</span>
+    </button>
+    <button class="ps-row ps-later k-ai" type="button" data-label="自動送印｜AI 負責" data-say="GitHub Actions 的設定，第 4 步發布時 AI 才會建立。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🤖</span><span class="ps-file">.github/</span></span>
+      <span class="ps-desc"><span class="ps-ph">自動送印小幫手</span><span class="ps-ph">（GitHub Actions）的設定</span></span>
+      <span class="ps-git yes">✓</span>
+    </button>
+
+    <button class="ps-row k-skip" type="button" data-label="印好的網頁｜不存檔" data-say="每次重新產生都會蓋掉，不要手改；線上的網頁由 GitHub Actions 重新印。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🌐</span><span class="ps-file">site/</span></span>
+      <span class="ps-desc"><span class="ps-ph">產生出來的網頁，</span><span class="ps-ph">雙擊 index.html 預覽</span></span>
+      <span class="ps-git no">✗</span>
+    </button>
+    <button class="ps-row k-skip" type="button" data-label="工具箱｜不存檔" data-say="AI 安裝的工具，每台電腦自己裝，不用存。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🧰</span><span class="ps-file">node_modules/</span></span>
+      <span class="ps-desc">AI 安裝的工具</span>
+      <span class="ps-git no">✗</span>
+    </button>
+    <button class="ps-row k-skip" type="button" data-label="素材｜不上網" data-say="從班務資料夾挑出來的素材，AI 從這裡抄內容；原檔不存進 Git，也不放上網。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🗂️</span><span class="ps-file">官網可用素材/</span></span>
+      <span class="ps-desc"><span class="ps-ph">前面挑好的素材，</span><span class="ps-ph">只給 AI 參考</span></span>
+      <span class="ps-git no">✗</span>
+    </button>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('ps');
+  var capBox = document.getElementById('ps-cap');
+  var capLabel = document.getElementById('ps-cap-label');
+  var capText = document.getElementById('ps-cap-text');
+  var rows = Array.prototype.slice.call(root.querySelectorAll('.ps-row'));
+  var idle = { label: capLabel.textContent, text: capText.textContent };
+  var current = -1;
+
+  // i = -1 回到初始狀態
+  function show(i) {
+    current = i;
+    rows.forEach(function (el, k) { el.classList.toggle('ps-active', k === i); });
+    if (i < 0) {
+      capLabel.textContent = idle.label;
+      capText.textContent = idle.text;
+      capBox.style.removeProperty('--cap-color');
+      return;
+    }
+    var el = rows[i];
+    capLabel.textContent = el.querySelector('.ps-file').textContent + '｜' + el.dataset.label;
+    capText.textContent = el.dataset.say;
+    capBox.style.setProperty('--cap-color', getComputedStyle(el).getPropertyValue('--k'));
+  }
+
+  rows.forEach(function (el, k) {
+    el.addEventListener('click', function () { show(k === current ? -1 : k); });
+  });
+
+  // ===== 跟講義頁同步：深淺色（沒有 data-theme = 深色，'light' = 淺色）與字級（A1～A5） =====
+  function syncWithPage() {
+    var dark;
+    try {
+      if (window.parent === window) throw new Error('standalone');
+      var pageRoot = window.parent.document.documentElement;
+      dark = pageRoot.getAttribute('data-theme') !== 'light';
+      document.documentElement.style.fontSize = window.parent.getComputedStyle(pageRoot).fontSize;
+    } catch (e) {
+      dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    root.classList.toggle('ps-dark', dark);
+    if (current >= 0) show(current);
+  }
+  syncWithPage();
+  try {
+    new MutationObserver(syncWithPage).observe(
+      window.parent.document.documentElement,
+      { attributes: true, attributeFilter: ['data-theme', 'style'] }
+    );
+  } catch (e) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncWithPage);
+  }
+})();
+</script>
+</body>
+</html>

@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" href="https://deanlin.net/images/favicon.png">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Claude 桌面版與班級官網｜生成式 AI 研習第 4 堂">
-  <meta property="og:description" content="為學校老師與行政設計的 Claude 講義：用桌面版直接讀取資料夾、沿用上一堂的 Skill 把活動通知存成 Word 檔，再到 Code 分頁請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。">
+  <meta property="og:description" content="為學校老師與行政設計的 Claude 講義：用桌面版直接讀取資料夾、沿用上一堂的 Skill 把活動通知存成 Word 檔，盤點雜亂的班級資料夾、挑出可公開的素材，再到 Code 分頁請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。">
   <meta property="og:image" content="https://deanlin.net/course/tschool/claudecode/assets/og-image.jpg">
   <meta property="og:url" content="https://deanlin.net/course/tschool/claudecode/">
   <meta property="og:site_name" content="林鼎淵 Dean Lin">
@@ -6893,8 +6893,9 @@
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-claude">安裝 Claude 桌面版</a></li>
-        <li><a href="#sub-section-4">上一堂的專案，改成直接讀資料夾</a></li>
-        <li><a href="#sub-skill">Skill 直接使用：在桌面版直接交出通知</a></li>
+        <li><a href="#sub-section-4">將專案改成直接讀資料夾</a></li>
+        <li><a href="#sub-skill">優化並使用 Skill 生成檔案</a></li>
+        <li><a href="#sub-section-6">彙整雜亂的資料夾</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-2">
@@ -6903,9 +6904,9 @@
       </a>
       <ul class="toc-sub">
         <li><a href="#sub-vibe-coding">Vibe Coding 是什麼？</a></li>
-        <li><a href="#sub-section-7">從自己的需求出發</a></li>
-        <li><a href="#sub-section-8">為什麼第一個作品選班級官網</a></li>
-        <li><a href="#sub-section-9">先認識幾個名詞</a></li>
+        <li><a href="#sub-section-8">從自己的需求出發</a></li>
+        <li><a href="#sub-section-9">為什麼第一個作品選班級官網</a></li>
+        <li><a href="#sub-section-10">先認識幾個名詞</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-3">
@@ -6919,7 +6920,7 @@
         <li><a href="#sub-3-git">第 3 步：加入 Git，替網站留下存檔點</a></li>
         <li><a href="#sub-4-github-pages">第 4 步：發布到 GitHub Pages，官網有了網址</a></li>
         <li><a href="#sub-5">第 5 步：更新內容，線上跟著更新</a></li>
-        <li><a href="#sub-section-16">案例回顧</a></li>
+        <li><a href="#sub-section-17">案例回顧</a></li>
       </ul>
     </li>
     <li class="toc-group" data-section="section-4">
@@ -6934,9 +6935,9 @@
         <span class="toc-num">📌</span> 課程總結
       </a>
       <ul class="toc-sub">
-        <li><a href="#sub-section-17">技術更新好快，我好焦慮</a></li>
-        <li><a href="#sub-work-smart-dont-work-hard">Work Smart, Don't Work Hard</a></li>
-        <li><a href="#sub-section-19">回顧：這個系列走過的路</a></li>
+        <li><a href="#sub-section-18">技術更新好快，我好焦慮</a></li>
+        <li><a href="#sub-section-19">把力氣留給只有人能做的事</a></li>
+        <li><a href="#sub-section-20">回顧：這個系列走過的路</a></li>
       </ul>
     </li>
 
@@ -6968,7 +6969,7 @@
     <header class="hero">
     <div class="hero-badge"><span class="dot"></span>生成式 AI 研習｜第 4 堂</div>
     <h1>讓 AI 動手整理檔案，<br>做出班級官網</h1>
-    <p class="hero-sub">從直接讀資料夾、沿用 Skill 寫通知，到用 Markdown 編輯的班級官網，練習驗收、Git 存檔點與 GitHub Pages 發布</p>
+    <p class="hero-sub">從直接讀資料夾、沿用 Skill 寫通知、整理雜亂的班級資料夾，到用 Markdown 編輯的班級官網，練習驗收、Git 存檔點與 GitHub Pages 發布</p>
     <p class="hero-author">林鼎淵 Dean Lin — 外商工程師 · 企業內訓講師 · 暢銷書作家</p>
     <nav class="hero-nav">
       <a href="#5">課前回顧</a>
@@ -7077,7 +7078,7 @@
             <span class="class-timeline__status-tag is-current">進行中</span>
           </div>
           <div class="class-timeline__time">19:00~21:00</div>
-          <div class="class-timeline__des"><strong>讓 AI 動手整理檔案，做出班級官網</strong>：用 Claude 桌面版直接讀取電腦裡的資料夾，沿用上一堂的 Skill 把活動通知存成 Word 檔；再切到 Code 分頁，請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。</div>
+          <div class="class-timeline__des"><strong>讓 AI 動手整理檔案，做出班級官網</strong>：用 Claude 桌面版直接讀取電腦裡的資料夾，更新上一堂的 Skill 把活動通知存成 Word 檔，再盤點雜亂的班級資料夾、挑出可公開的官網素材；接著切到 Code 分頁，請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。</div>
           
         </div>
       </div>
@@ -7186,7 +7187,7 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧳</span> 這堂課會帶走的 4 個成果</div>
+      <div class="group-header"><span class="icon">🧳</span> 這堂課會帶走的 5 個成果</div>
       <div class="group-body">
         <div class="flow">
       <div class="flow-step">
@@ -7200,18 +7201,25 @@
         <div class="step-num">2</div>
         <div class="step-content">
           <div class="step-title">直接交出 Word 通知</div>
-          <div class="step-desc">上一堂的 Skill 可以直接使用，寫好的通知直接存進資料夾</div>
+          <div class="step-desc">上一堂的 Skill 更新一次就能沿用，寫好的通知直接存進資料夾</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">班級官網</div>
-          <div class="step-desc">不用寫程式，做出首頁、課表、每日聯絡簿三個分頁，內容用 Markdown 就能改</div>
+          <div class="step-title">整理雜亂資料夾</div>
+          <div class="step-desc">盤點哪些能公開、照規則改檔名，挑出能放上官網的素材</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">班級官網</div>
+          <div class="step-desc">用挑好的素材，不用寫程式就做出首頁、課表、每日聯絡簿三個分頁，內容用 Markdown 就能改</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
         <div class="step-content">
           <div class="step-title">網址與更新流程</div>
           <div class="step-desc">用 Git 留存檔點、發布到 GitHub Pages，之後改完內容，線上就會更新</div>
@@ -7230,13 +7238,6 @@
     <span class="section-label" id="ai-ai" data-seg="0"><span class="num">1</span> 讓 AI 直接動手</span>
     <h2>不用上傳，AI 直接讀你的資料夾</h2>
     
-  </div>
-
-  <div class="reveal">
-    <div class="insight">
-      <div class="insight-title">網頁版 🆚 桌面版</div>
-      <p><strong>網頁版</strong>只能處理<code>你上傳的檔案</code>；<strong>桌面版</strong>能在<code>你選定的電腦資料夾</code>裡讀檔、改檔，把成品直接存進去。</p>
-    </div>
   </div>
 
   <div class="reveal">
@@ -7260,7 +7261,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-4" data-seg="0"><span class="bar"></span>上一堂的專案，改成直接讀資料夾</div>
+    <div class="sub-title" id="sub-section-4" data-seg="0"><span class="bar"></span>將專案改成直接讀資料夾</div>
   </div>
 
   <div class="reveal">
@@ -7276,8 +7277,7 @@
     <span class="download-card__ext">ZIP</span>
   </a>
         <ul class="loose-list">
-      <li>解壓後會得到 <code>行政文件案例庫</code> 資料夾</li>
-      <li>9 份範例通知 Word + 本學期活動一覽 CSV</li>
+      <li>解壓縮後會得到 <code>行政文件案例庫</code> 資料夾</li>
     </ul>
       </div>
     </div>
@@ -7396,13 +7396,13 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-skill" data-seg="0"><span class="bar"></span>Skill 直接使用：在桌面版直接交出通知</div>
+    <div class="sub-title" id="sub-skill" data-seg="0"><span class="bar"></span>優化並使用 Skill 生成檔案</div>
   </div>
 
   <div class="reveal">
     <div class="insight">
       <div class="insight-title">上一堂在網頁版做的 Skill，今天不用重做</div>
-      <p>Skill 存在你的<code>帳號</code>裡：網頁版建立的，打開桌面版一樣找得到。<br>差別在於成品：上一堂的通知要從對話下載，今天<code>直接存進資料夾</code>。</p>
+      <p>Skill 存在你的<code>帳號</code>裡：網頁版建立的，打開桌面版一樣找得到。</p>
     </div>
   </div>
 
@@ -7441,7 +7441,7 @@
       <div class="group-body">
         <div class="insight">
       <div class="insight-title">為什麼 Skill 要先改？</div>
-      <p>上一堂的 Skill 寫的是「去<code>專案</code>找案例，不要去電腦裡找」，成品也是讓你從對話下載。<br>照原本的寫法，它會跑去雲端專案找，<code>看不到資料夾裡的檔案</code>。</p>
+      <p>上一堂的 Skill 寫的是「去<code>專案</code>找案例，不要去電腦裡找」。<br>照原本的寫法，它會跑去雲端專案找，<code>看不到資料夾裡的檔案</code>。</p>
     </div>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -7456,8 +7456,8 @@
 有選資料夾時，資料直接從資料夾讀取；沒有選資料夾時，才去專案找</div>
     </div>
         <figure class="content-image">
-      <img src="assets/claude-desktop-skill-update.png" width="1905" height="1045" alt="更新 Skill 讓他符合更多應用情境，點擊「更新」才會生效" loading="lazy">
-      <figcaption>更新 Skill 讓他符合更多應用情境，點擊「更新」才會生效</figcaption>
+      <img src="assets/claude-desktop-skill-update.png" width="1905" height="1045" alt="更新 Skill 讓它符合更多應用情境，點擊「更新」才會生效" loading="lazy">
+      <figcaption>更新 Skill 讓它符合更多應用情境，點擊「更新」才會生效</figcaption>
     </figure>
         <div class="insight">
       <div class="insight-title">Skill 記的是做事的步驟，工作環境換了，步驟就要跟著更新</div>
@@ -7492,12 +7492,60 @@
   </div>
 
   <div class="reveal">
+    <div class="sub-title" id="sub-section-6" data-seg="0"><span class="bar"></span>彙整雜亂的資料夾</div>
+  </div>
+
+  <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🏷️</span> 檔名雜亂的資料夾，也可以請它整理</div>
+      <div class="group-header"><span class="icon">🗂️</span> 亂放的班級資料夾，先請它盤點</div>
       <div class="group-body">
         <ul>
-  <li>上一堂說過<code>檔案命名要有邏輯</code>；今天的案例庫已經照「類型-主題-學年度」整理好，新通知也自動照這個規則命名</li>
-  <li>自己電腦裡那些 <code>新增文件 (3).docx</code>、<code>通知_final_改2.docx</code>，回去可以用下面的方式整理；先<code>複製一份資料夾</code>再練習</li>
+  <li>我們知道<code>檔案命名要有邏輯</code>，這樣人跟 AI 的可讀性才高，但<code>真實的資料夾通常不是這樣</code></li>
+  <li>下面這個練習資料夾，模擬一位導師一學期下來<code>隨手存的東西</code>：<code>文件1.docx</code>、<code>校外教學通知_final_改2.docx</code>、手機翻拍的 <code>IMG_4821.HEIC</code>、LINE 截圖、黑板照片都混在一起</li>
+</ul>
+        <a class="download-card" href="assets/五三班務.zip" download>
+    <span class="download-card__icon" aria-hidden="true">⬇</span>
+    <span class="download-card__body">
+      <span class="download-card__label">下載「五三班務」練習資料夾</span>
+      <span class="download-card__desc">亂放的班級資料夾：31 個檔案，Word、Excel、PDF、照片、LINE 截圖都有</span>
+    </span>
+    <span class="download-card__ext">ZIP</span>
+  </a>
+        <ul class="loose-list">
+      <li>解壓縮後選這個資料夾，貼上下面的 prompt</li>
+    </ul>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">先盤點，不要動手</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">確認資料夾的所有檔案後，列三張表給我：
+1. 可以公開給家長的內容
+2. 不能公開的檔案，說明原因
+3. 互相矛盾或過期、需要我決定的地方</div>
+    </div>
+        <figure class="content-image">
+      <img src="assets/claude-desktop-folder-inventory.png" width="1920" height="1047" alt="AI 讀完整個資料夾，列出可以公開、不能公開、需要你決定的三張表" loading="lazy">
+      <figcaption>AI 讀完整個資料夾，列出可以公開、不能公開、需要你決定的三張表</figcaption>
+    </figure>
+        <div class="insight">
+      <div class="insight-title">為什麼要先列表，不直接請它做網站？</div>
+      <p>版本、日期、個資，<code>只有你能拍板</code>；AI 能做的是把該問的問題<code>一次攤在你面前</code>。</p>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🏷️</span> 盤點完，再請它整理檔名</div>
+      <div class="group-body">
+        <ul>
+  <li>同一個資料夾，接著請它照「類型-主題-學年度」的規則改檔名；否則像 <code>新增文字文件 (2).txt</code> 這種檔名，打開前沒人知道裡面是什麼</li>
 </ul>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -7512,9 +7560,63 @@
 先列出「原檔名 → 新檔名」的對照表給我確認，我說可以再改名。
 只改檔名，不要刪除或搬移任何檔案。</div>
     </div>
+        <figure class="content-image">
+      <img src="assets/claude-desktop-folder-rename.png" width="1920" height="1047" alt="AI 讀過每份檔案後，列出「原檔名 → 新檔名」的對照表，等你確認才動手" loading="lazy">
+      <figcaption>AI 讀過每份檔案後，列出「原檔名 → 新檔名」的對照表，等你確認才動手</figcaption>
+    </figure>
         <div class="insight">
       <div class="insight-title">為什麼要先看對照表，不直接讓它改？</div>
-      <p>改名、搬移、刪除，都是<code>做了就不容易復原</code>的動作。<br>先看計畫再放行，花不到一分鐘；<code>按下同意，責任就是你的</code>。</p>
+      <p>改名、搬移、刪除，都是<code>做了就不容易復原</code>的動作。<br>先看計畫再執行，花一點時間但是更安全；<code>按下同意，責任就是你的</code>。</p>
+    </div>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">請 AI 調整</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">OK，照對照表改名。同一份文件有好幾版的，最新版用正式檔名，舊版在檔名最後加「舊版」。</div>
+    </div>
+        <figure class="content-image">
+      <img src="assets/claude-desktop-folder-rename-done.png" width="1856" height="590" alt="確認已完成檔案命名調整" loading="lazy">
+      <figcaption>確認已完成檔案命名調整</figcaption>
+    </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">📦</span> 告訴它要做班級官網，把能用的素材放進新資料夾</div>
+      <div class="group-body">
+        <ul>
+  <li>先回覆盤點第 3 張表裡<code>需要你決定的地方</code></li>
+  <li>只有部分內容能用的檔案（ex: 開學信裡有私人手機），請它<code>把能用的段落另存一份</code>，不要整份複製</li>
+</ul>
+        <div class="prompt-block">
+      <div class="prompt-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        Prompt
+        <span class="label">建立官網素材資料夾，只放可以公開的</span>
+        <button class="copy-btn" aria-label="複製" onclick="copyPrompt(this)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+      </div>
+      <div class="prompt-body">我想做一個班級官網。請新增一個「官網可用素材」資料夾，把可以公開給家長的內容「複製」進去：
+1. 不能公開的檔案一律不放；只有部分內容能用的，把能用的段落另存成新檔，私人聯絡方式與草稿備註不要帶進去
+2. 重複資訊先使用最新版
+3. 原本的檔案不要移動、修改或刪除
+完成後列出放了哪些檔案，以及每一份來自哪裡。</div>
+    </div>
+        <figure class="content-image">
+      <img src="assets/claude-desktop-folder-website-assets.png" width="1918" height="1048" alt="新資料夾只放可以公開的素材，每一份都標出來源" loading="lazy">
+      <figcaption>新資料夾只放可以公開的素材，每一份都標出來源</figcaption>
+    </figure>
+        <div class="insight">
+      <div class="insight-title">為什麼要另外建一個資料夾，不直接拿原本的做網站？</div>
+      <p>原本的資料夾是你的<code>正本</code>，裡面有學生資料、成績；官網素材資料夾只放<code>確定可以公開</code>的東西。<br>等一下做網站，只把這個資料夾交給 AI，<code>看不到的東西，就不會被放上網</code>。</p>
     </div>
       </div>
     </div>
@@ -7575,7 +7677,7 @@
         <div class="step-num">3</div>
         <div class="step-content">
           <div class="step-title">等一下做的<code>班級官網</code></div>
-          <div class="step-desc">重點並不是做出來好開心，而是<code>自己對他有多少掌控力</code></div>
+          <div class="step-desc">重點並不是做出來好開心，而是<code>自己對它有多少掌控力</code></div>
         </div>
       </div>
     </div>
@@ -7588,7 +7690,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-7" data-seg="0"><span class="bar"></span>從自己的需求出發</div>
+    <div class="sub-title" id="sub-section-8" data-seg="0"><span class="bar"></span>從自己的需求出發</div>
   </div>
 
   <div class="reveal">
@@ -7627,7 +7729,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-8" data-seg="0"><span class="bar"></span>為什麼第一個作品選班級官網</div>
+    <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>為什麼第一個作品選班級官網</div>
   </div>
 
   <div class="reveal">
@@ -7636,13 +7738,13 @@
       <div class="group-body">
         <ul>
   <li>聯絡簿抄在黑板，孩子漏抄家長<code>晚上就來訊息問</code></li>
-  <li>家長常見問題（ex: 請假怎麼請、餐費何時繳），<code>每位家長常問的問題</code></li>
+  <li>家長常見問題（ex: 請假怎麼請、週三幾點放學），<code>每位家長都問一次，你就要回一次</code></li>
   <li>班級課表發過紙本，要用的時候<code>找不到在哪裡</code></li>
   <li>最新公告發在群組，<code>兩天後就被洗到找不到</code></li>
 </ul>
         <div class="insight">
-      <div class="insight-title">嘗試把資訊彙整在一個固定的地方</div>
-      <p>「明天要帶什麼？」「報名表哪裡下載？」這些問題的答案都有，只是<code>沒有一個固定找得到的地方</code>。<br>我們可以讓班級官網成為<code>資訊匯聚的地方</code>。</p>
+      <div class="insight-title">答案都有，只是沒有固定找得到的地方</div>
+      <p>「明天要帶什麼？」「報名表哪裡下載？」這些答案都有，只是散在黑板、群組和紙本裡。<br>班級官網要做的，就是成為這個<code>固定找得到的地方</code>。</p>
     </div>
       </div>
     </div>
@@ -7704,7 +7806,7 @@
 <hr class="divider">
 <section class="section">
   <div class="reveal">
-    <div class="sub-title" id="sub-section-9" data-seg="0"><span class="bar"></span>先認識幾個名詞</div>
+    <div class="sub-title" id="sub-section-10" data-seg="0"><span class="bar"></span>先認識幾個名詞</div>
   </div>
 
   <div class="reveal">
@@ -8268,7 +8370,7 @@
   <div class="reveal">
     <div class="insight">
       <div class="insight-title">為什麼要先做 MVP？</div>
-      <p><code>先求有、再求好</code>。MVP（Minimum Viable Product）是<code>最小可行產品</code>：先做出「能用的最簡版本」，再一次加一樣東西。<br>今天的官網只有三個分頁，每完成一步都要<code>親手驗收</code>，確認沒問題才往下走。</p>
+      <p><code>先求有、再求好</code>。MVP（Minimum Viable Product）是<code>最小可行產品</code>：先做出「能用的最簡版本」。<br>今天的官網只有三個分頁，每完成一步都要<code>親手驗收</code>，確認沒問題才往下走。</p>
     </div>
   </div>
 
@@ -8284,17 +8386,19 @@
   <li>前半段寫通知，選好資料夾就能請 Claude 動手；要做網站，得<code>寫程式、執行程式、用 Git</code>，這些交給專門做這件事的 <code>Claude Code</code></li>
   <li>Claude Code 就在 Claude 桌面版裡面，也就是「Code」分頁，<code>不用另外安裝</code>；但需要付費方案</li>
 </ul>
-        <a class="download-card" href="assets/班級官網素材.zip" download>
+        <ul class="loose-list">
+      <li>在桌面新增一個資料夾，取名 <code>class-website</code></li>
+      <li>把剛剛在 <code>五三班務</code> 裡建好的 <code>官網可用素材</code> 整個資料夾，複製一份放進 <code>class-website</code> 裡</li>
+      <li>前面沒整理完的老師，下載下面的備用包，解壓縮後一樣放進 <code>class-website</code></li>
+    </ul>
+        <a class="download-card" href="assets/官網可用素材.zip" download>
     <span class="download-card__icon" aria-hidden="true">⬇</span>
     <span class="download-card__body">
-      <span class="download-card__label">下載「班級官網素材」</span>
-      <span class="download-card__desc">兩份活動通知（Word）、親子共讀夜報名表（PDF）與五年三班課表（圖片）</span>
+      <span class="download-card__label">下載「官網可用素材」備用包</span>
+      <span class="download-card__desc">前面沒整理完的老師用：兩份活動通知、親子共讀夜報名表、課表、家長常見問答、開學信的公開段落與聯絡簿草稿</span>
     </span>
     <span class="download-card__ext">ZIP</span>
   </a>
-        <ul class="loose-list">
-      <li>把下載解壓縮後的 <code>班級官網素材</code> 整個資料夾，重新命名為 <code>class-website</code></li>
-    </ul>
         <p class="loose-text"><strong>操作路徑</strong>: 左側欄上方「Code」→ 選擇環境 → 新增環境</p>
         <ul class="loose-list">
       <li>名稱 <code>class-website</code></li>
@@ -8327,7 +8431,7 @@
       <div class="flow-step">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title"><strong>Code 分頁的 Local</strong></div>
+          <div class="step-title"><strong>Code 分頁的本機環境</strong></div>
           <div class="step-desc">用的是<code>你電腦上的工具</code>，第一次做網站時，多半會缺東缺西</div>
         </div>
       </div>
@@ -8379,7 +8483,7 @@
           </tr>
           <tr>
             <td class="align-left"><strong>內容來源</strong></td>
-            <td class="align-left">最新公告從 <code>班級官網素材</code> 的兩份活動通知整理</td>
+            <td class="align-left">從 <code>官網可用素材</code> 整理：班呼、導師的話、兩則活動公告、聯絡簿</td>
           </tr>
           <tr>
             <td class="align-left"><strong>邊界</strong></td>
@@ -8399,7 +8503,7 @@
       </div>
       <div class="prompt-body">我想做「五年三班」的班級官網，給家長和學生用手機看。
 分頁有：首頁（班呼、導師的話、最新公告）、課表、每日聯絡簿。
-最新公告從「班級官網素材」資料夾的兩份活動通知整理；課表先寫「即將公布」；聯絡簿先放三天的範例。
+內容從「官網可用素材」資料夾整理；課表先寫「即將公布」；聯絡簿先放 11/24～11/26 三天。
 網站是公開的，不要放學生姓名、照片與私人電話。
 我沒有程式背景，做好後我要能直接用瀏覽器打開，並告訴我怎麼打開。</div>
     </div>
@@ -8438,7 +8542,7 @@
           </tr>
           <tr>
             <td class="align-left col-w"><strong>內容有沒有錯</strong></td>
-            <td class="align-left">對照兩份通知：親子共讀夜是 12/11（五）、校外教學是 12/23（三）</td>
+            <td class="align-left">對照兩份通知：親子共讀夜是 12/11（五）、校外教學是 12/23（三），不是舊版的 12/4、12/22</td>
             <td class="align-left">「＿＿的日期和通知不一樣，請以通知為準」</td>
           </tr>
           <tr>
@@ -8550,13 +8654,315 @@
 把每個分頁的內容抽成一份 Markdown，放在 content 資料夾：index.md（首頁）、timetable.md（課表）、contact-book.md（每日聯絡簿）。
 我改完 Markdown 就能重新產生網頁，版面維持現在的樣子，一樣能直接用瀏覽器打開。
 需要安裝工具時，先說明用途，我同意再裝。
-完成後告訴我改完要怎麼重新產生網頁，並把這個網站要遵守的規則寫進 CLAUDE.md（給 AI 看的規則檔）。</div>
+完成後告訴我改完要怎麼重新產生網頁，並把這個網站的呈現規則寫進 CLAUDE.md（給 AI 看的規則檔）：日期怎麼寫、公告與聯絡簿的格式、哪些內容不能放上網站。</div>
     </div>
         <p class="loose-text"><!-- 待補圖片：claude-code-install-approve.png｜AI 安裝工具前跳出的核准提示，以虛線紅框標出要執行的指令與核准按鈕（Mac、Windows 各一張） --></p>
         <p class="loose-text"><!-- <img src="assets/claude-code-install-approve.png" alt="安裝前會先跳出核准提示，看懂它要裝什麼再同意" class="inline-image"> --></p>
         <ul class="loose-list">
       <li>轉換完先打開網站看一次：<code>樣子和內容都跟轉換前一樣</code>，再開始自己改</li>
     </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <div class="group-block" data-seg="0">
+      <div class="group-header"><span class="icon">🗂️</span> 轉換之後，資料夾會長這樣</div>
+      <div class="group-body">
+        <iframe class="raw-html-frame" srcdoc="<!DOCTYPE html>
+<html lang=&quot;zh-Hant&quot;>
+<head>
+<meta charset=&quot;UTF-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
+<title>班級官網的資料夾：哪些你改、哪些交給 AI</title>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  /* 字級全部用 rem：嵌進講義時，腳本會把這裡的根字級對齊講義頁（A1～A5 的設定），
+     所以 1rem = 講義頁的 1rem；單獨開檔時用下面的 22px（講義預設的 A3）。 */
+  html { font-size: 22px; }
+  html, body { margin: 0; padding: 0; }
+
+  /* 變數掛在 .ps 而不是 :root：講義列印模式會把這份 HTML 攤平進頁面，:root 與 body 的規則到時對不到 */
+  .ps {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --cap-bg: #f5f5f7;
+    --text: #1a1a2e;
+    --text-2: #4f5060;
+    --muted: #7a7b8a;
+    --border: #d9d9df;
+    --row-hover: #f7f7fa;
+
+    --c-edit: #c2410c;  --c-edit-bg: #fef5ed;
+    --c-rule: #2563eb;  --c-rule-bg: #eef4ff;
+    --c-ai:   #2f855a;  --c-ai-bg:   #edf7f1;
+    --c-skip: #7a7b8a;  --c-skip-bg: #f1f1f4;
+  }
+  .ps.ps-dark {
+    --bg: #181b25;
+    --card: #1e2130;
+    --cap-bg: #1e2130;
+    --text: #e4e4e7;
+    --text-2: #b3b5c2;
+    --muted: #8b8d9a;
+    --border: #2d3148;
+    --row-hover: #23273a;
+
+    --c-edit: #f0a060;  --c-edit-bg: #2a1b10;
+    --c-rule: #7da2f7;  --c-rule-bg: #171f3a;
+    --c-ai:   #6fcf97;  --c-ai-bg:   #12281c;
+    --c-skip: #9a9cab;  --c-skip-bg: #23263a;
+  }
+
+  .ps, .ps * { box-sizing: border-box; }
+
+  .ps {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    line-height: 1.55;
+    padding: 0.75rem 0.7rem 0.8rem;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  /* ===== 旁白列：平常是標題，點一列就說明那一列 ===== */
+  .ps-cap {
+    background: var(--cap-bg);
+    border-left: 5px solid var(--cap-color, var(--muted));
+    border-radius: 10px;
+    padding: 0.45rem 0.7rem;
+    margin-bottom: 0.6rem;
+    transition: border-color 0.2s;
+  }
+  .ps-cap-label { font-size: 0.7rem; font-weight: 700; color: var(--cap-color, var(--muted)); letter-spacing: 0.4px; }
+  .ps-cap-text { font-size: 0.95rem; font-weight: 700; }
+
+  /* ===== 圖例 ===== */
+  .ps-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 0.5rem; margin-bottom: 0.55rem; }
+  .ps-chip {
+    display: inline-flex; align-items: center; gap: 0.25rem;
+    font-size: 0.68rem; font-weight: 700; line-height: 1.3;
+    color: var(--k); background: var(--kb);
+    border-radius: 999px; padding: 0.12rem 0.55rem;
+  }
+  .k-edit { --k: var(--c-edit); --kb: var(--c-edit-bg); }
+  .k-rule { --k: var(--c-rule); --kb: var(--c-rule-bg); }
+  .k-ai   { --k: var(--c-ai);   --kb: var(--c-ai-bg); }
+  .k-skip { --k: var(--c-skip); --kb: var(--c-skip-bg); }
+
+  /* ===== 資料夾樹 ===== */
+  .ps-tree { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--card); }
+  .ps-head, .ps-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.6fr) 3.2rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.32rem 0.6rem;
+  }
+  .ps-head { font-size: 0.66rem; font-weight: 700; color: var(--muted); background: var(--cap-bg); letter-spacing: 0.3px; }
+  .ps-head span:last-child, .ps-git { text-align: center; }
+  .ps-row {
+    width: 100%; font: inherit; color: inherit; text-align: left;
+    background: transparent; border: none; border-top: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    cursor: pointer; transition: background 0.15s, border-color 0.15s;
+  }
+  .ps-row:hover { background: var(--row-hover); }
+  .ps-row.ps-active { background: var(--kb); border-left-color: var(--k); }
+  .ps-row:focus-visible { outline: 2px solid var(--k); outline-offset: -2px; }
+
+  .ps-name { display: flex; align-items: center; gap: 0.35rem; min-width: 0; }
+  .ps-ind { flex-shrink: 0; display: inline-block; }
+  .ps-ind-1 { width: 0.9rem; }
+  .ps-ind-2 { width: 1.8rem; }
+  .ps-ico { flex-shrink: 0; font-size: 0.95rem; line-height: 1; }
+  .ps-file {
+    font-family: 'JetBrains Mono', 'Noto Sans TC', monospace;
+    font-size: 0.78rem; font-weight: 700; color: var(--k, var(--text));
+    overflow-wrap: break-word;
+  }
+  .ps-root .ps-file { color: var(--text); }
+  .ps-desc { font-size: 0.78rem; color: var(--text-2); line-height: 1.45; min-width: 0; }
+  .ps-git { font-size: 0.8rem; font-weight: 700; }
+  .ps-git.yes { color: var(--c-ai); }
+  .ps-git.no { color: var(--muted); }
+  .ps-later .ps-file::after {
+    content: '第 4 步'; margin-left: 0.35rem;
+    font-family: 'Noto Sans TC', sans-serif; font-size: 0.6rem; font-weight: 700;
+    color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 0 0.35rem;
+    vertical-align: 0.1rem;
+  }
+  /* 一個詞組一個 inline-block：換行只發生在詞組之間 */
+  .ps-ph { display: inline-block; }
+
+  @media (max-width: 620px) {
+    .ps { padding: 0.6rem 0.5rem; }
+    .ps-head { display: none; }
+    /* 手機：檔名獨占第一行，說明與存檔記號放第二行，檔名才不會從字中間斷開 */
+    .ps-row { grid-template-columns: minmax(0, 1fr) 1.6rem; gap: 0.1rem 0.4rem; padding: 0.4rem 0.5rem; }
+    .ps-name { grid-column: 1 / 3; grid-row: 1; }
+    .ps-ind-1 { width: 0.6rem; }
+    .ps-ind-2 { width: 1.2rem; }
+    .ps-file { font-size: 0.74rem; }
+    .ps-desc { grid-column: 1; grid-row: 2; padding-left: 1.6rem; }
+    .ps-git { grid-column: 2; grid-row: 2; }
+  }
+
+  @media print {
+    .ps-cap { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class=&quot;ps&quot; id=&quot;ps&quot;>
+
+  <div class=&quot;ps-cap&quot; id=&quot;ps-cap&quot;>
+    <div class=&quot;ps-cap-label&quot; id=&quot;ps-cap-label&quot;>class-website 資料夾（每一列都可以點）</div>
+    <div class=&quot;ps-cap-text&quot; id=&quot;ps-cap-text&quot;>你只要改 content 裡的 Markdown，其他交給 AI。</div>
+  </div>
+
+  <div class=&quot;ps-legend&quot;>
+    <span class=&quot;ps-chip k-edit&quot;>✏️ 你會改的原稿</span>
+    <span class=&quot;ps-chip k-rule&quot;>📘 給 AI 看的手冊</span>
+    <span class=&quot;ps-chip k-ai&quot;>⚙️ AI 負責，不用動</span>
+    <span class=&quot;ps-chip k-skip&quot;>🚫 不存檔、不上網</span>
+  </div>
+
+  <div class=&quot;ps-tree&quot;>
+    <div class=&quot;ps-head&quot;><span>檔案／資料夾</span><span>放什麼</span><span>存檔</span></div>
+
+    <button class=&quot;ps-row ps-root k-skip&quot; type=&quot;button&quot; data-label=&quot;整個網站&quot; data-say=&quot;在 Code 分頁開的就是這個資料夾，AI 只能在這裡面動手。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ico&quot;>📁</span><span class=&quot;ps-file&quot;>class-website/</span></span>
+      <span class=&quot;ps-desc&quot;>整個網站的資料夾</span>
+      <span class=&quot;ps-git&quot;></span>
+    </button>
+
+    <button class=&quot;ps-row k-edit&quot; type=&quot;button&quot; data-label=&quot;原稿｜你會改&quot; data-say=&quot;想改哪一頁，就打開哪一份 Markdown；改完請 AI 重新產生網頁。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>📂</span><span class=&quot;ps-file&quot;>content/</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>原稿：</span><span class=&quot;ps-ph&quot;>每個分頁一份 Markdown</span></span>
+      <span class=&quot;ps-git yes&quot;>✓</span>
+    </button>
+    <button class=&quot;ps-row k-edit&quot; type=&quot;button&quot; data-label=&quot;原稿｜首頁&quot; data-say=&quot;班呼、導師的話、最新公告都寫在這一份。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-2&quot;></span><span class=&quot;ps-ico&quot;>📝</span><span class=&quot;ps-file&quot;>index.md</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>首頁：班呼、導師的話、</span><span class=&quot;ps-ph&quot;>最新公告</span></span>
+      <span class=&quot;ps-git yes&quot;>✓</span>
+    </button>
+    <button class=&quot;ps-row k-edit&quot; type=&quot;button&quot; data-label=&quot;原稿｜課表&quot; data-say=&quot;一開始寫「即將公布」，第 5 步再把課表圖片轉成表格放進來。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-2&quot;></span><span class=&quot;ps-ico&quot;>📝</span><span class=&quot;ps-file&quot;>timetable.md</span></span>
+      <span class=&quot;ps-desc&quot;>課表</span>
+      <span class=&quot;ps-git yes&quot;>✓</span>
+    </button>
+    <button class=&quot;ps-row k-edit&quot; type=&quot;button&quot; data-label=&quot;原稿｜每日聯絡簿&quot; data-say=&quot;你最常改的一份：每天在最上面加一天。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-2&quot;></span><span class=&quot;ps-ico&quot;>📝</span><span class=&quot;ps-file&quot;>contact-book.md</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>每日聯絡簿，</span><span class=&quot;ps-ph&quot;>最新的一天在最上面</span></span>
+      <span class=&quot;ps-git yes&quot;>✓</span>
+    </button>
+    <button class=&quot;ps-row k-edit&quot; type=&quot;button&quot; data-label=&quot;原稿｜附件&quot; data-say=&quot;公告要附的檔案放這裡，Markdown 用「files/檔名」連過來。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-2&quot;></span><span class=&quot;ps-ico&quot;>📎</span><span class=&quot;ps-file&quot;>files/</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>公告的附件</span><span class=&quot;ps-ph&quot;>（ex: 空白報名表）</span></span>
+      <span class=&quot;ps-git yes&quot;>✓</span>
+    </button>
+
+    <button class=&quot;ps-row k-rule&quot; type=&quot;button&quot; data-label=&quot;員工手冊｜給 AI 看&quot; data-say=&quot;日期怎麼寫、公告和聯絡簿的格式、什麼不能放上網：AI 每次開工前都會先讀。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>📘</span><span class=&quot;ps-file&quot;>CLAUDE.md</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>呈現規則：日期寫法、</span><span class=&quot;ps-ph&quot;>公告與聯絡簿格式</span></span>
+      <span class=&quot;ps-git yes&quot;>✓</span>
+    </button>
+
+    <button class=&quot;ps-row k-ai&quot; type=&quot;button&quot; data-label=&quot;印刷廠｜AI 負責&quot; data-say=&quot;把 Markdown 套上版面變成網頁的程式，AI 寫的，你不用打開。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>🖨️</span><span class=&quot;ps-file&quot;>build.mjs</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>轉換程式（印刷廠），</span><span class=&quot;ps-ph&quot;>連同 package.json</span></span>
+      <span class=&quot;ps-git yes&quot;>✓</span>
+    </button>
+    <button class=&quot;ps-row ps-later k-ai&quot; type=&quot;button&quot; data-label=&quot;自動送印｜AI 負責&quot; data-say=&quot;GitHub Actions 的設定，第 4 步發布時 AI 才會建立。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>🤖</span><span class=&quot;ps-file&quot;>.github/</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>自動送印小幫手</span><span class=&quot;ps-ph&quot;>（GitHub Actions）的設定</span></span>
+      <span class=&quot;ps-git yes&quot;>✓</span>
+    </button>
+
+    <button class=&quot;ps-row k-skip&quot; type=&quot;button&quot; data-label=&quot;印好的網頁｜不存檔&quot; data-say=&quot;每次重新產生都會蓋掉，不要手改；線上的網頁由 GitHub Actions 重新印。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>🌐</span><span class=&quot;ps-file&quot;>site/</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>產生出來的網頁，</span><span class=&quot;ps-ph&quot;>雙擊 index.html 預覽</span></span>
+      <span class=&quot;ps-git no&quot;>✗</span>
+    </button>
+    <button class=&quot;ps-row k-skip&quot; type=&quot;button&quot; data-label=&quot;工具箱｜不存檔&quot; data-say=&quot;AI 安裝的工具，每台電腦自己裝，不用存。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>🧰</span><span class=&quot;ps-file&quot;>node_modules/</span></span>
+      <span class=&quot;ps-desc&quot;>AI 安裝的工具</span>
+      <span class=&quot;ps-git no&quot;>✗</span>
+    </button>
+    <button class=&quot;ps-row k-skip&quot; type=&quot;button&quot; data-label=&quot;素材｜不上網&quot; data-say=&quot;從班務資料夾挑出來的素材，AI 從這裡抄內容；原檔不存進 Git，也不放上網。&quot;>
+      <span class=&quot;ps-name&quot;><span class=&quot;ps-ind ps-ind-1&quot;></span><span class=&quot;ps-ico&quot;>🗂️</span><span class=&quot;ps-file&quot;>官網可用素材/</span></span>
+      <span class=&quot;ps-desc&quot;><span class=&quot;ps-ph&quot;>前面挑好的素材，</span><span class=&quot;ps-ph&quot;>只給 AI 參考</span></span>
+      <span class=&quot;ps-git no&quot;>✗</span>
+    </button>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('ps');
+  var capBox = document.getElementById('ps-cap');
+  var capLabel = document.getElementById('ps-cap-label');
+  var capText = document.getElementById('ps-cap-text');
+  var rows = Array.prototype.slice.call(root.querySelectorAll('.ps-row'));
+  var idle = { label: capLabel.textContent, text: capText.textContent };
+  var current = -1;
+
+  // i = -1 回到初始狀態
+  function show(i) {
+    current = i;
+    rows.forEach(function (el, k) { el.classList.toggle('ps-active', k === i); });
+    if (i < 0) {
+      capLabel.textContent = idle.label;
+      capText.textContent = idle.text;
+      capBox.style.removeProperty('--cap-color');
+      return;
+    }
+    var el = rows[i];
+    capLabel.textContent = el.querySelector('.ps-file').textContent + '｜' + el.dataset.label;
+    capText.textContent = el.dataset.say;
+    capBox.style.setProperty('--cap-color', getComputedStyle(el).getPropertyValue('--k'));
+  }
+
+  rows.forEach(function (el, k) {
+    el.addEventListener('click', function () { show(k === current ? -1 : k); });
+  });
+
+  // ===== 跟講義頁同步：深淺色（沒有 data-theme = 深色，'light' = 淺色）與字級（A1～A5） =====
+  function syncWithPage() {
+    var dark;
+    try {
+      if (window.parent === window) throw new Error('standalone');
+      var pageRoot = window.parent.document.documentElement;
+      dark = pageRoot.getAttribute('data-theme') !== 'light';
+      document.documentElement.style.fontSize = window.parent.getComputedStyle(pageRoot).fontSize;
+    } catch (e) {
+      dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    root.classList.toggle('ps-dark', dark);
+    if (current >= 0) show(current);
+  }
+  syncWithPage();
+  try {
+    new MutationObserver(syncWithPage).observe(
+      window.parent.document.documentElement,
+      { attributes: true, attributeFilter: ['data-theme', 'style'] }
+    );
+  } catch (e) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncWithPage);
+  }
+})();
+</script>
+</body>
+</html>
+" frameborder="0" scrolling="no" style="width:100%;border:none;overflow:hidden" onload="(function(f){var sync=function(){try{var d=f.contentDocument;if(!d||!d.documentElement)return;var s=f.style,p=s.height;s.height='0px';var h=d.documentElement.scrollHeight;s.height=h?h+'px':p;}catch(e){}};sync();try{var d=f.contentDocument;if(d&&'ResizeObserver' in window){var ro=new ResizeObserver(sync);ro.observe(d.documentElement);if(d.body)ro.observe(d.body);}if(f.contentWindow){f.contentWindow.addEventListener('resize',sync);}window.addEventListener('resize',sync);if(d&&d.fonts&&d.fonts.ready)d.fonts.ready.then(sync);}catch(e){}})(this)"></iframe>
+        <div class="insight">
+      <div class="insight-title">CLAUDE.md 是什麼？</div>
+      <p>給 AI 看的<code>員工手冊</code>：日期寫成「11/27（五）」、截止日用粗體、聯絡簿最新的一天放最上面，這些<code>呈現規則</code>都寫在裡面。<br>你只管改 Markdown 的內容，AI 照手冊把它排成網頁；之後開新對話也會先讀這份，<code>不用每次重新交代</code>。</p>
+    </div>
       </div>
     </div>
   </div>
@@ -8622,7 +9028,7 @@
 
 - 國語：習作第 12 課，完成第 5～6 頁
 - 數學：課本第 70～71 頁
-- 親子共讀夜報名表，12/4（五）前交回</div>
+- 親子共讀夜報名表，**12/4（五）前交回**</div>
     </div>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -8667,7 +9073,7 @@
         <ul class="loose-list">
       <li>前面有跟上的老師<code>不用下載</code>，直接往下做</li>
       <li>把桌面上做到一半的 <code>class-website</code> 改成別的名字（ex: <code>class-website-舊</code>），再把解壓縮後的資料夾改名為 <code>class-website</code></li>
-      <li>把 <code>班級官網素材</code> 資料夾放進新的 <code>class-website</code>，後面的練習會用到</li>
+      <li>把 <code>官網可用素材</code> 資料夾放進新的 <code>class-website</code>，後面的練習會用到</li>
       <li>在 Code 分頁開啟這個資料夾，跟 Claude 說「安裝這個專案需要的套件並產生網頁」，就能從這一步接著做</li>
     </ul>
       </div>
@@ -8681,7 +9087,6 @@
         <ul>
   <li>打 Boss 前先存檔，打輸了就<code>讀檔重來</code>；Git 就是替資料夾裡的檔案<code>存檔</code>的工具</li>
   <li>AI 改東西很快，改壞也很快；有了存檔點，<code>改壞了就回到上一版</code></li>
-  <li>你不用背指令，用白話跟 Claude 說就好</li>
 </ul>
         <div class="table-wrap">
       <table class="content-table">
@@ -8734,7 +9139,7 @@
       <div class="group-header"><span class="icon">💾</span> 建立第一個存檔點</div>
       <div class="group-body">
         <ul>
-  <li>存檔點會記下「誰存的」，要用到 GitHub 帳號：還沒有的話，先到 <a href="https://github.com" target="_blank" rel="noopener">github.com</a> 註冊，有 Email 就能辦，免費</li>
+  <li>下一步要發布到 GitHub，先準備好帳號：還沒有的話，先到 <a href="https://github.com" target="_blank" rel="noopener">github.com</a> 註冊，有 Email 就能辦，免費</li>
   <li>帳號名稱會出現在官網的網址裡（<code>https://你的帳號.github.io/class-website/</code>），取一個<code>適合給家長看</code>的名稱</li>
 </ul>
         <div class="prompt-block">
@@ -8747,7 +9152,7 @@
         </button>
       </div>
       <div class="prompt-body">幫這個網站加上 Git，建立第一個存檔點，說明寫「班級官網第一版」。
-- 不需要放上網路的東西不要存進去（ex: 「班級官網素材」資料夾）
+- 不需要放上網路的東西不要存進去（ex: 「官網可用素材」資料夾）
 - 需要設定名稱與信箱時先問我；之後會公開，信箱不要用我的私人信箱
 完成後用白話告訴我存了哪些檔案。</div>
     </div>
@@ -8773,11 +9178,14 @@
           </tr>
           <tr>
             <td class="align-left"><strong>沒存進去的東西</strong></td>
-            <td class="align-left"><code>班級官網素材</code>、安裝的套件、<code>site</code> 資料夾都不在裡面</td>
+            <td class="align-left"><code>官網可用素材</code>、AI 安裝的工具（<code>node_modules</code>）、產生出來的網頁（<code>site</code> 資料夾）都不在裡面</td>
           </tr>
         </tbody>
       </table>
     </div>
+        <ul class="loose-list">
+      <li>網頁之後由 GitHub Actions 重新產生，所以存檔只要留<code>原稿（Markdown）與轉換程式</code></li>
+    </ul>
         <div class="insight">
       <div class="insight-title">為什麼信箱不能用私人信箱？</div>
       <p>每個存檔點都會記下「誰存的」。等一下專案要公開，<code>存檔紀錄裡的信箱也會跟著公開</code>。<br>GitHub 有提供一組不公開的信箱，請 AI 幫你設定就好。</p>
@@ -8875,7 +9283,7 @@
           </tr>
           <tr>
             <td class="align-left"><strong>GitHub 專案的檔案列表</strong></td>
-            <td class="align-left">沒有 <code>班級官網素材</code> 資料夾</td>
+            <td class="align-left">沒有 <code>官網可用素材</code> 資料夾</td>
           </tr>
         </tbody>
       </table>
@@ -8990,7 +9398,7 @@
         </button>
       </div>
       <div class="prompt-body">在首頁的最新公告新增一則：「親子共讀夜報名表開放下載，請於 12/4（五）前交回」。
-把「班級官網素材」裡的「親子共讀夜報名表.pdf」附在這則公告，家長點了就能下載。
+把「官網可用素材」裡的親子共讀夜報名表（PDF）附在這則公告，家長點了就能下載。
 先重新產生網頁讓我預覽，我確認沒問題，你再存檔推上 GitHub。</div>
     </div>
         <div class="table-wrap">
@@ -9019,10 +9427,10 @@
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🗓️</span> 練習三：拖入課表圖片，轉成 Markdown</div>
+      <div class="group-header"><span class="icon">🗓️</span> 練習三：課表圖片轉成 Markdown</div>
       <div class="group-body">
         <ul>
-  <li>把 <code>班級官網素材</code> 裡的 <code>五年三班課表.png</code> 拖進對話框，再貼上下面的 prompt</li>
+  <li>課表圖片已經在 <code>官網可用素材</code> 裡，不用另外上傳，直接貼上下面的 prompt</li>
 </ul>
         <div class="prompt-block">
       <div class="prompt-header">
@@ -9033,7 +9441,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         </button>
       </div>
-      <div class="prompt-body">把這張課表轉成課表分頁的 Markdown，取代「課表即將公布」。
+      <div class="prompt-body">把「官網可用素材」裡的課表圖片，轉成課表分頁的 Markdown，取代「課表即將公布」。
 科任課要保留老師與教室，表格下方的備註也要保留；看不清楚的格子寫「待確認」，不要猜。
 先重新產生網頁讓我預覽，我確認沒問題，你再存檔推上 GitHub。</div>
     </div>
@@ -9052,6 +9460,10 @@
           <tr>
             <td class="align-left"><strong>總節數</strong></td>
             <td class="align-left">一週 32 節：週一、二、四、五各 7 節，週三 4 節</td>
+          </tr>
+          <tr>
+            <td class="align-left"><strong>調課</strong></td>
+            <td class="align-left">用的是 10/5 調課後的版本：週二第四節音樂、週四第四節健康</td>
           </tr>
           <tr>
             <td class="align-left"><strong>週三下午</strong></td>
@@ -9123,7 +9535,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-16" data-seg="0"><span class="bar"></span>案例回顧</div>
+    <div class="sub-title" id="sub-section-17" data-seg="0"><span class="bar"></span>案例回顧</div>
   </div>
 
   <div class="reveal">
@@ -9256,7 +9668,7 @@
 </section>
 
 <hr class="divider">
-<section class="interactive-page" id="section-4-interactive">
+<section class="interactive-page" id="summary-interactive">
   <div class="interactive-session">
     <div class="interactive-session__deco" aria-hidden="true">💬</div>
     <div class="interactive-session__inner">
@@ -9279,7 +9691,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-17" data-seg="0"><span class="bar"></span>技術更新好快，我好焦慮</div>
+    <div class="sub-title" id="sub-section-18" data-seg="0"><span class="bar"></span>技術更新好快，我好焦慮</div>
   </div>
 
   <div class="reveal">
@@ -9400,7 +9812,7 @@
       <div class="group-body">
         <ul>
   <li>過去想要一個小工具，得排隊<code>等工程師</code>，甚至需要花上<code>幾萬到數十萬</code>；現在 AI 讓你有機會先<code>自己做出雛形</code></li>
-  <li>別因為「怕犯錯」就不敢碰：做中學，你才會真正知道 <code>AI 能做什麼、不能做什麼</code></li>
+  <li>心裡冒出「AI 做得到嗎？」就直接讓它試：做中學，你才會真正知道 <code>AI 能做什麼、不能做什麼</code></li>
 </ul>
         <div class="insight">
       <div class="insight-title">AI 就像一面鏡子，它會放大你原本的樣子</div>
@@ -9412,7 +9824,7 @@
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-work-smart-dont-work-hard" data-seg="0"><span class="bar"></span>Work Smart, Don't Work Hard</div>
+    <div class="sub-title" id="sub-section-19" data-seg="0"><span class="bar"></span>把力氣留給只有人能做的事</div>
   </div>
 
   <div class="reveal">
@@ -9428,82 +9840,11 @@
   </div>
 
   <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🙌</span> 不要有預設立場，先讓 AI 試試看</div>
-      <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">我不確定 AI 能不能做到</div>
-          <div class="step-desc">如果腦海冒出這個想法，就<code>直接讓 AI 嘗試看看</code></div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">把執行交給 AI，把判斷留給自己</div>
-          <div class="step-desc">這才是<code>從容的節奏</code></div>
-        </div>
-      </div>
-    </div>
-      </div>
-    </div>
+    <div class="sub-title" id="sub-section-20" data-seg="0"><span class="bar"></span>回顧：這個系列走過的路</div>
   </div>
 
   <div class="reveal">
-    <div class="sub-title" id="sub-section-19" data-seg="0"><span class="bar"></span>回顧：這個系列走過的路</div>
-  </div>
-
-  <div class="reveal">
-    <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🧭</span> 從聊天工具，升級成工作幫手</div>
-      <div class="group-body">
-        <div class="flow">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <div class="step-title">第 1 堂 ChatGPT</div>
-          <div class="step-desc">認識網頁版與桌面版、三家 AI 功能對標，練習 Prompt 與圖片生成，再用記憶、外掛程式與專案建立教學助理</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <div class="step-title">第 2 堂 Codex</div>
-          <div class="step-desc">讓 AI 直接讀資料夾、把手寫報名表照片轉成 Excel，再用現成 Skill 交付信件、配圖、資訊卡、線上講義與校園簡報</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <div class="step-title">第 3 堂 Claude</div>
-          <div class="step-desc">用 Connector 串接工具、Project 固定背景，再把好方法做成 Skill</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <div class="step-title">第 4 堂 Claude 桌面版</div>
-          <div class="step-desc">選定資料夾就不用上傳，沿用上一堂的 Skill，把通知直接存成 Word 檔</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">5</div>
-        <div class="step-content">
-          <div class="step-title">做出班級官網</div>
-          <div class="step-desc">先說需求做出首頁、課表、每日聯絡簿，符合期待再把內容轉成 Markdown</div>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">6</div>
-        <div class="step-content">
-          <div class="step-title">發布與更新</div>
-          <div class="step-desc">用 Git 留存檔點、發布到 GitHub Pages，改完內容推上去，線上就更新</div>
-        </div>
-      </div>
-    </div>
-        <div class="summary-grid">
+    <div class="summary-grid">
       <div class="summary-card">
         <div class="sc-icon">💬</div>
         <h4>ChatGPT</h4>
@@ -9522,7 +9863,7 @@
       <div class="summary-card">
         <div class="sc-icon">🗂️</div>
         <h4>Claude 桌面版</h4>
-        <p>選定電腦資料夾就不用上傳，Skill 跟著帳號走，成品直接存進資料夾</p>
+        <p>選定資料夾就不用上傳；盤點、改檔名、挑出可公開素材，成品直接存進資料夾</p>
       </div>
       <div class="summary-card">
         <div class="sc-icon">🌐</div>
@@ -9535,13 +9876,11 @@
         <p>驗收通過才存檔，推上去就自動發布；改壞了就回到上一版</p>
       </div>
     </div>
-      </div>
-    </div>
   </div>
 
   <div class="reveal">
     <div class="group-block" data-seg="0">
-      <div class="group-header"><span class="icon">🪞</span> AI 就像是一面鏡子：讓它回頭看看「你」</div>
+      <div class="group-header"><span class="icon">🔍</span> 讓 AI 幫你復盤：回頭看看「你」</div>
       <div class="group-body">
         <p>這個系列都在分享<code>AI 的技巧</code>，但如果你已經使用了一段時間，過去<code>問過的問題、踩過的坑、在意的細節</code>都已經默默被 AI 記錄了。</p>
         <p class="loose-text">你可以讓 AI 幫你<strong>復盤</strong>：看清自己怎麼思考、如何解決問題，再把那些<code>一再重複的提問，變成下一個專屬於你的 Skill</code>。</p>
@@ -9615,7 +9954,7 @@
 </section>
 
 <hr class="divider">
-<section class="qa-page" id="summary-qa">
+<section class="qa-page" id="summary-qa-2">
   <div class="qa-session">
     <div class="qa-session__deco" aria-hidden="true">?</div>
     <div class="qa-session__inner">
@@ -10001,7 +10340,7 @@
 
     // Scroll spy — 這兩個陣列需根據實際內容填入
     var sectionIds = ["instructor","5","ai-ai","section-2","section-3","section-4","summary"];        // e.g. ['instructor','new-project','old-project','testing','summary']
-    var allAnchorIds = ["instructor","5","sub-sop","sub-section-2","ai-ai","sub-claude","sub-section-4","sub-skill","section-2","sub-vibe-coding","sub-section-7","sub-section-8","sub-section-9","section-3","sub-code-ai","sub-1","sub-2-markdown","sub-3-git","sub-4-github-pages","sub-5","sub-section-16","section-4","summary","sub-section-17","sub-work-smart-dont-work-hard","sub-section-19"];   // e.g. ['instructor','new-project','sub-create-project',...]
+    var allAnchorIds = ["instructor","5","sub-sop","sub-section-2","ai-ai","sub-claude","sub-section-4","sub-skill","sub-section-6","section-2","sub-vibe-coding","sub-section-8","sub-section-9","sub-section-10","section-3","sub-code-ai","sub-1","sub-2-markdown","sub-3-git","sub-4-github-pages","sub-5","sub-section-17","section-4","summary","sub-section-18","sub-section-19","sub-section-20"];   // e.g. ['instructor','new-project','sub-create-project',...]
     // 兩張對照表由 toc 段填入；updateToc 在任何時機呼叫都讀得到（未填時退回第一個章節）
     var sectionForAnchor = {};
     var subForAnchor = {};

@@ -18,7 +18,7 @@
 - label: 第 4 堂｜Claude Code
   date: 11/27
   time: 19:00~21:00
-  des: **讓 AI 動手整理檔案，做出班級官網**：用 Claude 桌面版直接讀取電腦裡的資料夾，沿用上一堂的 Skill 把活動通知存成 Word 檔；再切到 Code 分頁，請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。
+  des: **讓 AI 動手整理檔案，做出班級官網**：用 Claude 桌面版直接讀取電腦裡的資料夾，更新上一堂的 Skill 把活動通知存成 Word 檔，再盤點雜亂的班級資料夾、挑出可公開的官網素材；接著切到 Code 分頁，請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。
   link: [查看講義](../claudecode/index.html)
 [/time]
 
