@@ -453,7 +453,7 @@
 | 回信模板 | 中文、英文各一份，每種回應類型的寫法 | 語氣是從我寄出去的信整理的 |
 | 婉拒紀錄 | 不接的品類、過去婉拒過誰與原因 | 每次做完決定都會`回寫`一筆 |
 
-![根據個人經驗設計的 Skill](assets/skill-sponsorship-folder.png)
+![根據個人經驗設計的 Skill（sponsorship-negotiator）](assets/skill-sponsorship-folder.png)
 
 ### ▶️ 示範：從 Gmail 找出邀約信，交給我的 Skill
 
@@ -847,7 +847,7 @@
 
 ![業配影片：在 MiniMax Code 用白話文自動剪 NG、照講稿校正字幕、加上動畫與音效](assets/minimax-code-auto-editing.png)
 
-![AI 郵報 Skill Shot 的分享主題：AI 負責剪片、你負責驗收，用剪乾淨、構圖與風格、確認分鏡、預覽與修改四道關卡打造自動化剪輯工作流](assets/aipost-skill-shot.jpg)
+![AI 郵報 Skill Shot 的分享主題：AI 負責剪片、你負責驗收，用剪乾淨、構圖與風格、確認分鏡、預覽與修改四道關卡打造自動化剪輯工作流](assets/aipost-skill-shot.jpg){max-width=500px}
 
 > **工具一直在用，就會一直變好**
 > [這套剪輯工具](https://github.com/dean9703111/auto-edit-workspace)到現在更新了 `70 多次`
