@@ -3,22 +3,22 @@
   date: 11/23
   time: 19:00~21:00
   des: **釐清需求，建立專屬的教學助理**：認識網頁版與桌面版、三家 AI 功能對標，學會去識別化與 Prompt，生成教材圖片，再用記憶、外掛程式與專案打造教學助理。
-  link: [查看講義](../chatgpt/index.html)
+  link: [查看講義](../chatgpt/)
 - label: 第 2 堂｜Codex
   date: 11/24
   time: 19:00~21:00
   des: **讓 AI 動手處理檔案，用 Skill 交付教材**：手寫報名表拍張照就變 Excel；把常做的事存成 Skill，照你的語氣寫信，交出資訊卡、講義與簡報。
-  link: [查看講義](../codex/index.html)
+  link: [查看講義](../codex/)
 - label: 第 3 堂｜Claude
   date: 11/26
   time: 19:00~21:00
   des: **串接工具、建立知識庫，把好方法變 SOP**：先把學生名冊去識別化，再用 Connector 整理信件與行事曆、用 Project 建立活動知識庫、把家長通知流程存成 Skill。
-  link: [查看講義](../claude/index.html)
+  link: [查看講義](../claude/)
 - label: 第 4 堂｜Claude Code
   date: 11/27
   time: 19:00~21:00
   des: **讓 AI 動手整理檔案，做出班級官網**：把雜亂的班級資料夾整理乾淨，再做出改文字就能更新、改壞也能還原的班級官網，家長用手機就能看。
-  link: [查看講義](../claudecode/index.html)
+  link: [查看講義](../claudecode/)
   active: true
 [/time]
 
