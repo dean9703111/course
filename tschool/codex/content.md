@@ -7,7 +7,7 @@
 - label: 第 2 堂｜Codex
   date: 11/24
   time: 19:00~21:00
-  des: **讓 AI 動手處理檔案，用 Skill 交付教材**：安裝 ChatGPT 桌面版，讓 AI 直接讀資料夾、把手寫報名表照片轉成 Excel；再用白話生成報名表登記、每週回顧與寫信風格的 Skill，最後切到 Codex，用資訊卡、線上講義、校園簡報 Skill 交出成品。
+  des: **讓 AI 動手處理檔案，用 Skill 交付教材**：手寫報名表拍張照就變 Excel；把常做的事存成 Skill，照你的語氣寫信，交出資訊卡、講義與簡報。
   link: [查看講義](../codex/index.html)
   active: true
 - label: 第 3 堂｜Claude
@@ -18,7 +18,7 @@
 - label: 第 4 堂｜Claude Code
   date: 11/27
   time: 19:00~21:00
-  des: **讓 AI 動手整理檔案，做出班級官網**：用 Claude 桌面版直接讀取電腦裡的資料夾，更新上一堂的 Skill 把活動通知存成 Word 檔，再盤點雜亂的班級資料夾、挑出可公開的官網素材；接著切到 Code 分頁，請 AI 檢查並安裝環境，做出用 Markdown 編輯的班級官網，加上 Git 存檔點並發布到 GitHub Pages。
+  des: **讓 AI 動手整理檔案，做出班級官網**：把雜亂的班級資料夾整理乾淨，再做出改文字就能更新、改壞也能還原的班級官網，家長用手機就能看。
   link: [查看講義](../claudecode/index.html)
 [/time]
 

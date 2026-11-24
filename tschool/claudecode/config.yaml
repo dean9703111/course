@@ -2,7 +2,7 @@ page:
   title: "Claude Code｜讓 AI 動手整理檔案，做出班級官網"
   badge: "生成式 AI 研習｜第 4 堂"
   hero_title: "讓 AI 動手整理檔案，<br>做出班級官網"
-  subtitle: "從直接讀資料夾、沿用 Skill 寫通知、整理雜亂的班級資料夾，到用 Markdown 編輯的班級官網，練習驗收、Git 存檔點與 GitHub Pages 發布"
+  subtitle: "從整理雜亂的資料夾到架好班級官網，練習驗收、存檔與發布"
   year: 2026
 seo:
   default_image: "https://deanlin.net/course/tschool/claudecode/assets/og-image.jpg"
