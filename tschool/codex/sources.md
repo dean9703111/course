@@ -12,6 +12,7 @@
 | 認識 Skill（8 分） | [安美諾](../../amiino/content.md)「技能封裝」第 1250～1283 行；[BiCS 第 2 堂](../../bics/lesson2/content.md)「為什麼要打包成 Skill？」 | 兩個痛點 flow 改成校園情境；保留 SOP 手冊比喻、Prompt／專案／Skill 對照表；匯入路徑（外掛程式 → 技能 → ＋ → 從電腦上傳）與 `@` 呼叫沿用安美諾 |
 | ChatGPT 的 Skill（23 分） | 安美諾「📝 行銷文案」「🖼️ 圖片設計」（第 1340～1414 行）；本堂舊版「技能一：資訊卡」 | 只示範非程式類：寫信風格先用講者自己的 `sponsorship-negotiator`（合作邀約回覆，只寫檔案類別，不放金額與品牌名稱）說明 Skill 需要個人背景與持續更新，再給 `teacher-letter-style` 當起點並請 AI 問出「我的寫信背景」；`teacher-image-style`（教材配圖，沿用第 1 堂四種圖）；再用資訊卡示範「這個 Skill 用到了程式」，附五個 Skill 的程式對照表 |
 | Codex（23 分） | 本堂舊版「初探 Codex」「在 Codex 安裝與呼叫 Skill」「技能二、三」；安美諾「📊 簡報設計」 | 新增「雲端執行 vs 在你的電腦執行」對照表（講者經驗）；安裝交給 Codex、缺工具先說明再安裝的 Prompt；資訊卡在 Codex 重做一次做對比；線上講義與校園簡報沿用 |
+| 一魚多吃（2026-11-24 新增，時間待排） | 講師口述（2026-11-24）：文章改影片、逐字稿用 Skill 生成文章、剪片工具延伸成業配（MiniMax Code）與 AI 郵報分享、工具更新 70 多次、PressPlay《Claude 自動化實戰》6 小時課的剪輯帳（約 18 小時素材、外包報價約 50 萬、過去 Review 30 小時以上） | 改寫成「我」的現身說法；業配點名 MiniMax Code 並附影片封面（`assets/minimax-code-auto-editing.png`），AI 郵報附連結與 Skill Shot 海報（`assets/aipost-skill-shot.jpg`，由講師提供的 PNG 轉 JPG），PressPlay 嵌入試閱影片；最後回扣本堂做過的資訊卡、Word 轉簡報、線上簡報，給一個「盤點累積、先提案」的 prompt |
 | 課程總結（9 分） | 本堂舊版總結；[EDA](../../eda/content.md)、[緯穎](../../wiwynn/content.md)「🎁 幕後製作心得」 | summary、交付檢查、Q&A 依新流程更新；bonus 換回各講義通用的講義製作心路歷程五步驟，加一句「迭代超過 100 次」（出自安美諾講義） |
 
 已刪除：「自動填入不同格式的表單」（申請表與簽辦草稿）、「圖片起手式」「教材與活動配圖」兩章（圖片生成已移到第 1 堂）。
@@ -25,6 +26,7 @@
 | Q3 備課故事（PPT 20 小時 → Markdown＋Skill 3 小時） | Skill 起手式 → 技能二「🧑‍🏫 你現在看的這份講義，就是這樣做出來的」 | 卡片條列 |
 | Q3 技巧一（Markdown 結構化，過去講座變素材） | 備課資源彙整 →「為什麼要把備課資源整理成結構化文件？」 | Insight |
 | Q3 技巧三（最多時間花在驗證，責任自己承擔） | 備課資源彙整 → 對照預期結果之後「把最多時間花在驗證」 | Insight |
+| Q1 剪片例子（10 分鐘影片要剪 1 天、經驗回寫讓下一支站在更高的起點） | 一魚多吃 →「🎬 一開始，只是給自己用的剪片工具」與「工具一直在用，就會一直變好」 | 卡片條列＋Insight |
 | Q5 前半到中段（圖片辨識、例外規則、少量試跑、人工驗證） | 報名表照片轉 Excel →「📷 過去只能人工判讀」卡片、「先用 3～5 張試跑」「AI 完成後，還是要人工驗證」兩個 Insight、lab-session 先放 3 張 | 卡片＋Insight＋lab 設計 |
 
 未使用：Q3 技巧二（選擇題發想，留給第 1 堂）、Q5 開頭「先找重複、格式固定、你能判斷對錯的任務」（留給第 4 堂系列收尾）。
@@ -33,7 +35,8 @@
 
 | 影片 | 位置 | 形式 |
 |---|---|---|
-| [【ChatGPT Codex 實戰】將 Vibe Coding 成果從「用完就丟」，變成「可持續優化」的 Agent Skills](https://youtu.be/0pZri5f_tfk) | Skill 起手式 → 認識 Skill | `[youtube]` 嵌入（本堂唯一嵌入） |
+| [【ChatGPT Codex 實戰】將 Vibe Coding 成果從「用完就丟」，變成「可持續優化」的 Agent Skills](https://youtu.be/0pZri5f_tfk) | Skill 起手式 → 認識 Skill | `[youtube]` 嵌入 |
+| [《Claude AI 實戰落地｜打造高效AI 團隊，從日常雜務到系統化SOP》線上課程｜試閱影片](https://youtu.be/lP3sqNUVm_I) | 一魚多吃 →「💰 原本打算外包，最後自己剪」 | `[youtube]` 嵌入（用 AI 剪輯工作流剪的成品） |
 | [【Antigravity Agent Skills 教學】當別人還在複製貼上，你的 AI 已經自動搞定](https://youtu.be/xe00zJEtuMo) | Skill 起手式 →「🌐 不同 AI Agent 都有 Skill」 | 連結 |
 | [【Manus Skill 技能教學】教會 AI 一次，他永遠記得！](https://youtu.be/lKiwb381mfU) | 同上 | 連結 |
 | [【Manus 桌面版教學】讓 AI 操作電腦，從資料夾彙整報告、辨識圖片寫 Excel、自動填表單](https://youtu.be/WGHQuCI3iJk) | 報名表照片轉 Excel →「🔁 同樣的事，換一個 Agent 也做得到」 | 連結 |
