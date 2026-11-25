@@ -117,8 +117,9 @@
   .ps-git { font-size: 0.8rem; font-weight: 700; }
   .ps-git.yes { color: var(--c-ai); }
   .ps-git.no { color: var(--muted); }
-  .ps-later .ps-file::after {
-    content: '第 4 步'; margin-left: 0.35rem;
+  /* 檔名後面的小標籤：之後才出現（第 5 步）或不一定會有的項目，文字寫在 data-tag */
+  .ps-file[data-tag]::after {
+    content: attr(data-tag); margin-left: 0.35rem;
     font-family: 'Noto Sans TC', sans-serif; font-size: 0.6rem; font-weight: 700;
     color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 0 0.35rem;
     vertical-align: 0.1rem;
@@ -178,7 +179,7 @@
       <span class="ps-desc"><span class="ps-ph">首頁：班呼、導師的話、</span><span class="ps-ph">最新公告</span></span>
       <span class="ps-git yes">✓</span>
     </button>
-    <button class="ps-row k-edit" type="button" data-label="原稿｜課表" data-say="一開始寫「即將公布」，第 5 步再把課表圖片轉成表格放進來。">
+    <button class="ps-row k-edit" type="button" data-label="原稿｜課表" data-say="一開始寫「即將公布」，第 6 步再把課表圖片轉成表格放進來。">
       <span class="ps-name"><span class="ps-ind ps-ind-2"></span><span class="ps-ico">📝</span><span class="ps-file">timetable.md</span></span>
       <span class="ps-desc">課表</span>
       <span class="ps-git yes">✓</span>
@@ -188,9 +189,9 @@
       <span class="ps-desc"><span class="ps-ph">每日聯絡簿，</span><span class="ps-ph">最新的一天在最上面</span></span>
       <span class="ps-git yes">✓</span>
     </button>
-    <button class="ps-row k-edit" type="button" data-label="原稿｜附件" data-say="公告要附的檔案放這裡，Markdown 用「files/檔名」連過來。">
-      <span class="ps-name"><span class="ps-ind ps-ind-2"></span><span class="ps-ico">📎</span><span class="ps-file">files/</span></span>
-      <span class="ps-desc"><span class="ps-ph">公告的附件</span><span class="ps-ph">（ex: 空白報名表）</span></span>
+    <button class="ps-row k-edit" type="button" data-label="原稿｜附件" data-say="公告要附檔案時 AI 才會建立，資料夾名稱可能不同；Markdown 用連結連過去。">
+      <span class="ps-name"><span class="ps-ind ps-ind-2"></span><span class="ps-ico">📎</span><span class="ps-file" data-tag="不一定有">files/</span></span>
+      <span class="ps-desc"><span class="ps-ph">公告的附件（ex: 空白報名表），</span><span class="ps-ph">有附檔案才會出現</span></span>
       <span class="ps-git yes">✓</span>
     </button>
 
@@ -202,11 +203,16 @@
 
     <button class="ps-row k-ai" type="button" data-label="印刷廠｜AI 負責" data-say="把 Markdown 套上版面變成網頁的程式，AI 寫的，你不用打開。">
       <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🖨️</span><span class="ps-file">build.mjs</span></span>
-      <span class="ps-desc"><span class="ps-ph">轉換程式（印刷廠），</span><span class="ps-ph">連同 package.json</span></span>
+      <span class="ps-desc"><span class="ps-ph">轉換程式（印刷廠），</span><span class="ps-ph">檔名可能不同</span></span>
       <span class="ps-git yes">✓</span>
     </button>
-    <button class="ps-row ps-later k-ai" type="button" data-label="自動送印｜AI 負責" data-say="GitHub Actions 的設定，第 4 步發布時 AI 才會建立。">
-      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🤖</span><span class="ps-file">.github/</span></span>
+    <button class="ps-row k-ai" type="button" data-label="指令清單｜AI 負責" data-say="記著這個專案有哪些指令可以用（ex: 產生網頁、即時預覽）；需要時請 AI 執行就好。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">📦</span><span class="ps-file">package.json</span></span>
+      <span class="ps-desc"><span class="ps-ph">指令清單：</span><span class="ps-ph">產生網頁、即時預覽</span></span>
+      <span class="ps-git yes">✓</span>
+    </button>
+    <button class="ps-row k-ai" type="button" data-label="自動送印｜AI 負責" data-say="GitHub Actions 的設定，第 5 步發布時 AI 才會建立。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🤖</span><span class="ps-file" data-tag="第 5 步">.github/</span></span>
       <span class="ps-desc"><span class="ps-ph">自動送印小幫手</span><span class="ps-ph">（GitHub Actions）的設定</span></span>
       <span class="ps-git yes">✓</span>
     </button>
@@ -216,9 +222,9 @@
       <span class="ps-desc"><span class="ps-ph">產生出來的網頁，</span><span class="ps-ph">雙擊 index.html 預覽</span></span>
       <span class="ps-git no">✗</span>
     </button>
-    <button class="ps-row k-skip" type="button" data-label="工具箱｜不存檔" data-say="AI 安裝的工具，每台電腦自己裝，不用存。">
-      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🧰</span><span class="ps-file">node_modules/</span></span>
-      <span class="ps-desc">AI 安裝的工具</span>
+    <button class="ps-row k-skip" type="button" data-label="工具箱｜不存檔" data-say="AI 有安裝工具才會出現；每台電腦自己裝，不用存。">
+      <span class="ps-name"><span class="ps-ind ps-ind-1"></span><span class="ps-ico">🧰</span><span class="ps-file" data-tag="不一定有">node_modules/</span></span>
+      <span class="ps-desc"><span class="ps-ph">AI 安裝的工具，</span><span class="ps-ph">有裝才會出現</span></span>
       <span class="ps-git no">✗</span>
     </button>
     <button class="ps-row k-skip" type="button" data-label="素材｜不上網" data-say="從班務資料夾挑出來的素材，AI 從這裡抄內容；原檔不存進 Git，也不放上網。">

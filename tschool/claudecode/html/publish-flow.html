@@ -54,7 +54,7 @@
     transition: background 0.25s, color 0.25s;
   }
 
-  /* ===== 旁白列（平常是標題，走流程時說明目前這一站） ===== */
+  /* ===== 旁白列（平常是標題，點某一站時說明那一站） ===== */
   .pj-cap {
     display: flex;
     align-items: center;
@@ -74,21 +74,6 @@
     letter-spacing: 0.4px;
   }
   .pj-cap-text { font-size: 0.95rem; font-weight: 700; }
-  .pj-play {
-    flex-shrink: 0;
-    font: inherit;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #fff;
-    background: var(--c-local);
-    border: none;
-    border-radius: 999px;
-    padding: 0.35rem 0.85rem;
-    cursor: pointer;
-    transition: transform 0.15s, opacity 0.15s;
-  }
-  .pj-dark .pj-play { color: #1a1206; }
-  .pj-play:hover { transform: translateY(-1px); opacity: 0.9; }
 
   /* ===== 區域（你的電腦／網路上） ===== */
   .pj-zone {
@@ -235,7 +220,6 @@
       <div class="pj-cap-label" id="pj-cap-label">班刊的旅程（每一站都可以點）</div>
       <div class="pj-cap-text" id="pj-cap-text">一則聯絡簿，怎麼從你的電腦走到家長的手機？</div>
     </div>
-    <button class="pj-play" id="pj-play" type="button">▶ 跑一次流程</button>
   </div>
 
   <!-- ===== 你的電腦 ===== -->
@@ -312,14 +296,12 @@
 <script>
 (function () {
   var root = document.getElementById('pj');
-  var btn = document.getElementById('pj-play');
   var capBox = document.getElementById('pj-cap');
   var capLabel = document.getElementById('pj-cap-label');
   var capText = document.getElementById('pj-cap-text');
   var stops = Array.prototype.slice.call(root.querySelectorAll('.pj-st'));
   var idle = { label: capLabel.textContent, text: capText.textContent };
   var current = -1;
-  var timer = null;
 
   // i = -1 回到初始狀態
   function show(i) {
@@ -343,27 +325,8 @@
     capBox.style.setProperty('--cap-color', getComputedStyle(el).getPropertyValue('--zone'));
   }
 
-  function stop() {
-    clearInterval(timer);
-    timer = null;
-    btn.textContent = '▶ 跑一次流程';
-  }
-
-  btn.addEventListener('click', function () {
-    if (timer) { stop(); show(-1); return; }
-    var i = 0;
-    show(0);
-    btn.textContent = '■ 停止';
-    timer = setInterval(function () {
-      i++;
-      if (i >= stops.length) { stop(); return; }
-      show(i);
-    }, 2800);
-  });
-
   stops.forEach(function (el, k) {
     el.addEventListener('click', function () {
-      stop();
       show(k === current ? -1 : k);
     });
   });

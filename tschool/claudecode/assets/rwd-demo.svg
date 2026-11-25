@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="800" viewBox="0 0 1600 800" font-family="'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif">
+  <!-- RWD 示意：同一個班級官網，在電腦與手機上的排版。三個區塊用同一組顏色，方便左右對照。 -->
+  <defs>
+    <clipPath id="win"><rect x="60" y="110" width="950" height="630" rx="16"/></clipPath>
+    <clipPath id="screen"><rect x="1222" y="124" width="266" height="602" rx="30"/></clipPath>
+  </defs>
+
+  <rect width="1600" height="800" fill="#f6f7f9"/>
+
+  <!-- 標題 -->
+  <text x="535" y="72" text-anchor="middle" font-size="30" font-weight="700" fill="#1a1a2e">電腦：畫面寬，區塊左右並排</text>
+  <text x="1355" y="72" text-anchor="middle" font-size="30" font-weight="700" fill="#1a1a2e">手機：畫面窄，排成一欄</text>
+
+  <!-- ===== 電腦瀏覽器 ===== -->
+  <g clip-path="url(#win)">
+    <rect x="60" y="110" width="950" height="630" fill="#ffffff"/>
+    <rect x="60" y="110" width="950" height="48" fill="#e9ecf1"/>
+    <circle cx="92" cy="134" r="7" fill="#f87171"/>
+    <circle cx="116" cy="134" r="7" fill="#fbbf24"/>
+    <circle cx="140" cy="134" r="7" fill="#34d399"/>
+    <rect x="180" y="120" width="520" height="28" rx="14" fill="#ffffff" stroke="#d9d9df"/>
+    <text x="200" y="140" font-size="15" fill="#7a7b8a">你的帳號.github.io/class-website</text>
+
+    <!-- 網站標題與導覽列 -->
+    <text x="96" y="200" font-size="26" font-weight="700" fill="#1a1a2e">五年三班</text>
+    <text x="760" y="198" font-size="20" font-weight="700" fill="#c2410c">首頁</text>
+    <text x="838" y="198" font-size="20" fill="#4f5060">課表</text>
+    <text x="916" y="198" font-size="20" fill="#4f5060">聯絡簿</text>
+    <rect x="758" y="208" width="44" height="4" rx="2" fill="#c2410c"/>
+    <line x1="60" y1="222" x2="1010" y2="222" stroke="#e5e7eb" stroke-width="2"/>
+
+    <!-- 班呼 -->
+    <rect x="96" y="246" width="878" height="110" rx="12" fill="#fef5ed" stroke="#f0c9a8" stroke-width="2"/>
+    <text x="120" y="278" font-size="16" font-weight="700" fill="#c2410c">班呼</text>
+    <text x="535" y="324" text-anchor="middle" font-size="30" font-weight="700" fill="#9a3412">五年三班，閃閃發亮，勇敢學習，一起向上！</text>
+
+    <!-- 最新公告（左欄） -->
+    <rect x="96" y="380" width="427" height="320" rx="12" fill="#eef4ff" stroke="#bcd0fa" stroke-width="2"/>
+    <text x="120" y="424" font-size="24" font-weight="700" fill="#1d4ed8">最新公告</text>
+    <rect x="120" y="446" width="379" height="64" rx="8" fill="#ffffff"/>
+    <text x="138" y="486" font-size="20" font-weight="700" fill="#1a1a2e">親子共讀夜</text>
+    <text x="481" y="486" text-anchor="end" font-size="20" fill="#1d4ed8">12/11（五）</text>
+    <rect x="120" y="522" width="379" height="64" rx="8" fill="#ffffff"/>
+    <text x="138" y="562" font-size="20" font-weight="700" fill="#1a1a2e">五年級校外教學</text>
+    <text x="481" y="562" text-anchor="end" font-size="20" fill="#1d4ed8">12/23（三）</text>
+    <rect x="120" y="612" width="300" height="12" rx="6" fill="#c7d7f5"/>
+    <rect x="120" y="638" width="220" height="12" rx="6" fill="#c7d7f5"/>
+
+    <!-- 導師的話（右欄） -->
+    <rect x="547" y="380" width="427" height="320" rx="12" fill="#edf7f1" stroke="#b0dcc4" stroke-width="2"/>
+    <text x="571" y="424" font-size="24" font-weight="700" fill="#276749">導師的話</text>
+    <text x="571" y="470" font-size="20" fill="#22543d">孩子不是催出來的，是等出來的。</text>
+    <rect x="571" y="496" width="379" height="12" rx="6" fill="#b7dcc6"/>
+    <rect x="571" y="522" width="350" height="12" rx="6" fill="#b7dcc6"/>
+    <rect x="571" y="548" width="379" height="12" rx="6" fill="#b7dcc6"/>
+    <rect x="571" y="574" width="320" height="12" rx="6" fill="#b7dcc6"/>
+    <rect x="571" y="600" width="379" height="12" rx="6" fill="#b7dcc6"/>
+    <rect x="571" y="626" width="250" height="12" rx="6" fill="#b7dcc6"/>
+  </g>
+  <rect x="60" y="110" width="950" height="630" rx="16" fill="none" stroke="#cfd3da" stroke-width="2"/>
+
+  <!-- ===== 中間：同一個網頁 ===== -->
+  <text x="1110" y="392" text-anchor="middle" font-size="22" font-weight="700" fill="#4f5060">同一個網頁</text>
+  <line x1="1040" y1="425" x2="1164" y2="425" stroke="#7a7b8a" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="1160,411 1184,425 1160,439" fill="#7a7b8a"/>
+  <text x="1110" y="470" text-anchor="middle" font-size="18" fill="#7a7b8a">排版自動調整</text>
+
+  <!-- ===== 手機 ===== -->
+  <rect x="1210" y="110" width="290" height="630" rx="40" fill="#1f2937"/>
+  <g clip-path="url(#screen)">
+    <rect x="1222" y="124" width="266" height="602" fill="#ffffff"/>
+
+    <!-- 網站標題與導覽列 -->
+    <text x="1236" y="182" font-size="20" font-weight="700" fill="#1a1a2e">五年三班</text>
+    <text x="1276" y="218" text-anchor="middle" font-size="15" font-weight="700" fill="#c2410c">首頁</text>
+    <text x="1355" y="218" text-anchor="middle" font-size="15" fill="#4f5060">課表</text>
+    <text x="1434" y="218" text-anchor="middle" font-size="15" fill="#4f5060">聯絡簿</text>
+    <rect x="1252" y="226" width="48" height="3" rx="1.5" fill="#c2410c"/>
+    <line x1="1222" y1="232" x2="1488" y2="232" stroke="#e5e7eb" stroke-width="2"/>
+
+    <!-- 班呼 -->
+    <rect x="1236" y="244" width="238" height="92" rx="10" fill="#fef5ed" stroke="#f0c9a8" stroke-width="2"/>
+    <text x="1248" y="264" font-size="12" font-weight="700" fill="#c2410c">班呼</text>
+    <text x="1355" y="292" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3412">五年三班，閃閃發亮，</text>
+    <text x="1355" y="318" text-anchor="middle" font-size="18" font-weight="700" fill="#9a3412">勇敢學習，一起向上！</text>
+
+    <!-- 最新公告 -->
+    <rect x="1236" y="348" width="238" height="176" rx="10" fill="#eef4ff" stroke="#bcd0fa" stroke-width="2"/>
+    <text x="1248" y="376" font-size="17" font-weight="700" fill="#1d4ed8">最新公告</text>
+    <rect x="1248" y="388" width="214" height="56" rx="6" fill="#ffffff"/>
+    <text x="1258" y="412" font-size="14" font-weight="700" fill="#1a1a2e">親子共讀夜</text>
+    <text x="1258" y="434" font-size="14" fill="#1d4ed8">12/11（五）</text>
+    <rect x="1248" y="452" width="214" height="56" rx="6" fill="#ffffff"/>
+    <text x="1258" y="476" font-size="14" font-weight="700" fill="#1a1a2e">五年級校外教學</text>
+    <text x="1258" y="498" font-size="14" fill="#1d4ed8">12/23（三）</text>
+
+    <!-- 導師的話（超出畫面的部分往下捲） -->
+    <rect x="1236" y="536" width="238" height="230" rx="10" fill="#edf7f1" stroke="#b0dcc4" stroke-width="2"/>
+    <text x="1248" y="564" font-size="17" font-weight="700" fill="#276749">導師的話</text>
+    <text x="1248" y="590" font-size="14" fill="#22543d">孩子不是催出來的，</text>
+    <text x="1248" y="610" font-size="14" fill="#22543d">是等出來的。</text>
+    <rect x="1248" y="626" width="214" height="9" rx="4.5" fill="#b7dcc6"/>
+    <rect x="1248" y="644" width="196" height="9" rx="4.5" fill="#b7dcc6"/>
+    <rect x="1248" y="662" width="214" height="9" rx="4.5" fill="#b7dcc6"/>
+    <rect x="1248" y="680" width="176" height="9" rx="4.5" fill="#b7dcc6"/>
+    <rect x="1248" y="698" width="214" height="9" rx="4.5" fill="#b7dcc6"/>
+    <rect x="1248" y="716" width="150" height="9" rx="4.5" fill="#b7dcc6"/>
+  </g>
+  <rect x="1320" y="132" width="70" height="14" rx="7" fill="#1f2937"/>
+</svg>
