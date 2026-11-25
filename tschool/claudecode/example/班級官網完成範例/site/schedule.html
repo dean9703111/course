@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>五年三班｜課表</title>
+<meta name="theme-color" content="#233a30">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- 這個檔案由 build.js 依 content/ 自動產生，請改 Markdown，不要直接改這裡 -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><b>五年三班</b><span>星光國小</span></a>
+    <nav class="topnav" aria-label="主要導覽">
+      <a href="index.html">首頁</a>
+      <a href="schedule.html" aria-current="page">課表</a>
+      <a href="homework.html">聯絡簿</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="board slim">
+    <h1>功課表</h1>
+    <p>115 學年度第一學期<br>明德樓 2F 203 教室</p>
+  </section>
+
+  <!-- 手機：一次看一天 -->
+  <div class="mobile-day">
+    <div class="day-tabs" role="tablist" aria-label="選擇星期"></div>
+    <ol class="periods" id="periods"></ol>
+  </div>
+
+  <!-- 桌機：整週 -->
+  <div class="week" id="week"></div>
+
+  <ul class="legend" id="legend"></ul>
+
+  <h2>小提醒</h2>
+  <ul class="tips">
+    <li>週四第七節「綜合★」是班會。</li>
+    <li>雨天時，體育課改到活動中心上課，仍請穿運動服，建議帶一雙乾的鞋子備用。</li>
+    <li>週二美勞連堂，請帶彩色筆與剪刀。</li>
+    <li>週一、二、四、五 15:50 放學；週三 12:40 放學（在校吃完午餐後整隊放學）。</li>
+    <li>7:50 後到校算遲到。</li>
+  </ul>
+
+  <footer>星光國小 五年三班</footer>
+</main>
+
+<nav class="tabs" aria-label="主要導覽">
+  <a href="index.html"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>首頁</a>
+  <a href="schedule.html" aria-current="page"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 10v11M15 10v11"/></svg>課表</a>
+  <a href="homework.html"><svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6z"/><path d="M6 3v18M4 7h4M4 12h4M4 17h4M11 8h5M11 12h5"/></svg>聯絡簿</a>
+</nav>
+<script>
+const SLOTS = [["晨光時間","07:50–08:30"],["第一節","08:40–09:20"],["第二節","09:30–10:10"],["大下課","10:10–10:30","break"],["第三節","10:30–11:10"],["第四節","11:20–12:00"],["午餐・午休","12:00–13:20","break"],["第五節","13:30–14:10"],["第六節","14:20–15:00"],["第七節","15:10–15:50"]];
+const DAYS = {"一":[["升旗典禮",""],["國語","國語"],["數學","數學"],null,["自然","自然","林老師・自然教室"],["社會","社會"],null,["體育","健體","張老師・操場"],["綜合","綜合"],["閩南語","本土語","吳老師"]],"二":[["晨光閱讀",""],["數學","數學"],["國語","國語"],null,["社會","社會"],["音樂","藝術","李老師・音樂教室"],null,["美勞","藝術"],["美勞","藝術"],["社團","彈性","依社團教室"]],"三":[["英語晨讀",""],["國語","國語"],["英語","英語","陳老師・英語教室"],null,["體育","健體","張老師・操場"],["綜合","綜合"],null,{"off":"12:40","note":"吃完午餐後整隊放學"},{"off":"12:40"},{"off":"12:40"}],"四":[["晨光閱讀",""],["數學","數學"],["國語","國語"],null,["英語","英語","陳老師・英語教室"],["健康","健體"],null,["自然","自然","林老師・自然教室"],["社會","社會"],["綜合★","綜合","班會"]],"五":[["打掃時間",""],["國語","國語"],["數學","數學"],null,["自然","自然","林老師・自然教室"],["閱讀","彈性","圖書室"],null,["書法","彈性"],["資訊","彈性","黃老師・電腦教室"],["英語聽說","英語","陳老師・英語教室"]]};
+const LEGEND = ["國語","數學","英語","自然","社會","健體","藝術","綜合","本土語","彈性"];
+const NAMES = Object.keys(DAYS);
+
+const todayIdx = new Date().getDay() - 1; // 週一 = 0
+const isSchoolDay = todayIdx >= 0 && todayIdx < NAMES.length;
+const after = (time) => (time.slice(0, 2) >= "12" ? "下午" : "之後");
+
+/* ---- 手機：單日 ---- */
+const tabs = document.querySelector(".day-tabs");
+const list = document.getElementById("periods");
+
+function renderDay(day) {
+  tabs.querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", b.dataset.day === day));
+  let html = "", offShown = false;
+  SLOTS.forEach(([label, time, kind], i) => {
+    const c = DAYS[day][i];
+    if (kind === "break") {
+      html += `<li class="break"><div class="when"><b>${label}</b>${time}</div><div class="subj">休息</div></li>`;
+    } else if (c && c.off !== undefined) {
+      if (!offShown) html += `<li class="off"><div class="when"><b>${after(time)}</b></div><div class="subj">${c.off} 放學${c.note ? `<small>${c.note}</small>` : ""}</div></li>`;
+      offShown = true;
+    } else {
+      offShown = false;
+      const [subj, cat, note] = c;
+      html += `<li><div class="when"><b>${label}</b>${time}</div>` +
+              `<div class="subj ${cat ? "c-" + cat : ""}">${cat ? '<i class="dot"></i>' : ""}<div>${subj}${note ? `<small>${note}</small>` : ""}</div></div></li>`;
+    }
+  });
+  list.innerHTML = html;
+}
+
+NAMES.forEach((d, i) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.setAttribute("role", "tab");
+  b.dataset.day = d;
+  b.innerHTML = `週${d}` + (isSchoolDay && i === todayIdx ? `<span class="today">今天</span>` : "");
+  b.addEventListener("click", () => renderDay(d));
+  tabs.appendChild(b);
+});
+renderDay(NAMES[isSchoolDay ? todayIdx : 0]);
+
+/* ---- 桌機：整週 ---- */
+const td = (i) => (isSchoolDay && i === todayIdx ? " is-today" : "");
+let t = `<table><thead><tr><th scope="col">節次</th>` +
+  NAMES.map((d, i) => `<th scope="col" class="${td(i).trim()}">週${d}${isSchoolDay && i === todayIdx ? "（今天）" : ""}</th>`).join("") +
+  `</tr></thead><tbody>`;
+SLOTS.forEach(([label, time, kind], r) => {
+  if (kind === "break") {
+    t += `<tr class="break"><th scope="row"><b>${label}</b>${time}</th><td colspan="${NAMES.length}">${label}</td></tr>`;
+    return;
+  }
+  t += `<tr><th scope="row"><b>${label}</b>${time}</th>`;
+  NAMES.forEach((d, i) => {
+    const c = DAYS[d][r];
+    if (c && c.off !== undefined) {
+      const prev = DAYS[d][r - 1];
+      if (prev && prev.off !== undefined) return; // 已被上面合併
+      let span = 1;
+      while (DAYS[d][r + span] && DAYS[d][r + span].off !== undefined) span++;
+      t += `<td class="off${td(i)}" rowspan="${span}">週${d}${after(time)}<br>${c.off} 放學</td>`;
+      return;
+    }
+    const [subj, cat, note] = c;
+    t += `<td class="${cat ? "c-" + cat : "mini"}${td(i)}">${subj}${note ? `<small>${note}</small>` : ""}</td>`;
+  });
+  t += `</tr>`;
+});
+t += `</tbody></table>`;
+document.getElementById("week").innerHTML = t;
+
+/* ---- 圖例 ---- */
+document.getElementById("legend").innerHTML =
+  LEGEND.map(c => `<li class="c-${c}"><i></i>${c}</li>`).join("");
+</script>
+</body>
+</html>

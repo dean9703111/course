@@ -1,13 +1,10 @@
 {
-  "name": "class-website",
+  "name": "class-5-3-website",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
-  "description": "星光國小五年三班班級官網（虛構範例）",
+  "description": "星光國小五年三班班級網站：改 content/ 的 Markdown，產生 site/ 的網頁",
   "scripts": {
-    "build": "node build.mjs"
-  },
-  "dependencies": {
-    "marked": "^15.0.0"
+    "build": "node build.js",
+    "dev": "node build.js --serve"
   }
 }
